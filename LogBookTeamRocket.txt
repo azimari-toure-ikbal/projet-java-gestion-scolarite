@@ -1,5 +1,8 @@
 JOURNAL DE BORD DE LA TEAM ROCKET
 
 27/01/23: Première réunion, nous essayons de de commencer le diagramme des classes et nos débats 
-			sur la logique de l'application nous fait nous rendre compte que cette aventure ne sera pas de tout repos !
+		sur la logique de l'application nous fait nous rendre compte que cette aventure ne sera pas de tout repos !
+30/01/23: Deuxième réunion, nous avons posé certaines de nos interrogations à des membre du personel de l'école.
+		Nous avons été éclairés sur certains points mais derrière ce brouillard se cachait encore plus de travail.
+		Nous sommes moralement au plus bas !
 
