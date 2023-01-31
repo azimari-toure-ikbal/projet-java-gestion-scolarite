@@ -5,4 +5,8 @@ JOURNAL DE BORD DE LA TEAM ROCKET
 30/01/23: Deuxième réunion, nous avons posé certaines de nos interrogations à des membre du personel de l'école.
 		Nous avons été éclairés sur certains points mais derrière ce brouillard se cachait encore plus de travail.
 		Nous sommes moralement au plus bas !
+31/01/23: Troisième réunion... Nous avons reçu de manière inopinée de nouvelles spécifications du client qui chamboulent le
+		quelques bases que nous avions mais Dieu est grand et après avoir discuté avec le directeur d'une école du coin
+		nous avons finalement pu repartir sur de bonnes bases. Nous avançon lentement mais sûrement dans la conception
+		des diagrammes et de l'interface.
 
