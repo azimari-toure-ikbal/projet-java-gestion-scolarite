@@ -9,4 +9,5 @@ JOURNAL DE BORD DE LA TEAM ROCKET
 		quelques bases que nous avions mais Dieu est grand et après avoir discuté avec le directeur d'une école du coin
 		nous avons finalement pu repartir sur de bonnes bases. Nous avançon lentement mais sûrement dans la conception
 		des diagrammes et de l'interface.
-
+03/02/23: Quatrième réunion, le produit final commence à prendre forme... tout du moins dans nos têtes. Nous avons assez avancé
+		sur les diagrammes et la logique pour pouvoir commencer à coder. It's time to code !
