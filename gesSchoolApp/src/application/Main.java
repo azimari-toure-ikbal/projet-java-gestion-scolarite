@@ -1,10 +1,12 @@
 package application;
 
-import application.view.UILoginController;
+import application.view.LoginUIController;
+import application.view.SecretaireUIController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -30,22 +32,22 @@ public class Main extends Application {
      */
     /**
      * Initializes the root layout and tries to load the last opened
-     * person file.
+     * person fi    le.
      */
     public void initLayout() {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource("./view/UILoginInterface.fxml"));
+            loader.setLocation(Main.class.getResource("./view/SecretaireUI.fxml"));
             Parent dash = loader.load();
             Scene scene = new Scene(dash);
 
             // Set the application scene,title and Icon.
             primaryStage.setScene(scene);
             primaryStage.setTitle("SchoolUp - Login");
-//    			this.primaryStage.getIcons().add(new Image("file:resources/images/app_icon.png"));
+            primaryStage.getIcons().add(new Image("file:C:\\Users\\TOSHIBA PC\\intellij-workspace\\gesSchoolApp\\src\\resources\\images\\app_icon.png"));
 
             // Set the main and current scene references into controller
-            UILoginController controller = loader.getController();
+            SecretaireUIController controller = loader.getController();
             controller.setMainApp(this);
             controller.setCurrentScene(scene);
 

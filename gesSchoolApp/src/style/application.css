@@ -1,10 +1,15 @@
 
+
+.label {
+
+}
 .background {
     -fx-background-color: #1d1d1d;
 }
 
 .app-title{
     -fx-text-fill:  linear-gradient(from 25px 25px to 100px 100px, #DA4453, #89216B);
+    -fx-font-weight: bold;
 }
 
 
@@ -15,6 +20,7 @@
     -fx-opacity: 1;
 }
 
+.
 
 .label-header {
     -fx-font-size: 32pt;
@@ -101,6 +107,11 @@
 	-fx-border-color: #6CC8E1;
 }
 
+.search_student:focused{
+	-fx-border-color: #2c7aba;
+}
+
+
 .button {
     -fx-padding: 5 22 5 22;   
     -fx-border-color: #5488FF;
@@ -163,4 +174,150 @@
 
 .button:default:hover {
     -fx-background-color: derive(-fx-focus-color,30%);
+}
+
+// ########### SECRETAIRE UI :
+
+.notif_btn{
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 30, 0, 0, 0);
+    -fx-padding: 10;
+    -fx-border-radius: 20;
+    -fx-border-width: 0;
+    -fx-pref-width: 20px;
+    -fx-background-radius: 20;
+    -fx-background-color: #fff;
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 11pt;
+    -fx-text-fill: black;
+    -fx-cursor: hand;
+}
+
+.notif_btn:focused{
+   -fx-border-width: 0;
+   -fx-border-style: solid, segments(0, 0);
+   -fx-border-radius: 0, 0;
+   -fx-border-insets: 0;
+}
+
+.notif_btn:hover{
+    -fx-background-color: #e6eff2;
+}
+
+.profile_pic{
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);
+    -fx-pref-width: 43px;
+    -fx-pref-height: 43px;
+    -fx-border-radius: 20;
+    -fx-border-width: 0;
+    -fx-pref-width: 20px;
+    -fx-background-radius: 20;
+    -fx-background-color: #fff;
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 11pt;
+    -fx-text-fill: black;
+    -fx-cursor: hand;
+        -fx-background-image: url("../resources/images/pp_placeholder.jpg");
+        -fx-background-repeat: stretch;
+        -fx-background-size: 20 20;
+        -fx-background-position: center center;
+}
+
+.profile_pic:focused{
+   -fx-border-width: 0;
+   -fx-border-style: solid, segments(0, 0);
+   -fx-border-radius: 0, 0;
+   -fx-border-insets: 0;
+}
+
+.profile_pic:hover{
+    -fx-background-color: #e6eff2;
+}
+
+// -- navbar menu :
+
+.menu_section{
+    -fx-border-color: #5488FF;
+    -fx-text-fill: #84898d;
+    -fx-font-weight: bold;
+    -fx-font-family: "Montserrat", sans-serif;
+    -fx-border-width: 0;
+    -fx-padding: 0 0 0 40px;
+    -fx-background-color: #F4F4F4;
+    -fx-font-size: 13pt;
+    -fx-cursor: hand;
+}
+
+.menu_section:focused{
+   -fx-border-width: 0;
+   -fx-border-style: solid, segments(0, 0);
+   -fx-border-radius: 0, 0;
+   -fx-border-insets: 0;
+}
+
+.menu_section:hover{
+    -fx-background-color: #2C7ABA;
+    -fx-text-fill: white;
+    -fx-fill: white;
+}
+
+.active{
+    -fx-background-color: #2C7ABA;
+    -fx-text-fill: white;
+    -fx-fill: white;
+    -fx-border-color: white;
+    -fx-font-size: 12pt;
+}
+
+.disconnect_btn {
+    -fx-padding: 5 30 5 30;
+    -fx-border-color: #1D52A0;
+    -fx-pref-height: 39px;
+    -fx-border-radius: 5;
+    -fx-border-width: 0.3;
+    -fx-background-radius: 5;
+    -fx-background-color: #DC3545 ;
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 12pt;
+    -fx-text-fill: #fff;
+    -fx-background-insets: 0 0 0 0, 0, 1, 2;
+    -fx-cursor: hand;
+}
+
+.disconnect_btn:hover{
+    -fx-background-color: #ED1B23;
+}
+
+.classic_btn {
+    -fx-padding: 5 10 5 10;
+    -fx-border-color: #1D52A0;
+    -fx-border-radius: 5;
+    -fx-border-width: 0.3;
+    -fx-background-radius: 5;
+    -fx-background-color: #2C7ABA ;
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 12pt;
+    -fx-text-fill: #fff;
+    -fx-background-insets: 0 0 0 0, 0, 1, 2;
+    -fx-cursor: hand;
+}
+
+.classic_btn:hover{
+    -fx-background-color: #1D52A0;
+}
+
+.classic_btn:focused{
+    -fx-border-width: 0, 0;
+    -fx-border-style: solid, segments(0, 0);
+    -fx-border-radius: 0, 0;
+    -fx-border-insets: 0;
+}
+
+.class_card{
+    -fx-background-color: #F2F5FA;
+    -fx-background-radius: 7px;
+    -fx-cursor: hand;
+}
+.class_card_selected{
+  -fx-background-color: #fff;
+  -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);
 }
