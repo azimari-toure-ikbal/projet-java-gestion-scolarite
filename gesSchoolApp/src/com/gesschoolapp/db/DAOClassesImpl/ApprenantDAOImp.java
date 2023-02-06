@@ -1,7 +1,6 @@
 package com.gesschoolapp.db.DAOClassesImpl;
 
 import com.gesschoolapp.Exceptions.DAOException;
-import com.gesschoolapp.db.DAOInterfaces.DAO;
 import com.gesschoolapp.db.DAOInterfaces.SearchDAO;
 import com.gesschoolapp.models.student.Apprenant;
 
@@ -35,7 +34,7 @@ public class ApprenantDAOImp implements SearchDAO<Apprenant> {
     }
 
     @Override
-    public Apprenant search(String name) throws DAOException {
+    public List<Apprenant> search(String stringToSearch) throws DAOException {
         return null;
     }
 }
