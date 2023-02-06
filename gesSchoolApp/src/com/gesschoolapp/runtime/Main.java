@@ -5,16 +5,18 @@ import com.gesschoolapp.view.LoginUIController;
 import com.gesschoolapp.view.SecretaireUIController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class Main extends Application {
 
     // ceci est un commentaire venant du bazard personnel a al amine
-    
+
     public Stage primaryStage;
 
     @Override
@@ -96,6 +98,11 @@ public class Main extends Application {
             // Makes the stage draggable
             controller.setDraggable();
 
+
+            Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
+            primaryStage.setX((primScreenBounds.getWidth() - primaryStage.getWidth()) / 2);
+            primaryStage.setY((primScreenBounds.getHeight() - primaryStage.getHeight()) / 2);
+            
             primaryStage.show();
         } catch(Exception e) {
             e.printStackTrace();
