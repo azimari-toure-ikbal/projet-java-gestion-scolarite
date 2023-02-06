@@ -13,6 +13,8 @@ import javafx.stage.StageStyle;
 
 public class Main extends Application {
 
+    // ceci est un commentaire venant du bazard personnel a al amine
+    
     public Stage primaryStage;
 
     @Override
