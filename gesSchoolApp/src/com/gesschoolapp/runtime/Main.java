@@ -2,6 +2,7 @@ package com.gesschoolapp.runtime;
 
 import com.gesschoolapp.view.LoginUIController;
 import com.gesschoolapp.view.LoginUIController;
+import com.gesschoolapp.view.SecretaireUIController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -70,6 +71,35 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+
+    public void displaySecretaireLayout() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("../view/SecretaireUI.fxml"));
+            Parent dash = loader.load();
+            Scene scene = new Scene(dash);
+
+            // Set the com.gesschoolapp scene,title and Icon.
+            primaryStage.setScene(scene);
+            primaryStage.setTitle("SchoolUp - Login");
+            primaryStage.getIcons().add(new Image("com/gesschoolapp/resources/images/app_icon.png"));
+
+            // Set the main and current scene references into controller
+            SecretaireUIController controller = loader.getController();
+            controller.setMainApp(this);
+            controller.setCurrentScene(scene);
+
+            // Makes the stage draggable
+            controller.setDraggable();
+
+            primaryStage.show();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
+
     }
 
 }
