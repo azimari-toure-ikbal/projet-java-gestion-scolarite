@@ -1,6 +1,7 @@
 package com.gesschoolapp.view;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -18,13 +19,17 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import java.awt.Desktop;
 import java.io.IOException;
@@ -60,7 +65,6 @@ public class LoginUIController implements Initializable  {
 
     private UserDAOImp userDAOImp = new UserDAOImp();
 
-//    private UserDaoImplDB users = new UserDaoImplDB();
 
     /**
      * Is called by the main com.gesschoolapp to give a reference back to itself.
@@ -83,26 +87,23 @@ public class LoginUIController implements Initializable  {
 
     @FXML
     private void handleExit() {
-//        try {
-//            Timeline timeline = new Timeline();
-//            KeyFrame key;
-//            key = new KeyFrame(Duration.millis(50),
-//                    new KeyValue (main.getPrimaryStage().opacityProperty(), 0));
-//            timeline.getKeyFrames().add(key);
-//            timeline.setOnFinished((ae) -> System.exit(0));
-//            timeline.play();
-//        } catch (Exception e) {e.getMessage();}
         try {
-            Desktop.getDesktop().browse(new URI("https://www.youtube.com/watch?v=BOpvlTRfL9g"));
-        } catch (URISyntaxException | IOException e) {
-            e.printStackTrace();
-        }
+            Timeline timeline = new Timeline();
+            KeyFrame key;
+            key = new KeyFrame(Duration.millis(50),
+                    new KeyValue (main.getPrimaryStage().opacityProperty(), 0));
+            timeline.getKeyFrames().add(key);
+            timeline.setOnFinished((ae) -> System.exit(0));
+            timeline.play();
+        } catch (Exception e) {e.getMessage();}
 
     }
 
 
+
     @FXML
-    private void handleLogin() {
+    void handleLogin(ActionEvent event) {
+
         String login = txtUsername.getText();
         String password = txtPassword.getText();
         if (login.isEmpty() || password.isEmpty()) {
@@ -113,15 +114,22 @@ public class LoginUIController implements Initializable  {
                 if (user != null) {
                     if (user.getPassword().equals(password)) {
                         if (user instanceof Secretaire) {
-                            main.displaySecretaireLayout();
+                            Node node = (Node) event.getSource();
+                            Stage stage = (Stage) node.getScene().getWindow();
+
+                            stage.close();
+
+                            Scene scene = new Scene(FXMLLoader.load(getClass().getResource("SecretaireUI.fxml")));
+                            stage.setScene(scene);
+                            stage.show();
                         }
                     } else {
                         messageInfo.setText("Mot de passe incorrect");
                     }
                 } else {
-                    messageInfo.setText("Utilisateur introuvable");
+                    messageInfo.setText("Login et/ou mot de passe incorrect");
                 }
-            } catch (DAOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

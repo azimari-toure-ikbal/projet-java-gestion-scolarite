@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -185,5 +186,10 @@ public class SecretaireUIController implements Initializable {
             setCurrentRoute(profile);
         }
     }
+
+//    public void openSecretaireUI(){
+//        Node node = (Node) event.getSource();
+//
+//    }
 
 }

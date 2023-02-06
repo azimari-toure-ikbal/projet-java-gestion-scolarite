@@ -18,6 +18,7 @@ public class Main extends Application {
     // ceci est un commentaire venant du bazard personnel a al amine
 
     public Stage primaryStage;
+    Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -80,6 +81,8 @@ public class Main extends Application {
 
     public void displaySecretaireLayout() {
         try {
+
+
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("../view/SecretaireUI.fxml"));
             Parent dash = loader.load();
@@ -99,16 +102,28 @@ public class Main extends Application {
             controller.setDraggable();
 
 
-            Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
             primaryStage.setX((primScreenBounds.getWidth() - primaryStage.getWidth()) / 2);
             primaryStage.setY((primScreenBounds.getHeight() - primaryStage.getHeight()) / 2);
-            
-            primaryStage.show();
+
+            setTimeout(() -> primaryStage.show(), 5000);
+
         } catch(Exception e) {
             e.printStackTrace();
         }
 
 
+    }
+
+    public static void setTimeout(Runnable runnable, int delay){
+        new Thread(() -> {
+            try {
+                Thread.sleep(delay);
+                runnable.run();
+            }
+            catch (Exception e){
+                System.err.println(e);
+            }
+        }).start();
     }
 
 }

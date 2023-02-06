@@ -13,7 +13,7 @@ public class DBManager {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
 //            Ouverture de la connexion
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/scolarite_db", "root", "");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/scolarite_db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             return connection;
         } catch (ClassNotFoundException e) {
             throw new Exception("Driver Class not found : '" + e.getMessage() + "' ");
