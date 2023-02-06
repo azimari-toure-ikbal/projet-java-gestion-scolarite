@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 03, 2023 at 03:22 PM
+-- Generation Time: Feb 06, 2023 at 01:14 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -57,22 +57,6 @@ CREATE TABLE IF NOT EXISTS `archives` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `classe`
---
-
-DROP TABLE IF EXISTS `classe`;
-CREATE TABLE IF NOT EXISTS `classe` (
-  `idClasse` int(11) NOT NULL AUTO_INCREMENT,
-  `intitule` varchar(40) NOT NULL,
-  `reference` int(11) NOT NULL,
-  `annee` varchar(12) NOT NULL,
-  `formation` varchar(36) NOT NULL,
-  PRIMARY KEY (`idClasse`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `classeapprenant`
 --
 
@@ -87,11 +71,42 @@ CREATE TABLE IF NOT EXISTS `classeapprenant` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `module`
+-- Table structure for table `classes`
 --
 
-DROP TABLE IF EXISTS `module`;
-CREATE TABLE IF NOT EXISTS `module` (
+DROP TABLE IF EXISTS `classes`;
+CREATE TABLE IF NOT EXISTS `classes` (
+  `idClasse` int(11) NOT NULL AUTO_INCREMENT,
+  `intitule` varchar(40) NOT NULL,
+  `reference` int(11) NOT NULL,
+  `annee` varchar(12) NOT NULL,
+  `formation` varchar(36) NOT NULL,
+  PRIMARY KEY (`idClasse`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `echeancier`
+--
+
+DROP TABLE IF EXISTS `echeancier`;
+CREATE TABLE IF NOT EXISTS `echeancier` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `intitule` varchar(40) NOT NULL,
+  `date` datetime NOT NULL,
+  `reference` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `modules`
+--
+
+DROP TABLE IF EXISTS `modules`;
+CREATE TABLE IF NOT EXISTS `modules` (
   `idModule` int(11) NOT NULL AUTO_INCREMENT,
   `intitule` varchar(40) NOT NULL,
   `idClasse` int(11) NOT NULL,
@@ -102,11 +117,11 @@ CREATE TABLE IF NOT EXISTS `module` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `note`
+-- Table structure for table `notes`
 --
 
-DROP TABLE IF EXISTS `note`;
-CREATE TABLE IF NOT EXISTS `note` (
+DROP TABLE IF EXISTS `notes`;
+CREATE TABLE IF NOT EXISTS `notes` (
   `idNote` int(11) NOT NULL,
   `valeur` int(11) NOT NULL,
   `idApprenant` int(11) NOT NULL,
@@ -118,28 +133,29 @@ CREATE TABLE IF NOT EXISTS `note` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `paiement`
+-- Table structure for table `paiements`
 --
 
-DROP TABLE IF EXISTS `paiement`;
-CREATE TABLE IF NOT EXISTS `paiement` (
+DROP TABLE IF EXISTS `paiements`;
+CREATE TABLE IF NOT EXISTS `paiements` (
   `idPaiement` int(11) NOT NULL,
   `montant` int(11) NOT NULL,
   `rubrique` varchar(255) NOT NULL,
   `date` datetime NOT NULL,
   `apprenant` varchar(120) NOT NULL,
   `caissier` varchar(40) NOT NULL,
-  `classe` varchar(40) NOT NULL
+  `classe` varchar(40) NOT NULL,
+  `observation` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `rubrique`
+-- Table structure for table `rubriques`
 --
 
-DROP TABLE IF EXISTS `rubrique`;
-CREATE TABLE IF NOT EXISTS `rubrique` (
+DROP TABLE IF EXISTS `rubriques`;
+CREATE TABLE IF NOT EXISTS `rubriques` (
   `idRubrique` int(11) NOT NULL,
   `droitInscription` int(11) NOT NULL,
   `scolarite` int(11) NOT NULL,
@@ -154,11 +170,11 @@ CREATE TABLE IF NOT EXISTS `rubrique` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `utilisateur`
+-- Table structure for table `utilisateurs`
 --
 
-DROP TABLE IF EXISTS `utilisateur`;
-CREATE TABLE IF NOT EXISTS `utilisateur` (
+DROP TABLE IF EXISTS `utilisateurs`;
+CREATE TABLE IF NOT EXISTS `utilisateurs` (
   `idUtilisateur` int(11) NOT NULL,
   `password` varchar(256) NOT NULL,
   `nom` varchar(40) NOT NULL,
@@ -179,17 +195,17 @@ ALTER TABLE `classeapprenant`
   ADD CONSTRAINT `classeapprenant_ibfk_1` FOREIGN KEY (`idApprenant`) REFERENCES `apprenants` (`idApprenant`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `module`
+-- Constraints for table `modules`
 --
-ALTER TABLE `module`
-  ADD CONSTRAINT `module_ibfk_1` FOREIGN KEY (`idClasse`) REFERENCES `classe` (`idClasse`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `modules`
+  ADD CONSTRAINT `modules_ibfk_1` FOREIGN KEY (`idClasse`) REFERENCES `classes` (`idClasse`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `note`
+-- Constraints for table `notes`
 --
-ALTER TABLE `note`
-  ADD CONSTRAINT `note_ibfk_1` FOREIGN KEY (`idModule`) REFERENCES `module` (`idModule`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `note_ibfk_2` FOREIGN KEY (`idApprenant`) REFERENCES `apprenants` (`idApprenant`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `notes`
+  ADD CONSTRAINT `notes_ibfk_1` FOREIGN KEY (`idModule`) REFERENCES `modules` (`idModule`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `notes_ibfk_2` FOREIGN KEY (`idApprenant`) REFERENCES `apprenants` (`idApprenant`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
