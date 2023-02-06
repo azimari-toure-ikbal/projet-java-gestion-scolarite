@@ -128,7 +128,7 @@ public class SecretaireUIController implements Initializable {
         // SetCurrentRoute :
         setCurrentRoute(home);
 
-        Image pp = new Image("resources/images/pp_placeholder.jpg");
+        Image pp = new Image("com/gesschoolapp/resources/images/pp_placeholder.jpg");
         pp_placeholder.setFill(new ImagePattern(pp));
 //        class_preview.setImage(new Image("resources/images/plc.png"));
     }

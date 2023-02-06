@@ -14,6 +14,6 @@ public class ClassPreviewItemController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        class_preview.setImage(new Image("resources/images/plc.png"));
+        class_preview.setImage(new Image("com/gesschoolapp/resources/images/plc.png"));
     }
 }
