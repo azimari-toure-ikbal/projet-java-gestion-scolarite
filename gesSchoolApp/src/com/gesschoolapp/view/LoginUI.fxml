@@ -65,18 +65,18 @@
                         </Label>
                         <AnchorPane layoutX="28.0" layoutY="87.0" prefHeight="333.0" prefWidth="322.0">
                            <children>
-                              <TextField fx:id="txtUsername" layoutX="19.0" layoutY="73.0" prefHeight="35.0" prefWidth="285.0" />
+                              <TextField fx:id="txtUsername" layoutX="19.0" layoutY="73.0" prefHeight="35.0" prefWidth="285.0" promptText="exemple@exemple.com" />
                               <Label layoutX="21.0" layoutY="140.0" text="Entrez votre mot de passe">
                                  <font>
                                     <Font name="Gill Sans MT" size="15.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="txtPassword" layoutX="19.0" layoutY="164.0" prefHeight="35.0" prefWidth="285.0" promptText="Min 8 char.">
+                              <TextField fx:id="txtPassword" layoutX="19.0" layoutY="164.0" prefHeight="35.0" prefWidth="285.0" promptText="min 8 char.">
                                  <font>
                                     <Font size="6.0" />
                                  </font>
                               </TextField>
-                              <Label layoutX="21.0" layoutY="49.0" text="Entrez votre login">
+                              <Label layoutX="21.0" layoutY="49.0" text="Entrez votre email">
                                  <font>
                                     <Font name="Gill Sans MT" size="15.0" />
                                  </font>

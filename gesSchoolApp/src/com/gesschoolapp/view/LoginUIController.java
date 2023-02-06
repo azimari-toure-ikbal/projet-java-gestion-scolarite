@@ -34,6 +34,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 
+import javax.swing.*;
+
 public class LoginUIController implements Initializable  {
 
 
@@ -83,46 +85,41 @@ public class LoginUIController implements Initializable  {
 
     @FXML
     private void handleExit() {
-//        try {
-//            Timeline timeline = new Timeline();
-//            KeyFrame key;
-//            key = new KeyFrame(Duration.millis(50),
-//                    new KeyValue (main.getPrimaryStage().opacityProperty(), 0));
-//            timeline.getKeyFrames().add(key);
-//            timeline.setOnFinished((ae) -> System.exit(0));
-//            timeline.play();
-//        } catch (Exception e) {e.getMessage();}
         try {
-            Desktop.getDesktop().browse(new URI("https://www.youtube.com/watch?v=BOpvlTRfL9g"));
-        } catch (URISyntaxException | IOException e) {
-            e.printStackTrace();
+            Timeline timeline = new Timeline();
+            KeyFrame key;
+            key = new KeyFrame(Duration.millis(50),
+                    new KeyValue (main.getPrimaryStage().opacityProperty(), 0));
+            timeline.getKeyFrames().add(key);
+            timeline.setOnFinished((ae) -> System.exit(0));
+            timeline.play();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
-
     }
 
 
     @FXML
     private void handleLogin() {
-        String login = txtUsername.getText();
+        String email = txtUsername.getText();
         String password = txtPassword.getText();
-        if (login.isEmpty() || password.isEmpty()) {
+        if (email.isEmpty() || password.isEmpty()) {
             messageInfo.setText("Veuillez remplir tous les champs");
         } else {
             try {
-                Utilisateur user = userDAOImp.authenticate(login, password);
+                Utilisateur user = userDAOImp.authenticate(email, password);
                 if (user != null) {
-                    if (user.getPassword().equals(password)) {
-                        if (user instanceof Secretaire) {
-                            main.displaySecretaireLayout();
-                        }
-                    } else {
-                        messageInfo.setText("Mot de passe incorrect");
+                    if (user instanceof Secretaire) {
+                        main.displaySecretaireLayout();
                     }
                 } else {
-                    messageInfo.setText("Utilisateur introuvable");
+                    messageInfo.setText("email ou mot de passe incorrect");
                 }
             } catch (DAOException e) {
-                e.printStackTrace();
+                // Afficher un message d'erreur
+                JDialog dialog = new JDialog();
+                dialog.setAlwaysOnTop(true);
+                JOptionPane.showMessageDialog(dialog, "Une erreur est survenue");
             }
         }
 //        if (!Objects.equals(login, "") && !Objects.equals(password, "")){
@@ -168,15 +165,7 @@ public class LoginUIController implements Initializable  {
 
     @FXML
     private void onMinimize(){
-        Timeline timeline = new Timeline();
-        KeyFrame key;
-        key = new KeyFrame(Duration.millis(50),
-                new KeyValue (main.getPrimaryStage().opacityProperty(), 0));
-        timeline.getKeyFrames().add(key);
-        timeline.setOnFinished((ae) -> main.getPrimaryStage().setIconified(true));
-        timeline.play();
-//        NOTE : Tu devrais avoir une animation spécifique à la réduction de page !
-
+        main.getPrimaryStage().setIconified(true);
     };
 
     @Override
