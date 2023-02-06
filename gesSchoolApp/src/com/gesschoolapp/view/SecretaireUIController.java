@@ -156,7 +156,6 @@ public class SecretaireUIController implements Initializable {
     }
 
     public void setCurrentRoute(Route currentRoute) {
-        System.out.println(currentRoute.getRouteView());
         currentRoute.getRouteView().toFront();
         menuStyleReset();
         currentRoute.getNavSelection().setStyle("-fx-background-color: #2C7ABA;-fx-text-fill: white;");
