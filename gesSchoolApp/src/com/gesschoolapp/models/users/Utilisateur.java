@@ -11,7 +11,19 @@ public abstract class Utilisateur {
     protected String  numero;
     protected String fullName;
 
+
+    public Utilisateur(int id, String nom, String prenom, String email, String password, String numero) {
+        this(nom, prenom, email, password, numero);
+        this.setId(id);
+    }
+
     public Utilisateur(String nom, String prenom, String email, String password, String numero) {
+        this.setNom(nom);
+        this.setPrenom(prenom);
+        this.setEmail(email);
+        this.setPassword(password);
+        this.setNumero(numero);
+        this.setFullName(nom + " " + prenom);
     }
 
     public int getId() {

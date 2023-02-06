@@ -6,6 +6,7 @@ import java.io.IOException;
 public class Example {
     public static void main(String[] args) throws IOException {
         Email from = new Email("contact@ar-struct.com");
+        System.out.println(from);
         String subject = "Sending with Twilio SendGrid is Fun";
         Email to = new Email("azimariiki007@gmail.com");
         Content content = new Content("text/plain", "and easy to do anywhere, even with Java");

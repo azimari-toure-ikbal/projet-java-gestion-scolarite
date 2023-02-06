@@ -33,7 +33,7 @@ public class ClasseDAOImp implements SearchDAO<Classe> {
     }
 
     @Override
-    public Classe search(String name) throws DAOException {
+    public List<Classe> search(String stringToSearch) throws DAOException {
         return null;
     }
 }
