@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -10,7 +11,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="589.0" prefWidth="922.0" stylesheets="@../style/application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gesschoolapp.view.LoginUIController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="589.0" prefWidth="922.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gesschoolapp.view.LoginUIController">
 
     <children>
         <AnchorPane prefHeight="589.0" prefWidth="393.0" style="-fx-background-color: linear-gradient(to right, #2C7ABA, #5AB2D8);" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -64,13 +65,13 @@
                         </Label>
                         <AnchorPane layoutX="28.0" layoutY="87.0" prefHeight="333.0" prefWidth="322.0">
                            <children>
-                              <TextField layoutX="19.0" layoutY="73.0" prefHeight="35.0" prefWidth="285.0" />
+                              <TextField fx:id="txtUsername" layoutX="19.0" layoutY="73.0" prefHeight="35.0" prefWidth="285.0" />
                               <Label layoutX="21.0" layoutY="140.0" text="Entrez votre mot de passe">
                                  <font>
                                     <Font name="Gill Sans MT" size="15.0" />
                                  </font>
                               </Label>
-                              <TextField layoutX="19.0" layoutY="164.0" prefHeight="35.0" prefWidth="285.0" promptText="Min 8 char.">
+                              <TextField fx:id="txtPassword" layoutX="19.0" layoutY="164.0" prefHeight="35.0" prefWidth="285.0" promptText="Min 8 char.">
                                  <font>
                                     <Font size="6.0" />
                                  </font>
@@ -80,12 +81,17 @@
                                     <Font name="Gill Sans MT" size="15.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="btnFb" alignment="CENTER" defaultButton="true" layoutX="19.0" layoutY="256.0" lineSpacing="1.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="277.0" style="-fx-background-color: #2D7BBB;" styleClass="connect_btn" text="Connexion" textFill="#e1dbdb">
+                              <Button fx:id="btnFb" alignment="CENTER" defaultButton="true" layoutX="23.0" layoutY="276.0" lineSpacing="1.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="43.0" prefWidth="277.0" style="-fx-background-color: #2D7BBB;" styleClass="connect_btn" text="Connexion" textFill="#e1dbdb">
                                  <font>
                                     <Font name="Segoe UI" size="11.0" />
                                  </font>
                               </Button>
-                              <Label layoutX="181.0" layoutY="224.0" prefHeight="17.0" prefWidth="120.0" text="Mot de passe oublié ?" textFill="#3c8dc4" />
+                              <Label layoutX="183.0" layoutY="246.0" prefHeight="17.0" prefWidth="120.0" text="Mot de passe oublié ?" textFill="#3c8dc4" />
+                              <Label layoutX="23.0" layoutY="207.0" prefHeight="16.0" prefWidth="266.0" textFill="#ea2f2f">
+                                 <font>
+                                    <Font name="Gill Sans MT" size="14.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </AnchorPane>
                      </children>
@@ -109,4 +115,7 @@
          </top>
       </BorderPane>
     </children>
+   <stylesheets>
+      <URL value="@../style/application.css" />
+   </stylesheets>
 </AnchorPane>
