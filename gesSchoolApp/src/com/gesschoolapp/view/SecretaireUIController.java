@@ -12,7 +12,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
-
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.control.Button;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -51,16 +57,20 @@ public class SecretaireUIController implements Initializable {
 
     @FXML
     private void handleExit() {
+//        try{
+//            Timeline timeline = new Timeline();
+//            KeyFrame key;
+//            key = new KeyFrame(Duration.millis(50),
+//                    new KeyValue (main.getPrimaryStage().opacityProperty(), 0));
+//            timeline.getKeyFrames().add(key);
+//            timeline.setOnFinished((ae) -> System.exit(0));
+//            timeline.play();
+//        } catch (Exception e) {e.getMessage();}
         try {
-            Timeline timeline = new Timeline();
-            KeyFrame key;
-            key = new KeyFrame(Duration.millis(50),
-                    new KeyValue (main.getPrimaryStage().opacityProperty(), 0));
-            timeline.getKeyFrames().add(key);
-            timeline.setOnFinished((ae) -> System.exit(0));
-            timeline.play();
-        } catch (Exception e) {e.getMessage();}
-
+            Desktop.getDesktop().browse(new URI("https://www.youtube.com/watch?v=dQw4w9WgXcQ"));
+        } catch (URISyntaxException | IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
