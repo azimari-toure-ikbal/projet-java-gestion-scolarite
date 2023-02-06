@@ -87,7 +87,7 @@
                                  </font>
                               </Button>
                               <Label layoutX="183.0" layoutY="246.0" prefHeight="17.0" prefWidth="120.0" text="Mot de passe oublié ?" textFill="#3c8dc4" />
-                              <Label layoutX="23.0" layoutY="207.0" prefHeight="16.0" prefWidth="266.0" textFill="#ea2f2f">
+                              <Label fx:id="messageInfo" layoutX="23.0" layoutY="207.0" prefHeight="16.0" prefWidth="266.0" textFill="#ea2f2f">
                                  <font>
                                     <Font name="Gill Sans MT" size="14.0" />
                                  </font>

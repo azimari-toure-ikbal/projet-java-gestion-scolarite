@@ -12,6 +12,9 @@
       <root url="jar://$PROJECT_DIR$/lib/javafx.graphics.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../../../javafx-sdk-19" />
+    </SOURCES>
+    <jarDirectory url="file://$PROJECT_DIR$/../../../javafx-sdk-19" recursive="false" type="SOURCES" />
   </library>
 </component>
