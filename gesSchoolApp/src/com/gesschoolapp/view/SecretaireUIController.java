@@ -1,6 +1,6 @@
-package application.view;
+package com.gesschoolapp.view;
 
-import application.Main;
+import com.gesschoolapp.runtime.Main;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
