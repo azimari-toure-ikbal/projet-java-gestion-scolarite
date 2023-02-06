@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 06, 2023 at 01:14 PM
+-- Generation Time: Feb 06, 2023 at 05:27 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -82,7 +82,31 @@ CREATE TABLE IF NOT EXISTS `classes` (
   `annee` varchar(12) NOT NULL,
   `formation` varchar(36) NOT NULL,
   PRIMARY KEY (`idClasse`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `classes`
+--
+
+INSERT INTO `classes` (`idClasse`, `intitule`, `reference`, `annee`, `formation`) VALUES
+(1, 'creche', 1, '2023', 'Maternelle'),
+(2, 'Très Petite Section', 2, '2023', 'Maternelle'),
+(3, 'Moyenne Section', 3, '2023', 'Maternelle'),
+(4, 'Grande Section', 3, '2023', 'Maternelle'),
+(5, 'CI', 4, '2022/2023', 'Elementaire'),
+(6, 'CP', 4, '2022/2023', 'Elementaire'),
+(7, 'CE1', 5, '2022/2023', 'Elementaire'),
+(8, 'CE2', 5, '2022/2023', 'Elementaire'),
+(9, 'CM1', 6, '2022/2023', 'Elementaire'),
+(10, 'CM2', 6, '2022/2023', 'Elementaire'),
+(11, 'Petite Section', 3, '2022/2023', 'Maternelle'),
+(12, '3eme', 8, '2022/2023', 'College'),
+(13, '4eme', 8, '2022/2023', 'College'),
+(14, '5eme', 7, '2022/2023', 'College'),
+(15, '6eme', 7, '2022/2023', 'College'),
+(16, '1ere année', 9, '2022/2023', 'Froid/Climatisation'),
+(17, '2e année', 9, '2022/2023', 'Froid/Climatisation'),
+(18, '3e année', 9, '2022/2023', 'Froid/Climatisation');
 
 -- --------------------------------------------------------
 
@@ -156,16 +180,32 @@ CREATE TABLE IF NOT EXISTS `paiements` (
 
 DROP TABLE IF EXISTS `rubriques`;
 CREATE TABLE IF NOT EXISTS `rubriques` (
-  `idRubrique` int(11) NOT NULL,
+  `idRubrique` int(11) NOT NULL AUTO_INCREMENT,
   `droitInscription` int(11) NOT NULL,
   `scolarite` int(11) NOT NULL,
+  `album` int(11) NOT NULL,
   `tenue` int(11) NOT NULL,
-  `blouseTravail` int(11) NOT NULL,
   `fraisGeneraux` int(11) NOT NULL,
   `cotisationAPE` int(11) NOT NULL,
   `inscription` int(11) NOT NULL,
-  `reference` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `reference` int(11) NOT NULL,
+  PRIMARY KEY (`idRubrique`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `rubriques`
+--
+
+INSERT INTO `rubriques` (`idRubrique`, `droitInscription`, `scolarite`, `album`, `tenue`, `fraisGeneraux`, `cotisationAPE`, `inscription`, `reference`) VALUES
+(1, 75000, 50000, 2000, 0, 0, 3000, 130000, 1),
+(2, 17000, 23000, 2000, 10000, 10000, 3000, 65000, 2),
+(3, 17000, 16000, 2000, 10000, 10000, 3000, 58000, 3),
+(4, 17000, 15000, 0, 30000, 10000, 3000, 75000, 4),
+(5, 17000, 16000, 0, 30000, 10000, 3000, 75000, 5),
+(6, 17000, 21500, 0, 30000, 10000, 3000, 76000, 6),
+(7, 17000, 23000, 0, 30000, 10000, 3000, 83000, 7),
+(8, 17000, 28000, 0, 30000, 10000, 3000, 88000, 8),
+(9, 17000, 15000, 0, 0, 10000, 3000, 52000, 9);
 
 -- --------------------------------------------------------
 
@@ -175,14 +215,24 @@ CREATE TABLE IF NOT EXISTS `rubriques` (
 
 DROP TABLE IF EXISTS `utilisateurs`;
 CREATE TABLE IF NOT EXISTS `utilisateurs` (
-  `idUtilisateur` int(11) NOT NULL,
+  `idUtilisateur` int(11) NOT NULL AUTO_INCREMENT,
   `password` varchar(256) NOT NULL,
   `nom` varchar(40) NOT NULL,
   `prenom` varchar(40) NOT NULL,
   `email` varchar(64) NOT NULL,
   `numero` varchar(20) NOT NULL,
-  `type` varchar(40) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `type` varchar(40) NOT NULL,
+  PRIMARY KEY (`idUtilisateur`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `utilisateurs`
+--
+
+INSERT INTO `utilisateurs` (`idUtilisateur`, `password`, `nom`, `prenom`, `email`, `numero`, `type`) VALUES
+(1, 'fatou', 'Syla', 'Fatou', 'fatou.syla@mail.cum', '76 696 69 69', 'secretaire'),
+(2, 'marcus', 'Sins', 'Marcus', 'marcus.sins@mail.com', '76 789 24 23', 'comptable'),
+(3, 'wissam', 'Youssef', 'Wissam', 'wissam.youssef@mail.com', '76 138 52 88', 'administrateur');
 
 --
 -- Constraints for dumped tables
