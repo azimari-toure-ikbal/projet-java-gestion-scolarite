@@ -1,8 +1,18 @@
 package com.gesschoolapp.view;
 
+import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
+import com.gesschoolapp.Exceptions.DAOException;
+import com.gesschoolapp.db.DAOClassesImpl.UserDAOImp;
+import com.gesschoolapp.models.users.Secretaire;
+import com.gesschoolapp.models.users.Utilisateur;
 import com.gesschoolapp.runtime.Main;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -11,8 +21,18 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.control.Button;
 
 public class LoginUIController implements Initializable  {
 
@@ -32,16 +52,18 @@ public class LoginUIController implements Initializable  {
     @FXML
     private ImageView minIcon;
 
-    // Reference to the main application
+    // Reference to the main com.gesschoolapp
     private Main main;
 
     // Reference to the current scene
     private Scene scene;
 
+    private UserDAOImp userDAOImp = new UserDAOImp();
+
 //    private UserDaoImplDB users = new UserDaoImplDB();
 
     /**
-     * Is called by the main application to give a reference back to itself.
+     * Is called by the main com.gesschoolapp to give a reference back to itself.
      *
      * @param main mainApp
      */
@@ -50,7 +72,7 @@ public class LoginUIController implements Initializable  {
     }
 
     /**
-     * Is called by the main application to give a reference of its current Scene Root to itself.
+     * Is called by the main com.gesschoolapp to give a reference of its current Scene Root to itself.
      *
      * @param sc  current Scene Parent root
      */
@@ -61,55 +83,55 @@ public class LoginUIController implements Initializable  {
 
     @FXML
     private void handleExit() {
+//        try {
+//            Timeline timeline = new Timeline();
+//            KeyFrame key;
+//            key = new KeyFrame(Duration.millis(50),
+//                    new KeyValue (main.getPrimaryStage().opacityProperty(), 0));
+//            timeline.getKeyFrames().add(key);
+//            timeline.setOnFinished((ae) -> System.exit(0));
+//            timeline.play();
+//        } catch (Exception e) {e.getMessage();}
         try {
-            Timeline timeline = new Timeline();
-            KeyFrame key;
-            key = new KeyFrame(Duration.millis(50),
-                    new KeyValue (main.getPrimaryStage().opacityProperty(), 0));
-            timeline.getKeyFrames().add(key);
-            timeline.setOnFinished((ae) -> System.exit(0));
-            timeline.play();
-        } catch (Exception e) {e.getMessage();}
+            Desktop.getDesktop().browse(new URI("https://www.youtube.com/watch?v=BOpvlTRfL9g"));
+        } catch (URISyntaxException | IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
 
     @FXML
     private void handleLogin() {
-//
-//        String login = txtUsername.getText().toString();
-//        String password = txtPassword.getText().toString();
-//
-//        if(isInputValid(login,password)) {
+        String login = txtUsername.getText();
+        String password = txtPassword.getText();
+        if (login.isEmpty() || password.isEmpty()) {
+            messageInfo.setText("Veuillez remplir tous les champs");
+        } else {
+            try {
+                Utilisateur user = userDAOImp.authenticate(login, password);
+                if (user != null) {
+                    if (user.getPassword().equals(password)) {
+                        if (user instanceof Secretaire) {
+                            main.displaySecretaireLayout();
+                        }
+                    } else {
+                        messageInfo.setText("Mot de passe incorrect");
+                    }
+                } else {
+                    messageInfo.setText("Utilisateur introuvable");
+                }
+            } catch (DAOException e) {
+                e.printStackTrace();
+            }
+        }
+//        if (!Objects.equals(login, "") && !Objects.equals(password, "")){
 //            try {
-//                User session_user = users.readByLoginPassword(login, password);
-//
-//                if(session_user == null) {
-//                    messageInfo.setTextFill(Color.TOMATO);
-//                    messageInfo.setText("Incorrect Login or Password !");
-//                }else {
-//                    messageInfo.setTextFill(Color.LIMEGREEN);
-//                    messageInfo.setText("Welcome, "+ session_user.getLogin() +" !");
-//
-//                    FXMLLoader loader = new FXMLLoader();
-//                    loader.setLocation(Main.class.getResource("view/Dashboard.fxml"));
-//                    Parent welcome;
-//                    try {
-//                        welcome = loader.load();
-//                        Scene scene2 = new Scene(welcome);
-////						main.getPrimaryStage().setWidth(scene2.getWidth());
-////						main.getPrimaryStage().setHeight(scene2.getHeight());
-//                        main.getPrimaryStage().setScene(scene2);
-//                        main.getPrimaryStage().show();
-//
-//                    } catch (IOException e) {
-//                        // TODO Auto-generated catch block
-//                        e.printStackTrace();
-//                    }
-//
-//                }
+//                Utilisateur user = userDAOImp.authenticate(login, password);
+//                if(user instanceof Secretaire)
+//                    main.displaySecretaireLayout();
 //            } catch (DAOException e) {
-//                e.printStackTrace();
+//                throw new RuntimeException(e);
 //            }
 //        }
     }
