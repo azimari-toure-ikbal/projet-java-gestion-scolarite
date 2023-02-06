@@ -1,7 +1,6 @@
 package com.gesschoolapp.runtime;
 
 import com.gesschoolapp.view.LoginUIController;
-import com.gesschoolapp.view.LoginUIController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

@@ -1,4 +1,4 @@
-package application.view;
+package com.gesschoolapp.view;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

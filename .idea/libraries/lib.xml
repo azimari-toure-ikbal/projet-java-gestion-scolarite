@@ -1,0 +1,19 @@
+<component name="libraryTable">
+  <library name="lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/gesSchoolApp/lib/javafx.media.jar!/" />
+      <root url="jar://$PROJECT_DIR$/gesSchoolApp/lib/javafx.swing.jar!/" />
+      <root url="jar://$PROJECT_DIR$/gesSchoolApp/lib/javafx-swt.jar!/" />
+      <root url="jar://$PROJECT_DIR$/gesSchoolApp/lib/javafx.base.jar!/" />
+      <root url="jar://$PROJECT_DIR$/gesSchoolApp/lib/fontawesomefx-8.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/gesSchoolApp/lib/mysql-connector-java-8.0.13.jar!/" />
+      <root url="jar://$PROJECT_DIR$/gesSchoolApp/lib/javafx.controls.jar!/" />
+      <root url="jar://$PROJECT_DIR$/gesSchoolApp/lib/javafx.fxml.jar!/" />
+      <root url="jar://$PROJECT_DIR$/gesSchoolApp/lib/javafx.graphics.jar!/" />
+      <root url="jar://$PROJECT_DIR$/gesSchoolApp/lib/javafx.web.jar!/" />
+      <root url="jar://$PROJECT_DIR$/gesSchoolApp/lib/sendgrid-java.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,4 +1,4 @@
-package application.view;
+package com.gesschoolapp.view;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.scene.control.Button;

@@ -1,9 +1,9 @@
-package application.view;
+package com.gesschoolapp.view;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import application.Main;
+import com.gesschoolapp.runtime.Main;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;

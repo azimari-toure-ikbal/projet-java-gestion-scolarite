@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="gestion.scolarite">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/gestion.scolarite.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
