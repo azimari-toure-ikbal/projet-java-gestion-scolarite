@@ -1,13 +1,9 @@
-package com.gesschoolapp.view;
+package application.view;
 
-import java.awt.*;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.gesschoolapp.runtime.Main;
+import application.Main;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -15,18 +11,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
-import java.awt.Desktop;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.control.Button;
 
 public class LoginUIController implements Initializable  {
 
@@ -46,7 +32,7 @@ public class LoginUIController implements Initializable  {
     @FXML
     private ImageView minIcon;
 
-    // Reference to the main com.gesschoolapp
+    // Reference to the main application
     private Main main;
 
     // Reference to the current scene
@@ -55,7 +41,7 @@ public class LoginUIController implements Initializable  {
 //    private UserDaoImplDB users = new UserDaoImplDB();
 
     /**
-     * Is called by the main com.gesschoolapp to give a reference back to itself.
+     * Is called by the main application to give a reference back to itself.
      *
      * @param main mainApp
      */
@@ -64,7 +50,7 @@ public class LoginUIController implements Initializable  {
     }
 
     /**
-     * Is called by the main com.gesschoolapp to give a reference of its current Scene Root to itself.
+     * Is called by the main application to give a reference of its current Scene Root to itself.
      *
      * @param sc  current Scene Parent root
      */
@@ -75,20 +61,15 @@ public class LoginUIController implements Initializable  {
 
     @FXML
     private void handleExit() {
-//        try {
-//            Timeline timeline = new Timeline();
-//            KeyFrame key;
-//            key = new KeyFrame(Duration.millis(50),
-//                    new KeyValue (main.getPrimaryStage().opacityProperty(), 0));
-//            timeline.getKeyFrames().add(key);
-//            timeline.setOnFinished((ae) -> System.exit(0));
-//            timeline.play();
-//        } catch (Exception e) {e.getMessage();}
         try {
-            Desktop.getDesktop().browse(new URI("https://www.youtube.com/watch?v=dQw4w9WgXcQ"));
-        } catch (URISyntaxException | IOException e) {
-            e.printStackTrace();
-        }
+            Timeline timeline = new Timeline();
+            KeyFrame key;
+            key = new KeyFrame(Duration.millis(50),
+                    new KeyValue (main.getPrimaryStage().opacityProperty(), 0));
+            timeline.getKeyFrames().add(key);
+            timeline.setOnFinished((ae) -> System.exit(0));
+            timeline.play();
+        } catch (Exception e) {e.getMessage();}
 
     }
 
