@@ -114,14 +114,8 @@ public class LoginUIController implements Initializable  {
                 if (user != null) {
                     if (user.getPassword().equals(password)) {
                         if (user instanceof Secretaire) {
-                            Node node = (Node) event.getSource();
-                            Stage stage = (Stage) node.getScene().getWindow();
-
-                            stage.close();
-
-                            Scene scene = new Scene(FXMLLoader.load(getClass().getResource("SecretaireUI.fxml")));
-                            stage.setScene(scene);
-                            stage.show();
+                            SecretaireUIController secretaireUI = new SecretaireUIController();
+                            secretaireUI.openInterface(event,(Secretaire) user);
                         }
                     } else {
                         messageInfo.setText("Mot de passe incorrect");

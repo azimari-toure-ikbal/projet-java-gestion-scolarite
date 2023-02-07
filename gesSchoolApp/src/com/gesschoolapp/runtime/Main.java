@@ -79,51 +79,6 @@ public class Main extends Application {
     }
 
 
-    public void displaySecretaireLayout() {
-        try {
 
-
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource("../view/SecretaireUI.fxml"));
-            Parent dash = loader.load();
-            Scene scene = new Scene(dash);
-
-            // Set the com.gesschoolapp scene,title and Icon.
-            primaryStage.setScene(scene);
-            primaryStage.setTitle("SchoolUp - Login");
-            primaryStage.getIcons().add(new Image("com/gesschoolapp/resources/images/app_icon.png"));
-
-            // Set the main and current scene references into controller
-            SecretaireUIController controller = loader.getController();
-            controller.setMainApp(this);
-            controller.setCurrentScene(scene);
-
-            // Makes the stage draggable
-            controller.setDraggable();
-
-
-            primaryStage.setX((primScreenBounds.getWidth() - primaryStage.getWidth()) / 2);
-            primaryStage.setY((primScreenBounds.getHeight() - primaryStage.getHeight()) / 2);
-
-            setTimeout(() -> primaryStage.show(), 5000);
-
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-
-
-    }
-
-    public static void setTimeout(Runnable runnable, int delay){
-        new Thread(() -> {
-            try {
-                Thread.sleep(delay);
-                runnable.run();
-            }
-            catch (Exception e){
-                System.err.println(e);
-            }
-        }).start();
-    }
 
 }

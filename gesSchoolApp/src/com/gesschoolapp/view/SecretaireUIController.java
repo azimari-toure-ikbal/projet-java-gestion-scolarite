@@ -1,5 +1,7 @@
 package com.gesschoolapp.view;
 
+import com.gesschoolapp.models.users.Secretaire;
+import com.gesschoolapp.models.users.Utilisateur;
 import com.gesschoolapp.runtime.Main;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.animation.KeyFrame;
@@ -7,22 +9,27 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -31,6 +38,8 @@ public class SecretaireUIController implements Initializable {
 
 
     private Route currentRoute;
+    private Secretaire currentUser;
+
 
 //    Route infos :
 
@@ -70,8 +79,9 @@ public class SecretaireUIController implements Initializable {
     private AnchorPane classPreview;
 
 
-    // Reference to the main application
-    private Main main;
+
+    // Reference to the application's stage
+    private Stage stage;
 
     // Reference to the current scene
     private Scene scene;
@@ -85,13 +95,30 @@ public class SecretaireUIController implements Initializable {
 //    private UserDaoImplDB users = new UserDaoImplDB();
 
     /**
-     * Is called by the main application to give a reference back to itself.
+     * Is called by the controller to give a reference of it's stage back to itself.
      *
-     * @param main mainApp
+     * @param stage stage
      */
-    public void setMainApp(Main main) {
-        this.main = main;
+    public void setStage(Stage stage) {
+        this.stage = stage;
+
     }
+
+    public Stage getStage() {
+        stage = (Stage) btnAccueil.getScene().getWindow();
+        return stage;
+    }
+
+
+    public Secretaire getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(Secretaire currentUser) {
+        this.currentUser = currentUser;
+    }
+
+
 
     /**
      * Is called by the main application to give a reference of its current Scene Root to itself.
@@ -109,7 +136,7 @@ public class SecretaireUIController implements Initializable {
             Timeline timeline = new Timeline();
             KeyFrame key;
             key = new KeyFrame(Duration.millis(50),
-                    new KeyValue (main.getPrimaryStage().opacityProperty(), 0));
+                    new KeyValue (this.getStage().opacityProperty(), 0));
             timeline.getKeyFrames().add(key);
             timeline.setOnFinished((ae) -> System.exit(0));
             timeline.play();
@@ -129,6 +156,8 @@ public class SecretaireUIController implements Initializable {
         // SetCurrentRoute :
         setCurrentRoute(home);
 
+        System.out.println(this.getCurrentUser());
+
         Image pp = new Image("com/gesschoolapp/resources/images/pp_placeholder.jpg");
         pp_placeholder.setFill(new ImagePattern(pp));
 //        class_preview.setImage(new Image("resources/images/plc.png"));
@@ -140,15 +169,15 @@ public class SecretaireUIController implements Initializable {
 
         scene.getRoot().setOnMousePressed(e ->{
             scene.getRoot().setOnMouseDragged(e1 ->{
-                main.getPrimaryStage().setX(e1.getScreenX() - e.getSceneX());
-                main.getPrimaryStage().setY(e1.getScreenY() - e.getSceneY());
+                this.getStage().setX(e1.getScreenX() - e.getSceneX());
+                this.getStage().setY(e1.getScreenY() - e.getSceneY());
             });
         });
     }
 
     @FXML
-    private void onMinimize(){
-        main.getPrimaryStage().setIconified(true);
+    public void onMinimize(MouseEvent event){
+        this.getStage().setIconified(true);
     };
 
 
@@ -187,9 +216,40 @@ public class SecretaireUIController implements Initializable {
         }
     }
 
-//    public void openSecretaireUI(){
-//        Node node = (Node) event.getSource();
-//
-//    }
+
+    public void openInterface(ActionEvent e,Secretaire sc) {
+
+        try {
+
+        Node node = (Node) e.getSource();
+        Stage stg = (Stage) node.getScene().getWindow();
+
+        stg.close();
+
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("SecretaireUI.fxml"));
+        Parent dash = loader.load();
+
+        stg.setUserData(sc);
+
+        Scene scene = new Scene(dash);
+
+
+        // Set the current stage and scene references into controller
+        this.setCurrentScene(scene);
+        this.setStage(stg);
+
+        // Makes the stage draggable
+        this.setDraggable();
+
+        stg.setScene(scene);
+        stg.show();
+
+    } catch(Exception err) {
+        err.printStackTrace();
+    }
+    }
+
+
 
 }
