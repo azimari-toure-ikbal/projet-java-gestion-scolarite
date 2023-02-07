@@ -98,4 +98,9 @@ public class Apprenant {
     public void setEtatPaiement(int etatPaiement) {
         this.etatPaiement = etatPaiement;
     }
+
+    @Override
+    public String toString() {
+        return "Apprenant{" + "idApprenant=" + idApprenant + ", matricule=" + matricule + ", prenom=" + prenom + ", nom=" + nom + ", dateNaissance=" + dateNaissance + ", sexe=" + sexe + ", nationalite=" + nationalite + ", etatPaiement=" + etatPaiement + '}';
+    }
 }
