@@ -11,3 +11,6 @@ JOURNAL DE BORD DE LA TEAM ROCKET
 		des diagrammes et de l'interface.
 03/02/23: Quatrième réunion, le produit final commence à prendre forme... tout du moins dans nos têtes. Nous avons assez avancé
 		sur les diagrammes et la logique pour pouvoir commencer à coder. It's time to code !
+06/02/23: Cinquième réunion, nous nous éloignons des diagrammes pour nous rapprocher des lignes de code. La base de donnée est 
+		prête à l'emploi et nous avons déjà implémenté la fonction de connection. Nous continuons à développer les 
+		interfaces, nous avons aussi placé notre projet sur github pour faciliter le travail collaboratif.
