@@ -252,6 +252,12 @@ public class SecretaireUIController implements Initializable {
         }
     }
 
+    @FXML
+    void handleDisconnect(ActionEvent e){
+        System.out.println("DECONNEXON !");
+
+    }
+
 
 
 
