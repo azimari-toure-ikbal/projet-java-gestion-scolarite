@@ -14,6 +14,7 @@ public class DBManager {
 
 //            Ouverture de la connexion
             connection = DriverManager.getConnection("jdbc:mysql://109.234.165.62/obyg3702_java", "obyg3702_test", "eS!N?Za7q~_Q");
+//            connection = DriverManager.getConnection("jdbc:mysql://localhost/scolarite_db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","");
             return connection;
         } catch (ClassNotFoundException e) {
             throw new Exception("Driver Class not found : '" + e.getMessage() + "' ");

@@ -52,18 +52,36 @@ public class SecretaireUIController implements Initializable {
 
     private Secretaire currentUser;
 
-    private String selectedClass;
+    private Classe selectedClass;
 
     private ClasseDAOImp classesData = new ClasseDAOImp();
 
+    @FXML
+    private ClassPreviewItemController classPreview1Controller;
+    @FXML
+    private ClassPreviewItemController classPreview2Controller;
 
-    public String getSelectedClass() {
+    public Classe getSelectedClass() {
         return selectedClass;
     }
 
-    public void setSelectedClass(String selectedClass) {
+    public void setSelectedClass(Classe selectedClass) {
+        List<Node> allClassCards = classesHomeLayout.getChildren();
+
+        for(Node classCard: allClassCards){
+            ((HBox) classCard).setStyle("-fx-background-color: #F2F5FA;-fx-background-radius: 7px;-fx-cursor: hand;");
+        }
         this.selectedClass = selectedClass;
+
+        System.out.println(selectedClass.getIntitule());
+
+        classPreview1Controller.setData(selectedClass);
+        classPreview2Controller.setData(selectedClass);
+
     }
+
+
+
 //    Route infos :
 
     @FXML

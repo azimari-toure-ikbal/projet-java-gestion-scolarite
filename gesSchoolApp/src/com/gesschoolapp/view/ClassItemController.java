@@ -38,6 +38,8 @@ public class ClassItemController implements Initializable {
     @FXML
     private HBox classCard;
 
+    private Classe thisClass;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -45,6 +47,7 @@ public class ClassItemController implements Initializable {
     }
 
     public void setData(Classe classe){
+        thisClass = classe;
         labelIntitule.setText(classe.getIntitule());
         labelFormation.setText(classe.getFormation());
         labelAnnee.setText(classe.getAnnee());
@@ -52,8 +55,7 @@ public class ClassItemController implements Initializable {
 
     @FXML
     void onClickClass(MouseEvent event) {
-
-        System.out.println("CLICKED");
-        superController.setSelectedClass("LPTI1");
+        superController.setSelectedClass(thisClass);
+        classCard.setStyle("-fx-background-color: #fff;-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);");
     }
 }
