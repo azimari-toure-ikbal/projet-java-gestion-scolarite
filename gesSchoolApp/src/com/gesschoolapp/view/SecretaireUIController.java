@@ -234,6 +234,8 @@ public class SecretaireUIController implements Initializable {
             profileIcon.setGlyphStyle("-fx-fill: #2C7ABA;");
         }
 
+        setCurrentRoute(this.getCurrentRoute());
+
     }
 
 
