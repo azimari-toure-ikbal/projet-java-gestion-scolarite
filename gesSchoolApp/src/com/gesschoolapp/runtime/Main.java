@@ -1,5 +1,6 @@
 package com.gesschoolapp.runtime;
 
+import com.gesschoolapp.models.users.Secretaire;
 import com.gesschoolapp.view.LoginUIController;
 import com.gesschoolapp.view.LoginUIController;
 import com.gesschoolapp.view.SecretaireUIController;
@@ -79,6 +80,31 @@ public class Main extends Application {
     }
 
 
+    public void displaySecretaireUI(Stage stg, Secretaire user) {
+        try{
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("../view/SecretaireUI.fxml"));
+            Parent dash = loader.load();
+
+            Scene scene = new Scene(dash);
+
+            SecretaireUIController controller = loader.getController();
+
+            // Set the current stage and scene references into controller
+            controller.setCurrentScene(scene);
+            controller.setStage(stg);
+            controller.setCurrentUser((Secretaire) user);
+
+            // Makes the stage draggable
+            controller.setDraggable();
+
+            stg.setScene(scene);
+            stg.show();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
 
 
 }
