@@ -14,3 +14,5 @@ JOURNAL DE BORD DE LA TEAM ROCKET
 06/02/23: Cinquième réunion, nous nous éloignons des diagrammes pour nous rapprocher des lignes de code. La base de donnée est 
 		prête à l'emploi et nous avons déjà implémenté la fonction de connection. Nous continuons à développer les 
 		interfaces, nous avons aussi placé notre projet sur github pour faciliter le travail collaboratif.
+07/02/23: Sixième réunion, la plus agréable depuis le début en toute objectivité. Quelques problèmes se sont présentés à nous mais 
+		tous assez vite réglés pour le moment. Rien de mieux que le sentiment de progression !
