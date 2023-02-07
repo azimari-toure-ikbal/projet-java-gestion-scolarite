@@ -287,6 +287,13 @@
     -fx-background-color: #ED1B23;
 }
 
+.disconnect_btn:focused{
+    -fx-border-width: 0, 0;
+    -fx-border-style: solid, segments(0, 0);
+    -fx-border-radius: 0, 0;
+    -fx-border-insets: 0;
+}
+
 .classic_btn {
     -fx-padding: 5 10 5 10;
     -fx-border-color: #1D52A0;
