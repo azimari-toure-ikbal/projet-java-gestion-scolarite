@@ -314,7 +314,6 @@ public class SecretaireUIController implements Initializable {
                 e.printStackTrace();
             }
         }
-
     }
 
 }
