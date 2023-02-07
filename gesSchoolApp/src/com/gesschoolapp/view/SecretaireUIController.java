@@ -74,6 +74,9 @@ public class SecretaireUIController implements Initializable {
     @FXML
     private FontAwesomeIcon classesIcon;
 
+    @FXML
+    private VBox classesHomeLayout;
+
 
 
     @FXML
@@ -169,6 +172,22 @@ public class SecretaireUIController implements Initializable {
         Image pp = new Image("com/gesschoolapp/resources/images/pp_placeholder.jpg");
         pp_placeholder.setFill(new ImagePattern(pp));
 //        class_preview.setImage(new Image("resources/images/plc.png"));
+
+        // Classes récentes :
+
+        for (int i=0;i<4;i++){
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("ClassItem.fxml"));
+            try{
+                HBox hBox = fxmlLoader.load();
+                ClassItemController cic = fxmlLoader.getController();
+                cic.setData("LPTI3","LTI","2019-2020");
+                classesHomeLayout.getChildren().add(hBox);
+
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        }
     }
 
 
