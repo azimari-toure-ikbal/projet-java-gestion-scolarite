@@ -1,5 +1,7 @@
 package com.gesschoolapp.view;
 
+import com.gesschoolapp.models.users.Secretaire;
+import com.gesschoolapp.models.users.Utilisateur;
 import com.gesschoolapp.runtime.Main;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.animation.KeyFrame;
@@ -7,21 +9,27 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -30,6 +38,8 @@ public class SecretaireUIController implements Initializable {
 
 
     private Route currentRoute;
+    private Secretaire currentUser;
+
 
 //    Route infos :
 
@@ -66,11 +76,12 @@ public class SecretaireUIController implements Initializable {
     private Button btnProfile;
 
     @FXML
-    private AnchorPane classPreview;
+    private Label welcomeText;
 
 
-    // Reference to the main application
-    private Main main;
+
+    // Reference to the application's stage
+    private Stage stage;
 
     // Reference to the current scene
     private Scene scene;
@@ -84,13 +95,32 @@ public class SecretaireUIController implements Initializable {
 //    private UserDaoImplDB users = new UserDaoImplDB();
 
     /**
-     * Is called by the main application to give a reference back to itself.
+     * Is called by the controller to give a reference of it's stage back to itself.
      *
-     * @param main mainApp
+     * @param stage stage
      */
-    public void setMainApp(Main main) {
-        this.main = main;
+    public void setStage(Stage stage) {
+        this.stage = stage;
+
     }
+
+    public Stage getStage() {
+//        stage = (Stage) btnAccueil.getScene().getWindow();
+        return stage;
+    }
+
+
+    public Secretaire getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(Secretaire currentUser) {
+
+        this.currentUser = currentUser;
+        welcomeText.setText(" Bonjour " + currentUser.getFullName() + ", bienvenue !");
+    }
+
+
 
     /**
      * Is called by the main application to give a reference of its current Scene Root to itself.
@@ -108,7 +138,7 @@ public class SecretaireUIController implements Initializable {
             Timeline timeline = new Timeline();
             KeyFrame key;
             key = new KeyFrame(Duration.millis(50),
-                    new KeyValue (main.getPrimaryStage().opacityProperty(), 0));
+                    new KeyValue (this.getStage().opacityProperty(), 0));
             timeline.getKeyFrames().add(key);
             timeline.setOnFinished((ae) -> System.exit(0));
             timeline.play();
@@ -139,15 +169,15 @@ public class SecretaireUIController implements Initializable {
 
         scene.getRoot().setOnMousePressed(e ->{
             scene.getRoot().setOnMouseDragged(e1 ->{
-                main.getPrimaryStage().setX(e1.getScreenX() - e.getSceneX());
-                main.getPrimaryStage().setY(e1.getScreenY() - e.getSceneY());
+                this.getStage().setX(e1.getScreenX() - e.getSceneX());
+                this.getStage().setY(e1.getScreenY() - e.getSceneY());
             });
         });
     }
 
     @FXML
-    private void onMinimize(){
-        main.getPrimaryStage().setIconified(true);
+    public void onMinimize(MouseEvent event){
+        this.getStage().setIconified(true);
     };
 
 
@@ -156,6 +186,7 @@ public class SecretaireUIController implements Initializable {
     }
 
     public void setCurrentRoute(Route currentRoute) {
+        System.out.println(currentRoute.getRouteView());
         currentRoute.getRouteView().toFront();
         menuStyleReset();
         currentRoute.getNavSelection().setStyle("-fx-background-color: #2C7ABA;-fx-text-fill: white;");
@@ -173,10 +204,44 @@ public class SecretaireUIController implements Initializable {
         btnProfile.setStyle("-fx-background-color: #F4F4F4; -fx-text-fill: #959da5;");
     }
 
+    @FXML
+    public void handleHoverOn(MouseEvent e){
+        Button menu_section = (Button) e.getSource();
+
+        menu_section.setStyle("-fx-background-color: #2C7ABA;-fx-text-fill: white;");
+
+        if(menu_section == btnAccueil){
+            accueilIcon.setGlyphStyle("-fx-fill: white;");
+        }else if(menu_section == btnClasses){
+            classesIcon.setGlyphStyle("-fx-fill: white;");
+        }else if(menu_section == btnProfile){
+            profileIcon.setGlyphStyle("-fx-fill: white;");
+        }
+
+    }
 
     @FXML
-    void handleNavigation(ActionEvent e) {
+    public void handleHoverOff(MouseEvent e){
+        Button menu_section = (Button) e.getSource();
+
+        menu_section.setStyle("-fx-background-color: #F4F4F4; -fx-text-fill: #959da5;");
+
+        if(menu_section == btnAccueil){
+            accueilIcon.setGlyphStyle("-fx-fill: #2C7ABA;");
+        }else if(menu_section == btnClasses){
+            classesIcon.setGlyphStyle("-fx-fill: #2C7ABA;");
+        }else if(menu_section == btnProfile){
+            profileIcon.setGlyphStyle("-fx-fill: #2C7ABA;");
+        }
+
+    }
+
+
+
+    @FXML
+    void handleNavigation(MouseEvent e) {
         if(e.getSource() == btnAccueil){
+            System.out.println(" HOVER ?");
             setCurrentRoute(home);
         }else if(e.getSource() == btnClasses){
             setCurrentRoute(classes);
@@ -184,5 +249,12 @@ public class SecretaireUIController implements Initializable {
             setCurrentRoute(profile);
         }
     }
+
+
+
+
+
+
+
 
 }

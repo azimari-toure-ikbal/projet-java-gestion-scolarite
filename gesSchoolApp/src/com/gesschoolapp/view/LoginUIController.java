@@ -1,6 +1,7 @@
 package com.gesschoolapp.view;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -18,13 +19,18 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import java.awt.Desktop;
 import java.io.IOException;
@@ -33,8 +39,6 @@ import java.net.URISyntaxException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
-
-import javax.swing.*;
 
 public class LoginUIController implements Initializable  {
 
@@ -62,7 +66,6 @@ public class LoginUIController implements Initializable  {
 
     private UserDAOImp userDAOImp = new UserDAOImp();
 
-//    private UserDaoImplDB users = new UserDaoImplDB();
 
     /**
      * Is called by the main com.gesschoolapp to give a reference back to itself.
@@ -93,33 +96,66 @@ public class LoginUIController implements Initializable  {
             timeline.getKeyFrames().add(key);
             timeline.setOnFinished((ae) -> System.exit(0));
             timeline.play();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+        } catch (Exception e) {e.getMessage();}
+
     }
 
 
+
     @FXML
-    private void handleLogin() {
-        String email = txtUsername.getText();
+    void handleLogin(ActionEvent event) {
+
+        String login = txtUsername.getText();
         String password = txtPassword.getText();
-        if (email.isEmpty() || password.isEmpty()) {
+        if (login.isEmpty() || password.isEmpty()) {
             messageInfo.setText("Veuillez remplir tous les champs");
         } else {
             try {
-                Utilisateur user = userDAOImp.authenticate(email, password);
+                Utilisateur user = userDAOImp.authenticate(login, password);
                 if (user != null) {
-                    if (user instanceof Secretaire) {
-                        main.displaySecretaireLayout();
+                    if (user.getPassword().equals(password)) {
+                        if (user instanceof Secretaire) {
+
+                            try {
+
+                                Node node = (Node) event.getSource();
+                                Stage stg = (Stage) node.getScene().getWindow();
+
+                                stg.close();
+
+                                FXMLLoader loader = new FXMLLoader();
+                                loader.setLocation(getClass().getResource("SecretaireUI.fxml"));
+                                Parent dash = loader.load();
+
+                                stg.setUserData(user);
+
+                                Scene scene = new Scene(dash);
+
+                                SecretaireUIController controller = loader.getController();
+
+                                // Set the current stage and scene references into controller
+                                controller.setCurrentScene(scene);
+                                controller.setStage(stg);
+                                controller.setCurrentUser((Secretaire) user);
+
+                                // Makes the stage draggable
+                                controller.setDraggable();
+
+                                stg.setScene(scene);
+                                stg.show();
+
+                            } catch(Exception err) {
+                                err.printStackTrace();
+                            }
+                        }
+                    } else {
+                        messageInfo.setText("Mot de passe incorrect");
                     }
                 } else {
-                    messageInfo.setText("email ou mot de passe incorrect");
+                    messageInfo.setText("Login et/ou mot de passe incorrect");
                 }
-            } catch (DAOException e) {
-                // Afficher un message d'erreur
-                JDialog dialog = new JDialog();
-                dialog.setAlwaysOnTop(true);
-                JOptionPane.showMessageDialog(dialog, "Une erreur est survenue");
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
 //        if (!Objects.equals(login, "") && !Objects.equals(password, "")){
@@ -165,11 +201,18 @@ public class LoginUIController implements Initializable  {
 
     @FXML
     private void onMinimize(){
-        main.getPrimaryStage().setIconified(true);
+        Timeline timeline = new Timeline();
+        KeyFrame key;
+        key = new KeyFrame(Duration.millis(50),
+                new KeyValue (main.getPrimaryStage().opacityProperty(), 0));
+        timeline.getKeyFrames().add(key);
+        timeline.setOnFinished((ae) -> main.getPrimaryStage().setIconified(true));
+        timeline.play();
+//        NOTE : Tu devrais avoir une animation spécifique à la réduction de page !
+
     };
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
     }
 }
