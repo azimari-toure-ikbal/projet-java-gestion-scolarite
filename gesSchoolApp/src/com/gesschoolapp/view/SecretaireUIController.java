@@ -45,9 +45,18 @@ public class SecretaireUIController implements Initializable {
     private Main mainApp;
 
     private Route currentRoute;
+
     private Secretaire currentUser;
 
+    private String selectedClass;
 
+    public String getSelectedClass() {
+        return selectedClass;
+    }
+
+    public void setSelectedClass(String selectedClass) {
+        this.selectedClass = selectedClass;
+    }
 //    Route infos :
 
     @FXML
@@ -181,6 +190,7 @@ public class SecretaireUIController implements Initializable {
             try{
                 HBox hBox = fxmlLoader.load();
                 ClassItemController cic = fxmlLoader.getController();
+                cic.setSuperController(this);
                 cic.setData("LPTI3","LTI","2019-2020");
                 classesHomeLayout.getChildren().add(hBox);
 
@@ -188,6 +198,10 @@ public class SecretaireUIController implements Initializable {
                 e.printStackTrace();
             }
         }
+
+
+//        classesHomeLayout.getChildren().addC
+
     }
 
 

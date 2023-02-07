@@ -12,6 +12,16 @@ import java.util.ResourceBundle;
 
 public class ClassItemController implements Initializable {
 
+    private SecretaireUIController superController;
+
+    public SecretaireUIController getSuperController() {
+        return superController;
+    }
+
+    public void setSuperController(SecretaireUIController superController) {
+        this.superController = superController;
+    }
+
     @FXML
     private ImageView classImg;
 
@@ -41,6 +51,8 @@ public class ClassItemController implements Initializable {
 
     @FXML
     void onClickClass(MouseEvent event) {
+
         System.out.println("CLICKED");
+        superController.setSelectedClass("LPTI1");
     }
 }
