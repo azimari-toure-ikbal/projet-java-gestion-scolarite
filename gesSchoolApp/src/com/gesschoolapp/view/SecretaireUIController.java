@@ -220,15 +220,19 @@ public class SecretaireUIController implements Initializable {
                 ClassItemController cic = fxmlLoader.getController();
                 cic.setSuperController(this);
                 cic.setData(classe);
+
+                if(classe == classes.get(0)){
+                    hBox.setStyle("-fx-background-color: #fff;-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);");
+                    this.setSelectedClass(classe);
+                }
                 classesHomeLayout.getChildren().add(hBox);
+
             }
 
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
-
-//        classesHomeLayout.getChildren().addC
 
     }
 
