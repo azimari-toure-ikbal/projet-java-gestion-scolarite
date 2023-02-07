@@ -1,5 +1,8 @@
 package com.gesschoolapp.view;
 
+import com.gesschoolapp.Exceptions.DAOException;
+import com.gesschoolapp.db.DAOClassesImpl.ClasseDAOImp;
+import com.gesschoolapp.models.classroom.Classe;
 import com.gesschoolapp.models.users.Secretaire;
 import com.gesschoolapp.models.users.Utilisateur;
 import com.gesschoolapp.runtime.Main;
@@ -32,6 +35,7 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -49,6 +53,9 @@ public class SecretaireUIController implements Initializable {
     private Secretaire currentUser;
 
     private String selectedClass;
+
+    private ClasseDAOImp classesData = new ClasseDAOImp();
+
 
     public String getSelectedClass() {
         return selectedClass;
@@ -184,19 +191,22 @@ public class SecretaireUIController implements Initializable {
 
         // Classes récentes :
 
-        for (int i=0;i<4;i++){
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("ClassItem.fxml"));
-            try{
+        try {
+            List<Classe> classes = classesData.getList();
+
+            for(Classe classe: classes){
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("ClassItem.fxml"));
+
                 HBox hBox = fxmlLoader.load();
                 ClassItemController cic = fxmlLoader.getController();
                 cic.setSuperController(this);
-                cic.setData("LPTI3","LTI","2019-2020");
+                cic.setData(classe);
                 classesHomeLayout.getChildren().add(hBox);
-
-            }catch (IOException e){
-                e.printStackTrace();
             }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
 
 

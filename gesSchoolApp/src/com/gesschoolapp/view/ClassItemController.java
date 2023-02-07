@@ -1,5 +1,6 @@
 package com.gesschoolapp.view;
 
+import com.gesschoolapp.models.classroom.Classe;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -43,10 +44,10 @@ public class ClassItemController implements Initializable {
 
     }
 
-    public void setData(String i, String f, String a){
-        labelIntitule.setText(i);
-        labelFormation.setText(f);
-        labelAnnee.setText(a);
+    public void setData(Classe classe){
+        labelIntitule.setText(classe.getIntitule());
+        labelFormation.setText(classe.getFormation());
+        labelAnnee.setText(classe.getAnnee());
     }
 
     @FXML
