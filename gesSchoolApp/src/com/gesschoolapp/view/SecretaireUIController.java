@@ -176,8 +176,6 @@ public class SecretaireUIController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-
         home = new Route("Accueil",homeView,btnAccueil,accueilIcon);
         classes = new Route("Classes",classesView,btnClasses,classesIcon);
         profile = new Route("Mon profil",profileView,btnProfile,profileIcon);
@@ -206,7 +204,7 @@ public class SecretaireUIController implements Initializable {
             }
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.out.println("e.getMessage()");
         }
 
 

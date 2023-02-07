@@ -8,6 +8,7 @@ import com.gesschoolapp.models.classroom.Classe;
 import com.gesschoolapp.models.student.Apprenant;
 import com.gesschoolapp.models.matieres.Module;
 
+import javax.net.ssl.SSLException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,22 +20,22 @@ import java.util.List;
 public class ClasseDAOImp implements SearchDAO<Classe>, ClasseDAO {
     @Override
     public void create(Classe obj) throws DAOException {
-
+        //Not used
     }
 
     @Override
     public void update(Classe obj) throws DAOException {
-
+        //Not used
     }
 
     @Override
     public void delete(int id) throws DAOException {
-
+        //Not used
     }
 
     @Override
     public Classe read(int id) throws DAOException {
-        return null;
+        return this.getList().get(id-1);
     }
 
     @Override
@@ -63,7 +64,27 @@ public class ClasseDAOImp implements SearchDAO<Classe>, ClasseDAO {
 
     @Override
     public List<Classe> search(String stringToSearch) throws DAOException {
-        return null;
+        //get all classes from table classes and return them
+        List<Classe> classes = new ArrayList<>();
+        try (Connection connection = DBManager.getConnection()) {
+            String query = "SELECT * FROM classes WHERE intitule LIKE ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, "%" + stringToSearch + "%");
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("idClasse");
+                String intitule = rs.getString("intitule");
+                int reference = rs.getInt("reference");
+                String formation = rs.getString("formation");
+                String annee = rs.getString("annee");
+
+                Classe classe = new Classe(id, intitule, reference, annee, formation, this.getApprenantsOfClass(id), this.getModulesOfClass(id));
+                classes.add(classe);
+            }
+        } catch (Exception e) {
+            throw new DAOException(e.getMessage());
+        }
+        return classes;
     }
 
     @Override

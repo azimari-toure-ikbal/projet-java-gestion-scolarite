@@ -116,17 +116,13 @@ public class LoginUIController implements Initializable  {
                     if (user.getPassword().equals(password)) {
                         if (user instanceof Secretaire) {
 
-                            try {
 
-                                Node node = (Node) event.getSource();
-                                Stage stg = (Stage) node.getScene().getWindow();
-                                stg.close();
+                            Node node = (Node) event.getSource();
+                            Stage stg = (Stage) node.getScene().getWindow();
+                            stg.close();
 
-                                main.displaySecretaireUI(stg, (Secretaire) user, main);
+                            main.displaySecretaireUI(stg, (Secretaire) user, main);
 
-                            } catch(Exception err) {
-                                err.printStackTrace();
-                            }
                         }
                     } else {
                         messageInfo.setText("Mot de passe incorrect");
@@ -135,7 +131,7 @@ public class LoginUIController implements Initializable  {
                     messageInfo.setText("Login et/ou mot de passe incorrect");
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                System.out.println("e.getMessage()");
             }
         }
 //        if (!Objects.equals(login, "") && !Objects.equals(password, "")){
