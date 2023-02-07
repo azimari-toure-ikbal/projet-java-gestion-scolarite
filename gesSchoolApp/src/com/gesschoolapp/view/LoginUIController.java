@@ -122,7 +122,7 @@ public class LoginUIController implements Initializable  {
                                 Stage stg = (Stage) node.getScene().getWindow();
                                 stg.close();
 
-                                main.displaySecretaireUI(stg, (Secretaire) user);
+                                main.displaySecretaireUI(stg, (Secretaire) user, main);
 
                             } catch(Exception err) {
                                 err.printStackTrace();
