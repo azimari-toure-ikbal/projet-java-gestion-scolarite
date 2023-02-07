@@ -37,6 +37,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 public class SecretaireUIController implements Initializable {
@@ -210,19 +211,24 @@ public class SecretaireUIController implements Initializable {
         try {
             List<Classe> classes = classesData.getList();
 
-            for(Classe classe: classes){
+            Random rand = new Random();
+            int itr = rand.nextInt(classes.size() - 5);
+
+            for(int i=itr;i<=itr+4;i++){
+
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("ClassItem.fxml"));
 
                 HBox hBox = fxmlLoader.load();
                 ClassItemController cic = fxmlLoader.getController();
                 cic.setSuperController(this);
-                cic.setData(classe);
+                cic.setData(classes.get(i));
 
-                if(classe == classes.get(0)){
+                if(i==itr){
                     hBox.setStyle("-fx-background-color: #fff;-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);");
-                    this.setSelectedClass(classe);
+                    this.setSelectedClass(classes.get(i));
                 }
+
                 classesHomeLayout.getChildren().add(hBox);
 
             }
