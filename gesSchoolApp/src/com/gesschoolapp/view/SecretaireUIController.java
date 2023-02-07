@@ -15,7 +15,8 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
+
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -31,6 +32,7 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class SecretaireUIController implements Initializable {
@@ -261,11 +263,25 @@ public class SecretaireUIController implements Initializable {
     @FXML
     void handleDisconnect(ActionEvent event){
 
-        Node node = (Node) event.getSource();
-        Stage stg = (Stage) node.getScene().getWindow();
-        stg.close();
+        //ask for confirmation
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Déconnexion");
+        alert.setHeaderText("Vous êtes sur le point de vous déconnecter");
+        alert.setContentText("Voulez-vous continuer ?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            // ... user chose OK
+            try {
+                Node node = (Node) event.getSource();
+                Stage stg = (Stage) node.getScene().getWindow();
+                stg.close();
 
-        mainApp.initLayout();
+                mainApp.initLayout();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
 }
