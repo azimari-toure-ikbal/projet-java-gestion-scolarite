@@ -38,7 +38,7 @@ public class Main extends Application {
      */
     /**
      * Initializes the root layout and tries to load the last opened
-     * person fi    le.
+     * person file.
      */
     public void initLayout() {
         try {

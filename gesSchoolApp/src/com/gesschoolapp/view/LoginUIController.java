@@ -22,6 +22,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -114,8 +115,38 @@ public class LoginUIController implements Initializable  {
                 if (user != null) {
                     if (user.getPassword().equals(password)) {
                         if (user instanceof Secretaire) {
-                            SecretaireUIController secretaireUI = new SecretaireUIController();
-                            secretaireUI.openInterface(event,(Secretaire) user);
+
+                            try {
+
+                                Node node = (Node) event.getSource();
+                                Stage stg = (Stage) node.getScene().getWindow();
+
+                                stg.close();
+
+                                FXMLLoader loader = new FXMLLoader();
+                                loader.setLocation(getClass().getResource("SecretaireUI.fxml"));
+                                Parent dash = loader.load();
+
+                                stg.setUserData(user);
+
+                                Scene scene = new Scene(dash);
+
+                                SecretaireUIController controller = loader.getController();
+
+                                // Set the current stage and scene references into controller
+                                controller.setCurrentScene(scene);
+                                controller.setStage(stg);
+                                controller.setCurrentUser((Secretaire) user);
+
+                                // Makes the stage draggable
+                                controller.setDraggable();
+
+                                stg.setScene(scene);
+                                stg.show();
+
+                            } catch(Exception err) {
+                                err.printStackTrace();
+                            }
                         }
                     } else {
                         messageInfo.setText("Mot de passe incorrect");

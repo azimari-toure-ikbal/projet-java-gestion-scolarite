@@ -76,7 +76,7 @@ public class SecretaireUIController implements Initializable {
     private Button btnProfile;
 
     @FXML
-    private AnchorPane classPreview;
+    private Label welcomeText;
 
 
 
@@ -105,7 +105,7 @@ public class SecretaireUIController implements Initializable {
     }
 
     public Stage getStage() {
-        stage = (Stage) btnAccueil.getScene().getWindow();
+//        stage = (Stage) btnAccueil.getScene().getWindow();
         return stage;
     }
 
@@ -115,7 +115,9 @@ public class SecretaireUIController implements Initializable {
     }
 
     public void setCurrentUser(Secretaire currentUser) {
+
         this.currentUser = currentUser;
+        welcomeText.setText(" Bonjour " + currentUser.getFullName() + ", bienvenue !");
     }
 
 
@@ -155,8 +157,6 @@ public class SecretaireUIController implements Initializable {
 
         // SetCurrentRoute :
         setCurrentRoute(home);
-
-        System.out.println(this.getCurrentUser());
 
         Image pp = new Image("com/gesschoolapp/resources/images/pp_placeholder.jpg");
         pp_placeholder.setFill(new ImagePattern(pp));
@@ -204,10 +204,44 @@ public class SecretaireUIController implements Initializable {
         btnProfile.setStyle("-fx-background-color: #F4F4F4; -fx-text-fill: #959da5;");
     }
 
+    @FXML
+    public void handleHoverOn(MouseEvent e){
+        Button menu_section = (Button) e.getSource();
+
+        menu_section.setStyle("-fx-background-color: #2C7ABA;-fx-text-fill: white;");
+
+        if(menu_section == btnAccueil){
+            accueilIcon.setGlyphStyle("-fx-fill: white;");
+        }else if(menu_section == btnClasses){
+            classesIcon.setGlyphStyle("-fx-fill: white;");
+        }else if(menu_section == btnProfile){
+            profileIcon.setGlyphStyle("-fx-fill: white;");
+        }
+
+    }
 
     @FXML
-    void handleNavigation(ActionEvent e) {
+    public void handleHoverOff(MouseEvent e){
+        Button menu_section = (Button) e.getSource();
+
+        menu_section.setStyle("-fx-background-color: #F4F4F4; -fx-text-fill: #959da5;");
+
+        if(menu_section == btnAccueil){
+            accueilIcon.setGlyphStyle("-fx-fill: #2C7ABA;");
+        }else if(menu_section == btnClasses){
+            classesIcon.setGlyphStyle("-fx-fill: #2C7ABA;");
+        }else if(menu_section == btnProfile){
+            profileIcon.setGlyphStyle("-fx-fill: #2C7ABA;");
+        }
+
+    }
+
+
+
+    @FXML
+    void handleNavigation(MouseEvent e) {
         if(e.getSource() == btnAccueil){
+            System.out.println(" HOVER ?");
             setCurrentRoute(home);
         }else if(e.getSource() == btnClasses){
             setCurrentRoute(classes);
@@ -217,38 +251,9 @@ public class SecretaireUIController implements Initializable {
     }
 
 
-    public void openInterface(ActionEvent e,Secretaire sc) {
-
-        try {
-
-        Node node = (Node) e.getSource();
-        Stage stg = (Stage) node.getScene().getWindow();
-
-        stg.close();
-
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("SecretaireUI.fxml"));
-        Parent dash = loader.load();
-
-        stg.setUserData(sc);
-
-        Scene scene = new Scene(dash);
 
 
-        // Set the current stage and scene references into controller
-        this.setCurrentScene(scene);
-        this.setStage(stg);
 
-        // Makes the stage draggable
-        this.setDraggable();
-
-        stg.setScene(scene);
-        stg.show();
-
-    } catch(Exception err) {
-        err.printStackTrace();
-    }
-    }
 
 
 
