@@ -36,6 +36,11 @@ import java.util.ResourceBundle;
 public class SecretaireUIController implements Initializable {
 
 
+    public void setMainApp(Main mainApp) {
+        this.mainApp = mainApp;
+    }
+
+    private Main mainApp;
 
     private Route currentRoute;
     private Secretaire currentUser;
@@ -66,6 +71,7 @@ public class SecretaireUIController implements Initializable {
 
     @FXML
     private FontAwesomeIcon classesIcon;
+
 
 
     @FXML
@@ -253,16 +259,13 @@ public class SecretaireUIController implements Initializable {
     }
 
     @FXML
-    void handleDisconnect(ActionEvent e){
-        System.out.println("DECONNEXON !");
+    void handleDisconnect(ActionEvent event){
 
+        Node node = (Node) event.getSource();
+        Stage stg = (Stage) node.getScene().getWindow();
+        stg.close();
+
+        mainApp.initLayout();
     }
-
-
-
-
-
-
-
 
 }

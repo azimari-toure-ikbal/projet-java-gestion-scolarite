@@ -80,7 +80,7 @@ public class Main extends Application {
     }
 
 
-    public void displaySecretaireUI(Stage stg, Secretaire user) {
+    public void displaySecretaireUI(Stage stg, Secretaire user, Main main) {
         try{
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("../view/SecretaireUI.fxml"));
@@ -94,7 +94,7 @@ public class Main extends Application {
             controller.setCurrentScene(scene);
             controller.setStage(stg);
             controller.setCurrentUser((Secretaire) user);
-
+            controller.setMainApp(main);
             // Makes the stage draggable
             controller.setDraggable();
 
