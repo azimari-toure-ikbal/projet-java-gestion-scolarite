@@ -214,6 +214,5 @@ public class LoginUIController implements Initializable  {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
     }
 }

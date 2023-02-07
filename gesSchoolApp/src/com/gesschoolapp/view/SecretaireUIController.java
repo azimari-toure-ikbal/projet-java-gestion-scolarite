@@ -78,6 +78,9 @@ public class SecretaireUIController implements Initializable {
     @FXML
     private Label welcomeText;
 
+    @FXML
+    private Button btnDisconnect;
+
 
 
     // Reference to the application's stage
@@ -234,6 +237,8 @@ public class SecretaireUIController implements Initializable {
             profileIcon.setGlyphStyle("-fx-fill: #2C7ABA;");
         }
 
+        setCurrentRoute(this.getCurrentRoute());
+
     }
 
 
@@ -249,6 +254,12 @@ public class SecretaireUIController implements Initializable {
             setCurrentRoute(profile);
         }
     }
+
+    @FXML
+    void handleDisconnect(ActionEvent e) {
+        System.out.println("DECONNEXION !");
+    }
+
 
 
 
