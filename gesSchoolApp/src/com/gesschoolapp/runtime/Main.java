@@ -28,6 +28,7 @@ public class Main extends Application {
             primaryStage.initStyle(StageStyle.UNDECORATED);
 
             initLayout();
+
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -60,6 +61,7 @@ public class Main extends Application {
 
             // Makes the stage draggable
             controller.setDraggable();
+            controller.setFocus();
 
             primaryStage.show();
         } catch(Exception e) {

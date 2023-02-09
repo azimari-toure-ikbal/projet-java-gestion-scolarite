@@ -1,20 +1,34 @@
 package com.gesschoolapp.view;
 
+import com.gesschoolapp.models.classroom.Classe;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 
 public class Route {
+
+    private String routeMainName;
+
+    public String getRouteMainName() {
+        return routeMainName;
+    }
+
+    public void setRouteMainName(String routeMainName) {
+        this.routeMainName = routeMainName;
+    }
+
     private String routeLink;
     private BorderPane routeView;
     private Button navSelection;
 
     private FontAwesomeIcon routeIcon;
 
+    public Route(Classe classeSelectionee){
+        setRouteLink("/"+classeSelectionee.getIntitule());
+    }
 
-
-    public Route(String routeLink, BorderPane routeView, Button navSelection, FontAwesomeIcon routeIcon) {
-        setRouteLink(routeLink);
+    public Route(String routeMainName, BorderPane routeView, Button navSelection, FontAwesomeIcon routeIcon) {
+        setRouteMainName(routeMainName);
         setRouteView(routeView);
         setNavSelection(navSelection);
         setRouteIcon(routeIcon);

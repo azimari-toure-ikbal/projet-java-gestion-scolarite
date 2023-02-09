@@ -50,6 +50,10 @@ public class LoginUIController implements Initializable  {
     @FXML
     private TextField txtPassword;
 
+    public void setFocus(){
+        this.txtPassword.requestFocus();
+    }
+
     @FXML
     private Button btnLogin;
 
@@ -83,6 +87,7 @@ public class LoginUIController implements Initializable  {
      */
     public void setCurrentScene(Scene sc) {
         this.scene = sc;
+
     }
 
 
@@ -106,7 +111,9 @@ public class LoginUIController implements Initializable  {
     void handleLogin(ActionEvent event) {
 
         String login = txtUsername.getText();
+//        String login = "fatou.syla@mail.cum";
         String password = txtPassword.getText();
+//        String password = "fatou";
         if (login.isEmpty() || password.isEmpty()) {
             messageInfo.setText("Veuillez remplir tous les champs");
         } else {
@@ -190,5 +197,6 @@ public class LoginUIController implements Initializable  {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
     }
 }
