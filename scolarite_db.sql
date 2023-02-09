@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 06, 2023 at 09:09 PM
+-- Generation Time: Feb 08, 2023 at 09:21 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -33,13 +33,23 @@ CREATE TABLE IF NOT EXISTS `apprenants` (
   `prenom` varchar(64) NOT NULL,
   `nom` varchar(64) NOT NULL,
   `email` varchar(64) NOT NULL,
-  `dtNaiss` datetime NOT NULL,
+  `dtNaiss` date NOT NULL,
   `nationalite` varchar(40) NOT NULL,
-  `echeancier` varchar(40) NOT NULL,
-  `sexe` int(11) NOT NULL,
+  `echeancier` int(40) NOT NULL,
+  `sexe` varchar(2) NOT NULL,
   `matricule` int(11) NOT NULL,
   PRIMARY KEY (`idApprenant`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `apprenants`
+--
+
+INSERT INTO `apprenants` (`idApprenant`, `prenom`, `nom`, `email`, `dtNaiss`, `nationalite`, `echeancier`, `sexe`, `matricule`) VALUES
+(1, 'Moussa', 'DIOP', 'moussa.diop@mail.com', '2010-02-15', 'sénégalais', 0, 'M', 100),
+(2, 'Max', 'BIRD', 'max.bird@mail.com', '2010-06-13', 'français', 0, 'M', 101),
+(3, 'Marie', 'PLASSARD', 'marie.plassard@mail.com', '2010-01-16', 'belge', 0, 'F', 102),
+(4, 'Fabienne', 'DUPONT', 'fabienne.dupont@mail.com', '2010-08-11', 'française', 0, 'F', 103);
 
 -- --------------------------------------------------------
 
@@ -62,11 +72,23 @@ CREATE TABLE IF NOT EXISTS `archives` (
 
 DROP TABLE IF EXISTS `classeapprenant`;
 CREATE TABLE IF NOT EXISTS `classeapprenant` (
-  `idClasseAppenant` int(11) NOT NULL,
+  `idClasseAppenant` int(11) NOT NULL AUTO_INCREMENT,
   `idClasse` int(11) NOT NULL,
   `idApprenant` int(11) NOT NULL,
-  KEY `idApprenant` (`idApprenant`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`idClasseAppenant`),
+  KEY `idApprenant` (`idApprenant`),
+  KEY `classeapprenant_ibfk_2` (`idClasse`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `classeapprenant`
+--
+
+INSERT INTO `classeapprenant` (`idClasseAppenant`, `idClasse`, `idApprenant`) VALUES
+(1, 12, 4),
+(2, 12, 2),
+(3, 12, 1),
+(4, 12, 3);
 
 -- --------------------------------------------------------
 
@@ -89,7 +111,7 @@ CREATE TABLE IF NOT EXISTS `classes` (
 --
 
 INSERT INTO `classes` (`idClasse`, `intitule`, `reference`, `annee`, `formation`) VALUES
-(1, 'creche', 1, '2023', 'Maternelle'),
+(1, 'Crèche', 1, '2023', 'Maternelle'),
 (2, 'Très Petite Section', 2, '2023', 'Maternelle'),
 (3, 'Moyenne Section', 3, '2023', 'Maternelle'),
 (4, 'Grande Section', 3, '2023', 'Maternelle'),
@@ -136,7 +158,18 @@ CREATE TABLE IF NOT EXISTS `modules` (
   `idClasse` int(11) NOT NULL,
   PRIMARY KEY (`idModule`),
   KEY `idClasse` (`idClasse`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `modules`
+--
+
+INSERT INTO `modules` (`idModule`, `intitule`, `idClasse`) VALUES
+(11, 'Maths', 12),
+(12, 'Français', 12),
+(13, 'Histo/Geo', 12),
+(14, 'Physique-Chimie', 12),
+(15, 'Science de la vie et de la terre', 12);
 
 -- --------------------------------------------------------
 
@@ -162,15 +195,24 @@ CREATE TABLE IF NOT EXISTS `notes` (
 
 DROP TABLE IF EXISTS `paiements`;
 CREATE TABLE IF NOT EXISTS `paiements` (
-  `idPaiement` int(11) NOT NULL,
+  `idPaiement` int(11) NOT NULL AUTO_INCREMENT,
+  `numeroRecu` varchar(40) NOT NULL,
   `montant` int(11) NOT NULL,
   `rubrique` varchar(255) NOT NULL,
   `date` datetime NOT NULL,
   `apprenant` varchar(120) NOT NULL,
   `caissier` varchar(40) NOT NULL,
   `classe` varchar(40) NOT NULL,
-  `observation` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `observation` text NOT NULL,
+  PRIMARY KEY (`idPaiement`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `paiements`
+--
+
+INSERT INTO `paiements` (`idPaiement`, `numeroRecu`, `montant`, `rubrique`, `date`, `apprenant`, `caissier`, `classe`, `observation`) VALUES
+(1, '696969', 690000, 'ZGBRaaaa', '2023-02-07 20:05:15', 'Jordi El Nino', 'Violet Myers', 'RedTube', 'That was hard but juicy');
 
 -- --------------------------------------------------------
 
@@ -245,7 +287,8 @@ INSERT INTO `utilisateurs` (`idUtilisateur`, `password`, `nom`, `prenom`, `email
 -- Constraints for table `classeapprenant`
 --
 ALTER TABLE `classeapprenant`
-  ADD CONSTRAINT `classeapprenant_ibfk_1` FOREIGN KEY (`idApprenant`) REFERENCES `apprenants` (`idApprenant`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `classeapprenant_ibfk_1` FOREIGN KEY (`idApprenant`) REFERENCES `apprenants` (`idApprenant`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `classeapprenant_ibfk_2` FOREIGN KEY (`idClasse`) REFERENCES `classes` (`idClasse`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `modules`
