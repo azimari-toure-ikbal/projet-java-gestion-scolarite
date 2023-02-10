@@ -103,7 +103,7 @@ public class Main extends Application {
             stg.setScene(scene);
             stg.show();
         }catch (Exception e){
-            System.out.println("NTM");
+            e.printStackTrace();
         }
 
     }

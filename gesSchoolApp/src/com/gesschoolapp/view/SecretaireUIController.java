@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -50,7 +51,10 @@ public class SecretaireUIController implements Initializable {
 
     private Route currentRoute;
 
+    private String previousRouteLink;
+
     private Secretaire currentUser;
+
 
     private Classe selectedClass;
 
@@ -75,7 +79,8 @@ public class SecretaireUIController implements Initializable {
     @FXML
     private ClassPreviewItemController classPreview2Controller;
 
-    //    Route infos :
+
+    // Views :
 
     @FXML
     private BorderPane homeView;
@@ -84,7 +89,18 @@ public class SecretaireUIController implements Initializable {
     private BorderPane classesView;
 
     @FXML
+    private AnchorPane classStudentsView;
+
+    @FXML
+    private AnchorPane classNotesView;
+
+    @FXML
+    private AnchorPane classMainView;
+
+    @FXML
     private BorderPane profileView;
+
+    //    Route infos :
 
     @FXML
     private Button viewAllClasses;
@@ -117,6 +133,9 @@ public class SecretaireUIController implements Initializable {
     private VBox classesHomeLayout;
 
     @FXML
+    private ImageView btnPrecedent;
+
+    @FXML
     private VBox classesClassesLayout;
 
     @FXML
@@ -145,6 +164,10 @@ public class SecretaireUIController implements Initializable {
         home = new Route("Accueil", homeView, btnAccueil, accueilIcon);
         classes = new Route("Classes", classesView, btnClasses, classesIcon);
         profile = new Route("Mon profil", profileView, btnProfile, profileIcon);
+
+        // On donne une référence du super controlleur aux controlleurs filles :
+        classPreview1Controller.setSuperController(this);
+        classPreview2Controller.setSuperController(this);
 
         // SetCurrentRoute :
         setCurrentRoute(home);
@@ -183,6 +206,16 @@ public class SecretaireUIController implements Initializable {
     public Stage getStage() {
         return stage;
     }
+
+
+    public String getPreviousRouteLink() {
+        return previousRouteLink;
+    }
+
+    public void setPreviousRouteLink(String previousRouteLink) {
+        this.previousRouteLink = previousRouteLink;
+    }
+
 
     public Secretaire getCurrentUser() {
         return currentUser;
@@ -226,9 +259,11 @@ public class SecretaireUIController implements Initializable {
 
     }
 
-    private void setCurrentRouteLink(String link) {
+    void setCurrentRouteLink(String link) {
+        setPreviousRouteLink(getCurrentRoute().getRouteLink());
         getCurrentRoute().setRouteLink(link);
         routeLink.setText(getCurrentRoute().getRouteLink());
+        setSubView();
         System.out.println("############### ACTUAL ROUTE : " + getCurrentRoute().getRouteLink() + " - " + getCurrentRoute().getRouteMainName());
     }
 
@@ -287,7 +322,25 @@ public class SecretaireUIController implements Initializable {
             setCurrentRoute(classes);
         } else if (e.getSource() == btnProfile || e.getSource() == pp_placeholder || e.getSource() == pp_placeholder1) {
             setCurrentRoute(profile);
+        } else if (e.getSource() == btnPrecedent){
+
+            setCurrentRouteLink(extractPreviousRouteLink());
         }
+    }
+
+    private String extractPreviousRouteLink() {
+        StringBuilder sb = new StringBuilder();
+        String currentRouteLink = getCurrentRoute().getRouteLink();
+        String[] arr = currentRouteLink.split("/");
+
+        for(int i=0;i<arr.length-1;i++){
+            if(i==0){
+                sb.append(arr[i]);
+            }else{
+                sb.append("/"+arr[i]);
+            }
+        }
+        return sb.toString();
     }
 
 
@@ -324,6 +377,35 @@ public class SecretaireUIController implements Initializable {
         currentRoute.getRouteIcon().setGlyphStyle("-fx-fill: white;");
         currentRoute.getNavSelection().setBackground(new Background(new BackgroundFill(Color.rgb(113, 86, 221), CornerRadii.EMPTY, Insets.EMPTY)));
         this.currentRoute = currentRoute;
+
+    }
+
+    private void setSubView() {
+        System.out.println(getCurrentRoute().getRouteLink());
+        if(getCurrentRoute().getRouteLink().equals("/"+getSelectedClass().getIntitule()+"/eleves")){
+            classStudentsView.toFront();
+            btnPrecedentIsActive(true);
+        }else if(getCurrentRoute().getRouteLink().equals("/"+getSelectedClass().getIntitule()+"/notes")){
+            classNotesView.toFront();
+            btnPrecedentIsActive(true);
+        }else if(getCurrentRoute().getRouteLink().equals("/"+getSelectedClass().getIntitule())){
+            System.out.println("AFFICHE LE MAIN FDP");
+            classMainView.toFront();
+            btnPrecedentIsActive(false);
+        }
+
+    }
+
+    private void btnPrecedentIsActive(boolean state){
+        if(state == true){
+            btnPrecedent.toFront();
+            btnPrecedent.setDisable(false);
+            btnPrecedent.setCursor(Cursor.HAND);
+        }else{
+            btnPrecedent.toBack();
+            btnPrecedent.setDisable(true);
+            btnPrecedent.setCursor(Cursor.TEXT);
+        }
     }
 
     //    Méthodes de fonctionnalités de la vue :
