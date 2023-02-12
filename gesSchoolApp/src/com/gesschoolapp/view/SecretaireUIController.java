@@ -3,6 +3,7 @@ package com.gesschoolapp.view;
 import com.gesschoolapp.Exceptions.DAOException;
 import com.gesschoolapp.db.DAOClassesImpl.ClasseDAOImp;
 import com.gesschoolapp.models.classroom.Classe;
+import com.gesschoolapp.models.matieres.Module;
 import com.gesschoolapp.models.users.Secretaire;
 import com.gesschoolapp.models.users.Utilisateur;
 import com.gesschoolapp.runtime.Main;
@@ -28,9 +29,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.paint.Paint;
+import javafx.scene.paint.*;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -57,6 +56,9 @@ public class SecretaireUIController implements Initializable {
 
 
     private Classe selectedClass;
+
+
+    private Module selectedModule;
 
     private ClasseDAOImp classesData = new ClasseDAOImp();
 
@@ -121,6 +123,9 @@ public class SecretaireUIController implements Initializable {
     private TextField searchClassInput;
 
     @FXML
+    private TextField searchStudentHomeInput;
+
+    @FXML
     private FontAwesomeIcon accueilIcon;
 
     @FXML
@@ -131,6 +136,9 @@ public class SecretaireUIController implements Initializable {
 
     @FXML
     private VBox classesHomeLayout;
+
+    @FXML
+    private HBox modulesLayout;
 
     @FXML
     private ImageView btnPrecedent;
@@ -171,6 +179,8 @@ public class SecretaireUIController implements Initializable {
 
         // SetCurrentRoute :
         setCurrentRoute(home);
+        searchStudentHomeInput.requestFocus();
+
 
         Image pp = new Image("com/gesschoolapp/resources/images/pp_placeholder.jpg");
         pp_placeholder.setFill(new ImagePattern(pp));
@@ -181,11 +191,15 @@ public class SecretaireUIController implements Initializable {
         try {
             // Classes récentes :
             setClasseRecentes();
-            // Liste de toutes les classes :
 
+            // Liste de toutes les classes :
             setListeDesClasses(listeClasses);
+
+            // Liste des modules d'une classe :
+            setListeDesModules();
+
         } catch (Exception e) {
-            System.out.println("e.getMessage()");
+            e.printStackTrace();
         }
 
     }
@@ -255,9 +269,33 @@ public class SecretaireUIController implements Initializable {
         classPreview1Controller.setData(selectedClass);
         classPreview2Controller.setData(selectedClass);
 
+
         setCurrentRouteLink("/"+getSelectedClass().getIntitule());
 
+        try {
+            setListeDesModules();
+        } catch (DAOException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
+
+    public void setSelectedModule(Module selectedModule) {
+        List<Node> modulesCard = modulesLayout.getChildren();
+        for (Node moduleCard : modulesCard) {
+            ((Pane) moduleCard).getChildren().get(2).setVisible(false);
+        }
+
+        this.selectedModule = selectedModule;
+        System.out.println("MODULE SELECTIONNE :" + this.selectedModule.getIntitule());
+    }
+
+    public Module getSelectedModule() {
+        return selectedModule;
+    }
+
 
     void setCurrentRouteLink(String link) {
         setPreviousRouteLink(getCurrentRoute().getRouteLink());
@@ -316,10 +354,12 @@ public class SecretaireUIController implements Initializable {
     @FXML
     void handleNavigation(MouseEvent e) {
         if (e.getSource() == btnAccueil) {
-            System.out.println(" HOVER ?");
             setCurrentRoute(home);
+            searchStudentHomeInput.requestFocus();
         } else if (e.getSource() == btnClasses || e.getSource() == viewAllClasses) {
             setCurrentRoute(classes);
+            setCurrentRouteLink("/"+getSelectedClass().getIntitule());
+            searchClassInput.requestFocus();
         } else if (e.getSource() == btnProfile || e.getSource() == pp_placeholder || e.getSource() == pp_placeholder1) {
             setCurrentRoute(profile);
         } else if (e.getSource() == btnPrecedent){
@@ -373,11 +413,18 @@ public class SecretaireUIController implements Initializable {
         System.out.println(currentRoute.getRouteView());
         currentRoute.getRouteView().toFront();
         menuStyleReset();
+        if(currentRoute == home){
+            searchStudentHomeInput.requestFocus();
+        }
         currentRoute.getNavSelection().setStyle("-fx-background-color: #2C7ABA;-fx-text-fill: white;");
         currentRoute.getRouteIcon().setGlyphStyle("-fx-fill: white;");
         currentRoute.getNavSelection().setBackground(new Background(new BackgroundFill(Color.rgb(113, 86, 221), CornerRadii.EMPTY, Insets.EMPTY)));
         this.currentRoute = currentRoute;
 
+    }
+
+    public void setCurrentRoute(){
+        setCurrentRoute(classes);
     }
 
     private void setSubView() {
@@ -457,7 +504,7 @@ public class SecretaireUIController implements Initializable {
     }
 
         private void setListeDesClasses(List<Classe> classes) throws DAOException, IOException {
-        classesClassesLayout.getChildren().removeAll();
+        classesClassesLayout.getChildren(). clear();
         for (Classe classe : classes) {
 
             FXMLLoader fxmlLoader = new FXMLLoader();
@@ -476,6 +523,31 @@ public class SecretaireUIController implements Initializable {
         }
     }
 
+    private void setListeDesModules() throws DAOException, IOException {
+        modulesLayout.getChildren().clear();
+        List<Module> modules = selectedClass.getModules();
+        for (Module module : modules) {
+
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("ModuleItem.fxml"));
+
+            Pane pane = fxmlLoader.load();
+            ModuleItemController mic = fxmlLoader.getController();
+            mic.setSuperController(this);
+            mic.setData(module);
+//            ((FontAwesomeIcon) pane.getChildren().get(0)).setGlyphStyle(mic.getRandomTheme());
+
+            if (selectedClass.getModules().get(1) == module) {
+                setSelectedModule(module);
+                mic.setAsSelected();
+            }
+
+            modulesLayout.getChildren().add(pane);
+
+
+        }
+    }
+
     private void setClasseRecentes() throws DAOException, IOException {
         List<Classe> classes = listeClasses;
 
@@ -489,6 +561,7 @@ public class SecretaireUIController implements Initializable {
 
             HBox hBox = fxmlLoader.load();
             ClassItemController cic = fxmlLoader.getController();
+
             cic.setSuperController(this);
             cic.setData(classes.get(i));
 

@@ -15,13 +15,6 @@ public class ClassItemController implements Initializable {
 
     private SecretaireUIController superController;
 
-    public SecretaireUIController getSuperController() {
-        return superController;
-    }
-
-    public void setSuperController(SecretaireUIController superController) {
-        this.superController = superController;
-    }
 
     @FXML
     private ImageView classImg;
@@ -58,4 +51,13 @@ public class ClassItemController implements Initializable {
         superController.setSelectedClass(thisClass);
         classCard.setStyle("-fx-background-color: #fff;-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);");
     }
+
+    public SecretaireUIController getSuperController() {
+        return superController;
+    }
+
+    public void setSuperController(SecretaireUIController superController) {
+        this.superController = superController;
+    }
+
 }

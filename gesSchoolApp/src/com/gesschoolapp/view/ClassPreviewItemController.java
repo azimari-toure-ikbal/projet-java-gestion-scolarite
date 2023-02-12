@@ -69,6 +69,7 @@ public class ClassPreviewItemController implements Initializable {
         }else if(event.getSource() == btnClassesNotes){
             newRouteLink = "/"+superController.getSelectedClass().getIntitule()+"/notes";
         }
+            superController.setCurrentRoute();
             superController.setCurrentRouteLink(newRouteLink);
     }
 

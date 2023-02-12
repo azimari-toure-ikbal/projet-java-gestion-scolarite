@@ -1,14 +1,12 @@
 
 
-.label {
 
-}
 .background {
     -fx-background-color: #1d1d1d;
 }
 
 .app-title{
-    -fx-text-fill:  linear-gradient(from 25px 25px to 100px 100px, #DA4453, #89216B);
+    -fx-text-fill:  linear-gradient(from 25px 25px to 100px 100px, #DA4453, #DA4453);
     -fx-font-weight: bold;
 }
 
@@ -20,7 +18,6 @@
     -fx-opacity: 1;
 }
 
-.
 
 .label-header {
     -fx-font-size: 32pt;
@@ -327,4 +324,56 @@
 .class_card_selected{
   -fx-background-color: #fff;
   -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);
+}
+
+.module_menu{
+    -fx-background-radius: 20px;
+}
+
+
+.module_menu_scrollpane {
+    -fx-background-color: transparent;
+
+}
+
+.scroll-pane .corner {
+    -fx-background-color: red;
+}
+
+
+.scroll-bar:horizontal, .scroll-bar:vertical{
+    -fx-cursor: hand;
+    -fx-background-color: transparent;
+    -fx-pref-height: 11px;
+    -fx-padding: 0 20px 0 0;
+}
+
+.increment-button, .decrement-button {
+    -fx-background-color: transparent;
+    -fx-font-size: 25pt;
+    -fx-padding: 0 0 120px 0;
+    -fx-border-color: transparent;
+}
+
+.increment-button{
+    -fx-padding: 0 -45px 110px 0;
+}
+
+.decrement-button{
+    -fx-padding: 0 0 110px -28px;
+}
+
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0em;
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    // -fx-background-color:  linear-gradient(to right, #2c7aba,#2c7aba, #5AB2D8);
+    -fx-background-color: transparent;
+    -fx-font-size: 200px;
+    -fx-background-radius: 5em;
 }
