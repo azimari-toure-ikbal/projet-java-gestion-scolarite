@@ -102,7 +102,7 @@ public class Paiement {
 
     @Override
     public String toString() {
-        return "Paiement{" +
+        return "\nPaiement{" +
                 "idPaiement=" + idPaiement +
                 ", numeroRecu='" + numeroRecu + '\'' +
                 ", montant='" + montant + '\'' +
@@ -112,6 +112,6 @@ public class Paiement {
                 ", apprenant='" + apprenant + '\'' +
                 ", caissier='" + caissier + '\'' +
                 ", classe='" + classe + '\'' +
-                '}';
+                "}\n";
     }
 }

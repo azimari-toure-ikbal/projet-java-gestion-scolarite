@@ -1,13 +1,74 @@
 package com.gesschoolapp.db;
+import com.gesschoolapp.ArchiveManager;
+import com.gesschoolapp.Exceptions.DAOException;
+import com.gesschoolapp.db.DAOClassesImpl.ApprenantDAOImp;
 import com.gesschoolapp.db.DAOClassesImpl.ClasseDAOImp;
+import com.gesschoolapp.db.DAOClassesImpl.ModuleDAOImp;
 import com.gesschoolapp.db.DAOClassesImpl.PaiementDAOImp;
+import com.gesschoolapp.models.classroom.Classe;
+import com.gesschoolapp.models.classroom.Classes;
+import com.gesschoolapp.models.student.Apprenant;
 
 import java.sql.Connection;
+import java.time.LocalDate;
+import java.util.Objects;
+import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 
 public class TestConnection {
     public static void main(String[] args) {
-        testSearchPaiement("69");
+
+       testGetApprenantsOfClass(15);
+    }
+
+
+    public static void testCreateApprenant(){
+        try {
+            Apprenant apprenant = new Apprenant();
+            apprenant.setNom("Zagadou");
+            apprenant.setPrenom("Axel");
+            apprenant.setSexe("M");
+            apprenant.setNationalite("Camerounais");
+            apprenant.setEmail("axel.zagadou@mail.com");
+            apprenant.setDateNaissance(LocalDate.of(2009, 10, 5));
+            apprenant.setEtatPaiement(0);
+            apprenant.setClasse("4eme");
+            ApprenantDAOImp apprenantDAOImp = new ApprenantDAOImp();
+            apprenantDAOImp.create(apprenant);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+
+    public static void getApprenants(){
+        try {
+            ApprenantDAOImp apprenantDAOImp = new ApprenantDAOImp();
+            System.out.println(apprenantDAOImp.getList());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+
+    public static void testSerializeArchive(){
+        try{
+            ClasseDAOImp classeDAOImp = new ClasseDAOImp();
+            Classes classes = new Classes();
+            classes.setClasses(classeDAOImp.getList());
+            classes.setYear(classes.getClasses().get(1).getAnnee());
+            ArchiveManager.SerializeArchive(classes);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static void testDeserializeArchives(){
+        try {
+            Classes classes = ArchiveManager.DeserializeArchive("2022-2023");
+            System.out.println(classes.getClasses());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public static void testSearchPaiement(String numeroRecu) {
@@ -28,19 +89,21 @@ public class TestConnection {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
-    public static void testGetApprenants(int idClasse){
+    public static void testGetApprenantsOfClass(int idClasse){
         ClasseDAOImp classeDAOImp = new ClasseDAOImp();
         try {
-            System.out.println(classeDAOImp.getApprenantsOfClass(idClasse));
+            Classe classe = classeDAOImp.read(idClasse);
+            System.out.println(new ApprenantDAOImp().getList().stream().
+                    filter(apprenant -> Objects.equals(apprenant.getClasse(), classe.getIntitule())).collect(Collectors.toList()));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getClass() + " " + e.getMessage());
         }
     }
 
-    public static void testGetModules(int idClasse){
-        ClasseDAOImp classeDAOImp = new ClasseDAOImp();
+    public static void testGetModules(){
+        ModuleDAOImp classeDAOImp = new ModuleDAOImp();
         try {
-            System.out.println(classeDAOImp.getModulesOfClass(idClasse));
+            System.out.println(new ModuleDAOImp().getList());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }

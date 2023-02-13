@@ -1,17 +1,25 @@
 package com.gesschoolapp.models.matieres;
 
-public class Module {
+import java.io.Serializable;
+import java.util.List;
+
+public class Module implements Serializable {
+    public static final long serialVersionUID = 424;
     //Module has id, intitule
     private int id;
     private String intitule;
+    List<Note> notes;
+
+    private String classe;
 
     //constructors
     public Module() {
     }
 
-    public Module(int id, String intitule) {
+    public Module(int id, String intitule, List<Note> notes) {
         this.setId(id);
         this.setIntitule(intitule);
+        this.setNotes(notes);
     }
 
     //getters and setters
@@ -32,11 +40,28 @@ public class Module {
         this.intitule = intitule;
     }
 
+    public String getClasse() {
+        return classe;
+    }
+    public List<Note> getNotes() {
+        return notes;
+    }
+
+    public void setClasse(String classe) {
+        this.classe = classe;
+    }
+
+    public void setNotes(List<Note> notes) {
+        this.notes = notes;
+    }
+
+
     @Override
     public String toString() {
-        return "Module{" +
+        return "\nModule{" +
                 "id=" + id +
                 ", intitule='" + intitule + '\'' +
-                '}';
+                " notes " + notes +
+                "}\n";
     }
 }

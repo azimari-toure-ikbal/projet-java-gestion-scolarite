@@ -1,8 +1,10 @@
 package com.gesschoolapp.models.student;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Apprenant {
+public class Apprenant implements Serializable {
+    public static final long serialVersionUID = 427;
 
     private int idApprenant;
     private int matricule;
@@ -13,12 +15,19 @@ public class Apprenant {
     private String nationalite;
     private int etatPaiement = 0;
 
-    public Apprenant(int idApprenant, int matricule, String prenom, String nom, LocalDate dateNaissance, String sexe, String nationalite, int etatPaiement) {
-        this(matricule, prenom, nom, dateNaissance, sexe, nationalite, etatPaiement);
+    private String email;
+
+    private String classe;
+
+    public Apprenant() {
+    }
+
+    public Apprenant(int idApprenant, String email, int matricule, String prenom, String nom, LocalDate dateNaissance, String sexe, String nationalite, int etatPaiement) {
+        this(matricule, email, prenom, nom, dateNaissance, sexe, nationalite, etatPaiement);
         this.setIdApprenant(idApprenant);
     }
 
-    public Apprenant(int matricule, String prenom, String nom, LocalDate dateNaissance, String sexe, String nationalite, int etatPaiement) {
+    public Apprenant(int matricule, String email, String prenom, String nom, LocalDate dateNaissance, String sexe, String nationalite, int etatPaiement) {
         this.setMatricule(matricule);
         this.setPrenom(prenom);
         this.setNom(nom);
@@ -26,6 +35,12 @@ public class Apprenant {
         this.setSexe(sexe);
         this.setNationalite(nationalite);
         this.setEtatPaiement(etatPaiement);
+        this.setEmail(email);
+    }
+
+    public Apprenant(int matricule, String email, String prenom, String nom, LocalDate dateNaissance, String sexe, String nationalite, int etatPaiement, String classe) {
+        this(matricule, email, prenom, nom, dateNaissance, sexe, nationalite, etatPaiement);
+        this.setClasse(classe);
     }
 
 
@@ -38,6 +53,22 @@ public class Apprenant {
             throw new IllegalArgumentException("L'id ne peut pas être négatif");
         }
         this.idApprenant = idApprenant;
+    }
+
+    public String getClasse() {
+        return classe;
+    }
+
+    public void setClasse(String classe) {
+        this.classe = classe;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public int getMatricule() {
@@ -101,6 +132,9 @@ public class Apprenant {
 
     @Override
     public String toString() {
-        return "Apprenant{" + "idApprenant=" + idApprenant + ", matricule=" + matricule + ", prenom=" + prenom + ", nom=" + nom + ", dateNaissance=" + dateNaissance + ", sexe=" + sexe + ", nationalite=" + nationalite + ", etatPaiement=" + etatPaiement + '}';
+        return "\nApprenant{" + "idApprenant=" + idApprenant + ", matricule=" + matricule + ", email="
+                + email + ", prenom=" + prenom + ", nom=" + nom + ", dateNaissance=" + dateNaissance + ", sexe="
+                + sexe + ", nationalite=" + nationalite + ", etatPaiement=" + etatPaiement + ", classe=" + classe +
+                "}\n";
     }
 }

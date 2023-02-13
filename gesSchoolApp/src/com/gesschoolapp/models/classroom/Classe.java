@@ -3,9 +3,12 @@ package com.gesschoolapp.models.classroom;
 import com.gesschoolapp.models.matieres.Module;
 import com.gesschoolapp.models.student.Apprenant;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Classe {
+public class Classe implements Serializable {
+    public static final long serialVersionUID = 42L;
+
     //attributes id, intitule, reference(int), annee(string), formation(string), apprenants(list<Apprenants>), modules(list<Module>)
     private int id;
     private String intitule;
