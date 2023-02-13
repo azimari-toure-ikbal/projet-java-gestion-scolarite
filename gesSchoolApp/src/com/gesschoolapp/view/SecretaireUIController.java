@@ -179,7 +179,6 @@ public class SecretaireUIController implements Initializable {
 
         // SetCurrentRoute :
         setCurrentRoute(home);
-        searchStudentHomeInput.requestFocus();
 
 
         Image pp = new Image("com/gesschoolapp/resources/images/pp_placeholder.jpg");
@@ -285,7 +284,10 @@ public class SecretaireUIController implements Initializable {
     public void setSelectedModule(Module selectedModule) {
         List<Node> modulesCard = modulesLayout.getChildren();
         for (Node moduleCard : modulesCard) {
-            ((Pane) moduleCard).getChildren().get(2).setVisible(false);
+            Image closed = new Image("com/gesschoolapp/resources/images/closed_folder.png");
+            ((ImageView) ((Pane) moduleCard).getChildren().get(0)).setImage(closed);
+            ((Label) ((Pane) moduleCard).getChildren().get(1)).setStyle("-fx-font-size:11px;-fx-font-weight:bold;-fx-font-style:italic;-fx-padding: 0px 0 0 0;");
+
         }
 
         this.selectedModule = selectedModule;
@@ -355,7 +357,6 @@ public class SecretaireUIController implements Initializable {
     void handleNavigation(MouseEvent e) {
         if (e.getSource() == btnAccueil) {
             setCurrentRoute(home);
-            searchStudentHomeInput.requestFocus();
         } else if (e.getSource() == btnClasses || e.getSource() == viewAllClasses) {
             setCurrentRoute(classes);
             setCurrentRouteLink("/"+getSelectedClass().getIntitule());
@@ -413,9 +414,6 @@ public class SecretaireUIController implements Initializable {
         System.out.println(currentRoute.getRouteView());
         currentRoute.getRouteView().toFront();
         menuStyleReset();
-        if(currentRoute == home){
-            searchStudentHomeInput.requestFocus();
-        }
         currentRoute.getNavSelection().setStyle("-fx-background-color: #2C7ABA;-fx-text-fill: white;");
         currentRoute.getRouteIcon().setGlyphStyle("-fx-fill: white;");
         currentRoute.getNavSelection().setBackground(new Background(new BackgroundFill(Color.rgb(113, 86, 221), CornerRadii.EMPTY, Insets.EMPTY)));
@@ -543,7 +541,6 @@ public class SecretaireUIController implements Initializable {
             }
 
             modulesLayout.getChildren().add(pane);
-
 
         }
     }

@@ -1,14 +1,19 @@
 package com.gesschoolapp.view;
 
+import com.gesschoolapp.models.Action;
 import com.gesschoolapp.models.classroom.Classe;
 import com.gesschoolapp.models.matieres.Module;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.text.Font;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -19,6 +24,8 @@ import java.util.ResourceBundle;
 public class ModuleItemController implements Initializable {
 
     private SecretaireUIController superController;
+
+
 
     private List<String> moduleThemes = new ArrayList<>();
     {
@@ -50,15 +57,16 @@ public class ModuleItemController implements Initializable {
     }
 
     @FXML
-    void onClickModule(MouseEvent event) {
+    void onClickModule(ActionEvent event) {
         System.out.println("CLICKED ON MODULE : " + thisModule.getIntitule());
         this.setAsSelected();
     }
 
     public void setAsSelected(){
         superController.setSelectedModule(thisModule);
-        ((Pane) moduleCard).getChildren().get(2).setVisible(true);
-
+        Image opened = new Image("com/gesschoolapp/resources/images/opened_folder.png");
+        ((ImageView) ((Pane) moduleCard).getChildren().get(0)).setImage(opened);
+        ((Label) ((Pane) moduleCard).getChildren().get(1)).setStyle("-fx-font-size:9px;-fx-font-weight:bold;-fx-font-style:italic;-fx-padding: 8px 0 0 0;");
     }
 
     public SecretaireUIController getSuperController() {

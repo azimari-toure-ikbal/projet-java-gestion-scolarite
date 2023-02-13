@@ -110,10 +110,10 @@ public class LoginUIController implements Initializable  {
     @FXML
     void handleLogin(ActionEvent event) {
 
-        String login = txtUsername.getText();
-//        String login = "fatou.syla@mail.cum";
-        String password = txtPassword.getText();
-//        String password = "fatou";
+//        String login = txtUsername.getText();
+        String login = "fatou.syla@mail.cum";
+//        String password = txtPassword.getText();
+        String password = "fatou";
         if (login.isEmpty() || password.isEmpty()) {
             messageInfo.setText("Veuillez remplir tous les champs");
         } else {
