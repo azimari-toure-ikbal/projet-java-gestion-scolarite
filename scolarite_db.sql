@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 08, 2023 at 09:21 PM
+-- Generation Time: Feb 13, 2023 at 01:11 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -38,8 +38,9 @@ CREATE TABLE IF NOT EXISTS `apprenants` (
   `echeancier` int(40) NOT NULL,
   `sexe` varchar(2) NOT NULL,
   `matricule` int(11) NOT NULL,
-  PRIMARY KEY (`idApprenant`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`idApprenant`),
+  UNIQUE KEY `matricule` (`matricule`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `apprenants`
@@ -49,7 +50,8 @@ INSERT INTO `apprenants` (`idApprenant`, `prenom`, `nom`, `email`, `dtNaiss`, `n
 (1, 'Moussa', 'DIOP', 'moussa.diop@mail.com', '2010-02-15', 'sénégalais', 0, 'M', 100),
 (2, 'Max', 'BIRD', 'max.bird@mail.com', '2010-06-13', 'français', 0, 'M', 101),
 (3, 'Marie', 'PLASSARD', 'marie.plassard@mail.com', '2010-01-16', 'belge', 0, 'F', 102),
-(4, 'Fabienne', 'DUPONT', 'fabienne.dupont@mail.com', '2010-08-11', 'française', 0, 'F', 103);
+(4, 'Fabienne', 'DUPONT', 'fabienne.dupont@mail.com', '2010-08-11', 'française', 0, 'F', 103),
+(16, 'Axel', 'Zagadou', 'axel.zagadou@mail.com', '2009-10-05', 'Camerounais', 0, 'M', 104);
 
 -- --------------------------------------------------------
 
@@ -76,19 +78,21 @@ CREATE TABLE IF NOT EXISTS `classeapprenant` (
   `idClasse` int(11) NOT NULL,
   `idApprenant` int(11) NOT NULL,
   PRIMARY KEY (`idClasseAppenant`),
-  KEY `idApprenant` (`idApprenant`),
+  KEY `classeapprenant_ibfk_1` (`idApprenant`),
   KEY `classeapprenant_ibfk_2` (`idClasse`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `classeapprenant`
 --
 
 INSERT INTO `classeapprenant` (`idClasseAppenant`, `idClasse`, `idApprenant`) VALUES
-(1, 12, 4),
-(2, 12, 2),
-(3, 12, 1),
-(4, 12, 3);
+(1, 15, 4),
+(2, 15, 2),
+(3, 15, 1),
+(4, 15, 3),
+(10, 14, 16),
+(11, 14, 17);
 
 -- --------------------------------------------------------
 
@@ -111,10 +115,10 @@ CREATE TABLE IF NOT EXISTS `classes` (
 --
 
 INSERT INTO `classes` (`idClasse`, `intitule`, `reference`, `annee`, `formation`) VALUES
-(1, 'Crèche', 1, '2023', 'Maternelle'),
-(2, 'Très Petite Section', 2, '2023', 'Maternelle'),
-(3, 'Moyenne Section', 3, '2023', 'Maternelle'),
-(4, 'Grande Section', 3, '2023', 'Maternelle'),
+(1, 'Crèche', 1, '2022-2023', 'Maternelle'),
+(2, 'Très Petite Section', 2, '2022-2023', 'Maternelle'),
+(3, 'Moyenne Section', 3, '2022-2023', 'Maternelle'),
+(4, 'Grande Section', 3, '2022-2023', 'Maternelle'),
 (5, 'CI', 4, '2022/2023', 'Elementaire'),
 (6, 'CP', 4, '2022/2023', 'Elementaire'),
 (7, 'CE1', 5, '2022/2023', 'Elementaire'),
@@ -122,10 +126,10 @@ INSERT INTO `classes` (`idClasse`, `intitule`, `reference`, `annee`, `formation`
 (9, 'CM1', 6, '2022/2023', 'Elementaire'),
 (10, 'CM2', 6, '2022/2023', 'Elementaire'),
 (11, 'Petite Section', 3, '2022/2023', 'Maternelle'),
-(12, '3eme', 8, '2022/2023', 'College'),
-(13, '4eme', 8, '2022/2023', 'College'),
-(14, '5eme', 7, '2022/2023', 'College'),
-(15, '6eme', 7, '2022/2023', 'College'),
+(12, '6eme', 7, '2022/2023', 'College'),
+(13, '5eme', 7, '2022/2023', 'College'),
+(14, '4eme', 8, '2022/2023', 'College'),
+(15, '3eme', 8, '2022/2023', 'College'),
 (16, '1ere année', 9, '2022/2023', 'Froid/Climatisation'),
 (17, '2e année', 9, '2022/2023', 'Froid/Climatisation'),
 (18, '3e année', 9, '2022/2023', 'Froid/Climatisation');
@@ -165,11 +169,11 @@ CREATE TABLE IF NOT EXISTS `modules` (
 --
 
 INSERT INTO `modules` (`idModule`, `intitule`, `idClasse`) VALUES
-(11, 'Maths', 12),
-(12, 'Français', 12),
-(13, 'Histo/Geo', 12),
-(14, 'Physique-Chimie', 12),
-(15, 'Science de la vie et de la terre', 12);
+(11, 'Maths', 15),
+(12, 'Français', 15),
+(13, 'Histo/Geo', 15),
+(14, 'Physique-Chimie', 15),
+(15, 'Science de la vie et de la terre', 15);
 
 -- --------------------------------------------------------
 
@@ -179,13 +183,28 @@ INSERT INTO `modules` (`idModule`, `intitule`, `idClasse`) VALUES
 
 DROP TABLE IF EXISTS `notes`;
 CREATE TABLE IF NOT EXISTS `notes` (
-  `idNote` int(11) NOT NULL,
+  `idNote` int(11) NOT NULL AUTO_INCREMENT,
   `valeur` int(11) NOT NULL,
   `idApprenant` int(11) NOT NULL,
   `idModule` int(11) NOT NULL,
+  PRIMARY KEY (`idNote`),
   KEY `idModule` (`idModule`),
   KEY `idApprenant` (`idApprenant`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `notes`
+--
+
+INSERT INTO `notes` (`idNote`, `valeur`, `idApprenant`, `idModule`) VALUES
+(1, 14, 3, 14),
+(2, 18, 4, 14),
+(3, 10, 1, 14),
+(4, 20, 2, 14),
+(5, 9, 4, 11),
+(6, 13, 1, 11),
+(7, 18, 3, 11),
+(8, 10, 4, 11);
 
 -- --------------------------------------------------------
 
@@ -287,7 +306,6 @@ INSERT INTO `utilisateurs` (`idUtilisateur`, `password`, `nom`, `prenom`, `email
 -- Constraints for table `classeapprenant`
 --
 ALTER TABLE `classeapprenant`
-  ADD CONSTRAINT `classeapprenant_ibfk_1` FOREIGN KEY (`idApprenant`) REFERENCES `apprenants` (`idApprenant`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `classeapprenant_ibfk_2` FOREIGN KEY (`idClasse`) REFERENCES `classes` (`idClasse`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --

@@ -8,7 +8,6 @@ import com.gesschoolapp.models.classroom.Classe;
 import com.gesschoolapp.models.student.Apprenant;
 import com.gesschoolapp.models.matieres.Module;
 
-import javax.net.ssl.SSLException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,8 +15,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
-public class ClasseDAOImp implements SearchDAO<Classe>, ClasseDAO {
+public class ClasseDAOImp implements SearchDAO<Classe> {
     @Override
     public void create(Classe obj) throws DAOException {
         //Not used
@@ -35,7 +36,7 @@ public class ClasseDAOImp implements SearchDAO<Classe>, ClasseDAO {
 
     @Override
     public Classe read(int id) throws DAOException {
-        return this.getList().get(id-1);
+        return this.getList().get(id - 1);
     }
 
     @Override
@@ -52,12 +53,20 @@ public class ClasseDAOImp implements SearchDAO<Classe>, ClasseDAO {
                 int reference = rs.getInt("reference");
                 String formation = rs.getString("formation");
                 String annee = rs.getString("annee");
+                List<Module> modules = new ModuleDAOImp().getList();
+                if (modules != null) {
+                    modules = modules.stream().filter(module -> Objects.equals(module.getClasse(), intitule)).collect(Collectors.toList());
+                }
 
-                Classe classe = new Classe(id, intitule, reference, annee, formation, this.getApprenantsOfClass(id), this.getModulesOfClass(id));
+                List<Apprenant> apprenants = new ApprenantDAOImp().getList().stream().
+                        filter(apprenant -> Objects.equals(apprenant.getClasse(), intitule)).toList();
+
+
+                Classe classe = new Classe(id, intitule, reference, annee, formation, apprenants, modules);
                 classes.add(classe);
             }
         } catch (Exception e) {
-            throw new DAOException(e.getMessage());
+            throw new DAOException("Error in ClasseDAOImp.getList() \n" + e.getMessage());
         }
         return classes;
     }
@@ -78,66 +87,19 @@ public class ClasseDAOImp implements SearchDAO<Classe>, ClasseDAO {
                 String formation = rs.getString("formation");
                 String annee = rs.getString("annee");
 
-                Classe classe = new Classe(id, intitule, reference, annee, formation, this.getApprenantsOfClass(id), this.getModulesOfClass(id));
+                List<Module> modules = new ModuleDAOImp().getList().stream().
+                        filter(module -> Objects.equals(module.getClasse(), intitule)).toList();
+
+                List<Apprenant> apprenants = new ApprenantDAOImp().getList().stream().
+                        filter(apprenant -> Objects.equals(apprenant.getClasse(), intitule)).toList();
+
+                Classe classe = new Classe(id, intitule, reference, annee, formation, apprenants, modules);
                 classes.add(classe);
             }
         } catch (Exception e) {
-            throw new DAOException(e.getMessage());
+            throw new DAOException("Error in ClasseDAOImp.search()" + e.getMessage());
         }
         return classes;
-    }
-
-    @Override
-    public List<Module> getModulesOfClass(int idClasse) throws DAOException {
-        //get all modules of a class, module class has id, intitule
-        List<Module> modules = new ArrayList<>();
-        try (Connection connection = DBManager.getConnection()) {
-            String query = "SELECT * FROM modules WHERE idClasse=?";
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, idClasse);
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-                int id = rs.getInt("idModule");
-                String intitule = rs.getString("intitule");
-                Module module = new Module(id, intitule);
-                modules.add(module);
-            }
-        } catch (Exception e) {
-            throw new DAOException(e.getMessage());
-        }
-        return modules;
-    }
-
-    @Override
-    public List<Apprenant> getApprenantsOfClass(int idClasse) throws DAOException{
-        //get all apprenants of a class, apprenant has idApprenant, matricule, nom, prenom, dateNaissance, sexe, natioalite, etatPaiement
-        List<Apprenant> apprenants = new ArrayList<>();
-        try (Connection connection = DBManager.getConnection()) {
-            String query = "SELECT * FROM apprenants a, classeapprenant c WHERE c.idClasse=? && a.idApprenant=c.idApprenant";
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, idClasse);
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-                int id = rs.getInt("idApprenant");
-                int matricule = rs.getInt("matricule");
-                String nom = rs.getString("nom");
-                String prenom = rs.getString("prenom");
-                String dtNaiss = rs.getString("dtNaiss");
-                String sexe = rs.getString("sexe");
-                String nationalite = rs.getString("nationalite");
-                int etatPaiement = rs.getInt("echeancier");
-
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                //convert String to LocalDate
-                LocalDate dateNaissance = LocalDate.parse(dtNaiss, formatter);
-
-                Apprenant apprenant = new Apprenant(id, matricule, nom, prenom, dateNaissance, sexe, nationalite, etatPaiement);
-                apprenants.add(apprenant);
-            }
-        } catch (Exception e) {
-            throw new DAOException(e.getMessage());
-        }
-        return apprenants;
     }
 
 }
