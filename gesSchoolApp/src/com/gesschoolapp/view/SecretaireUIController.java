@@ -31,6 +31,7 @@ import javafx.scene.paint.*;
 import javafx.scene.shape.Circle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import java.io.File;
@@ -636,9 +637,12 @@ public class SecretaireUIController implements Initializable {
 
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("Voir élève");
+            dialogStage.setTitle("School UP - Profil élève");
             // Set the application icon.
-            dialogStage.getIcons().add(new Image("file:resources/images/app_icon.png"));
+
+            dialogStage.getIcons().add(new Image("com/gesschoolapp/resources/images/app_icon.png"));
+            dialogStage.initStyle(StageStyle.DECORATED);
+            dialogStage.setResizable(false);
 
 
             dialogStage.initModality(Modality.WINDOW_MODAL);
