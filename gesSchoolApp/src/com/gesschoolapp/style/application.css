@@ -123,6 +123,25 @@
     -fx-cursor: hand;
 }
 
+.default_btn {
+    -fx-padding: 5 22 5 22;
+    -fx-border-color: linear-gradient(to right, #2c7aba, #5AB2D8);
+    -fx-border-radius: 10px;
+    -fx-border-width: 1.5;
+    -fx-background-radius: 10px;
+    -fx-background-color: white;
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 11pt;
+    -fx-text-fill: #323a3f;
+    -fx-background-insets: 0 0 0 0, 0, 1, 2;
+    -fx-cursor: hand;
+}
+
+.default_btn:hover{
+
+}
+
+
 .virgin_btn{
     -fx-padding: 0;
     -fx-border-color: transparent;
@@ -149,13 +168,6 @@
         -fx-background-size:602 683;
 }
 
-.button:hover {
-    -fx-background-color: #0741FF;
-    -fx-border-radius: 2px;
-    -fx-text-fill: white;
-    
-}
-
 .signin_card{
     -fx-background-color: #fff;
      -fx-border-radius: 50px;
@@ -163,12 +175,6 @@
      -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 13, 0, 0, 0);
 }
 
-.button:focused {
-    -fx-border-width: 1, 1;
-    -fx-border-style: solid, segments(1, 1);
-    -fx-border-radius: 0, 0;
-    -fx-border-insets: 1 1 1 1, 0;
-}
 
 .button:disabled, .button:default:disabled {
     -fx-opacity: 0.4;
@@ -386,8 +392,15 @@
 
 .scroll-bar:horizontal .thumb,
 .scroll-bar:vertical .thumb {
-    // -fx-background-color:  linear-gradient(to right, #2c7aba,#2c7aba, #5AB2D8);
-    -fx-background-color: transparent;
+    -fx-background-color:  linear-gradient(to right, #2c7aba,#2c7aba, #5AB2D8);
     -fx-pref-height: 100px;
     -fx-background-radius: 5em;
 }
+.menu-button > .arrow-button {
+}
+
+.menu-button > .arrow-button > .arrow {
+-fx-background-color: transparent
+}
+
+ImageView:hover { -fx-cursor: hand; }

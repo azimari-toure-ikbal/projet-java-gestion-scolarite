@@ -138,7 +138,7 @@ public class LoginUIController implements Initializable  {
                     messageInfo.setText("Login et/ou mot de passe incorrect");
                 }
             } catch (Exception e) {
-                System.out.println("e.getMessage()");
+                e.printStackTrace();
             }
         }
 //        if (!Objects.equals(login, "") && !Objects.equals(password, "")){

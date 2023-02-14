@@ -4,8 +4,8 @@ import com.gesschoolapp.Exceptions.DAOException;
 import com.gesschoolapp.db.DAOClassesImpl.ClasseDAOImp;
 import com.gesschoolapp.models.classroom.Classe;
 import com.gesschoolapp.models.matieres.Module;
+import com.gesschoolapp.models.student.Apprenant;
 import com.gesschoolapp.models.users.Secretaire;
-import com.gesschoolapp.models.users.Utilisateur;
 import com.gesschoolapp.runtime.Main;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.animation.KeyFrame;
@@ -18,12 +18,10 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 
 import javafx.scene.control.Label;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -31,12 +29,15 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.*;
 import javafx.scene.shape.Circle;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
-import java.sql.SQLOutput;
 import java.util.*;
 
 public class SecretaireUIController implements Initializable {
@@ -126,6 +127,10 @@ public class SecretaireUIController implements Initializable {
     private TextField searchStudentHomeInput;
 
     @FXML
+    private Label classListName;
+
+
+    @FXML
     private FontAwesomeIcon accueilIcon;
 
     @FXML
@@ -139,6 +144,9 @@ public class SecretaireUIController implements Initializable {
 
     @FXML
     private HBox modulesLayout;
+
+    @FXML
+    private VBox studentsLayout;
 
     @FXML
     private ImageView btnPrecedent;
@@ -267,12 +275,11 @@ public class SecretaireUIController implements Initializable {
 
         classPreview1Controller.setData(selectedClass);
         classPreview2Controller.setData(selectedClass);
-
-
         setCurrentRouteLink("/"+getSelectedClass().getIntitule());
 
         try {
             setListeDesModules();
+            setListeDesApprenants();
         } catch (DAOException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
@@ -428,6 +435,7 @@ public class SecretaireUIController implements Initializable {
     private void setSubView() {
         System.out.println(getCurrentRoute().getRouteLink());
         if(getCurrentRoute().getRouteLink().equals("/"+getSelectedClass().getIntitule()+"/eleves")){
+            classListName.setText("Élèves en " + getSelectedClass().getIntitule());
             classStudentsView.toFront();
             btnPrecedentIsActive(true);
         }else if(getCurrentRoute().getRouteLink().equals("/"+getSelectedClass().getIntitule()+"/notes")){
@@ -533,7 +541,6 @@ public class SecretaireUIController implements Initializable {
             ModuleItemController mic = fxmlLoader.getController();
             mic.setSuperController(this);
             mic.setData(module);
-//            ((FontAwesomeIcon) pane.getChildren().get(0)).setGlyphStyle(mic.getRandomTheme());
 
             if (selectedClass.getModules().get(1) == module) {
                 setSelectedModule(module);
@@ -544,6 +551,26 @@ public class SecretaireUIController implements Initializable {
 
         }
     }
+
+    private void setListeDesApprenants() throws DAOException, IOException {
+        studentsLayout.getChildren().clear();
+        List<Apprenant> apprenants = selectedClass.getApprenants();
+        for (Apprenant apprenant : apprenants) {
+
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("ApprenantItem.fxml"));
+
+            HBox hbox = fxmlLoader.load();
+            ApprenantItemController aic = fxmlLoader.getController();
+            aic.setSuperController(this);
+            aic.setData(apprenant);
+
+
+            studentsLayout.getChildren().add(hbox);
+
+        }
+    }
+
 
     private void setClasseRecentes() throws DAOException, IOException {
         List<Classe> classes = listeClasses;
@@ -571,6 +598,8 @@ public class SecretaireUIController implements Initializable {
         }
     }
 
+
+
     private void clearListeDesClasses(){
 
         while (classesClassesLayout.getChildren().size() != 0){
@@ -597,4 +626,36 @@ public class SecretaireUIController implements Initializable {
     }
 
 
+    public void openStudentViewDialog(Apprenant appr) {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("ApprenantViewDialog.fxml"));
+
+            AnchorPane page = (AnchorPane) loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Voir élève");
+            // Set the application icon.
+            dialogStage.getIcons().add(new Image("file:resources/images/app_icon.png"));
+
+
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(mainApp.getPrimaryStage());
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the person into the controller.
+            ApprenantViewDialogController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setApprenant(appr);
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
