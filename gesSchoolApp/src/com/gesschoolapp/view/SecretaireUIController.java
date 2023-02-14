@@ -50,6 +50,10 @@ public class SecretaireUIController implements Initializable {
 
     private Main mainApp;
 
+    @FXML
+    private Label mainMessageInfo;
+
+
     private Route currentRoute;
 
     private String previousRouteLink;
@@ -197,17 +201,27 @@ public class SecretaireUIController implements Initializable {
 
 
         try {
-            // Classes récentes :
-            setClasseRecentes();
+            resetVue();
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void resetVue() {
+        try {
+            // Classes récentes :
+                setClasseRecentes();
             // Liste de toutes les classes :
             setListeDesClasses(listeClasses);
 
             // Liste des modules d'une classe :
             setListeDesModules();
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (DAOException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
     }
@@ -287,6 +301,17 @@ public class SecretaireUIController implements Initializable {
             throw new RuntimeException(e);
         }
 
+    }
+
+
+    public void setMainMessageInfo(String msg) {
+        mainMessageInfo.setText(msg);
+        if(msg.length() == 0){
+            mainMessageInfo.setVisible(false);
+        }else{
+            mainMessageInfo.setVisible(true);
+            setTimeout(() -> mainMessageInfo.setVisible(false), 10000);
+        }
     }
 
     public void setSelectedModule(Module selectedModule) {
@@ -553,7 +578,7 @@ public class SecretaireUIController implements Initializable {
         }
     }
 
-    private void setListeDesApprenants() throws DAOException, IOException {
+    public void setListeDesApprenants() throws DAOException, IOException {
         studentsLayout.getChildren().clear();
         List<Apprenant> apprenants = selectedClass.getApprenants();
         for (Apprenant apprenant : apprenants) {
@@ -662,4 +687,55 @@ public class SecretaireUIController implements Initializable {
             e.printStackTrace();
         }
     }
+
+        @FXML
+        public void openStudentAddDialog(ActionEvent event) {
+            try {
+                // Load the fxml file and create a new stage for the popup dialog.
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("ApprenantAddDialog.fxml"));
+
+                AnchorPane page = (AnchorPane) loader.load();
+
+                // Create the dialog Stage.
+                Stage dialogStage = new Stage();
+                dialogStage.setTitle("School UP - Ajouter un élève");
+                // Set the application icon.
+
+                dialogStage.getIcons().add(new Image("com/gesschoolapp/resources/images/app_icon.png"));
+                dialogStage.initStyle(StageStyle.DECORATED);
+                dialogStage.setResizable(false);
+
+
+                dialogStage.initModality(Modality.WINDOW_MODAL);
+                dialogStage.initOwner(mainApp.getPrimaryStage());
+                Scene scene = new Scene(page);
+                dialogStage.setScene(scene);
+
+                // Set the person into the controller.
+                ApprenantAddDialogController controller = loader.getController();
+                controller.setDialogStage(dialogStage);
+                controller.setSuperController(this);
+                controller.setCurrentClass(selectedClass);
+
+                // Show the dialog and wait until the user closes it
+                dialogStage.showAndWait();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+    }
+
+    public static void setTimeout(Runnable runnable, int delay){
+        new Thread(() -> {
+            try {
+                Thread.sleep(delay);
+                runnable.run();
+            }
+            catch (Exception e){
+                System.err.println(e);
+            }
+        }).start();
+    }
+
 }

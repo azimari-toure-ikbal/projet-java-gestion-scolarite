@@ -17,7 +17,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="589.0" prefWidth="526.0" stylesheets="@../style/application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gesschoolapp.view.ApprenantViewDialogController">
+<AnchorPane prefHeight="589.0" prefWidth="526.0" style="-fx-background-color: #fff;" stylesheets="@../style/application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gesschoolapp.view.ApprenantViewDialogController">
    <children>
       <Pane fx:id="landscape" layoutX="14.0" prefHeight="163.0" prefWidth="526.0" style="-fx-background-color: linear-gradient(to right, #2c7aba, #5AB2D8);" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
