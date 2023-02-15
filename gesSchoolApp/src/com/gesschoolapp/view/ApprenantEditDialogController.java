@@ -20,16 +20,17 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class ApprenantAddDialogController extends Application implements Initializable {
+public class ApprenantEditDialogController extends Application implements Initializable {
 
     private Classe currentClass;
+    private Apprenant selectedStudent;
+
 
     // Reference to the main com.gesschoolapp
     private Main main;
@@ -49,6 +50,19 @@ public class ApprenantAddDialogController extends Application implements Initial
 
     public Scene getScene() {
         return scene;
+    }
+    public void setSelectedStudent(Apprenant selectedStudent) {
+        this.selectedStudent = selectedStudent;
+        labelNom.setText(selectedStudent.getNom());
+        labelPrenom.setText(selectedStudent.getPrenom());
+        labelNationalite.setText(selectedStudent.getNationalite());
+        if(selectedStudent.getSexe().equals("M")){
+            selectGenre.setValue(Genre.MASCULIN);
+        }else{
+            selectGenre.setValue(Genre.FEMININ);
+        }
+
+        labelDNaiss.setValue(selectedStudent.getDateNaissance());
     }
 
     public void setScene(Scene scene) {
@@ -135,24 +149,33 @@ public class ApprenantAddDialogController extends Application implements Initial
         }else if(genre == Genre.FEMININ){
             apprenant.setSexe("F");
         }
+
         apprenant.setDateNaissance(dNaiss);
         apprenant.setClasse(currentClass.getIntitule());
+        apprenant.setIdApprenant(selectedStudent.getIdApprenant());
+        apprenant.setEtatPaiement(selectedStudent.getEtatPaiement());
 
-            if(apprenant instanceof Apprenant){
-                messageInfo.setVisible(true);
-                messageInfo.setText("Patientez...");
-                messageInfo.setTextFill(Color.web("#5CB85C"));
-            }
+        if(apprenant.equals(selectedStudent)){
+            messageInfo.setText("Vous devez d'abord au moins changer la valeur d'un champ pour modifier l'élève !");
+            messageInfo.setTextFill(Color.web("#e83636"));
+            return false;
+        }
+
+        if(apprenant instanceof Apprenant){
+            messageInfo.setVisible(true);
+            messageInfo.setText("Patientez...");
+            messageInfo.setTextFill(Color.web("#5CB85C"));
+        }
 
         try {
             dialogStage.close();
-            apprenantsData.create(apprenant);
+            apprenantsData.update(apprenant);
 //            superController.resetVue();
         } catch (DAOException e) {
             throw new RuntimeException(e);
         }
 
-        superController.setMainMessageInfo("Élève ajouté avec succès !");
+        superController.setMainMessageInfo("Élève modifié avec succès !");
         return true;
     }
 
@@ -182,9 +205,7 @@ public class ApprenantAddDialogController extends Application implements Initial
     }
 
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+
 
     @Override
     public void start(Stage primaryStage) {
@@ -202,8 +223,12 @@ public class ApprenantAddDialogController extends Application implements Initial
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         selectGenre.getItems().addAll(genres);
+        System.out.println(messageInfo);
         messageInfo.setVisible(false);
+//        System.out.println(labelName);
+//        System.out.println(selectedStudent);
         selectGenre.setValue(Genre.MASCULIN);
+
     }
     public void setSuperController(SecretaireUIController superController) {
         this.superController = superController;

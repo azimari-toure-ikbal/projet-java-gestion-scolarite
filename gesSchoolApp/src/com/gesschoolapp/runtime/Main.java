@@ -5,6 +5,7 @@ import com.gesschoolapp.view.LoginUIController;
 import com.gesschoolapp.view.LoginUIController;
 import com.gesschoolapp.view.SecretaireUIController;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
@@ -26,6 +27,7 @@ public class Main extends Application {
         try {
             this.primaryStage = primaryStage;
             primaryStage.initStyle(StageStyle.UNDECORATED);
+            Platform.setImplicitExit(false);
 
             initLayout();
 

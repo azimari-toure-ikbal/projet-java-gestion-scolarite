@@ -106,6 +106,7 @@ public class ApprenantViewDialogController implements Initializable {
 //        labelEtatPaiement.setText("occupe t'en plus tard");
 
         this.apprenant = appr;
+
     }
 
     @FXML
@@ -134,6 +135,11 @@ public class ApprenantViewDialogController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    }
+
+    @FXML
+    void deleteBtnClicked(ActionEvent event) {
 
     }
 }

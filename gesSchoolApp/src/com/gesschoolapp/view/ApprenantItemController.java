@@ -1,5 +1,8 @@
 package com.gesschoolapp.view;
 
+import com.gesschoolapp.Exceptions.DAOException;
+import com.gesschoolapp.db.DAOClassesImpl.ApprenantDAOImp;
+import com.gesschoolapp.db.DAOClassesImpl.ClasseDAOImp;
 import com.gesschoolapp.models.classroom.Classe;
 import com.gesschoolapp.models.student.Apprenant;
 import com.gesschoolapp.view.SecretaireUIController;
@@ -52,16 +55,29 @@ public class ApprenantItemController {
     }
 
     @FXML
-    void deleteBtnClicked(MouseEvent event) {
+    void editBtnClicked(ActionEvent event) {
+        superController.openStudentEditDialog(thisApprenant);
+    }
+
+    @FXML
+    void deleteBtnClicked(ActionEvent event) {
         System.out.println("clc ce fdp");
         //ask for confirmation
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Suppression");
-        alert.setHeaderText("Vous êtes sur le point de supprimer l'élève" + thisApprenant.getNom() + " " + thisApprenant.getPrenom() + " de matricule " + thisApprenant.getMatricule());
+        alert.setHeaderText("Vous êtes sur le point de supprimer l'élève " + thisApprenant.getPrenom() + " " + thisApprenant.getNom() + " de matricule " + thisApprenant.getMatricule());
         alert.setContentText("Voulez-vous continuer ?");
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
+            ApprenantDAOImp apprData = new ApprenantDAOImp();
 
+            try {
+                apprData.delete(thisApprenant.getIdApprenant());
+                superController.setMainMessageInfo("Élève supprimé avec succès !");
+//                superController.resetVue();
+            } catch (DAOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 

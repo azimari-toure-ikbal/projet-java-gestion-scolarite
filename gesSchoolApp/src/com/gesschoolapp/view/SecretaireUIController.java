@@ -11,6 +11,7 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -52,6 +53,9 @@ public class SecretaireUIController implements Initializable {
 
     @FXML
     private Label mainMessageInfo;
+
+    @FXML
+    private Label mainAwaitInfo;
 
 
     private Route currentRoute;
@@ -342,12 +346,20 @@ public class SecretaireUIController implements Initializable {
 
     public void setMainMessageInfo(String msg) {
         mainMessageInfo.setText(msg);
-        if(msg.length() == 0){
-            mainMessageInfo.setVisible(false);
-        }else{
-            mainMessageInfo.setVisible(true);
-            setTimeout(() -> mainMessageInfo.setVisible(false), 10000);
-        }
+        System.out.println(msg);
+        mainAwaitInfo.setVisible(true);
+        setTimeout(() -> {
+            mainAwaitInfo.setVisible(false);
+            if(msg.length() == 0){
+                mainMessageInfo.setVisible(false);
+            }else{
+                mainMessageInfo.setVisible(true);
+                setTimeout(() -> mainMessageInfo.setVisible(false), 10000);
+            }
+        }, 1000);
+
+        Platform.runLater(()->resetVue());
+
     }
 
     public void setSelectedModule(Module selectedModule) {
@@ -769,6 +781,48 @@ public class SecretaireUIController implements Initializable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+    }
+
+    public void openStudentEditDialog(Apprenant selectedAppr) {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("ApprenantEditDialog.fxml"));
+
+            AnchorPane page = (AnchorPane) loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("School UP - Modifier un élève");
+            // Set the application icon.
+
+            dialogStage.getIcons().add(new Image("com/gesschoolapp/resources/images/app_icon.png"));
+            dialogStage.initStyle(StageStyle.UNDECORATED);
+//                dialogStage.stageStyle(stageStyle.I);
+            dialogStage.setResizable(false);
+
+
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(mainApp.getPrimaryStage());
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the person into the controller.
+            ApprenantEditDialogController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setCurrentClass(selectedClass);
+            controller.setMain(mainApp);
+            controller.setScene(scene);
+            controller.setSuperController(this);
+            controller.setDraggable();
+            controller.setSelectedStudent(selectedAppr);
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void setTimeout(Runnable runnable, int delay){
