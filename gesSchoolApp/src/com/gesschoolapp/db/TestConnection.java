@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
 public class TestConnection {
     public static void main(String[] args) {
 
-       testGetApprenantsOfClass(15);
+       testGetModules();
     }
 
 

@@ -14,20 +14,17 @@ public class Apprenant implements Serializable {
     private String sexe;
     private String nationalite;
     private int etatPaiement = 0;
-
-    private String email;
-
     private String classe;
 
     public Apprenant() {
     }
 
-    public Apprenant(int idApprenant, String email, int matricule, String prenom, String nom, LocalDate dateNaissance, String sexe, String nationalite, int etatPaiement) {
-        this(matricule, email, prenom, nom, dateNaissance, sexe, nationalite, etatPaiement);
+    public Apprenant(int idApprenant,  int matricule, String prenom, String nom, LocalDate dateNaissance, String sexe, String nationalite, int etatPaiement) {
+        this(matricule, prenom, nom, dateNaissance, sexe, nationalite, etatPaiement);
         this.setIdApprenant(idApprenant);
     }
 
-    public Apprenant(int matricule, String email, String prenom, String nom, LocalDate dateNaissance, String sexe, String nationalite, int etatPaiement) {
+    public Apprenant(int matricule,String prenom, String nom, LocalDate dateNaissance, String sexe, String nationalite, int etatPaiement) {
         this.setMatricule(matricule);
         this.setPrenom(prenom);
         this.setNom(nom);
@@ -35,11 +32,10 @@ public class Apprenant implements Serializable {
         this.setSexe(sexe);
         this.setNationalite(nationalite);
         this.setEtatPaiement(etatPaiement);
-        this.setEmail(email);
     }
 
-    public Apprenant(int matricule, String email, String prenom, String nom, LocalDate dateNaissance, String sexe, String nationalite, int etatPaiement, String classe) {
-        this(matricule, email, prenom, nom, dateNaissance, sexe, nationalite, etatPaiement);
+    public Apprenant(int matricule, String prenom, String nom, LocalDate dateNaissance, String sexe, String nationalite, int etatPaiement, String classe) {
+        this(matricule, prenom, nom, dateNaissance, sexe, nationalite, etatPaiement);
         this.setClasse(classe);
     }
 
@@ -61,14 +57,6 @@ public class Apprenant implements Serializable {
 
     public void setClasse(String classe) {
         this.classe = classe;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public int getMatricule() {
@@ -132,8 +120,7 @@ public class Apprenant implements Serializable {
 
     @Override
     public String toString() {
-        return "\nApprenant{" + "idApprenant=" + idApprenant + ", matricule=" + matricule + ", email="
-                + email + ", prenom=" + prenom + ", nom=" + nom + ", dateNaissance=" + dateNaissance + ", sexe="
+        return "\nApprenant{" + "idApprenant=" + idApprenant + ", matricule=" + matricule + ", prenom=" + prenom + ", nom=" + nom + ", dateNaissance=" + dateNaissance + ", sexe="
                 + sexe + ", nationalite=" + nationalite + ", etatPaiement=" + etatPaiement + ", classe=" + classe +
                 "}\n";
     }

@@ -27,7 +27,7 @@ public class ApprenantDAOImp implements SearchDAO<Apprenant> {
                 matricule = rs.getInt(1) + 1;
             }
             //Generate a method to insert a Apprenant in the database
-            String query = "INSERT INTO apprenants (nom, prenom, sexe, nationalite, dtNaiss, echeancier, email, matricule) " +
+            String query = "INSERT INTO apprenants (nom, prenom, sexe, nationalite, dtNaiss, echeancier, matricule) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
             PreparedStatement statement = connexion.prepareStatement(query);
@@ -37,7 +37,6 @@ public class ApprenantDAOImp implements SearchDAO<Apprenant> {
             statement.setString(4, obj.getNationalite());
             statement.setString(5, obj.getDateNaissance().toString());
             statement.setInt(6, obj.getEtatPaiement());
-            statement.setString(7, obj.getEmail());
             statement.setInt(8, matricule);
             statement.executeUpdate();
 
@@ -69,7 +68,7 @@ public class ApprenantDAOImp implements SearchDAO<Apprenant> {
     @Override
     public Apprenant read(int id) throws DAOException {
         try(Connection connexion = DBManager.getConnection()){
-            String query = "SELECT a.prenom, a.nom, a.nationalite, a.dtNaiss, a.echeancier, a.matricule, a.sexe, a.email," +
+            String query = "SELECT a.prenom, a.nom, a.nationalite, a.dtNaiss, a.echeancier, a.matricule, a.sexe," +
                     "c.intitule FROM apprenants a, classes c, classeapprenant ca" +
                     " WHERE a.idApprenant = ? AND c.idClasse = ca.idClasse " +
                     "AND ca.idApprenant = a.idApprenant";
@@ -87,7 +86,6 @@ public class ApprenantDAOImp implements SearchDAO<Apprenant> {
                 String dateNaissance = rs.getString("dtNaiss");
                 apprenant.setEtatPaiement(rs.getInt("echeancier"));
                 apprenant.setClasse(rs.getString("intitule"));
-                apprenant.setEmail(rs.getString("email"));
 
                 //cast the dateNaissance to LocalDate
                 String format = "yyyy-MM-dd";
@@ -109,7 +107,7 @@ public class ApprenantDAOImp implements SearchDAO<Apprenant> {
         List<Apprenant> apprenants = new ArrayList<>();
 
         try(Connection connexion = DBManager.getConnection()){
-            String query = "SELECT a.idApprenant, a.prenom, a.nom, a.dtNaiss, a.nationalite, a.echeancier, a.sexe, a.email," +
+            String query = "SELECT a.idApprenant, a.prenom, a.nom, a.dtNaiss, a.nationalite, a.echeancier, a.sexe," +
                     " a.matricule, c.intitule FROM apprenants a, classes c, classeapprenant ca" +
                     " WHERE c.idClasse = ca.idClasse " +
                     "AND ca.idApprenant = a.idApprenant";
@@ -126,7 +124,6 @@ public class ApprenantDAOImp implements SearchDAO<Apprenant> {
                 String dateNaissance = rs.getString("dtNaiss");
                 apprenant.setEtatPaiement(rs.getInt("echeancier"));
                 apprenant.setClasse(rs.getString("intitule"));
-                apprenant.setEmail(rs.getString("email"));
 
                 //cast the dateNaissance to LocalDate
                 String format = "yyyy-MM-dd";
@@ -148,7 +145,7 @@ public class ApprenantDAOImp implements SearchDAO<Apprenant> {
         List<Apprenant> apprenants = new ArrayList<>();
 
         try(Connection connexion = DBManager.getConnection()){
-            String query = "SELECT a.idApprenant, a.prenom, a.nom, a.dtNaiss, a.nationalite, a.echeancier, a.sexe, a.email," +
+            String query = "SELECT a.idApprenant, a.prenom, a.nom, a.dtNaiss, a.nationalite, a.echeancier, a.sexe," +
                     "a.matricule, c.intitule FROM apprenants a, classes c, classeapprenant ca " +
                     "WHERE (a.nom LIKE ? OR prenom LIKE ?) AND c.idClasse = ca.idClasse AND ca.idApprenant = a.idApprenant" ;
             PreparedStatement statement = connexion.prepareStatement(query);
@@ -166,7 +163,6 @@ public class ApprenantDAOImp implements SearchDAO<Apprenant> {
                 String dateNaissance = rs.getString("dtNaiss");
                 apprenant.setEtatPaiement(rs.getInt("echeancier"));
                 apprenant.setClasse(rs.getString("intitule"));
-                apprenant.setEmail(rs.getString("email"));
 
                 //cast the dateNaissance to LocalDate
                 String format = "yyyy-MM-dd";
@@ -200,7 +196,6 @@ public class ApprenantDAOImp implements SearchDAO<Apprenant> {
                 apprenant.setNationalite(rs.getString("nationalite"));
                 String dateNaissance = rs.getString("dtNaiss");
                 apprenant.setEtatPaiement(rs.getInt("echeancier"));
-                apprenant.setEmail(rs.getString("email"));
 
                 //cast the dateNaissance to LocalDate
                 String format = "yyyy-MM-dd";
@@ -213,7 +208,6 @@ public class ApprenantDAOImp implements SearchDAO<Apprenant> {
         }catch(Exception e) {
             throw new DAOException("Error in search Apprenant" + e.getMessage());
         }
-
         return null;
     }
 }
