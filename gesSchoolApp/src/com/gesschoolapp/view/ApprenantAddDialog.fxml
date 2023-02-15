@@ -43,7 +43,7 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
-                  <Button fx:id="btnAnnuler" layoutX="392.0" layoutY="387.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="120.0" style="-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-background-color: linear-gradient(to right, #D23342, #ED213A);" styleClass="classic_btn" text="Annuler">
+                  <Button fx:id="btnAnnuler" layoutX="392.0" layoutY="387.0" mnemonicParsing="false" onAction="#onClose" prefHeight="41.0" prefWidth="120.0" style="-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-background-color: linear-gradient(to right, #D23342, #ED213A);" styleClass="classic_btn" text="Fermer">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>

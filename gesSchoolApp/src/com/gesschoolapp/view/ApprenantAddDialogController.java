@@ -4,14 +4,20 @@ import com.gesschoolapp.Exceptions.DAOException;
 import com.gesschoolapp.db.DAOClassesImpl.ApprenantDAOImp;
 import com.gesschoolapp.models.classroom.Classe;
 import com.gesschoolapp.models.student.Apprenant;
+import com.gesschoolapp.runtime.Main;
 import com.gesschoolapp.view.util.Genre;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -24,8 +30,29 @@ public class ApprenantAddDialogController extends Application implements Initial
 
     private Classe currentClass;
 
+    // Reference to the main com.gesschoolapp
+    private Main main;
+
+    // Reference to the current scene
+    private Scene scene;
+
     private SecretaireUIController superController;
 
+    public Main getMain() {
+        return main;
+    }
+
+    public void setMain(Main main) {
+        this.main = main;
+    }
+
+    public Scene getScene() {
+        return scene;
+    }
+
+    public void setScene(Scene scene) {
+        this.scene = scene;
+    }
 
     ApprenantDAOImp apprenantsData = new ApprenantDAOImp();
 
@@ -120,6 +147,32 @@ public class ApprenantAddDialogController extends Application implements Initial
         dialogStage.close();
         superController.setMainMessageInfo("Élève ajouté avec succès !");
         return true;
+    }
+
+    @FXML
+    void onClose(ActionEvent event) {
+
+        try {
+            Timeline timeline = new Timeline();
+            KeyFrame key;
+            key = new KeyFrame(Duration.millis(50),
+                    new KeyValue(dialogStage.opacityProperty(), 0));
+            timeline.getKeyFrames().add(key);
+            timeline.setOnFinished((ae) -> dialogStage.close());
+            timeline.play();
+        } catch (Exception e) {e.printStackTrace();}
+
+
+    }
+
+    public void setDraggable() {
+
+        scene.getRoot().setOnMousePressed(e ->{
+            scene.getRoot().setOnMouseDragged(e1 ->{
+                dialogStage.setX(e1.getScreenX() - e.getSceneX());
+                dialogStage.setY(e1.getScreenY() - e.getSceneY());
+            });
+        });
     }
 
 

@@ -1,14 +1,21 @@
 package com.gesschoolapp.view;
 
 import com.gesschoolapp.models.student.Apprenant;
+import com.gesschoolapp.runtime.Main;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -18,6 +25,30 @@ import java.util.ResourceBundle;
 public class ApprenantViewDialogController implements Initializable {
     private Stage dialogStage;
     private Apprenant apprenant;
+
+    private Main main;
+
+    // Reference to the current scene
+    private Scene scene;
+
+
+
+    public Main getMain() {
+        return main;
+    }
+
+    public void setMain(Main main) {
+        this.main = main;
+    }
+
+    public Scene getScene() {
+        return scene;
+    }
+
+    public void setScene(Scene scene) {
+        this.scene = scene;
+    }
+
 
 
     @FXML
@@ -76,6 +107,30 @@ public class ApprenantViewDialogController implements Initializable {
 
         this.apprenant = appr;
     }
+
+    @FXML
+    void onClose(ActionEvent event) {
+        try {
+            Timeline timeline = new Timeline();
+            KeyFrame key;
+            key = new KeyFrame(Duration.millis(50),
+                    new KeyValue(dialogStage.opacityProperty(), 0));
+            timeline.getKeyFrames().add(key);
+            timeline.setOnFinished((ae) -> dialogStage.close());
+            timeline.play();
+        } catch (Exception e) {e.printStackTrace();}
+    }
+
+    public void setDraggable() {
+
+        scene.getRoot().setOnMousePressed(e ->{
+            scene.getRoot().setOnMouseDragged(e1 ->{
+                dialogStage.setX(e1.getScreenX() - e.getSceneX());
+                dialogStage.setY(e1.getScreenY() - e.getSceneY());
+            });
+        });
+    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

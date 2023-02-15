@@ -101,7 +101,7 @@ public class LoginUIController implements Initializable  {
             timeline.getKeyFrames().add(key);
             timeline.setOnFinished((ae) -> System.exit(0));
             timeline.play();
-        } catch (Exception e) {e.getMessage();}
+        } catch (Exception e) {e.printStackTrace();}
 
     }
 

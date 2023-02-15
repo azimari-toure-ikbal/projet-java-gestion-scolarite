@@ -27,8 +27,7 @@ public class ClassPreviewItemController implements Initializable {
     @FXML
     private Label labelIntitule;
 
-    @FXML
-    private Label nbModules;
+
 
     @FXML
     private Label nbStudents;
@@ -50,8 +49,7 @@ public class ClassPreviewItemController implements Initializable {
     }
 
     public void setData(Classe classe){
-        nbStudents.setText(classe.getApprenants().size() + " apprenants,");
-        nbModules.setText(classe.getModules().size() + " modules");
+        nbStudents.setText(classe.getApprenants().size() + " élèves, " + classe.getModules().size() + " modules");
         labelIntitule.setText(classe.getIntitule());
         labelFormation.setText(classe.getFormation());
         labelAnnee.setText(classe.getAnnee());

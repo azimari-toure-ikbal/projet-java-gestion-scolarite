@@ -47,7 +47,7 @@
             <Font name="System Bold" size="17.0" />
          </font>
       </Label>
-      <Label fx:id="nbStudents" layoutX="25.0" layoutY="448.0" text="? apprenants," textFill="#93989e" AnchorPane.leftAnchor="28.5">
+      <Label fx:id="nbStudents" layoutX="25.0" layoutY="448.0" text="??? élèves, ??? modules" textFill="#93989e" AnchorPane.leftAnchor="28.5">
          <font>
             <Font size="17.0" />
          </font>
@@ -79,11 +79,6 @@
       <Label layoutX="160.0" layoutY="618.0" text="Gestion notes" textFill="#575151" AnchorPane.bottomAnchor="24.0">
          <font>
             <Font name="System Bold" size="13.0" />
-         </font>
-      </Label>
-      <Label fx:id="nbModules" layoutX="133.0" layoutY="448.0" text="? modules" textFill="#93989e">
-         <font>
-            <Font size="17.0" />
          </font>
       </Label>
    </children>

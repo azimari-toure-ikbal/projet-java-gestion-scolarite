@@ -666,7 +666,7 @@ public class SecretaireUIController implements Initializable {
             // Set the application icon.
 
             dialogStage.getIcons().add(new Image("com/gesschoolapp/resources/images/app_icon.png"));
-            dialogStage.initStyle(StageStyle.DECORATED);
+            dialogStage.initStyle(StageStyle.UNDECORATED);
             dialogStage.setResizable(false);
 
 
@@ -678,7 +678,10 @@ public class SecretaireUIController implements Initializable {
             // Set the person into the controller.
             ApprenantViewDialogController controller = loader.getController();
             controller.setDialogStage(dialogStage);
+            controller.setScene(scene);
+            controller.setMain(mainApp);
             controller.setApprenant(appr);
+            controller.setDraggable();
 
             // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();
@@ -703,7 +706,8 @@ public class SecretaireUIController implements Initializable {
                 // Set the application icon.
 
                 dialogStage.getIcons().add(new Image("com/gesschoolapp/resources/images/app_icon.png"));
-                dialogStage.initStyle(StageStyle.DECORATED);
+                dialogStage.initStyle(StageStyle.UNDECORATED);
+//                dialogStage.stageStyle(stageStyle.I);
                 dialogStage.setResizable(false);
 
 
@@ -715,8 +719,11 @@ public class SecretaireUIController implements Initializable {
                 // Set the person into the controller.
                 ApprenantAddDialogController controller = loader.getController();
                 controller.setDialogStage(dialogStage);
+                controller.setMain(mainApp);
+                controller.setScene(scene);
                 controller.setSuperController(this);
                 controller.setCurrentClass(selectedClass);
+                controller.setDraggable();
 
                 // Show the dialog and wait until the user closes it
                 dialogStage.showAndWait();
