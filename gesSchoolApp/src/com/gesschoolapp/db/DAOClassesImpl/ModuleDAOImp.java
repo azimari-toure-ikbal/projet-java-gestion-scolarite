@@ -2,6 +2,7 @@ package com.gesschoolapp.db.DAOClassesImpl;
 
 import com.gesschoolapp.Exceptions.DAOException;
 import com.gesschoolapp.db.DAOInterfaces.DAO;
+import com.gesschoolapp.db.DAOInterfaces.SearchDAO;
 import com.gesschoolapp.db.DBManager;
 import com.gesschoolapp.models.matieres.Module;
 import com.gesschoolapp.models.matieres.Note;
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class ModuleDAOImp implements DAO<Module> {
+public class ModuleDAOImp implements DAO<Module>, SearchDAO<Module> {
     @Override
     public void create(Module obj) throws DAOException {
 
@@ -88,6 +89,39 @@ public class ModuleDAOImp implements DAO<Module> {
 
         } catch (Exception e) {
             throw new DAOException("Error in ModuleDAOImp.getList() \n" + e.getMessage());
+        }
+    }
+
+
+    @Override
+    public List<Module> search(String stringToSearch) throws DAOException {
+        List<Module> modules = new ArrayList<>();
+
+        try(Connection connexion = DBManager.getConnection()){
+            String query = "SELECT m.idModule, m.intitule, c.intitule as classe FROM `modules` m, classes c WHERE m.idClasse = c.idClasse AND m.intitule LIKE ?";
+            PreparedStatement stmt = connexion.prepareStatement(query);
+            stmt.setString(1, "%" + stringToSearch + "%");
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Module module = new Module();
+                int idModule = rs.getInt("idModule");
+                String intitule = rs.getString("intitule");
+                List<Note> notes = new NoteDAOImp().getList().stream().
+                        filter(note -> Objects.equals(note.getModule(), intitule)).collect(Collectors.toList());
+
+                module.setId(idModule);
+                module.setIntitule(intitule);
+                module.setNotes(notes);
+                module.setClasse(rs.getString("classe"));
+
+                modules.add(module);
+
+            }
+            return modules;
+
+        } catch (Exception e) {
+            throw new DAOException("Error in ModuleDAOImp.search() \n" + e.getMessage());
         }
     }
 }

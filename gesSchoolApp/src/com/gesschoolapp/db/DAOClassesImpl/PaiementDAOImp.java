@@ -21,7 +21,6 @@ public class PaiementDAOImp implements SearchDAO<Paiement> {
     @Override
     public void create(Paiement obj) throws DAOException {
         //Generate a method to insert a paiement in the database
-
     }
 
     @Override
