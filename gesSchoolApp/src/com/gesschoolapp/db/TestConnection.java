@@ -29,7 +29,6 @@ public class TestConnection {
             apprenant.setPrenom("Axel");
             apprenant.setSexe("M");
             apprenant.setNationalite("Camerounais");
-            apprenant.setEmail("axel.zagadou@mail.com");
             apprenant.setDateNaissance(LocalDate.of(2009, 10, 5));
             apprenant.setEtatPaiement(0);
             apprenant.setClasse("4eme");
