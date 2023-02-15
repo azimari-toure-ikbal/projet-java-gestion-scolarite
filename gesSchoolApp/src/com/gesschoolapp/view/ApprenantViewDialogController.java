@@ -64,7 +64,7 @@ public class ApprenantViewDialogController implements Initializable {
     private Pane landscape;
 
     @FXML
-    private Label labelMail;
+    private Label labelEtatPaiement;
 
     @FXML
     private Label labelMatricule;
@@ -103,7 +103,7 @@ public class ApprenantViewDialogController implements Initializable {
         String dNaiss = appr.getDateNaissance().format(formatter);
 
         labelDNaiss.setText(dNaiss);
-        labelMail.setText(appr.getEmail());
+//        labelEtatPaiement.setText("occupe t'en plus tard");
 
         this.apprenant = appr;
     }

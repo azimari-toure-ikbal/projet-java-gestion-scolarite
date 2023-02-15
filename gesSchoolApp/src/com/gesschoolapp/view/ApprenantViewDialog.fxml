@@ -17,7 +17,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="589.0" prefWidth="526.0" style="-fx-background-color: #fff;" stylesheets="@../style/application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gesschoolapp.view.ApprenantViewDialogController">
+<AnchorPane prefHeight="589.0" prefWidth="526.0" style="-fx-border-color: #C8C8C8; -fx-background-color: white; -fx-border-width: 0.5px;" stylesheets="@../style/application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gesschoolapp.view.ApprenantViewDialogController">
    <children>
       <Pane fx:id="landscape" layoutX="14.0" prefHeight="163.0" prefWidth="526.0" style="-fx-background-color: linear-gradient(to right, #2c7aba, #5AB2D8);" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -94,7 +94,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="5">
                <children>
-                  <Label prefHeight="26.0" prefWidth="57.0" text="Email :" textFill="#3c3a3a">
+                  <Label prefHeight="26.0" prefWidth="175.0" text="Etat de paiement :" textFill="#3c3a3a">
                      <font>
                         <Font name="Gill Sans MT Bold" size="15.0" />
                      </font>
@@ -102,7 +102,7 @@
                         <Insets right="2.0" />
                      </padding>
                   </Label>
-                  <Label fx:id="labelMail" prefHeight="26.0" prefWidth="177.0" text="azoumilawal.14@mail.com" textFill="#3c3a3a">
+                  <Label fx:id="labelEtatPaiement" prefHeight="26.0" prefWidth="177.0" text="CONTENTIEUX" textFill="#3c3a3a">
                      <font>
                         <Font name="Gill Sans MT" size="15.0" />
                      </font>
@@ -163,7 +163,7 @@
             <Image url="@../resources/images/bill_icon.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnAnnuler" alignment="CENTER" layoutX="392.0" layoutY="532.0" mnemonicParsing="false" onAction="#onClose" prefHeight="43.0" prefWidth="120.0" style="-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-background-color: linear-gradient(to right, #D23342, #ED213A);" styleClass="classic_btn" text="Annuler">
+      <Button fx:id="btnAnnuler" alignment="CENTER" layoutX="392.0" layoutY="532.0" mnemonicParsing="false" onAction="#onClose" prefHeight="43.0" prefWidth="120.0" style="-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-background-color: linear-gradient(to right, #D23342, #ED213A);" styleClass="classic_btn" text="Fermer">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>

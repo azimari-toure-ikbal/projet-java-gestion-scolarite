@@ -133,7 +133,6 @@ public class ApprenantAddDialogController extends Application implements Initial
             apprenant.setSexe("F");
         }
         apprenant.setDateNaissance(dNaiss);
-        apprenant.setEmail("random@mail.com");
         apprenant.setClasse(currentClass.getIntitule());
 
         try {
