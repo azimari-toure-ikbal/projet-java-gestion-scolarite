@@ -18,17 +18,17 @@ import javax.swing.JOptionPane;
 public class TestConnection {
     public static void main(String[] args) {
 
-       testGetModules();
+       testCreateApprenant();
     }
 
 
     public static void testCreateApprenant(){
         try {
             Apprenant apprenant = new Apprenant();
-            apprenant.setNom("Zagadou");
-            apprenant.setPrenom("Axel");
+            apprenant.setNom("Emery");
+            apprenant.setPrenom("Warren");
             apprenant.setSexe("M");
-            apprenant.setNationalite("Camerounais");
+            apprenant.setNationalite("Français");
             apprenant.setDateNaissance(LocalDate.of(2009, 10, 5));
             apprenant.setEtatPaiement(0);
             apprenant.setClasse("4eme");
