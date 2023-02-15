@@ -30,7 +30,7 @@ public class NoteDAOImp implements DAO<Note> {
     @Override
     public Note read(int id) throws DAOException {
         try(Connection connexion = DBManager.getConnection()) {
-            String query = "SELECT n.valeur, m.intitule as intitule, n.idApprenant FROM notes n, modules m WHERE idNote = ?";
+            String query = "SELECT n.valeur, m.intitule as intitule, n.idApprenant, n.semestre FROM notes n, modules m WHERE idNote = ?";
             PreparedStatement stmt = connexion.prepareStatement(query);
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
@@ -41,6 +41,7 @@ public class NoteDAOImp implements DAO<Note> {
                 note.setNote(rs.getInt("note"));
                 note.setApprenant(apprenantDAOImp.read(rs.getInt("idApprenant")));
                 note.setModule(rs.getString("intitule"));
+                note.setSemestre(rs.getInt("semestre"));
                 return note;
             }
         } catch (Exception e) {

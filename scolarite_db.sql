@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 13, 2023 at 01:11 PM
+-- Generation Time: Feb 15, 2023 at 08:08 AM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -32,7 +32,6 @@ CREATE TABLE IF NOT EXISTS `apprenants` (
   `idApprenant` int(11) NOT NULL AUTO_INCREMENT,
   `prenom` varchar(64) NOT NULL,
   `nom` varchar(64) NOT NULL,
-  `email` varchar(64) NOT NULL,
   `dtNaiss` date NOT NULL,
   `nationalite` varchar(40) NOT NULL,
   `echeancier` int(40) NOT NULL,
@@ -46,12 +45,12 @@ CREATE TABLE IF NOT EXISTS `apprenants` (
 -- Dumping data for table `apprenants`
 --
 
-INSERT INTO `apprenants` (`idApprenant`, `prenom`, `nom`, `email`, `dtNaiss`, `nationalite`, `echeancier`, `sexe`, `matricule`) VALUES
-(1, 'Moussa', 'DIOP', 'moussa.diop@mail.com', '2010-02-15', 'sénégalais', 0, 'M', 100),
-(2, 'Max', 'BIRD', 'max.bird@mail.com', '2010-06-13', 'français', 0, 'M', 101),
-(3, 'Marie', 'PLASSARD', 'marie.plassard@mail.com', '2010-01-16', 'belge', 0, 'F', 102),
-(4, 'Fabienne', 'DUPONT', 'fabienne.dupont@mail.com', '2010-08-11', 'française', 0, 'F', 103),
-(16, 'Axel', 'Zagadou', 'axel.zagadou@mail.com', '2009-10-05', 'Camerounais', 0, 'M', 104);
+INSERT INTO `apprenants` (`idApprenant`, `prenom`, `nom`, `dtNaiss`, `nationalite`, `echeancier`, `sexe`, `matricule`) VALUES
+(1, 'Moussa', 'DIOP', '2010-02-15', 'sénégalais', 0, 'M', 100),
+(2, 'Max', 'BIRD', '2010-06-13', 'français', 0, 'M', 101),
+(3, 'Marie', 'PLASSARD', '2010-01-16', 'belge', 0, 'F', 102),
+(4, 'Fabienne', 'DUPONT', '2010-08-11', 'française', 0, 'F', 103),
+(16, 'Axel', 'Zagadou', '2009-10-05', 'Camerounais', 0, 'M', 104);
 
 -- --------------------------------------------------------
 
@@ -187,6 +186,7 @@ CREATE TABLE IF NOT EXISTS `notes` (
   `valeur` int(11) NOT NULL,
   `idApprenant` int(11) NOT NULL,
   `idModule` int(11) NOT NULL,
+  `semestre` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`idNote`),
   KEY `idModule` (`idModule`),
   KEY `idApprenant` (`idApprenant`)
@@ -196,15 +196,15 @@ CREATE TABLE IF NOT EXISTS `notes` (
 -- Dumping data for table `notes`
 --
 
-INSERT INTO `notes` (`idNote`, `valeur`, `idApprenant`, `idModule`) VALUES
-(1, 14, 3, 14),
-(2, 18, 4, 14),
-(3, 10, 1, 14),
-(4, 20, 2, 14),
-(5, 9, 4, 11),
-(6, 13, 1, 11),
-(7, 18, 3, 11),
-(8, 10, 4, 11);
+INSERT INTO `notes` (`idNote`, `valeur`, `idApprenant`, `idModule`, `semestre`) VALUES
+(1, 14, 3, 14, 1),
+(2, 18, 4, 14, 1),
+(3, 10, 1, 14, 1),
+(4, 20, 2, 14, 1),
+(5, 9, 4, 11, 1),
+(6, 13, 1, 11, 1),
+(7, 18, 3, 11, 1),
+(8, 10, 4, 11, 1);
 
 -- --------------------------------------------------------
 

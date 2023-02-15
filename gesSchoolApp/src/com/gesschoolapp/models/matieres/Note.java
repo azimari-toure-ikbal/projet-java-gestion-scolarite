@@ -11,16 +11,18 @@ public class Note implements Serializable {
     private int note;
     private Apprenant apprenant;
     private String module;
+    private int semestre;
 
     //constructors
     public Note() {
     }
 
-    public Note(int id, int note, Apprenant apprenant, String module) {
+    public Note(int id, int note, Apprenant apprenant, String module, int semestre) {
         this.setId(id);
         this.setNote(note);
         this.setApprenant(apprenant);
         this.setModule(module);
+        this.setSemestre(semestre);
     }
 
     //getters and setters
@@ -31,6 +33,14 @@ public class Note implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getSemestre() {
+        return semestre;
+    }
+
+    public void setSemestre(int semestre) {
+        this.semestre = semestre;
     }
 
     public int getNote() {
