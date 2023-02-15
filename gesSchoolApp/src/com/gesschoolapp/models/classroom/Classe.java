@@ -4,9 +4,10 @@ import com.gesschoolapp.models.matieres.Module;
 import com.gesschoolapp.models.student.Apprenant;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 
-public class Classe implements Serializable {
+public class Classe implements Serializable, Comparable<Classe>{
     public static final long serialVersionUID = 42L;
 
     //attributes id, intitule, reference(int), annee(string), formation(string), apprenants(list<Apprenants>), modules(list<Module>)
@@ -17,13 +18,13 @@ public class Classe implements Serializable {
     private String formation;
     private List<Apprenant> apprenants;
     private List<Module> modules;
-    private int views ;
+    private LocalDateTime views ;
 
     //constructors
     public Classe() {
     }
 
-    public Classe(int id, String intitule, int reference, String annee, String formation, List<Apprenant> apprenants, List<Module> modules, int views) {
+    public Classe(int id, String intitule, int reference, String annee, String formation, List<Apprenant> apprenants, List<Module> modules, LocalDateTime views) {
         //use setters
         this.setId(id);
         this.setIntitule(intitule);
@@ -77,11 +78,11 @@ public class Classe implements Serializable {
         this.formation = formation;
     }
 
-    public int getViews() {
+    public LocalDateTime getViews() {
         return views;
     }
 
-    public void setViews(int views) {
+    public void setViews(LocalDateTime views) {
         this.views = views;
     }
 
@@ -114,5 +115,11 @@ public class Classe implements Serializable {
                 ", views=" + views +
                 "}\n";
     }
+
+        @Override
+        public int compareTo(Classe o) {
+            //compare by views
+            return o.getViews().compareTo(this.getViews());
+        }
 
 }

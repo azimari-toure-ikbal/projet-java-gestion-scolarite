@@ -8,12 +8,13 @@ import com.gesschoolapp.models.classroom.Classe;
 import com.gesschoolapp.models.student.Apprenant;
 import com.gesschoolapp.models.matieres.Module;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -53,7 +54,7 @@ public class ClasseDAOImp implements SearchDAO<Classe> {
                 int reference = rs.getInt("reference");
                 String formation = rs.getString("formation");
                 String annee = rs.getString("annee");
-                int views = rs.getInt("views");
+                Timestamp timestamp = rs.getTimestamp("views");
                 List<Module> modules = new ModuleDAOImp().getList();
                 if (modules != null) {
                     modules = modules.stream().filter(module -> Objects.equals(module.getClasse(), intitule)).collect(Collectors.toList());
@@ -63,12 +64,14 @@ public class ClasseDAOImp implements SearchDAO<Classe> {
                         filter(apprenant -> Objects.equals(apprenant.getClasse(), intitule)).toList();
 
 
-                Classe classe = new Classe(id, intitule, reference, annee, formation, apprenants, modules, views);
+                Classe classe = new Classe(id, intitule, reference, annee, formation, apprenants, modules,
+                        timestamp.toLocalDateTime());
                 classes.add(classe);
             }
         } catch (Exception e) {
             throw new DAOException("Error in ClasseDAOImp.getList() \n" + e.getMessage());
         }
+        Collections.sort(classes);
         return classes;
     }
 
@@ -87,7 +90,7 @@ public class ClasseDAOImp implements SearchDAO<Classe> {
                 int reference = rs.getInt("reference");
                 String formation = rs.getString("formation");
                 String annee = rs.getString("annee");
-                int views = rs.getInt("views");
+                Timestamp timestamp = rs.getTimestamp("views");
 
                 List<Module> modules = new ModuleDAOImp().getList().stream().
                         filter(module -> Objects.equals(module.getClasse(), intitule)).toList();
@@ -95,7 +98,8 @@ public class ClasseDAOImp implements SearchDAO<Classe> {
                 List<Apprenant> apprenants = new ApprenantDAOImp().getList().stream().
                         filter(apprenant -> Objects.equals(apprenant.getClasse(), intitule)).toList();
 
-                Classe classe = new Classe(id, intitule, reference, annee, formation, apprenants, modules, views);
+                Classe classe = new Classe(id, intitule, reference, annee, formation,apprenants, modules,
+                               timestamp.toLocalDateTime());
                 classes.add(classe);
             }
         } catch (Exception e) {
@@ -104,14 +108,17 @@ public class ClasseDAOImp implements SearchDAO<Classe> {
         return classes;
     }
 
-    public void incrementViews(Classe classe) throws DAOException{
+    public void setLastView(Classe classe) throws DAOException{
 
         try (Connection connection = DBManager.getConnection()) {
             String query = "UPDATE classes SET views = ? WHERE idClasse = ?";
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, classe.getViews() + 1);
+            LocalDateTime localDateTime = LocalDateTime.now();
+            Timestamp timestamp = Timestamp.valueOf(localDateTime);
+            statement.setTimestamp(1, timestamp);
             statement.setInt(2, classe.getId());
             statement.executeUpdate();
+            classe.setViews(localDateTime);
         } catch (Exception e) {
             throw new DAOException("Error in ClasseDAOImp.incrementViews()" + e.getMessage());
         }
