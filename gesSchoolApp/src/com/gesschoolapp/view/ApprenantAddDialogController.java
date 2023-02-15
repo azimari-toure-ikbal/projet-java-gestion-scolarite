@@ -16,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -102,6 +103,7 @@ public class ApprenantAddDialogController extends Application implements Initial
         LocalDate dNaiss = null;
         try{
             dNaiss = labelDNaiss.getValue();
+
         }catch (DateTimeParseException e){
             messageInfo.setText("Veuillez entrer une date valide !");
             return false;
@@ -109,17 +111,18 @@ public class ApprenantAddDialogController extends Application implements Initial
 
 
         if(nom.length() >= 256 || prenom.length() >= 256){
+            messageInfo.setVisible(true);
             messageInfo.setText("Le nom et/ou le prénom ne doivent pas faire plus de 256 caractères !");
             return false;
-        }
-
-        if(nom.length() == 0 || prenom.length() == 0 || nationalite.length() == 0 || Objects.isNull(dNaiss)){
+        }else if(nom.length() == 0 || prenom.length() == 0 || nationalite.length() == 0 || Objects.isNull(dNaiss)){
+            messageInfo.setVisible(true);
             messageInfo.setText("Veuillez renseigner tous les champs !");
+            messageInfo.setTextFill(Color.web("#e83636"));
             return false;
-        }
-
-        if(nationalite.length() >= 130){
+        }else if(nationalite.length() >= 130){
+            messageInfo.setVisible(true);
             messageInfo.setText("Nationalité invalide !");
+            messageInfo.setTextFill(Color.web("#e83636"));
             return false;
         }
 
@@ -135,14 +138,19 @@ public class ApprenantAddDialogController extends Application implements Initial
         apprenant.setDateNaissance(dNaiss);
         apprenant.setClasse(currentClass.getIntitule());
 
+            if(apprenant instanceof Apprenant){
+                messageInfo.setVisible(true);
+                messageInfo.setText("Patientez...");
+                messageInfo.setTextFill(Color.web("#5CB85C"));
+            }
+
         try {
             apprenantsData.create(apprenant);
+            superController.resetVue();
         } catch (DAOException e) {
             throw new RuntimeException(e);
         }
 
-        messageInfo.setText("");
-//        superController.resetVue();
         dialogStage.close();
         superController.setMainMessageInfo("Élève ajouté avec succès !");
         return true;
@@ -150,7 +158,7 @@ public class ApprenantAddDialogController extends Application implements Initial
 
     @FXML
     void onClose(ActionEvent event) {
-
+        System.out.println("TEST ON CLOSE");
         try {
             Timeline timeline = new Timeline();
             KeyFrame key;
@@ -195,6 +203,7 @@ public class ApprenantAddDialogController extends Application implements Initial
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         selectGenre.getItems().addAll(genres);
+        messageInfo.setVisible(false);
         selectGenre.setValue(Genre.MASCULIN);
     }
     public void setSuperController(SecretaireUIController superController) {

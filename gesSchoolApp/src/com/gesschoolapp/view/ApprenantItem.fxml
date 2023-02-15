@@ -48,7 +48,7 @@
         </Pane>
         <Pane prefHeight="64.0" prefWidth="126.0">
             <children>
-                <Button fx:id="btnDeleteApprenant" alignment="CENTER" layoutX="75.0" layoutY="12.0" mnemonicParsing="false" style="-fx-pref-height: 40px; -fx-pref-width: 40px;" styleClass="virgin_btn" textAlignment="CENTER">
+                <Button fx:id="btnDeleteApprenant" alignment="CENTER" layoutX="75.0" layoutY="12.0" mnemonicParsing="false" onAction="#deleteBtnClicked" style="-fx-pref-height: 40px; -fx-pref-width: 40px;" styleClass="virgin_btn" textAlignment="CENTER">
                     <graphic>
                         <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                             <image>

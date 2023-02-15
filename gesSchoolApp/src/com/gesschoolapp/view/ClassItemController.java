@@ -31,6 +31,10 @@ public class ClassItemController implements Initializable {
     @FXML
     private HBox classCard;
 
+    public void setThisClass(Classe thisClass) {
+        this.thisClass = thisClass;
+    }
+
     private Classe thisClass;
 
 

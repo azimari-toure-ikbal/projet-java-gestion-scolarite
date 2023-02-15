@@ -201,7 +201,14 @@ public class SecretaireUIController implements Initializable {
 
 
         try {
-            resetVue();
+
+            // Classes récentes :
+            setClasseRecentes();
+            // Liste de toutes les classes :
+            setListeDesClasses(listeClasses);
+            // Liste des modules d'une classe :
+            setListeDesModules();
+            setListeDesApprenants();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -211,13 +218,12 @@ public class SecretaireUIController implements Initializable {
 
     public void resetVue() {
         try {
-            // Classes récentes :
-                setClasseRecentes();
-            // Liste de toutes les classes :
-            setListeDesClasses(listeClasses);
+            classesData = new ClasseDAOImp();
+            listeClasses = classesData.getList();
+            this.resetSelectedClass(classesData.search(selectedClass.getIntitule()).get(0));
+            List<Apprenant> newlist = classesData.search(selectedClass.getIntitule()).get(0).getApprenants();
+            setListeDesApprenants(newlist);
 
-            // Liste des modules d'une classe :
-            setListeDesModules();
         } catch (DAOException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
@@ -291,6 +297,36 @@ public class SecretaireUIController implements Initializable {
         classPreview1Controller.setData(selectedClass);
         classPreview2Controller.setData(selectedClass);
         setCurrentRouteLink("/"+getSelectedClass().getIntitule());
+
+        try {
+            setListeDesModules();
+            setListeDesApprenants();
+        } catch (DAOException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public void resetSelectedClass(Classe selectedClass) {
+        List<Node> classesRecentesCards = classesHomeLayout.getChildren();
+        List<Node> allClassCards = classesClassesLayout.getChildren();
+
+        for (Node classCard : allClassCards) {
+            ((HBox) classCard).setStyle("-fx-background-color: #F2F5FA;-fx-background-radius: 7px;-fx-cursor: hand;");
+        }
+
+        for (Node classCard : classesRecentesCards) {
+            ((HBox) classCard).setStyle("-fx-background-color: #F2F5FA;-fx-background-radius: 7px;-fx-cursor: hand;");
+        }
+
+        this.selectedClass = selectedClass;
+
+        System.out.println(selectedClass.getIntitule());
+
+        classPreview1Controller.setData(selectedClass);
+        classPreview2Controller.setData(selectedClass);
 
         try {
             setListeDesModules();
@@ -579,8 +615,10 @@ public class SecretaireUIController implements Initializable {
     }
 
     public void setListeDesApprenants() throws DAOException, IOException {
+        setListeDesApprenants(selectedClass.getApprenants());
+    }
+    public void setListeDesApprenants(List<Apprenant> apprenants) throws DAOException, IOException {
         studentsLayout.getChildren().clear();
-        List<Apprenant> apprenants = selectedClass.getApprenants();
         for (Apprenant apprenant : apprenants) {
 
             FXMLLoader fxmlLoader = new FXMLLoader();

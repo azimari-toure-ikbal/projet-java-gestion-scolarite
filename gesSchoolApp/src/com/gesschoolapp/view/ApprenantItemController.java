@@ -5,11 +5,17 @@ import com.gesschoolapp.models.student.Apprenant;
 import com.gesschoolapp.view.SecretaireUIController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 public class ApprenantItemController {
 
@@ -40,12 +46,26 @@ public class ApprenantItemController {
 
     @FXML
     void actionBtnClicked(ActionEvent event) {
-        System.out.println("CLICKED MF !");
         if(event.getSource() == btnViewApprenant){
-            System.out.println("CLICKED ON VIEW STUDENT");
             superController.openStudentViewDialog(thisApprenant);
         }
     }
+
+    @FXML
+    void deleteBtnClicked(MouseEvent event) {
+        System.out.println("clc ce fdp");
+        //ask for confirmation
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Suppression");
+        alert.setHeaderText("Vous êtes sur le point de supprimer l'élève" + thisApprenant.getNom() + " " + thisApprenant.getPrenom() + " de matricule " + thisApprenant.getMatricule());
+        alert.setContentText("Voulez-vous continuer ?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+
+        }
+    }
+
+
 
 
     public void setData(Apprenant apprenant){

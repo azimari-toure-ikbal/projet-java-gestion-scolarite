@@ -43,7 +43,7 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
-                  <Button fx:id="btnAnnuler" layoutX="392.0" layoutY="387.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="120.0" style="-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-background-color: linear-gradient(to right, #D23342, #ED213A);" styleClass="classic_btn" text="Annuler">
+                  <Button fx:id="btnAnnuler" layoutX="392.0" layoutY="387.0" mnemonicParsing="false" onAction="#onClose" prefHeight="41.0" prefWidth="120.0" style="-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-background-color: linear-gradient(to right, #D23342, #ED213A);" styleClass="classic_btn" text="Annuler">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
@@ -179,7 +179,7 @@
                         </DropShadow>
                      </effect>
                   </Button>
-                  <Label fx:id="messageInfo" alignment="CENTER" layoutX="23.0" layoutY="340.0" prefHeight="21.0" prefWidth="481.0" textFill="#e83636" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="23.0">
+                  <Label fx:id="messageInfo" alignment="CENTER" layoutX="23.0" layoutY="340.0" prefHeight="21.0" prefWidth="481.0" text="Patientez..." textFill="#5cb85c" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="23.0">
                      <font>
                         <Font name="Corbel" size="17.0" />
                      </font>
