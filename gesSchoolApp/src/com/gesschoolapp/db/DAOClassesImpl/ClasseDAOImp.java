@@ -53,6 +53,7 @@ public class ClasseDAOImp implements SearchDAO<Classe> {
                 int reference = rs.getInt("reference");
                 String formation = rs.getString("formation");
                 String annee = rs.getString("annee");
+                int views = rs.getInt("views");
                 List<Module> modules = new ModuleDAOImp().getList();
                 if (modules != null) {
                     modules = modules.stream().filter(module -> Objects.equals(module.getClasse(), intitule)).collect(Collectors.toList());
@@ -62,7 +63,7 @@ public class ClasseDAOImp implements SearchDAO<Classe> {
                         filter(apprenant -> Objects.equals(apprenant.getClasse(), intitule)).toList();
 
 
-                Classe classe = new Classe(id, intitule, reference, annee, formation, apprenants, modules);
+                Classe classe = new Classe(id, intitule, reference, annee, formation, apprenants, modules, views);
                 classes.add(classe);
             }
         } catch (Exception e) {
@@ -86,6 +87,7 @@ public class ClasseDAOImp implements SearchDAO<Classe> {
                 int reference = rs.getInt("reference");
                 String formation = rs.getString("formation");
                 String annee = rs.getString("annee");
+                int views = rs.getInt("views");
 
                 List<Module> modules = new ModuleDAOImp().getList().stream().
                         filter(module -> Objects.equals(module.getClasse(), intitule)).toList();
@@ -93,13 +95,26 @@ public class ClasseDAOImp implements SearchDAO<Classe> {
                 List<Apprenant> apprenants = new ApprenantDAOImp().getList().stream().
                         filter(apprenant -> Objects.equals(apprenant.getClasse(), intitule)).toList();
 
-                Classe classe = new Classe(id, intitule, reference, annee, formation, apprenants, modules);
+                Classe classe = new Classe(id, intitule, reference, annee, formation, apprenants, modules, views);
                 classes.add(classe);
             }
         } catch (Exception e) {
             throw new DAOException("Error in ClasseDAOImp.search()" + e.getMessage());
         }
         return classes;
+    }
+
+    public void incrementViews(Classe classe) throws DAOException{
+
+        try (Connection connection = DBManager.getConnection()) {
+            String query = "UPDATE classes SET views = ? WHERE idClasse = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, classe.getViews() + 1);
+            statement.setInt(2, classe.getId());
+            statement.executeUpdate();
+        } catch (Exception e) {
+            throw new DAOException("Error in ClasseDAOImp.incrementViews()" + e.getMessage());
+        }
     }
 
 }

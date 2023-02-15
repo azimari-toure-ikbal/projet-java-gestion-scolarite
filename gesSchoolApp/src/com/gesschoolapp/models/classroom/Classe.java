@@ -17,12 +17,13 @@ public class Classe implements Serializable {
     private String formation;
     private List<Apprenant> apprenants;
     private List<Module> modules;
+    private int views ;
 
     //constructors
     public Classe() {
     }
 
-    public Classe(int id, String intitule, int reference, String annee, String formation, List<Apprenant> apprenants, List<Module> modules) {
+    public Classe(int id, String intitule, int reference, String annee, String formation, List<Apprenant> apprenants, List<Module> modules, int views) {
         //use setters
         this.setId(id);
         this.setIntitule(intitule);
@@ -31,7 +32,7 @@ public class Classe implements Serializable {
         this.setFormation(formation);
         this.setApprenants(apprenants);
         this.setModules(modules);
-
+        this.setViews(views);
     }
 
     //getters and setters
@@ -76,6 +77,14 @@ public class Classe implements Serializable {
         this.formation = formation;
     }
 
+    public int getViews() {
+        return views;
+    }
+
+    public void setViews(int views) {
+        this.views = views;
+    }
+
     public List<Apprenant> getApprenants() {
         return apprenants;
     }
@@ -102,6 +111,8 @@ public class Classe implements Serializable {
                 ", formation='" + formation + '\'' +
                 ", apprenants=" + apprenants +
                 ", modules=" + modules +
+                ", views=" + views +
                 "}\n";
     }
+
 }

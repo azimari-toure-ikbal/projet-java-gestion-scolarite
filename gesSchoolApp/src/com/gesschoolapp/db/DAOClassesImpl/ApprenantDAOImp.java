@@ -69,7 +69,7 @@ public class ApprenantDAOImp implements SearchDAO<Apprenant> {
             statement.setInt(6, obj.getEtatPaiement());
             statement.setInt(7, obj.getIdApprenant());
             statement.executeUpdate();
-            
+
         }catch (Exception e) {
             throw new DAOException("Error while updating Apprenant" + e.getMessage());
         }
