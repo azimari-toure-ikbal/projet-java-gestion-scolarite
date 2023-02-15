@@ -295,6 +295,11 @@ public class SecretaireUIController implements Initializable {
         }
 
         this.selectedClass = selectedClass;
+        try {
+            classesData.setLastView(selectedClass);
+        } catch (DAOException e) {
+            throw new RuntimeException(e);
+        }
 
         System.out.println(selectedClass.getIntitule());
 
@@ -651,10 +656,7 @@ public class SecretaireUIController implements Initializable {
     private void setClasseRecentes() throws DAOException, IOException {
         List<Classe> classes = listeClasses;
 
-        Random rand = new Random();
-        int itr = rand.nextInt(classes.size() - 5);
-
-        for (int i = itr; i <= itr + 4; i++) {
+        for (int i = 0; i <= 6; i++) {
 
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("ClassItem.fxml"));
@@ -665,7 +667,7 @@ public class SecretaireUIController implements Initializable {
             cic.setSuperController(this);
             cic.setData(classes.get(i));
 
-            if (i == itr) {
+            if (i == 0) {
                 hBox.setStyle("-fx-background-color: #fff;-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);");
                 this.setSelectedClass(classes.get(i));
             }
