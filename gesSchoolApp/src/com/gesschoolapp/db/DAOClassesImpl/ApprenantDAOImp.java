@@ -28,7 +28,7 @@ public class ApprenantDAOImp implements SearchDAO<Apprenant> {
             }
             //Generate a method to insert a Apprenant in the database
             String query = "INSERT INTO apprenants (nom, prenom, sexe, nationalite, dtNaiss, echeancier, matricule) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                    "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
             PreparedStatement statement = connexion.prepareStatement(query);
             statement.setString(1, obj.getNom());
@@ -37,7 +37,7 @@ public class ApprenantDAOImp implements SearchDAO<Apprenant> {
             statement.setString(4, obj.getNationalite());
             statement.setString(5, obj.getDateNaissance().toString());
             statement.setInt(6, obj.getEtatPaiement());
-            statement.setInt(8, matricule);
+            statement.setInt(7, matricule);
             statement.executeUpdate();
 
             Classe classe = new ClasseDAOImp().search(obj.getClasse()).stream().filter(

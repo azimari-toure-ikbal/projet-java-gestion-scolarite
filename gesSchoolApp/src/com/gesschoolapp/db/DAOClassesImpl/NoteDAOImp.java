@@ -25,8 +25,6 @@ public class NoteDAOImp implements DAO<Note> {
         } catch (Exception e) {
             throw new DAOException("In NoteDAOImp.create()\n" + e.getMessage());
         }
-
-
     }
 
     @Override
