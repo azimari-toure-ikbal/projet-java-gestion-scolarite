@@ -58,11 +58,34 @@ public class ApprenantDAOImp implements SearchDAO<Apprenant> {
     @Override
     public void update(Apprenant obj) throws DAOException {
 
+        try(Connection connection = DBManager.getConnection() ){
+            String query = "UPDATE apprenants SET nom = ?, prenom = ?, sexe = ?, nationalite = ?, dtNaiss = ?, echeancier = ? WHERE idApprenant = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, obj.getNom());
+            statement.setString(2, obj.getPrenom());
+            statement.setString(3, obj.getSexe());
+            statement.setString(4, obj.getNationalite());
+            statement.setString(5, obj.getDateNaissance().toString());
+            statement.setInt(6, obj.getEtatPaiement());
+            statement.setInt(7, obj.getIdApprenant());
+            statement.executeUpdate();
+            
+        }catch (Exception e) {
+            throw new DAOException("Error while updating Apprenant" + e.getMessage());
+        }
+
     }
 
     @Override
     public void delete(int id) throws DAOException {
-
+        try(Connection connexion = DBManager.getConnection()){
+            String query = "DELETE FROM apprenants WHERE idApprenant = ?";
+            PreparedStatement statement = connexion.prepareStatement(query);
+            statement.setInt(1, id);
+            statement.executeUpdate();
+    }catch (Exception e) {
+            throw new DAOException("Error while deleting Apprenant" + e.getMessage());
+        }
     }
 
     @Override
