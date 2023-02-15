@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 15, 2023 at 08:08 AM
+-- Generation Time: Feb 15, 2023 at 08:35 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `apprenants` (
   `matricule` int(11) NOT NULL,
   PRIMARY KEY (`idApprenant`),
   UNIQUE KEY `matricule` (`matricule`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `apprenants`
@@ -50,7 +50,9 @@ INSERT INTO `apprenants` (`idApprenant`, `prenom`, `nom`, `dtNaiss`, `nationalit
 (2, 'Max', 'BIRD', '2010-06-13', 'français', 0, 'M', 101),
 (3, 'Marie', 'PLASSARD', '2010-01-16', 'belge', 0, 'F', 102),
 (4, 'Fabienne', 'DUPONT', '2010-08-11', 'française', 0, 'F', 103),
-(16, 'Axel', 'Zagadou', '2009-10-05', 'Camerounais', 0, 'M', 104);
+(16, 'Axel', 'Zagadou', '2009-10-05', 'Camerounais', 0, 'M', 104),
+(17, 'Warren', 'Emery', '2009-10-05', 'Français', 0, 'M', 105),
+(18, 'Warren', 'Emery', '2009-10-05', 'Français', 0, 'M', 106);
 
 -- --------------------------------------------------------
 
@@ -79,7 +81,7 @@ CREATE TABLE IF NOT EXISTS `classeapprenant` (
   PRIMARY KEY (`idClasseAppenant`),
   KEY `classeapprenant_ibfk_1` (`idApprenant`),
   KEY `classeapprenant_ibfk_2` (`idClasse`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `classeapprenant`
@@ -91,7 +93,8 @@ INSERT INTO `classeapprenant` (`idClasseAppenant`, `idClasse`, `idApprenant`) VA
 (3, 15, 1),
 (4, 15, 3),
 (10, 14, 16),
-(11, 14, 17);
+(11, 14, 17),
+(12, 14, 17);
 
 -- --------------------------------------------------------
 
@@ -106,6 +109,7 @@ CREATE TABLE IF NOT EXISTS `classes` (
   `reference` int(11) NOT NULL,
   `annee` varchar(12) NOT NULL,
   `formation` varchar(36) NOT NULL,
+  `views` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`idClasse`)
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 
@@ -113,25 +117,25 @@ CREATE TABLE IF NOT EXISTS `classes` (
 -- Dumping data for table `classes`
 --
 
-INSERT INTO `classes` (`idClasse`, `intitule`, `reference`, `annee`, `formation`) VALUES
-(1, 'Crèche', 1, '2022-2023', 'Maternelle'),
-(2, 'Très Petite Section', 2, '2022-2023', 'Maternelle'),
-(3, 'Moyenne Section', 3, '2022-2023', 'Maternelle'),
-(4, 'Grande Section', 3, '2022-2023', 'Maternelle'),
-(5, 'CI', 4, '2022/2023', 'Elementaire'),
-(6, 'CP', 4, '2022/2023', 'Elementaire'),
-(7, 'CE1', 5, '2022/2023', 'Elementaire'),
-(8, 'CE2', 5, '2022/2023', 'Elementaire'),
-(9, 'CM1', 6, '2022/2023', 'Elementaire'),
-(10, 'CM2', 6, '2022/2023', 'Elementaire'),
-(11, 'Petite Section', 3, '2022/2023', 'Maternelle'),
-(12, '6eme', 7, '2022/2023', 'College'),
-(13, '5eme', 7, '2022/2023', 'College'),
-(14, '4eme', 8, '2022/2023', 'College'),
-(15, '3eme', 8, '2022/2023', 'College'),
-(16, '1ere année', 9, '2022/2023', 'Froid/Climatisation'),
-(17, '2e année', 9, '2022/2023', 'Froid/Climatisation'),
-(18, '3e année', 9, '2022/2023', 'Froid/Climatisation');
+INSERT INTO `classes` (`idClasse`, `intitule`, `reference`, `annee`, `formation`, `views`) VALUES
+(1, 'Crèche', 1, '2022-2023', 'Maternelle', '2023-02-15 19:45:07'),
+(2, 'Très Petite Section', 2, '2022-2023', 'Maternelle', '2023-02-15 19:45:07'),
+(3, 'Moyenne Section', 3, '2022-2023', 'Maternelle', '2023-02-15 20:25:28'),
+(4, 'Grande Section', 3, '2022-2023', 'Maternelle', '2023-02-15 19:45:07'),
+(5, 'CI', 4, '2022/2023', 'Elementaire', '2023-02-15 19:45:07'),
+(6, 'CP', 4, '2022/2023', 'Elementaire', '2023-02-15 19:45:07'),
+(7, 'CE1', 5, '2022/2023', 'Elementaire', '2023-02-15 19:45:07'),
+(8, 'CE2', 5, '2022/2023', 'Elementaire', '2023-02-15 19:45:07'),
+(9, 'CM1', 6, '2022/2023', 'Elementaire', '2023-02-15 19:45:07'),
+(10, 'CM2', 6, '2022/2023', 'Elementaire', '2023-02-15 19:45:07'),
+(11, 'Petite Section', 3, '2022/2023', 'Maternelle', '2023-02-15 19:45:07'),
+(12, '6eme', 7, '2022/2023', 'College', '2023-02-15 20:22:29'),
+(13, '5eme', 7, '2022/2023', 'College', '2023-02-15 19:45:07'),
+(14, '4eme', 8, '2022/2023', 'College', '2023-02-15 19:45:07'),
+(15, '3eme', 8, '2022/2023', 'College', '2023-02-15 20:21:29'),
+(16, '1ere année', 9, '2022/2023', 'Froid/Climatisation', '2023-02-15 19:45:07'),
+(17, '2e année', 9, '2022/2023', 'Froid/Climatisation', '2023-02-15 19:45:07'),
+(18, '3e année', 9, '2022/2023', 'Froid/Climatisation', '2023-02-15 20:33:59');
 
 -- --------------------------------------------------------
 
