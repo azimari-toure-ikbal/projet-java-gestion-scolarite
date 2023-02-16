@@ -193,7 +193,7 @@
     -fx-background-color: derive(-fx-focus-color,30%);
 }
 
-// ########### SECRETAIRE UI :
+/* ########### SECRETAIRE UI :*/
 
 .notif_btn{
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 30, 0, 0, 0);
@@ -250,7 +250,7 @@
     -fx-background-color: #e6eff2;
 }
 
-// -- navbar menu :
+/* -- navbar menu :*/
 
 .menu_section{
     -fx-border-color: #5488FF;

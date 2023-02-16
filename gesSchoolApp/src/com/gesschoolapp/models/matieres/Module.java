@@ -12,14 +12,18 @@ public class Module implements Serializable {
 
     private String classe;
 
+    private int semestre;
+
     //constructors
     public Module() {
     }
 
-    public Module(int id, String intitule, List<Note> notes) {
+    public Module(int id, String intitule, List<Note> notes, String classe, int semestre) {
         this.setId(id);
         this.setIntitule(intitule);
         this.setNotes(notes);
+        this.setClasse(classe);
+        this.setSemestre(semestre);
     }
 
     //getters and setters
@@ -55,6 +59,14 @@ public class Module implements Serializable {
         this.notes = notes;
     }
 
+    public int getSemestre() {
+        return semestre;
+    }
+
+    public void setSemestre(int semestre) {
+        this.semestre = semestre;
+    }
+
 
     @Override
     public String toString() {
@@ -62,6 +74,8 @@ public class Module implements Serializable {
                 "id=" + id +
                 ", intitule='" + intitule + '\'' +
                 " notes " + notes +
+                ", classe='" + classe + '\'' +
+                ", semestre=" + semestre +
                 "}\n";
     }
 }
