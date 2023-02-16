@@ -4,7 +4,6 @@ import java.time.LocalDate;
 
 public class Paiement {
     //paiement has idPaiement, numeroRecu, montant, rubrique, date, apprenant(String), caissier(String), classe(String), observation
-
     private int idPaiement;
     private String numeroRecu;
     private String montant;
