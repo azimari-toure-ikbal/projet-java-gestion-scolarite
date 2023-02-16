@@ -4,9 +4,11 @@ import com.gesschoolapp.Exceptions.DAOException;
 import com.gesschoolapp.db.DAOClassesImpl.ClasseDAOImp;
 import com.gesschoolapp.models.classroom.Classe;
 import com.gesschoolapp.models.matieres.Module;
+import com.gesschoolapp.models.matieres.Note;
 import com.gesschoolapp.models.student.Apprenant;
 import com.gesschoolapp.models.users.Secretaire;
 import com.gesschoolapp.runtime.Main;
+import com.gesschoolapp.controllers.NotesItemController;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -35,10 +37,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.*;
 
@@ -90,7 +89,7 @@ public class SecretaireUIController implements Initializable {
         }
     }
 
-    //    Preview items controllers :
+    //    Preview items com.gesschoolapp.controllers :
 
     @FXML
     private ClassPreviewItemController classPreview1Controller;
@@ -159,6 +158,9 @@ public class SecretaireUIController implements Initializable {
 
     @FXML
     private HBox modulesLayout;
+
+    @FXML
+    private VBox notesLayout;
 
     private Button selectedSemestre;
 
@@ -267,9 +269,25 @@ public class SecretaireUIController implements Initializable {
 
     public void setSelectedSemestre(Button selectedSemestre) {
         this.selectedSemestre = selectedSemestre;
+        int numSemestre;
+        if(selectedSemestre == btnSemestre1){
+                numSemestre = 1;
+        }else{
+                numSemestre = 2;
+        }
             btnSemestre2.setStyle("-fx-border-width: 0;");
             btnSemestre1.setStyle("-fx-border-width: 0;");
         selectedSemestre.setStyle("-fx-border-width : 0 0 2px 0;-fx-border-color: #84898d;");
+        List<Module> listeModulesSemestre = selectedClass.getModules().stream().
+                filter(module -> Objects.equals(module.getSemestre(), numSemestre)).toList();
+
+        try {
+            setListeDesModules(listeModulesSemestre);
+        } catch (DAOException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         System.out.println("SELECTED " + selectedSemestre);
     }
 
@@ -396,6 +414,13 @@ public class SecretaireUIController implements Initializable {
         }
 
         this.selectedModule = selectedModule;
+        try {
+            setListeDesNotes(selectedModule.getNotes());
+        } catch (DAOException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         System.out.println("MODULE SELECTIONNE :" + this.selectedModule.getIntitule());
     }
 
@@ -643,8 +668,7 @@ public class SecretaireUIController implements Initializable {
             ModuleItemController mic = fxmlLoader.getController();
             mic.setSuperController(this);
             mic.setData(module);
-
-            if (selectedClass.getModules().get(1) == module) {
+            if (modules.get(1) == module) {
                 setSelectedModule(module);
                 mic.setAsSelected();
             }
@@ -652,6 +676,7 @@ public class SecretaireUIController implements Initializable {
             modulesLayout.getChildren().add(pane);
 
         }
+
     }
 
     public void setListeDesApprenants() throws DAOException, IOException {
@@ -675,6 +700,29 @@ public class SecretaireUIController implements Initializable {
         }
     }
 
+
+    public void setListeDesNotes() throws DAOException, IOException {
+        setListeDesNotes(selectedModule.getNotes());
+    }
+    public void setListeDesNotes(List<Note> notes) throws DAOException, IOException {
+        System.out.println(" SETTED LISTE DES NOTES ");
+        notesLayout.getChildren().clear();
+        for (Note note : notes) {
+
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("NotesItem.fxml"));
+
+            HBox hbox = fxmlLoader.load();
+
+            NotesItemController nic = fxmlLoader.getController();
+            nic.setSuperController(this);
+            nic.setData(note);
+
+
+            notesLayout.getChildren().add(hbox);
+
+        }
+    }
 
     private void setClasseRecentes() throws DAOException, IOException {
         List<Classe> classes = listeClasses;

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<HBox prefHeight="64.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gesschoolapp.view.notes.NotesItemController">
+   <children>
+      <Pane prefHeight="64.0" prefWidth="48.0">
+         <children>
+            <Label fx:id="labelMatricule" alignment="CENTER" layoutY="19.0" prefHeight="26.0" prefWidth="33.0" text="103" textFill="#3c3a3a">
+               <font>
+                  <Font name="Gill Sans MT" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane prefHeight="64.0" prefWidth="220.0">
+         <children>
+            <Label fx:id="labelEtudiant" alignment="CENTER" layoutX="12.0" layoutY="19.0" prefHeight="26.0" prefWidth="176.0" text="Ikbal AZIMARI TOURE" textFill="#3c3a3a">
+               <font>
+                  <Font name="Gill Sans MT" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane prefWidth="232.0">
+         <children>
+            <Label fx:id="labelNote" alignment="CENTER" contentDisplay="CENTER" layoutY="21.0" prefHeight="23.0" prefWidth="209.0" text="19.5/20" textAlignment="CENTER" textFill="#3c3a3a">
+               <font>
+                  <Font name="Gill Sans MT" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane prefHeight="64.0" prefWidth="126.0">
+         <children>
+            <Button fx:id="btnEditNote" alignment="CENTER" layoutX="40.0" layoutY="12.0" mnemonicParsing="false" onAction="#actionBtnClicked" style="-fx-pref-height: 40px; -fx-pref-width: 40px;" styleClass="virgin_btn" textAlignment="CENTER">
+               <graphic>
+                  <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/images/edit_alt_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </Pane>
+   </children>
+</HBox>
