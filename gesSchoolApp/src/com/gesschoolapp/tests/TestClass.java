@@ -1,5 +1,5 @@
 package com.gesschoolapp.tests;
-import com.gesschoolapp.ArchiveManager;
+import com.gesschoolapp.serial.ArchiveManager;
 import com.gesschoolapp.Exceptions.CSVException;
 import com.gesschoolapp.db.DAOClassesImpl.ApprenantDAOImp;
 import com.gesschoolapp.db.DAOClassesImpl.ClasseDAOImp;
