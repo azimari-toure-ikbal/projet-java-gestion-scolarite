@@ -36,7 +36,7 @@ public class ModuleDAOImp implements DAO<Module>, SearchDAO<Module> {
         List<Module> modules = new ArrayList<>();
 
         try(Connection connexion = DBManager.getConnection()){
-            String query = "SELECT m.idClasse, m.intitule, c.intitule as class FROM modules m, classes c WHERE idModule = ? AND c.intitule = m.idClasse";
+            String query = "SELECT m.idClasse, m.intitule, c.intitule as class, m.semestre FROM modules m, classes c WHERE idModule = ? AND c.intitule = m.idClasse";
             PreparedStatement stmt = connexion.prepareStatement(query);
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
@@ -51,6 +51,7 @@ public class ModuleDAOImp implements DAO<Module>, SearchDAO<Module> {
                 module.setIntitule(intitule);
                 module.setNotes(notes);
                 module.setClasse(rs.getString("class"));
+                module.setSemestre(rs.getInt("semestre"));
 
                 return module;
             }
@@ -66,7 +67,7 @@ public class ModuleDAOImp implements DAO<Module>, SearchDAO<Module> {
         List<Module> modules = new ArrayList<>();
 
         try(Connection connexion = DBManager.getConnection()){
-            String query = "SELECT m.idModule, m.intitule, c.intitule as classe FROM `modules` m, classes c WHERE m.idClasse = c.idClasse";
+            String query = "SELECT m.idModule, m.intitule, c.intitule as classe, m.semestre FROM `modules` m, classes c WHERE m.idClasse = c.idClasse";
             PreparedStatement stmt = connexion.prepareStatement(query);
             ResultSet rs = stmt.executeQuery();
 
@@ -81,7 +82,7 @@ public class ModuleDAOImp implements DAO<Module>, SearchDAO<Module> {
                 module.setIntitule(intitule);
                 module.setNotes(notes);
                 module.setClasse(rs.getString("classe"));
-
+                module.setSemestre(rs.getInt("semestre"));
                 modules.add(module);
 
             }
@@ -98,7 +99,7 @@ public class ModuleDAOImp implements DAO<Module>, SearchDAO<Module> {
         List<Module> modules = new ArrayList<>();
 
         try(Connection connexion = DBManager.getConnection()){
-            String query = "SELECT m.idModule, m.intitule, c.intitule as classe FROM `modules` m, classes c WHERE m.idClasse = c.idClasse AND m.intitule LIKE ?";
+            String query = "SELECT m.idModule, m.intitule, c.intitule as classe, m.semestre FROM `modules` m, classes c WHERE m.idClasse = c.idClasse AND m.intitule LIKE ?";
             PreparedStatement stmt = connexion.prepareStatement(query);
             stmt.setString(1, "%" + stringToSearch + "%");
             ResultSet rs = stmt.executeQuery();
@@ -114,6 +115,7 @@ public class ModuleDAOImp implements DAO<Module>, SearchDAO<Module> {
                 module.setIntitule(intitule);
                 module.setNotes(notes);
                 module.setClasse(rs.getString("classe"));
+                module.setSemestre(rs.getInt("semestre"));
 
                 modules.add(module);
 

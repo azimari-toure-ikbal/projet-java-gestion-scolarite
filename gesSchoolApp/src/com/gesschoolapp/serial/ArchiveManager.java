@@ -1,4 +1,4 @@
-package com.gesschoolapp;
+package com.gesschoolapp.serial;
 
 import com.gesschoolapp.Exceptions.ArchiveManagerException;
 import com.gesschoolapp.models.classroom.Classes;
@@ -10,7 +10,7 @@ import java.io.ObjectOutputStream;
 
 public class ArchiveManager {
     public static final long serialVersionUID = 11555;
-    private static final String FILE_TEMPLATE = "archives/archive";
+    private static final String FILE_TEMPLATE = "storage/archives/archive";
 
 
     public static void SerializeArchive(Classes classes) throws ArchiveManagerException{
@@ -25,7 +25,6 @@ public class ArchiveManager {
 
     public static Classes DeserializeArchive(String year) throws ArchiveManagerException {
         String filename = FILE_TEMPLATE + year + ".ser";
-        //deserialize the contacts from C:\workspace-java\files\contacts.ser and return the object
         try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
             return (Classes) ois.readObject();
         } catch (Exception e) {

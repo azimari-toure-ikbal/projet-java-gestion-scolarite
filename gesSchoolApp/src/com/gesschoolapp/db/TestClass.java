@@ -1,5 +1,5 @@
 package com.gesschoolapp.db;
-import com.gesschoolapp.ArchiveManager;
+import com.gesschoolapp.serial.ArchiveManager;
 import com.gesschoolapp.db.DAOClassesImpl.ApprenantDAOImp;
 import com.gesschoolapp.db.DAOClassesImpl.ClasseDAOImp;
 import com.gesschoolapp.db.DAOClassesImpl.ModuleDAOImp;
@@ -10,8 +10,6 @@ import com.gesschoolapp.models.student.Apprenant;
 
 import java.sql.Connection;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -20,8 +18,7 @@ import javax.swing.JOptionPane;
 public class TestClass {
     public static void main(String[] args) {
 
-        testLastView();
-        testGetClasses();
+        testSearchClasse("4eme");
     }
 
     public static void testLastView(){
