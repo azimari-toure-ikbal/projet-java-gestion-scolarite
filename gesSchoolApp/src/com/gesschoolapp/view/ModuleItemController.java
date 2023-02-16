@@ -26,20 +26,6 @@ public class ModuleItemController implements Initializable {
     private SecretaireUIController superController;
 
 
-
-    private List<String> moduleThemes = new ArrayList<>();
-    {
-        moduleThemes.add("-fx-fill: linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #e12538 0.0%, #d0747d 100.0%)");
-        moduleThemes.add("-fx-fill: linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #7326e0 0.0%, #9782d7 100.0%)");
-        moduleThemes.add("-fx-fill: linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #547558 0.0%, #83d68c 100.0%)");
-        moduleThemes.add("-fx-fill: linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #bf7225 0.0%, #e1852a 100.0%)");
-        moduleThemes.add("-fx-fill: linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #e02683 0.0%, #eeacbf 100.0%)");
-        moduleThemes.add("-fx-fill: linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #e02683 0.0%, #eeacbf 100.0%)");
-        moduleThemes.add("-fx-fill: linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #28bf4e 0.0%, #a4ffbf 100.0%)");
-        moduleThemes.add("-fx-fill: linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #b09509 0.0%, #f9ffa6 100.0%)");
-        moduleThemes.add("-fx-fill: linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #ad4009 0.0%, #da7645 100.0%)");
-
-    }
     @FXML
     private Label moduleName;
 
@@ -66,7 +52,7 @@ public class ModuleItemController implements Initializable {
         superController.setSelectedModule(thisModule);
         Image opened = new Image("com/gesschoolapp/resources/images/opened_folder.png");
         ((ImageView) ((Pane) moduleCard).getChildren().get(0)).setImage(opened);
-        ((Label) ((Pane) moduleCard).getChildren().get(1)).setStyle("-fx-font-size:9px;-fx-font-weight:bold;-fx-font-style:italic;-fx-padding: 8px 0 0 0;");
+        ((Label) ((Pane) moduleCard).getChildren().get(1)).setStyle("-fx-font-size:7px;-fx-font-weight:bold;-fx-font-style:italic;-fx-padding: 8px 0 0 0;");
     }
 
     public SecretaireUIController getSuperController() {
@@ -77,10 +63,6 @@ public class ModuleItemController implements Initializable {
         this.superController = superController;
     }
 
-    public String getRandomTheme(){
-        Random rand = new Random();
-        return moduleThemes.get(rand.nextInt(moduleThemes.size()));
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

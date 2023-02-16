@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="moduleCard" prefHeight="98.0" prefWidth="106.0" style="-fx-background-color: EAEFF8;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gesschoolapp.view.ModuleItemController">
+<Pane fx:id="moduleCard" prefHeight="84.0" prefWidth="96.0" style="-fx-background-color: EAEFF8;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gesschoolapp.view.ModuleItemController">
    <children>
-      <ImageView fitHeight="105.0" fitWidth="106.0" layoutY="-3.0">
+      <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="8.0" layoutY="2.0">
          <image>
             <Image url="@../resources/images/closed_folder.png" />
          </image>
@@ -19,9 +19,9 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </ImageView>
-      <Label fx:id="moduleName" alignment="CENTER" layoutX="5.0" layoutY="34.0" prefHeight="41.0" prefWidth="96.0" text="Physique-Chimie" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS" wrapText="true">
+      <Label fx:id="moduleName" alignment="CENTER" focusTraversable="false" layoutX="10.0" layoutY="26.0" prefHeight="38.0" prefWidth="78.0" text="Sciences de la vie et de la terre" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS" wrapText="true">
          <font>
-            <Font name="System Bold Italic" size="11.0" />
+            <Font name="System Bold Italic" size="9.0" />
          </font>
          <cursor>
             <Cursor fx:constant="DEFAULT" />
@@ -30,7 +30,7 @@
             <Insets left="3.0" right="3.0" />
          </padding>
       </Label>
-      <Button layoutY="1.0" mnemonicParsing="false" onAction="#onClickModule" prefHeight="41.0" prefWidth="106.0" style="-fx-background-color: transparent; -fx-border-width: 0;">
+      <Button layoutY="6.0" mnemonicParsing="false" onAction="#onClickModule" prefHeight="76.0" prefWidth="97.0" style="-fx-background-color: transparent; -fx-border-width: 0;">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>

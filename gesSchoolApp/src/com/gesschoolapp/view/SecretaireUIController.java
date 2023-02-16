@@ -55,6 +55,12 @@ public class SecretaireUIController implements Initializable {
     private Label mainMessageInfo;
 
     @FXML
+    private Button btnSemestre1;
+
+    @FXML
+    private Button btnSemestre2;
+
+    @FXML
     private Label mainAwaitInfo;
 
 
@@ -153,6 +159,8 @@ public class SecretaireUIController implements Initializable {
 
     @FXML
     private HBox modulesLayout;
+
+    private Button selectedSemestre;
 
     @FXML
     private VBox studentsLayout;
@@ -253,6 +261,17 @@ public class SecretaireUIController implements Initializable {
         return stage;
     }
 
+    public Button getSelectedSemestre() {
+        return selectedSemestre;
+    }
+
+    public void setSelectedSemestre(Button selectedSemestre) {
+        this.selectedSemestre = selectedSemestre;
+            btnSemestre2.setStyle("-fx-border-width: 0;");
+            btnSemestre1.setStyle("-fx-border-width: 0;");
+        selectedSemestre.setStyle("-fx-border-width : 0 0 2px 0;-fx-border-color: #84898d;");
+        System.out.println("SELECTED " + selectedSemestre);
+    }
 
     public String getPreviousRouteLink() {
         return previousRouteLink;
@@ -372,7 +391,7 @@ public class SecretaireUIController implements Initializable {
         for (Node moduleCard : modulesCard) {
             Image closed = new Image("com/gesschoolapp/resources/images/closed_folder.png");
             ((ImageView) ((Pane) moduleCard).getChildren().get(0)).setImage(closed);
-            ((Label) ((Pane) moduleCard).getChildren().get(1)).setStyle("-fx-font-size:11px;-fx-font-weight:bold;-fx-font-style:italic;-fx-padding: 0px 0 0 0;");
+            ((Label) ((Pane) moduleCard).getChildren().get(1)).setStyle("-fx-font-size:9px;-fx-font-weight:bold;-fx-font-style:italic;-fx-padding: 0px 0 0 0;");
 
         }
 
@@ -519,6 +538,7 @@ public class SecretaireUIController implements Initializable {
             btnPrecedentIsActive(true);
         }else if(getCurrentRoute().getRouteLink().equals("/"+getSelectedClass().getIntitule()+"/notes")){
             classNotesView.toFront();
+            setSelectedSemestre(btnSemestre1);
             btnPrecedentIsActive(true);
         }else if(getCurrentRoute().getRouteLink().equals("/"+getSelectedClass().getIntitule())){
             System.out.println("AFFICHE LE MAIN FDP");
@@ -608,11 +628,14 @@ public class SecretaireUIController implements Initializable {
         }
     }
 
-    private void setListeDesModules() throws DAOException, IOException {
-        modulesLayout.getChildren().clear();
-        List<Module> modules = selectedClass.getModules();
-        for (Module module : modules) {
+        private void setListeDesModules() throws DAOException, IOException {
+            setListeDesModules(selectedClass.getModules());
+        }
 
+        private void setListeDesModules(List<Module> modules) throws DAOException, IOException {
+        modulesLayout.getChildren().clear();
+
+        for (Module module : modules) {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("ModuleItem.fxml"));
 
@@ -684,7 +707,11 @@ public class SecretaireUIController implements Initializable {
         classesClassesLayout.getChildren().remove(classesClassesLayout.lookup(".class_card"));
         }
 
+    }
 
+    @FXML
+    private void onSemestreClicked(ActionEvent e){
+            setSelectedSemestre((Button) e.getSource());
     }
 
     @FXML
