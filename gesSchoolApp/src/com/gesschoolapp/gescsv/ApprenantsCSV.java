@@ -2,11 +2,13 @@ package com.gesschoolapp.gescsv;
 
 import com.gesschoolapp.Exceptions.CSVException;
 import com.gesschoolapp.Exceptions.DAOException;
+import com.gesschoolapp.Exceptions.Mismatch;
 import com.gesschoolapp.db.DAOClassesImpl.ApprenantDAOImp;
 import com.gesschoolapp.gescsv.reader.CSVReader;
 import com.gesschoolapp.gescsv.writter.CSVWritter;
 import com.gesschoolapp.models.classroom.Classe;
 import com.gesschoolapp.models.student.Apprenant;
+import com.gesschoolapp.utils.Utilitaire;
 
 import java.io.*;
 import java.time.LocalDate;
@@ -85,11 +87,14 @@ public class ApprenantsCSV implements CSVReader<Apprenant>, CSVWritter<Apprenant
             } catch (DAOException e) {
                 throw new CSVException("Une erreur est survenue lors de la création de l'apprenant : " + e.getMessage());
             }
+
+            // Add the apprenant to the list
+            apprenants.add(apprenant);
         }
         return apprenants;
     }
 
-    public List<Apprenant> csvToObject(List<String[]> data, Classe classe) throws CSVException {
+    public List<Apprenant> csvToObject(List<String[]> data, Classe classe) throws CSVException, Mismatch {
         // Verify if the list is not empty
         if (data.isEmpty()) {
             throw new CSVException("La liste est vide");
@@ -97,21 +102,29 @@ public class ApprenantsCSV implements CSVReader<Apprenant>, CSVWritter<Apprenant
 
         List<Apprenant> apprenants = new ArrayList<>();
 
+        ApprenantDAOImp apprenantDAOImp = new ApprenantDAOImp();
+
         for (String[] line : data) {
             if (line.length != 5) {
                 throw new CSVException("Le fichier n'est pas au bon format");
             }
 
             Apprenant apprenant = new Apprenant();
-            apprenant.setPrenom(line[0].substring(0, 1).toUpperCase() + line[0].substring(1).toLowerCase());
+            apprenant.setPrenom(Utilitaire.capitalizeName(line[0]));
             apprenant.setNom(line[1].toUpperCase());
-            apprenant.setDateNaissance(LocalDate.parse(line[2]));
+            // Verify if the date has format 'dd-MM-yyyy'
+            if (!line[2].matches("\\d{2}-\\d{2}-\\d{4}")) {
+                throw new Mismatch("La date doit être au format 'jj-MM-aaaa'");
+            }
+            // Convert the date to LocalDate with format 'yyyy-MM-dd'
+            apprenant.setDateNaissance(Utilitaire.dateFornater(line[2]));
             apprenant.setNationalite(line[3].substring(0, 1).toUpperCase() + line[3].substring(1).toLowerCase());
             apprenant.setEtatPaiement(0);
+            // Verify if the sexe is 'M' or 'F'
+            if (!line[4].equalsIgnoreCase("M") && !line[4].equalsIgnoreCase("F")) {
+                throw new Mismatch("Le sexe doit être 'M' ou 'F'");
+            }
             apprenant.setSexe(line[4].toUpperCase());
-            // generate matricule
-            int matricule = 105;
-            apprenant.setMatricule(matricule++);
             apprenant.setClasse(classe.getIntitule());
 
             // Create the apprenant
@@ -120,6 +133,9 @@ public class ApprenantsCSV implements CSVReader<Apprenant>, CSVWritter<Apprenant
             } catch (DAOException e) {
                 throw new CSVException("Une erreur est survenue lors de la création de l'apprenant : " + e.getMessage());
             }
+
+            // Add the apprenant to the list
+            apprenants.add(apprenant);
         }
         return apprenants;
     }
@@ -165,4 +181,5 @@ public class ApprenantsCSV implements CSVReader<Apprenant>, CSVWritter<Apprenant
             throw new CSVException("Une erreur est survenue lors de l'écriture du fichier : " + e.getMessage());
         }
     }
+
 }

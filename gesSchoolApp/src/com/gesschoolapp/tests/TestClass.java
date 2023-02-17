@@ -12,6 +12,7 @@ import com.gesschoolapp.models.classroom.Classe;
 import com.gesschoolapp.models.classroom.Classes;
 import com.gesschoolapp.models.matieres.Note;
 import com.gesschoolapp.models.student.Apprenant;
+import com.gesschoolapp.utils.Utilitaire;
 
 import java.io.File;
 import java.sql.Connection;
@@ -25,9 +26,10 @@ public class TestClass {
 
 //        testLastView();
 //        testGetClasses();
-//        testNoteCSV();
+        testNoteCSV();
 //        testApprenantCSV();
-        testCSVWriter();
+//        testCSVWriter();
+        System.out.println(Utilitaire.dateFornater("15-07-2010"));
     }
 
     public static void testLastView(){
@@ -248,5 +250,4 @@ public class TestClass {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
-
 }

@@ -21,7 +21,7 @@ public class ApprenantDAOImp implements SearchDAO<Apprenant> {
     @Override
     public Apprenant create(Apprenant obj) throws DAOException {
         try(Connection connexion = DBManager.getConnection()){
-            int matricule = 0;
+            int matricule = 100;
             String queryMat = "SELECT MAX(matricule) FROM apprenants";
             PreparedStatement statementMat = connexion.prepareStatement(queryMat);
             ResultSet rs = statementMat.executeQuery();
