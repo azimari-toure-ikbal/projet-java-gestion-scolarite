@@ -252,28 +252,12 @@ public class ApprenantDAOImp implements SearchDAO<Apprenant> {
     //search Apprenant by matricule
     public Apprenant searchByMatricule(int matricule) throws DAOException {
         try(Connection connexion = DBManager.getConnection()){
-            String query = "SELECT * FROM apprenants WHERE matricule = ?" ;
-            PreparedStatement statement = connexion.prepareStatement(query);
-            statement.setInt(1, matricule);
-            ResultSet rs = statement.executeQuery();
-            if(rs.next()) {
-                Apprenant apprenant = new Apprenant();
-                apprenant.setIdApprenant(rs.getInt("idApprenant"));
-                apprenant.setNom(rs.getString("nom"));
-                apprenant.setPrenom(rs.getString("prenom"));
-                apprenant.setSexe(rs.getString("sexe"));
-                apprenant.setMatricule(rs.getInt("matricule"));
-                apprenant.setNationalite(rs.getString("nationalite"));
-                String dateNaissance = rs.getString("dtNaiss");
-                apprenant.setEtatPaiement(rs.getInt("echeancier"));
-
-                //cast the dateNaissance to LocalDate
-                String format = "yyyy-MM-dd";
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
-                LocalDate date = LocalDate.parse(dateNaissance, formatter);
-                apprenant.setDateNaissance(date);
-                rs.close();
-                return apprenant;
+            //use getList() method to get all apprenants and then search by matricule
+            List<Apprenant> apprenants = getList();
+            for(Apprenant apprenant : apprenants) {
+                if(apprenant.getMatricule() == matricule) {
+                    return apprenant;
+                }
             }
         }catch(Exception e) {
             throw new DAOException("Error in search Apprenant" + e.getMessage());
