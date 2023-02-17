@@ -19,17 +19,20 @@ public class Action implements Serializable {
     }
 
     /**
+     *
+     *      Action constructor:
+     *      Action is a class that contains the information about the action that has been done by the user
+     *      object is the object involved in the action
+     *      actor is the user who has done the action
+     *      action is the type of action that has been done, you can find the list of actions in the ActionType class
+     *
      * @param idAction
      * @param object
      * @param actor
      * @param action
      * @param date
+     *\n
      *
-     * Action constructor:
-     * Action is a class that contains the information about the action that has been done by the user
-     * object is the object involved in the action
-     * actor is the user who has done the action
-     * action is the type of action that has been done, you can find the list of actions in the ActionType class
      *
      */
 

@@ -18,9 +18,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PaiementDAOImp implements SearchDAO<Paiement> {
+
     @Override
     public void create(Paiement obj) throws DAOException {
         //Generate a method to insert a paiement in the database
+        try (Connection connection = DBManager.getConnection()) {
+            if(obj.getRubrique() == ""){
+
+            }
+            String query = "INSERT INTO paiements (numeroRecu, date, montant, apprenant, classe, rubrique, caissier, observation) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, obj.getNumeroRecu());
+            statement.setString(2, obj.getDate().toString());
+            statement.setString(3, obj.getMontant());
+            statement.setString(4, obj.getApprenant());
+            statement.setString(5, obj.getClasse());
+            statement.setString(6, obj.getRubrique());
+            statement.setString(7, obj.getCaissier());
+            statement.setString(8, obj.getObservation());
+            statement.executeUpdate();
+        } catch (Exception e) {
+            throw new DAOException( "Error in PaiementDAO.create() : " + e.getMessage());
+        }
     }
 
     @Override
@@ -40,8 +59,36 @@ public class PaiementDAOImp implements SearchDAO<Paiement> {
 
     @Override
     public List<Paiement> getList() throws DAOException {
+        try (Connection connection = DBManager.getConnection()) {
+            List<Paiement> paiements = new ArrayList<>();
+            String query = "SELECT * FROM paiements";
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("idPaiement");
+                String numeroRecu = rs.getString("numeroRecu");
+                String date = rs.getString("date");
+                String montant = rs.getString("montant");
+                String apprenant = rs.getString("apprenant");
+                String classe = rs.getString("classe");
+                String rubrique = rs.getString("rubrique");
+                String caissier = rs.getString("caissier");
+                String observation = rs.getString("observation");
+
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                //convert String to LocalDate
+                LocalDate formatedDate = LocalDate.parse(date, formatter);
+
+                Paiement paiement = new Paiement(id, numeroRecu, montant, rubrique, formatedDate, observation, apprenant, caissier, classe);
+                paiements.add(paiement);
+                return paiements;
+            }
+        } catch (Exception e) {
+            throw new DAOException(e.getMessage());
+        }
         return null;
-    }
+}
 
     @Override
     public List<Paiement> search(String stringToSearch) throws DAOException {

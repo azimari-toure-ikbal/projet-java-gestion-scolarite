@@ -4,6 +4,7 @@ import com.gesschoolapp.Exceptions.DAOException;
 import com.gesschoolapp.db.DAOInterfaces.SearchDAO;
 import com.gesschoolapp.db.DBManager;
 import com.gesschoolapp.models.classroom.Classe;
+import com.gesschoolapp.models.matieres.Module;
 import com.gesschoolapp.models.student.Apprenant;
 
 import java.sql.Connection;
@@ -49,6 +50,15 @@ public class ApprenantDAOImp implements SearchDAO<Apprenant> {
             statement2.setInt(1, apprenant.getIdApprenant());
             statement2.setInt(2, classe.getId());
             statement2.executeUpdate();
+
+            List<Module> modules = classe.getModules();
+            for (Module module : modules){
+                String query3 = "INSERT INTO notes (idApprenant, idModule, valeur) VALUES (?, ?, 0)";
+                PreparedStatement statement3 = connexion.prepareStatement(query3);
+                statement3.setInt(1, apprenant.getIdApprenant());
+                statement3.setInt(2, module.getId());
+                statement3.executeUpdate();
+            }
 
         }catch (Exception e) {
             throw new DAOException("Error while creating Apprenant" + e.getMessage());

@@ -41,13 +41,14 @@ public class ActionManager {
     }
 
     /**
-     * @param action
-     * @throws ArchiveManagerException
-     *
      * Every time an action is done you create an action that you pass to this method, the action will
      * be saved in the list of actions and serialized.
      * If the file doesn't exist, or if the file is empty, it will create a new list of actions and
      * add the action to it.
+     *
+     * @param action
+     * @throws ArchiveManagerException
+     *
      */
     public static void add(Action action) throws ArchiveManagerException {
         Actions actions = DeserializeActions();
