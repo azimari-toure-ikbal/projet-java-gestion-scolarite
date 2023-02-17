@@ -34,7 +34,7 @@ public class NoteDAOImp implements DAO<Note> {
             stmt.setInt(1, obj.getNote());
             stmt.setInt(2, obj.getApprenant().getIdApprenant());
             stmt.setInt(3, new ModuleDAOImp().search(obj.getModule()).get(0).getId());
-            stmt.setInt(5, obj.getId());
+            stmt.setInt(4, obj.getId());
             stmt.executeUpdate();
         } catch (Exception e) {
             throw new DAOException("In NoteDAOImp.update()\n" + e.getMessage());

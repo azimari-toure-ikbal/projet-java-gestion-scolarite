@@ -232,15 +232,22 @@ public class SecretaireUIController implements Initializable {
 
     public void resetVue() {
         try {
+//            Cette méthode est particulièrement lente, il faudra peut-être trouver une solution pour l'optimiser
             classesData = new ClasseDAOImp();
             listeClasses = classesData.getList();
+            for(Classe classe : listeClasses){
+                if(classe.getId() == selectedClass.getId()){
+                    resetSelectedClass(classe);
+                }
+            }
             this.resetSelectedClass(classesData.search(selectedClass.getIntitule()).get(0));
-            List<Apprenant> newlist = classesData.search(selectedClass.getIntitule()).get(0).getApprenants();
+            List<Apprenant> newlist = selectedClass.getApprenants();
             setListeDesApprenants(newlist);
 
         } catch (DAOException e) {
             throw new RuntimeException(e);
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             throw new RuntimeException(e);
         }
 
@@ -375,6 +382,7 @@ public class SecretaireUIController implements Initializable {
         classPreview2Controller.setData(selectedClass);
 
         try {
+            Module oldSelectedModule = selectedModule;
             setListeDesModules();
             setListeDesApprenants();
         } catch (DAOException e) {
@@ -386,10 +394,19 @@ public class SecretaireUIController implements Initializable {
     }
 
 
-    public void setMainMessageInfo(String msg) {
+    public void setMainMessageInfo(String msg,int status) {
         mainMessageInfo.setText(msg);
         System.out.println(msg);
         mainAwaitInfo.setVisible(true);
+
+        if(status == 0){
+            mainMessageInfo.setStyle("-fx-background-color: #CE4F4B;");
+        }else if(status == 1){
+            mainMessageInfo.setStyle("-fx-background-color: #4FCE4B;");
+        }else{
+            mainMessageInfo.setStyle("-fx-background-color: #007AF2;");
+        }
+
         setTimeout(() -> {
             mainAwaitInfo.setVisible(false);
             if(msg.length() == 0){
@@ -398,10 +415,16 @@ public class SecretaireUIController implements Initializable {
                 mainMessageInfo.setVisible(true);
                 setTimeout(() -> mainMessageInfo.setVisible(false), 10000);
             }
-        }, 1000);
+        }, 500);
 
-        Platform.runLater(()->resetVue());
+        if(status !=0)
+            Platform.runLater(()->resetVue());
 
+
+    }
+
+    public void setMainMessageInfo(String msg) {
+        setMainMessageInfo(msg,1);
     }
 
     public void setSelectedModule(Module selectedModule) {
@@ -668,7 +691,7 @@ public class SecretaireUIController implements Initializable {
             ModuleItemController mic = fxmlLoader.getController();
             mic.setSuperController(this);
             mic.setData(module);
-            if (modules.get(1) == module) {
+            if (modules.get(0) == module) {
                 setSelectedModule(module);
                 mic.setAsSelected();
             }

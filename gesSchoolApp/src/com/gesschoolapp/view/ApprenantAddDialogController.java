@@ -147,7 +147,6 @@ public class ApprenantAddDialogController extends Application implements Initial
         try {
             dialogStage.close();
             apprenantsData.create(apprenant);
-//            superController.resetVue();
         } catch (DAOException e) {
             throw new RuntimeException(e);
         }
