@@ -18,7 +18,7 @@
             </ImageView>
          </children>
       </Pane>
-      <Label fx:id="labelIntitule" alignment="CENTER" prefHeight="26.0" prefWidth="106.0" text="{intitulé}" textFill="#3c3a3a">
+      <Label fx:id="labelIntitule" alignment="CENTER" prefHeight="26.0" prefWidth="106.0" styleClass="classItemLabel" text="{intitulé}" textFill="#3c3a3a">
          <font>
             <Font name="Gill Sans MT" size="18.0" />
          </font>

@@ -24,6 +24,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -147,6 +149,9 @@ public class ApprenantAddDialogController extends Application implements Initial
         try {
             dialogStage.close();
             apprenantsData.create(apprenant);
+            List<Apprenant> list = new ArrayList<>(superController.getSelectedClass().getApprenants());
+            list.add(apprenant);
+            superController.getSelectedClass().setApprenants(list);
         } catch (DAOException e) {
             throw new RuntimeException(e);
         }

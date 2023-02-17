@@ -23,6 +23,8 @@ import javafx.util.Duration;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -161,16 +163,13 @@ public class ApprenantEditDialogController extends Application implements Initia
             return false;
         }
 
-        if(apprenant instanceof Apprenant){
-            messageInfo.setVisible(true);
-            messageInfo.setText("Patientez...");
-            messageInfo.setTextFill(Color.web("#5CB85C"));
-        }
-
         try {
             dialogStage.close();
             apprenantsData.update(apprenant);
-//            superController.resetVue();
+            List<Apprenant> list = new ArrayList<>(superController.getSelectedClass().getApprenants());
+//            selectedStudent.setNom(apprenant.getNom());
+            list.set(list.indexOf(selectedStudent),apprenant);
+            superController.getSelectedClass().setApprenants(list);
         } catch (DAOException e) {
             throw new RuntimeException(e);
         }
