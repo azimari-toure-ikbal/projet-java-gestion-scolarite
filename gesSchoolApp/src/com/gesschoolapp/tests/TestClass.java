@@ -1,10 +1,8 @@
 package com.gesschoolapp.tests;
+import com.gesschoolapp.Exceptions.DAOException;
+import com.gesschoolapp.db.DAOClassesImpl.*;
 import com.gesschoolapp.serial.ArchiveManager;
 import com.gesschoolapp.Exceptions.CSVException;
-import com.gesschoolapp.db.DAOClassesImpl.ApprenantDAOImp;
-import com.gesschoolapp.db.DAOClassesImpl.ClasseDAOImp;
-import com.gesschoolapp.db.DAOClassesImpl.ModuleDAOImp;
-import com.gesschoolapp.db.DAOClassesImpl.PaiementDAOImp;
 import com.gesschoolapp.db.DBManager;
 import com.gesschoolapp.gescsv.ApprenantsCSV;
 import com.gesschoolapp.gescsv.NotesCSV;
@@ -27,7 +25,24 @@ public class TestClass {
 //        testGetClasses();
 //        testNoteCSV();
 //        testApprenantCSV();
-        testCSVWriter();
+//        testCSVWriter();
+//        testReadClasse(13);
+        testUpdateNote(14);
+    }
+
+    public static void testUpdateNote(int idNote){
+        try {
+            Note note = new NoteDAOImp().read(idNote);
+            //before update
+            System.out.println(note);
+            note.setNote(0);
+            System.out.println("-------------------");
+            new NoteDAOImp().update(note, 1);
+            //after update
+            System.out.println(note);
+        } catch (DAOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public static void testLastView(){

@@ -27,6 +27,14 @@ public class NoteDAOImp implements DAO<Note> {
         }
     }
 
+    /**
+     * 
+     * You can also use the surronding method to update a note
+     * To use the surronding method, you have to pass the 'semestre' of the module
+     * 
+     * @param obj 
+     * @throws DAOException
+     */
     @Override
     public void update(Note obj) throws DAOException {
         try(Connection connexion = DBManager.getConnection()) {
@@ -36,6 +44,30 @@ public class NoteDAOImp implements DAO<Note> {
             stmt.setInt(2, obj.getApprenant().getIdApprenant());
             stmt.setInt(3, new ModuleDAOImp().search(obj.getModule()).get(0).getId());
             stmt.setInt(4, obj.getId());
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            throw new DAOException("In NoteDAOImp.update()\n" + e.getMessage());
+        }
+    }
+
+    /**
+     * 
+     * This method is desegned to solve to problem of id
+     * It may be a little bit slower than the other method but
+     * we can't have all we want in life smeh...
+     *
+     * @param obj
+     * @param semestre
+     * @throws DAOException
+     */
+    public void update (Note obj, int semestre) throws DAOException {
+        try(Connection connexion = DBManager.getConnection()) {
+            String query = "UPDATE notes n, modules m, apprenants a SET n.valeur = ? WHERE n.idApprenant = a.idApprenant AND n.idModule = m.idModule AND m.semestre = ? AND a.matricule = ? AND m.intitule = ?";
+            PreparedStatement stmt = connexion.prepareStatement(query);
+            stmt.setInt(1, obj.getNote());
+            stmt.setInt(2, semestre);
+            stmt.setInt(3, obj.getApprenant().getMatricule());
+            stmt.setString(4, obj.getModule());
             stmt.executeUpdate();
         } catch (Exception e) {
             throw new DAOException("In NoteDAOImp.update()\n" + e.getMessage());
@@ -66,7 +98,7 @@ public class NoteDAOImp implements DAO<Note> {
                 Note note = new Note();
                 ApprenantDAOImp apprenantDAOImp = new ApprenantDAOImp();
                 note.setId(id);
-                note.setNote(rs.getInt("note"));
+                note.setNote(rs.getInt("valeur"));
                 note.setApprenant(apprenantDAOImp.read(rs.getInt("idApprenant")));
                 note.setModule(rs.getString("intitule"));
                 return note;
