@@ -6,6 +6,7 @@ import com.gesschoolapp.db.DBManager;
 import com.gesschoolapp.models.classroom.Classe;
 import com.gesschoolapp.models.matieres.Module;
 import com.gesschoolapp.models.student.Apprenant;
+import de.jensd.fx.glyphs.testapps.App;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,7 +19,7 @@ import java.util.List;
 public class ApprenantDAOImp implements SearchDAO<Apprenant> {
 
     @Override
-    public void create(Apprenant obj) throws DAOException {
+    public Apprenant create(Apprenant obj) throws DAOException {
         try(Connection connexion = DBManager.getConnection()){
             int matricule = 0;
             String queryMat = "SELECT MAX(matricule) FROM apprenants";
@@ -59,7 +60,7 @@ public class ApprenantDAOImp implements SearchDAO<Apprenant> {
                 statement3.setInt(2, module.getId());
                 statement3.executeUpdate();
             }
-
+            return this.searchByMatricule(matricule);
         }catch (Exception e) {
             throw new DAOException("Error while creating Apprenant" + e.getMessage());
         }

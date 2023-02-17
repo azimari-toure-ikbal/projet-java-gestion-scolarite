@@ -13,7 +13,7 @@ import java.util.List;
 
 public class NoteDAOImp implements DAO<Note> {
     @Override
-    public void create(Note obj) throws DAOException {
+    public Note create(Note obj) throws DAOException {
         try(Connection connexion = DBManager.getConnection()) {
             String query = "INSERT INTO notes (valeur, idApprenant, idModule) VALUES (?, ?, ?, ?)";
             PreparedStatement stmt = connexion.prepareStatement(query);
@@ -21,6 +21,7 @@ public class NoteDAOImp implements DAO<Note> {
             stmt.setInt(2, obj.getApprenant().getIdApprenant());
             stmt.setInt(3, new ModuleDAOImp().search(obj.getModule()).get(0).getId());
             stmt.executeUpdate();
+            return getList().get(getList().size() - 1);
         } catch (Exception e) {
             throw new DAOException("In NoteDAOImp.create()\n" + e.getMessage());
         }

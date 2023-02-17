@@ -9,8 +9,8 @@ import java.util.List;
 
 public class EcheancierDAOImp implements SearchDAO<Echeance> {
     @Override
-    public void create(Echeance obj) throws DAOException {
-
+    public Echeance create(Echeance obj) throws DAOException {
+        return null;
     }
 
     @Override

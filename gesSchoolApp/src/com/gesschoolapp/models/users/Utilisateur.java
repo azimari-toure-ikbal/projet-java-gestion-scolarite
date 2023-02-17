@@ -92,4 +92,14 @@ public abstract class Utilisateur {
     public void setFullName(String fullName) {
         this.fullName = fullName;
     }
+
+    public String getType() {
+        if (this instanceof Admin)
+            return "administrateur";
+        if (this instanceof Secretaire)
+            return "secretaire";
+        if (this instanceof Caissier)
+            return "caissier";
+        return "utilisateur";
+    }
 }
