@@ -43,12 +43,17 @@ public class ApprenantDAOImp implements SearchDAO<Apprenant> {
 
             Classe classe = new ClasseDAOImp().search(obj.getClasse()).stream().filter(
                     classe1 -> classe1.getIntitule().equals(obj.getClasse())).findFirst().orElse(null);
-            Apprenant apprenant = this.searchByMatricule(matricule);
+            int finalMatricule = matricule;
+            Apprenant apprenant = getAllFromAppprenants().stream().filter(
+                    apprenant1 -> (apprenant1.getMatricule() == finalMatricule) ).findFirst().orElse(null);
 
             String query2 = "INSERT INTO classeapprenant (idApprenant, idClasse) VALUES (?, ?)";
             PreparedStatement statement2 = connexion.prepareStatement(query2);
+            assert apprenant != null;
             statement2.setInt(1, apprenant.getIdApprenant());
+            assert classe != null;
             statement2.setInt(2, classe.getId());
+
             statement2.executeUpdate();
 
             List<Module> modules = classe.getModules();
@@ -62,6 +67,30 @@ public class ApprenantDAOImp implements SearchDAO<Apprenant> {
 
         }catch (Exception e) {
             throw new DAOException("Error while creating Apprenant" + e.getMessage());
+        }
+    }
+
+    public List<Apprenant> getAllFromAppprenants() throws DAOException{
+        try(Connection connexion = DBManager.getConnection()){
+            List<Apprenant> apprenants = new ArrayList<>();
+            String query = "SELECT * FROM apprenants";
+            PreparedStatement statement = connexion.prepareStatement(query);
+            ResultSet rs = statement.executeQuery();
+            while(rs.next()){
+                Apprenant apprenant = new Apprenant();
+                apprenant.setIdApprenant(rs.getInt("idApprenant"));
+                apprenant.setNom(rs.getString("nom"));
+                apprenant.setPrenom(rs.getString("prenom"));
+                apprenant.setSexe(rs.getString("sexe"));
+                apprenant.setNationalite(rs.getString("nationalite"));
+                apprenant.setDateNaissance(LocalDate.parse(rs.getString("dtNaiss"), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+                apprenant.setEtatPaiement(rs.getInt("echeancier"));
+                apprenant.setMatricule(rs.getInt("matricule"));
+                apprenants.add(apprenant);
+            }
+            return apprenants;
+        }catch (Exception e) {
+            throw new DAOException("Error while getting Apprenant" + e.getMessage());
         }
     }
 
@@ -93,6 +122,14 @@ public class ApprenantDAOImp implements SearchDAO<Apprenant> {
             PreparedStatement statement = connexion.prepareStatement(query);
             statement.setInt(1, id);
             statement.executeUpdate();
+            String query2 = "DELETE FROM classeapprenant WHERE idApprenant = ?";
+            PreparedStatement statement2 = connexion.prepareStatement(query2);
+            statement2.setInt(1, id);
+            statement2.executeUpdate();
+            String query3 = "DELETE FROM notes WHERE idApprenant = ?";
+            PreparedStatement statement3 = connexion.prepareStatement(query3);
+            statement3.setInt(1, id);
+            statement3.executeUpdate();
     }catch (Exception e) {
             throw new DAOException("Error while deleting Apprenant" + e.getMessage());
         }
