@@ -88,26 +88,129 @@ public class UserDAOImp implements SearchDAO<Utilisateur>, LoginDAO {
 
     @Override
     public Utilisateur create(Utilisateur obj) throws DAOException {
-        return null;
+        //Utilisateur has idUtilisateur, nom, prenom, email, password, numero, type
+        //INSERT INTO utilisateurs (nom, prenom, email, password, numero, type) VALUES (?,?,?,?,?,?)
+        //if obj instance of Admin -> type = "administrateur"
+        //if obj instance of Secretaire -> type = "secretaire"
+        //if obj instance of Caissier -> type = "caissier"
+        try {
+            Connection connection = DBManager.getConnection();
+            String query = "INSERT INTO utilisateurs (nom, prenom, email, password, numero, type) VALUES (?,?,?,?,?,?)";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, obj.getNom());
+            ps.setString(2, obj.getPrenom());
+            ps.setString(3, obj.getEmail());
+            ps.setString(4, obj.getPassword());
+            ps.setString(5, obj.getNumero());
+            ps.setString(6, obj.getType());
+            ps.executeUpdate();
+            return this.getList().get(this.getList().size() - 1);
+        } catch (Exception e) {
+            throw new DAOException(e.getMessage());
+        }
     }
 
     @Override
     public void update(Utilisateur obj) throws DAOException {
+        //UPDATE utilisateurs SET nom=?, prenom=?, email=?, password=?, numero=?, type=? WHERE idUtilisateur=?
+        try {
+            Connection connection = DBManager.getConnection();
+            String query = "UPDATE utilisateurs SET nom=?, prenom=?, email=?, password=?, numero=?, type=? WHERE idUtilisateur=?";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, obj.getNom());
+            ps.setString(2, obj.getPrenom());
+            ps.setString(3, obj.getEmail());
+            ps.setString(4, obj.getPassword());
+            ps.setString(5, obj.getNumero());
+            ps.setString(6, obj.getType());
+            ps.setInt(7, obj.getId());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            throw new DAOException(e.getMessage());
+        }
 
     }
 
     @Override
     public void delete(int id) throws DAOException {
-
+        try {
+            Connection connection = DBManager.getConnection();
+            String query = "DELETE FROM utilisateurs WHERE idUtilisateur=?";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            throw new DAOException(e.getMessage());
+        }
     }
 
     @Override
     public Utilisateur read(int id) throws DAOException {
+        try {
+            Connection connection = DBManager.getConnection();
+            String query = "SELECT * FROM utilisateurs WHERE idUtilisateur=?";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.first()) {
+                //get nom, prenom, email, password, numero, id, type
+                String nom = rs.getString("nom");
+                String prenom = rs.getString("prenom");
+                String email = rs.getString("email");
+                String password = rs.getString("password");
+                String numero = rs.getString("numero");
+                int idUtilisateur = rs.getInt("idUtilisateur");
+                String type = rs.getString("type");
+
+                Utilisateur user = null;
+                switch (type) {
+                    case "administrateur" -> user = new Admin(idUtilisateur, nom, prenom, email, password, numero);
+                    case "secretaire" -> user = new Secretaire(idUtilisateur, nom, prenom, email, password, numero);
+                    case "caissier" -> user = new Caissier(idUtilisateur, nom, prenom, email, password, numero);
+                }
+                return user;
+            }
+        } catch (Exception e) {
+            throw new DAOException(e.getMessage());
+        }
         return null;
     }
 
     @Override
     public List<Utilisateur> getList() throws DAOException {
+
+        List<Utilisateur> users = new ArrayList<>();
+
+        try (Connection connection = DBManager.getConnection()) {
+            String query = "SELECT * FROM utilisateurs";
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                int idUtilisateur = resultSet.getInt("idUtilisateur");
+                String nom = resultSet.getString("nom");
+                String prenom = resultSet.getString("prenom");
+                String numero = resultSet.getString("numero");
+                String type = resultSet.getString("type");
+                String password = resultSet.getString("password");
+
+                System.out.println("idUtilisateur = " + idUtilisateur);
+                System.out.println("nom = " + nom);
+                System.out.println("prenom = " + prenom);
+                System.out.println("numero = " + numero);
+                switch (type) {
+                    case "administrateur" -> users.add(new Admin(idUtilisateur, nom, prenom, numero, type, password));
+                    case "secretaire" -> users.add(new Secretaire(idUtilisateur, nom, prenom, numero, type, password));
+                    case "caissier" -> users.add(new Caissier(idUtilisateur, nom, prenom, numero, type, password));
+                    default -> {
+                        users.add(null);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            throw new DAOException(e.getMessage());
+        }
         return null;
+
     }
 }

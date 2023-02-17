@@ -45,13 +45,13 @@ public class TestClass {
     public static void testCreateApprenant(){
         try {
             Apprenant apprenant = new Apprenant();
-            apprenant.setNom("Emery");
-            apprenant.setPrenom("Warren");
+            apprenant.setNom("Brady");
+            apprenant.setPrenom("Tom");
             apprenant.setSexe("M");
-            apprenant.setNationalite("Français");
-            apprenant.setDateNaissance(LocalDate.of(2009, 10, 5));
+            apprenant.setNationalite("Gallois");
+            apprenant.setDateNaissance(LocalDate.of(2010, 7, 15));
             apprenant.setEtatPaiement(0);
-            apprenant.setClasse("4eme");
+            apprenant.setClasse("3eme");
             ApprenantDAOImp apprenantDAOImp = new ApprenantDAOImp();
             apprenantDAOImp.create(apprenant);
 
