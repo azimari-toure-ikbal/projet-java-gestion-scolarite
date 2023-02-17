@@ -155,6 +155,7 @@ public class NotesCSV implements CSVReader<Note> {
 
             // Create the note
             try {
+                notes.add(note);
                 noteDAOImp.create(note);
             } catch (DAOException e) {
                 throw new CSVException("Une erreur est survenue lors de la création de la note : " + e.getMessage());

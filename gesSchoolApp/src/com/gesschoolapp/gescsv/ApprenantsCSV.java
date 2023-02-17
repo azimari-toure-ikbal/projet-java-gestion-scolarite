@@ -117,6 +117,7 @@ public class ApprenantsCSV implements CSVReader<Apprenant>, CSVWritter<Apprenant
             // Create the apprenant
             try {
                 new ApprenantDAOImp().create(apprenant);
+                apprenants.add(apprenant);
             } catch (DAOException e) {
                 throw new CSVException("Une erreur est survenue lors de la création de l'apprenant : " + e.getMessage());
             }

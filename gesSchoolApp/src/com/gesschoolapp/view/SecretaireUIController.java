@@ -1,7 +1,11 @@
 package com.gesschoolapp.view;
 
+import com.gesschoolapp.Exceptions.CSVException;
 import com.gesschoolapp.Exceptions.DAOException;
+import com.gesschoolapp.Exceptions.Mismatch;
 import com.gesschoolapp.db.DAOClassesImpl.ClasseDAOImp;
+import com.gesschoolapp.gescsv.ApprenantsCSV;
+import com.gesschoolapp.gescsv.NotesCSV;
 import com.gesschoolapp.models.classroom.Classe;
 import com.gesschoolapp.models.matieres.Module;
 import com.gesschoolapp.models.matieres.Note;
@@ -32,11 +36,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.*;
 import javafx.scene.shape.Circle;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
@@ -81,13 +87,6 @@ public class SecretaireUIController implements Initializable {
 
     private List<Classe> listeClasses;
 
-    {
-        try {
-            listeClasses = classesData.getList();
-        } catch (DAOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     //    Preview items com.gesschoolapp.controllers :
 
@@ -171,6 +170,12 @@ public class SecretaireUIController implements Initializable {
     private ImageView btnPrecedent;
 
     @FXML
+    private Button btnImportNotes;
+
+    @FXML
+    private Button btnImportStudents;
+
+    @FXML
     private VBox classesClassesLayout;
 
     @FXML
@@ -199,6 +204,12 @@ public class SecretaireUIController implements Initializable {
         home = new Route("Accueil", homeView, btnAccueil, accueilIcon);
         classes = new Route("Classes", classesView, btnClasses, classesIcon);
         profile = new Route("Mon profil", profileView, btnProfile, profileIcon);
+
+        try {
+            listeClasses = classesData.getList();
+        } catch (DAOException e) {
+            throw new RuntimeException(e);
+        }
 
         // On donne une référence du super controlleur aux controlleurs filles :
         classPreview1Controller.setSuperController(this);
@@ -232,29 +243,27 @@ public class SecretaireUIController implements Initializable {
 
     public void resetVue() {
         try {
-//            Cette méthode est particulièrement lente, il faudra peut-être trouver une solution pour l'optimiser
-            classesData = new ClasseDAOImp();
-            listeClasses = classesData.getList();
-            for(Classe classe : listeClasses){
-                if(classe.getId() == selectedClass.getId()){
-                    resetSelectedClass(classe);
-                }
-            }
-            this.resetSelectedClass(classesData.search(selectedClass.getIntitule()).get(0));
-            List<Apprenant> newlist = selectedClass.getApprenants();
-            setListeDesApprenants(newlist);
-
+            resetSelectedClass(selectedClass);
+            setListeDesApprenants(selectedClass.getApprenants());
         } catch (DAOException e) {
             throw new RuntimeException(e);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 
 
     // getters et setters :
+
+
+    public List<Classe> getListeClasses() {
+        return listeClasses;
+    }
+
+    public void setListeClasses(List<Classe> listeClasses) {
+        this.listeClasses = listeClasses;
+    }
+
 
     /**
      * Is called by the controller to give a reference of it's stage back to itself.
@@ -332,10 +341,22 @@ public class SecretaireUIController implements Initializable {
 
         for (Node classCard : allClassCards) {
             ((HBox) classCard).setStyle("-fx-background-color: #F2F5FA;-fx-background-radius: 7px;-fx-cursor: hand;");
+
+            String currentClassName = ((Label) ((HBox) classCard).lookup(".classItemLabel")).getText();
+
+            if(currentClassName == selectedClass.getIntitule()){
+                classCard.setStyle("-fx-background-color: #fff;-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);");
+            }
         }
 
         for (Node classCard : classesRecentesCards) {
             ((HBox) classCard).setStyle("-fx-background-color: #F2F5FA;-fx-background-radius: 7px;-fx-cursor: hand;");
+
+            String currentClassName = ((Label) ((HBox) classCard).lookup(".classItemLabel")).getText();
+
+            if(currentClassName == selectedClass.getIntitule()){
+                classCard.setStyle("-fx-background-color: #fff;-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);");
+            }
         }
 
         this.selectedClass = selectedClass;
@@ -368,10 +389,22 @@ public class SecretaireUIController implements Initializable {
 
         for (Node classCard : allClassCards) {
             ((HBox) classCard).setStyle("-fx-background-color: #F2F5FA;-fx-background-radius: 7px;-fx-cursor: hand;");
+            String currentClassName = ((Label) ((HBox) classCard).lookup(".classItemLabel")).getText();
+
+            if(currentClassName == selectedClass.getIntitule()){
+                classCard.setStyle("-fx-background-color: #fff;-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);");
+            }
+
         }
 
         for (Node classCard : classesRecentesCards) {
             ((HBox) classCard).setStyle("-fx-background-color: #F2F5FA;-fx-background-radius: 7px;-fx-cursor: hand;");
+
+            String currentClassName = ((Label) ((HBox) classCard).lookup(".classItemLabel")).getText();
+
+            if(currentClassName == selectedClass.getIntitule()){
+                classCard.setStyle("-fx-background-color: #fff;-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);");
+            }
         }
 
         this.selectedClass = selectedClass;
@@ -397,29 +430,24 @@ public class SecretaireUIController implements Initializable {
     public void setMainMessageInfo(String msg,int status) {
         mainMessageInfo.setText(msg);
         System.out.println(msg);
-        mainAwaitInfo.setVisible(true);
 
         if(status == 0){
-            mainMessageInfo.setStyle("-fx-background-color: #CE4F4B;");
+            mainMessageInfo.setStyle("-fx-background-color: #CE4F4B;-fx-background-radius: 0 0 5px 5px;");
         }else if(status == 1){
-            mainMessageInfo.setStyle("-fx-background-color: #4FCE4B;");
+            mainMessageInfo.setStyle("-fx-background-color:  #5CB85C;-fx-background-radius: 0 0 5px 5px;");
         }else{
-            mainMessageInfo.setStyle("-fx-background-color: #007AF2;");
+            mainMessageInfo.setStyle("-fx-background-color: #007AF2;-fx-background-radius: 0 0 5px 5px;");
         }
 
-        setTimeout(() -> {
-            mainAwaitInfo.setVisible(false);
-            if(msg.length() == 0){
-                mainMessageInfo.setVisible(false);
-            }else{
-                mainMessageInfo.setVisible(true);
-                setTimeout(() -> mainMessageInfo.setVisible(false), 10000);
-            }
-        }, 500);
+        if(msg.length() == 0){
+            mainMessageInfo.setVisible(false);
+        }else{
+            mainMessageInfo.setVisible(true);
+            setTimeout(() -> mainMessageInfo.setVisible(false), 10000);
+        }
 
-        if(status !=0)
-            Platform.runLater(()->resetVue());
-
+        if(status!=0)
+            resetVue();
 
     }
 
@@ -555,7 +583,85 @@ public class SecretaireUIController implements Initializable {
         this.getStage().setIconified(true);
     }
 
-    ;
+    @FXML
+    public void handleFileExport(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+
+        // Set extension filter
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+                "CSV files (*.csv)", "*.csv");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        // Show save file dialog
+        File file = fileChooser.showSaveDialog(mainApp.getPrimaryStage());
+
+        if (file != null) {
+            // Make sure it has the correct extension
+            if (!file.getPath().endsWith(".csv")) {
+                file = new File(file.getPath() + ".csv");
+            }
+                ApprenantsCSV aCSV = new ApprenantsCSV();
+            try {
+                aCSV.writeCSVFile(file.getName(),selectedClass.getApprenants());
+            } catch (CSVException e) {
+                throw new RuntimeException(e);
+            }
+            this.setMainMessageInfo("Fichier " +file.getName() +" exporté avec succès !");
+            mainApp.setPersonFilePath(file);
+        }
+    }
+    public void handleFileImport(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+
+        // Set extension filter
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+                "CSV files (*.csv)", "*.csv");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        // Show save file dialog
+        File file = fileChooser.showOpenDialog(mainApp.getPrimaryStage());
+
+        if (file != null) {
+            System.out.println(file.getName());
+            if(event.getSource() == btnImportNotes){
+                NotesCSV nCSV = new NotesCSV();
+                try {
+
+                    List<String> fileContent = nCSV.readFile(file);
+                    List<String[]> fileData = nCSV.getData(fileContent);
+                    List<Note> importedNotes = nCSV.csvToObject(fileData,selectedModule,selectedClass);
+                    List<Note> list = new ArrayList<>(selectedModule.getNotes());
+                    list.addAll(importedNotes);
+                    selectedModule.setNotes(list);
+
+                    this.setMainMessageInfo("Notes importés avec succès !");
+                } catch (CSVException e) {
+                        setMainMessageInfo(e.getMessage(),0);
+                }catch (Mismatch e) {
+                        setMainMessageInfo(e.getMessage(),0);
+                }
+            }
+
+            if(event.getSource() == btnImportStudents){
+                ApprenantsCSV aCSV = new ApprenantsCSV();
+                try {
+                    List<String> fileContent = aCSV.readFile(file);
+                    List<String[]> fileData = aCSV.getData(fileContent);
+                    List<Apprenant> importedApprenants = aCSV.csvToObject(fileData,selectedClass);
+
+                    List<Apprenant> list = new ArrayList<>(selectedClass.getApprenants());
+                    list.addAll(importedApprenants);
+                    selectedClass.setApprenants(list);
+                    System.out.println("a importer" + importedApprenants.size());
+                    this.setMainMessageInfo("Apprenants importés avec succès !");
+                } catch (CSVException e) {
+                    setMainMessageInfo(e.getMessage(),0);
+                }
+            }
+        }
+    }
+
+
 
     //    Méthodes de gestion du routage :
 
@@ -707,8 +813,9 @@ public class SecretaireUIController implements Initializable {
     }
     public void setListeDesApprenants(List<Apprenant> apprenants) throws DAOException, IOException {
         studentsLayout.getChildren().clear();
-        for (Apprenant apprenant : apprenants) {
 
+        for (Apprenant apprenant : apprenants) {
+            System.out.println(apprenant.getNom());
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("ApprenantItem.fxml"));
 

@@ -15,6 +15,9 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.io.File;
+import java.util.prefs.Preferences;
+
 public class Main extends Application {
 
     // ceci est un commentaire venant du bazard personnel a al amine
@@ -83,6 +86,43 @@ public class Main extends Application {
         launch(args);
     }
 
+    /**
+     * Returns the person file preference, i.e. the file that was last opened.
+     * The preference is read from the OS specific registry. If no such
+     * preference can be found, null is returned.
+     *
+     * @return File Preferred file or null
+     */
+    public File getPersonFilePath() {
+        Preferences prefs = Preferences.userNodeForPackage(Main.class);
+        String filePath = prefs.get("filePath", null);
+        if (filePath != null) {
+            return new File(filePath);
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Sets the file path of the currently loaded file. The path is persisted in
+     * the OS specific registry.
+     *
+     * @param file the file or null to remove the path
+     */
+    public void setPersonFilePath(File file) {
+        Preferences prefs = Preferences.userNodeForPackage(Main.class);
+        if (file != null) {
+            prefs.put("filePath", file.getPath());
+
+            // Update the stage title.
+            primaryStage.setTitle("SchoolUp - " + file.getName());
+        } else {
+            prefs.remove("filePath");
+
+            // Update the stage title.
+            primaryStage.setTitle("SchoolUp");
+        }
+    }
 
     public void displaySecretaireUI(Stage stg, Secretaire user, Main main) {
         try{

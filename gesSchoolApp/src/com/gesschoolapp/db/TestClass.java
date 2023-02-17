@@ -18,8 +18,11 @@ import javax.swing.JOptionPane;
 public class TestClass {
     public static void main(String[] args) {
 
-        testSearchClasse("4eme");
+//        testSearchClasse("4eme");
+//        testCreateApprenant();
+//        testConnexion();
     }
+
 
     public static void testLastView(){
         try {
