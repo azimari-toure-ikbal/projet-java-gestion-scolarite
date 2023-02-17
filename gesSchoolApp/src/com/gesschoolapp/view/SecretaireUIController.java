@@ -137,6 +137,18 @@ public class SecretaireUIController implements Initializable {
     private TextField searchClassInput;
 
     @FXML
+    private TextField searchStudentInput;
+
+    @FXML
+    private MenuButton FilterStudentInput;
+
+    @FXML
+    private MenuItem getCont;
+
+    @FXML
+    private MenuItem getEnRegle;
+
+    @FXML
     private TextField searchStudentHomeInput;
 
     @FXML
@@ -286,13 +298,13 @@ public class SecretaireUIController implements Initializable {
     public void setSelectedSemestre(Button selectedSemestre) {
         this.selectedSemestre = selectedSemestre;
         int numSemestre;
-        if(selectedSemestre == btnSemestre1){
-                numSemestre = 1;
-        }else{
-                numSemestre = 2;
+        if (selectedSemestre == btnSemestre1) {
+            numSemestre = 1;
+        } else {
+            numSemestre = 2;
         }
-            btnSemestre2.setStyle("-fx-border-width: 0;");
-            btnSemestre1.setStyle("-fx-border-width: 0;");
+        btnSemestre2.setStyle("-fx-border-width: 0;");
+        btnSemestre1.setStyle("-fx-border-width: 0;");
         selectedSemestre.setStyle("-fx-border-width : 0 0 2px 0;-fx-border-color: #84898d;");
         List<Module> listeModulesSemestre = selectedClass.getModules().stream().
                 filter(module -> Objects.equals(module.getSemestre(), numSemestre)).toList();
@@ -344,7 +356,7 @@ public class SecretaireUIController implements Initializable {
 
             String currentClassName = ((Label) ((HBox) classCard).lookup(".classItemLabel")).getText();
 
-            if(currentClassName == selectedClass.getIntitule()){
+            if (currentClassName == selectedClass.getIntitule()) {
                 classCard.setStyle("-fx-background-color: #fff;-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);");
             }
         }
@@ -354,7 +366,7 @@ public class SecretaireUIController implements Initializable {
 
             String currentClassName = ((Label) ((HBox) classCard).lookup(".classItemLabel")).getText();
 
-            if(currentClassName == selectedClass.getIntitule()){
+            if (currentClassName == selectedClass.getIntitule()) {
                 classCard.setStyle("-fx-background-color: #fff;-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);");
             }
         }
@@ -370,7 +382,7 @@ public class SecretaireUIController implements Initializable {
 
         classPreview1Controller.setData(selectedClass);
         classPreview2Controller.setData(selectedClass);
-        setCurrentRouteLink("/"+getSelectedClass().getIntitule());
+        setCurrentRouteLink("/" + getSelectedClass().getIntitule());
 
         try {
             setListeDesModules();
@@ -391,7 +403,7 @@ public class SecretaireUIController implements Initializable {
             ((HBox) classCard).setStyle("-fx-background-color: #F2F5FA;-fx-background-radius: 7px;-fx-cursor: hand;");
             String currentClassName = ((Label) ((HBox) classCard).lookup(".classItemLabel")).getText();
 
-            if(currentClassName == selectedClass.getIntitule()){
+            if (currentClassName == selectedClass.getIntitule()) {
                 classCard.setStyle("-fx-background-color: #fff;-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);");
             }
 
@@ -402,7 +414,7 @@ public class SecretaireUIController implements Initializable {
 
             String currentClassName = ((Label) ((HBox) classCard).lookup(".classItemLabel")).getText();
 
-            if(currentClassName == selectedClass.getIntitule()){
+            if (currentClassName == selectedClass.getIntitule()) {
                 classCard.setStyle("-fx-background-color: #fff;-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);");
             }
         }
@@ -427,32 +439,32 @@ public class SecretaireUIController implements Initializable {
     }
 
 
-    public void setMainMessageInfo(String msg,int status) {
+    public void setMainMessageInfo(String msg, int status) {
         mainMessageInfo.setText(msg);
         System.out.println(msg);
 
-        if(status == 0){
+        if (status == 0) {
             mainMessageInfo.setStyle("-fx-background-color: #CE4F4B;-fx-background-radius: 0 0 5px 5px;");
-        }else if(status == 1){
+        } else if (status == 1) {
             mainMessageInfo.setStyle("-fx-background-color:  #5CB85C;-fx-background-radius: 0 0 5px 5px;");
-        }else{
+        } else {
             mainMessageInfo.setStyle("-fx-background-color: #007AF2;-fx-background-radius: 0 0 5px 5px;");
         }
 
-        if(msg.length() == 0){
+        if (msg.length() == 0) {
             mainMessageInfo.setVisible(false);
-        }else{
+        } else {
             mainMessageInfo.setVisible(true);
             setTimeout(() -> mainMessageInfo.setVisible(false), 10000);
         }
 
-        if(status!=0)
+        if (status != 0)
             resetVue();
 
     }
 
     public void setMainMessageInfo(String msg) {
-        setMainMessageInfo(msg,1);
+        setMainMessageInfo(msg, 1);
     }
 
     public void setSelectedModule(Module selectedModule) {
@@ -540,11 +552,11 @@ public class SecretaireUIController implements Initializable {
             setCurrentRoute(home);
         } else if (e.getSource() == btnClasses || e.getSource() == viewAllClasses) {
             setCurrentRoute(classes);
-            setCurrentRouteLink("/"+getSelectedClass().getIntitule());
+            setCurrentRouteLink("/" + getSelectedClass().getIntitule());
             searchClassInput.requestFocus();
         } else if (e.getSource() == btnProfile || e.getSource() == pp_placeholder || e.getSource() == pp_placeholder1) {
             setCurrentRoute(profile);
-        } else if (e.getSource() == btnPrecedent){
+        } else if (e.getSource() == btnPrecedent) {
 
             setCurrentRouteLink(extractPreviousRouteLink());
         }
@@ -555,11 +567,11 @@ public class SecretaireUIController implements Initializable {
         String currentRouteLink = getCurrentRoute().getRouteLink();
         String[] arr = currentRouteLink.split("/");
 
-        for(int i=0;i<arr.length-1;i++){
-            if(i==0){
+        for (int i = 0; i < arr.length - 1; i++) {
+            if (i == 0) {
                 sb.append(arr[i]);
-            }else{
-                sb.append("/"+arr[i]);
+            } else {
+                sb.append("/" + arr[i]);
             }
         }
         return sb.toString();
@@ -600,16 +612,17 @@ public class SecretaireUIController implements Initializable {
             if (!file.getPath().endsWith(".csv")) {
                 file = new File(file.getPath() + ".csv");
             }
-                ApprenantsCSV aCSV = new ApprenantsCSV();
+            ApprenantsCSV aCSV = new ApprenantsCSV();
             try {
-                aCSV.writeCSVFile(file.getName(),selectedClass.getApprenants());
+                aCSV.writeCSVFile(file.getName(), selectedClass.getApprenants());
             } catch (CSVException e) {
                 throw new RuntimeException(e);
             }
-            this.setMainMessageInfo("Fichier " +file.getName() +" exporté avec succès !");
+            this.setMainMessageInfo("Fichier " + file.getName() + " exporté avec succès !");
             mainApp.setPersonFilePath(file);
         }
     }
+
     public void handleFileImport(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
 
@@ -623,31 +636,31 @@ public class SecretaireUIController implements Initializable {
 
         if (file != null) {
             System.out.println(file.getName());
-            if(event.getSource() == btnImportNotes){
+            if (event.getSource() == btnImportNotes) {
                 NotesCSV nCSV = new NotesCSV();
                 try {
 
                     List<String> fileContent = nCSV.readFile(file);
                     List<String[]> fileData = nCSV.getData(fileContent);
-                    List<Note> importedNotes = nCSV.csvToObject(fileData,selectedModule,selectedClass);
+                    List<Note> importedNotes = nCSV.csvToObject(fileData, selectedModule, selectedClass);
                     List<Note> list = new ArrayList<>(selectedModule.getNotes());
                     list.addAll(importedNotes);
                     selectedModule.setNotes(list);
 
                     this.setMainMessageInfo("Notes importés avec succès !");
                 } catch (CSVException e) {
-                        setMainMessageInfo(e.getMessage(),0);
-                }catch (Mismatch e) {
-                        setMainMessageInfo(e.getMessage(),0);
+                    setMainMessageInfo(e.getMessage(), 0);
+                } catch (Mismatch e) {
+                    setMainMessageInfo(e.getMessage(), 0);
                 }
             }
 
-            if(event.getSource() == btnImportStudents){
+            if (event.getSource() == btnImportStudents) {
                 ApprenantsCSV aCSV = new ApprenantsCSV();
                 try {
                     List<String> fileContent = aCSV.readFile(file);
                     List<String[]> fileData = aCSV.getData(fileContent);
-                    List<Apprenant> importedApprenants = aCSV.csvToObject(fileData,selectedClass);
+                    List<Apprenant> importedApprenants = aCSV.csvToObject(fileData, selectedClass);
 
                     List<Apprenant> list = new ArrayList<>(selectedClass.getApprenants());
                     list.addAll(importedApprenants);
@@ -655,12 +668,11 @@ public class SecretaireUIController implements Initializable {
                     System.out.println("a importer" + importedApprenants.size());
                     this.setMainMessageInfo("Apprenants importés avec succès !");
                 } catch (CSVException e) {
-                    setMainMessageInfo(e.getMessage(),0);
+                    setMainMessageInfo(e.getMessage(), 0);
                 }
             }
         }
     }
-
 
 
     //    Méthodes de gestion du routage :
@@ -680,21 +692,21 @@ public class SecretaireUIController implements Initializable {
 
     }
 
-    public void setCurrentRoute(){
+    public void setCurrentRoute() {
         setCurrentRoute(classes);
     }
 
     private void setSubView() {
         System.out.println(getCurrentRoute().getRouteLink());
-        if(getCurrentRoute().getRouteLink().equals("/"+getSelectedClass().getIntitule()+"/eleves")){
+        if (getCurrentRoute().getRouteLink().equals("/" + getSelectedClass().getIntitule() + "/eleves")) {
             classListName.setText("Élèves en " + getSelectedClass().getIntitule());
             classStudentsView.toFront();
             btnPrecedentIsActive(true);
-        }else if(getCurrentRoute().getRouteLink().equals("/"+getSelectedClass().getIntitule()+"/notes")){
+        } else if (getCurrentRoute().getRouteLink().equals("/" + getSelectedClass().getIntitule() + "/notes")) {
             classNotesView.toFront();
             setSelectedSemestre(btnSemestre1);
             btnPrecedentIsActive(true);
-        }else if(getCurrentRoute().getRouteLink().equals("/"+getSelectedClass().getIntitule())){
+        } else if (getCurrentRoute().getRouteLink().equals("/" + getSelectedClass().getIntitule())) {
             System.out.println("AFFICHE LE MAIN FDP");
             classMainView.toFront();
             btnPrecedentIsActive(false);
@@ -702,12 +714,12 @@ public class SecretaireUIController implements Initializable {
 
     }
 
-    private void btnPrecedentIsActive(boolean state){
-        if(state == true){
+    private void btnPrecedentIsActive(boolean state) {
+        if (state == true) {
             btnPrecedent.toFront();
             btnPrecedent.setDisable(false);
             btnPrecedent.setCursor(Cursor.HAND);
-        }else{
+        } else {
             btnPrecedent.toBack();
             btnPrecedent.setDisable(true);
             btnPrecedent.setCursor(Cursor.TEXT);
@@ -743,23 +755,62 @@ public class SecretaireUIController implements Initializable {
     @FXML
     public void handleClassSearch(KeyEvent e) {
         String toSearch = "";
-        toSearch +=searchClassInput.getText();
+        toSearch += searchClassInput.getText();
 
         List<Classe> found = new ArrayList<>();
         System.out.println(toSearch);
         try {
 
             for (Classe classe : listeClasses) {
-                if(classe.getIntitule().contains(toSearch)){
+                if (classe.getIntitule().contains(toSearch)) {
                     found.add(classe);
                 }
             }
-                    clearListeDesClasses();
-                    setListeDesClasses(found);
+            clearListeDesClasses();
+            setListeDesClasses(found);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
-//        }
+    }
+
+    @FXML
+    public void handleStudentsFilter(ActionEvent e) {
+        List<Apprenant> newList = null;
+        if(e.getSource() == getCont){
+            newList = selectedClass.getApprenants().stream().
+                    filter(appr -> appr.getEtatPaiement() == 1).toList();
+        }else{
+            newList = selectedClass.getApprenants().stream().
+                    filter(appr -> appr.getEtatPaiement() == 0).toList();
+        }
+
+        try {
+            setListeDesApprenants(newList);
+        } catch (DAOException ex) {
+            throw new RuntimeException(ex);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    @FXML
+    public void handleStudentSearch(KeyEvent e) {
+        String toSearch = "";
+        toSearch +=searchStudentInput.getText();
+
+        List<Apprenant> found = new ArrayList<>();
+        System.out.println(toSearch);
+        try {
+
+            for (Apprenant appr: selectedClass.getApprenants()) {
+                if(appr.getNom().contains(toSearch) || appr.getPrenom().contains(toSearch) || Integer.toString(appr.getMatricule()).contains(toSearch)){
+                    found.add(appr);
+                }
+            }
+            setListeDesApprenants(found);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
         private void setListeDesClasses(List<Classe> classes) throws DAOException, IOException {
