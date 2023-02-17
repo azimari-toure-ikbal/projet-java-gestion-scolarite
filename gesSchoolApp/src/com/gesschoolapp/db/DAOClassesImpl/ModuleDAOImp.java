@@ -6,6 +6,7 @@ import com.gesschoolapp.db.DAOInterfaces.SearchDAO;
 import com.gesschoolapp.db.DBManager;
 import com.gesschoolapp.models.matieres.Module;
 import com.gesschoolapp.models.matieres.Note;
+import org.bouncycastle.math.raw.Mod;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,8 +18,8 @@ import java.util.stream.Collectors;
 
 public class ModuleDAOImp implements DAO<Module>, SearchDAO<Module> {
     @Override
-    public void create(Module obj) throws DAOException {
-
+    public Module create(Module obj) throws DAOException {
+        return null;
     }
 
     @Override

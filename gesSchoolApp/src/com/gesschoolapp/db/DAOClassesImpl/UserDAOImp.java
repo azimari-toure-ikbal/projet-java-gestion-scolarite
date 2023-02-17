@@ -87,8 +87,8 @@ public class UserDAOImp implements SearchDAO<Utilisateur>, LoginDAO {
     }
 
     @Override
-    public void create(Utilisateur obj) throws DAOException {
-
+    public Utilisateur create(Utilisateur obj) throws DAOException {
+        return null;
     }
 
     @Override

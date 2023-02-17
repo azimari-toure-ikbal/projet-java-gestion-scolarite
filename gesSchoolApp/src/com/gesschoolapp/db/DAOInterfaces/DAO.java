@@ -8,7 +8,7 @@ public interface DAO<T> {
 
 //    create, read, getList, update, delete
 
-    public void create(T obj) throws DAOException;
+    public T create(T obj) throws DAOException;
     public void update(T obj) throws DAOException;
     public void delete(int id) throws DAOException;
     public T read(int id) throws DAOException;

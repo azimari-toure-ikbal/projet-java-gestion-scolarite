@@ -21,8 +21,9 @@ import java.util.stream.Collectors;
 
 public class ClasseDAOImp implements SearchDAO<Classe> {
     @Override
-    public void create(Classe obj) throws DAOException {
+    public Classe create(Classe obj) throws DAOException {
         //Not used
+        return null;
     }
 
     @Override

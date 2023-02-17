@@ -20,7 +20,7 @@ import java.util.List;
 public class PaiementDAOImp implements SearchDAO<Paiement> {
 
     @Override
-    public void create(Paiement obj) throws DAOException {
+    public Paiement create(Paiement obj) throws DAOException {
         //Generate a method to insert a paiement in the database
         try (Connection connection = DBManager.getConnection()) {
             if(obj.getRubrique() == ""){
@@ -37,6 +37,7 @@ public class PaiementDAOImp implements SearchDAO<Paiement> {
             statement.setString(7, obj.getCaissier());
             statement.setString(8, obj.getObservation());
             statement.executeUpdate();
+            return getList().get(getList().size() - 1);
         } catch (Exception e) {
             throw new DAOException( "Error in PaiementDAO.create() : " + e.getMessage());
         }
