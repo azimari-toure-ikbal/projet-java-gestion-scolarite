@@ -15,7 +15,7 @@ public class NoteDAOImp implements DAO<Note> {
     @Override
     public Note create(Note obj) throws DAOException {
         try(Connection connexion = DBManager.getConnection()) {
-            String query = "INSERT INTO notes (valeur, idApprenant, idModule) VALUES (?, ?, ?, ?)";
+            String query = "INSERT INTO notes (valeur, idApprenant, idModule) VALUES (?, ?, ?)";
             PreparedStatement stmt = connexion.prepareStatement(query);
             stmt.setInt(1, obj.getNote());
             stmt.setInt(2, obj.getApprenant().getIdApprenant());

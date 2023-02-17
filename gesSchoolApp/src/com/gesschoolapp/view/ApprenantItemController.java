@@ -18,6 +18,9 @@ import javafx.stage.Stage;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 public class ApprenantItemController {
@@ -73,6 +76,9 @@ public class ApprenantItemController {
 
             try {
                 apprData.delete(thisApprenant.getIdApprenant());
+                List<Apprenant> list = new ArrayList<>(superController.getSelectedClass().getApprenants());
+                list.removeIf(appr -> appr.getIdApprenant() == thisApprenant.getIdApprenant());
+                superController.getSelectedClass().setApprenants(list);
                 superController.setMainMessageInfo("Élève supprimé avec succès !");
 //                superController.resetVue();
             } catch (DAOException e) {
@@ -86,7 +92,7 @@ public class ApprenantItemController {
 
     public void setData(Apprenant apprenant){
         thisApprenant = apprenant;
-        labelId.setText(Integer.toString(apprenant.getIdApprenant()));
+        labelId.setText(Integer.toString(apprenant.getMatricule()));
         labelNom.setText(apprenant.getPrenom() + " " + apprenant.getNom());
 //      Parsing birthday :
         DateTimeFormatter formatters = DateTimeFormatter.ofPattern("d/MM/uuuu");

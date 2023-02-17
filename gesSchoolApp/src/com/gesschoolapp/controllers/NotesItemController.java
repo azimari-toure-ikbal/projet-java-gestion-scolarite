@@ -79,8 +79,8 @@ public class NotesItemController extends Application {
             } catch (DAOException e) {
                 throw new RuntimeException(e);
             }
+            thisNote.setNote(noteValue);
             superController.setMainMessageInfo("Note modifiée avec succès !",1);
-//            labelNote.setText(newNote.toString());
             editNoteTF.setVisible(false);
 
         }

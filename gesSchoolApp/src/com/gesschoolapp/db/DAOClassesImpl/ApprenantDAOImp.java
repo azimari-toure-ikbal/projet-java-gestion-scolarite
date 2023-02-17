@@ -21,7 +21,7 @@ public class ApprenantDAOImp implements SearchDAO<Apprenant> {
     @Override
     public Apprenant create(Apprenant obj) throws DAOException {
         try(Connection connexion = DBManager.getConnection()){
-            int matricule = 0;
+            int matricule = 100;
             String queryMat = "SELECT MAX(matricule) FROM apprenants";
             PreparedStatement statementMat = connexion.prepareStatement(queryMat);
             ResultSet rs = statementMat.executeQuery();
@@ -44,17 +44,12 @@ public class ApprenantDAOImp implements SearchDAO<Apprenant> {
 
             Classe classe = new ClasseDAOImp().search(obj.getClasse()).stream().filter(
                     classe1 -> classe1.getIntitule().equals(obj.getClasse())).findFirst().orElse(null);
-            int finalMatricule = matricule;
-            Apprenant apprenant = getAllFromAppprenants().stream().filter(
-                    apprenant1 -> (apprenant1.getMatricule() == finalMatricule) ).findFirst().orElse(null);
+            Apprenant apprenant = this.searchByMatricule(matricule);
 
             String query2 = "INSERT INTO classeapprenant (idApprenant, idClasse) VALUES (?, ?)";
             PreparedStatement statement2 = connexion.prepareStatement(query2);
-            assert apprenant != null;
             statement2.setInt(1, apprenant.getIdApprenant());
-            assert classe != null;
             statement2.setInt(2, classe.getId());
-
             statement2.executeUpdate();
 
             List<Module> modules = classe.getModules();
@@ -68,30 +63,6 @@ public class ApprenantDAOImp implements SearchDAO<Apprenant> {
             return this.searchByMatricule(matricule);
         }catch (Exception e) {
             throw new DAOException("Error while creating Apprenant" + e.getMessage());
-        }
-    }
-
-    public List<Apprenant> getAllFromAppprenants() throws DAOException{
-        try(Connection connexion = DBManager.getConnection()){
-            List<Apprenant> apprenants = new ArrayList<>();
-            String query = "SELECT * FROM apprenants";
-            PreparedStatement statement = connexion.prepareStatement(query);
-            ResultSet rs = statement.executeQuery();
-            while(rs.next()){
-                Apprenant apprenant = new Apprenant();
-                apprenant.setIdApprenant(rs.getInt("idApprenant"));
-                apprenant.setNom(rs.getString("nom"));
-                apprenant.setPrenom(rs.getString("prenom"));
-                apprenant.setSexe(rs.getString("sexe"));
-                apprenant.setNationalite(rs.getString("nationalite"));
-                apprenant.setDateNaissance(LocalDate.parse(rs.getString("dtNaiss"), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-                apprenant.setEtatPaiement(rs.getInt("echeancier"));
-                apprenant.setMatricule(rs.getInt("matricule"));
-                apprenants.add(apprenant);
-            }
-            return apprenants;
-        }catch (Exception e) {
-            throw new DAOException("Error while getting Apprenant" + e.getMessage());
         }
     }
 
@@ -123,14 +94,6 @@ public class ApprenantDAOImp implements SearchDAO<Apprenant> {
             PreparedStatement statement = connexion.prepareStatement(query);
             statement.setInt(1, id);
             statement.executeUpdate();
-            String query2 = "DELETE FROM classeapprenant WHERE idApprenant = ?";
-            PreparedStatement statement2 = connexion.prepareStatement(query2);
-            statement2.setInt(1, id);
-            statement2.executeUpdate();
-            String query3 = "DELETE FROM notes WHERE idApprenant = ?";
-            PreparedStatement statement3 = connexion.prepareStatement(query3);
-            statement3.setInt(1, id);
-            statement3.executeUpdate();
     }catch (Exception e) {
             throw new DAOException("Error while deleting Apprenant" + e.getMessage());
         }
@@ -253,12 +216,28 @@ public class ApprenantDAOImp implements SearchDAO<Apprenant> {
     //search Apprenant by matricule
     public Apprenant searchByMatricule(int matricule) throws DAOException {
         try(Connection connexion = DBManager.getConnection()){
-            //use getList() method to get all apprenants and then search by matricule
-            List<Apprenant> apprenants = getList();
-            for(Apprenant apprenant : apprenants) {
-                if(apprenant.getMatricule() == matricule) {
-                    return apprenant;
-                }
+            String query = "SELECT * FROM apprenants WHERE matricule = ?" ;
+            PreparedStatement statement = connexion.prepareStatement(query);
+            statement.setInt(1, matricule);
+            ResultSet rs = statement.executeQuery();
+            if(rs.next()) {
+                Apprenant apprenant = new Apprenant();
+                apprenant.setIdApprenant(rs.getInt("idApprenant"));
+                apprenant.setNom(rs.getString("nom"));
+                apprenant.setPrenom(rs.getString("prenom"));
+                apprenant.setSexe(rs.getString("sexe"));
+                apprenant.setMatricule(rs.getInt("matricule"));
+                apprenant.setNationalite(rs.getString("nationalite"));
+                String dateNaissance = rs.getString("dtNaiss");
+                apprenant.setEtatPaiement(rs.getInt("echeancier"));
+
+                //cast the dateNaissance to LocalDate
+                String format = "yyyy-MM-dd";
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
+                LocalDate date = LocalDate.parse(dateNaissance, formatter);
+                apprenant.setDateNaissance(date);
+                rs.close();
+                return apprenant;
             }
         }catch(Exception e) {
             throw new DAOException("Error in search Apprenant" + e.getMessage());
