@@ -44,7 +44,7 @@ public class ApprenantDAOImp implements SearchDAO<Apprenant> {
 
             Classe classe = new ClasseDAOImp().search(obj.getClasse()).stream().filter(
                     classe1 -> classe1.getIntitule().equals(obj.getClasse())).findFirst().orElse(null);
-            Apprenant apprenant = this.searchByMatricule(matricule);
+            Apprenant apprenant = this.searchForCreate(matricule);
 
             String query2 = "INSERT INTO classeapprenant (idApprenant, idClasse) VALUES (?, ?)";
             PreparedStatement statement2 = connexion.prepareStatement(query2);
@@ -216,6 +216,38 @@ public class ApprenantDAOImp implements SearchDAO<Apprenant> {
     //search Apprenant by matricule
     public Apprenant searchByMatricule(int matricule) throws DAOException {
         try(Connection connexion = DBManager.getConnection()){
+            String query = "SELECT a.idApprenant, prenom, nom, dtNaiss, nationalite, echeancier, sexe, matricule, c.intitule FROM apprenants a, classeapprenant ca, classes c WHERE matricule = ? AND a.idApprenant = ca.idApprenant AND ca.idClasse = c.idClasse" ;
+            PreparedStatement statement = connexion.prepareStatement(query);
+            statement.setInt(1, matricule);
+            ResultSet rs = statement.executeQuery();
+            if(rs.next()) {
+                Apprenant apprenant = new Apprenant();
+                apprenant.setIdApprenant(rs.getInt("idApprenant"));
+                apprenant.setNom(rs.getString("nom"));
+                apprenant.setPrenom(rs.getString("prenom"));
+                apprenant.setSexe(rs.getString("sexe"));
+                apprenant.setMatricule(rs.getInt("matricule"));
+                apprenant.setNationalite(rs.getString("nationalite"));
+                String dateNaissance = rs.getString("dtNaiss");
+                apprenant.setEtatPaiement(rs.getInt("echeancier"));
+                apprenant.setClasse(rs.getString("intitule"));
+
+                //cast the dateNaissance to LocalDate
+                String format = "yyyy-MM-dd";
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
+                LocalDate date = LocalDate.parse(dateNaissance, formatter);
+                apprenant.setDateNaissance(date);
+                rs.close();
+                return apprenant;
+            }
+        }catch(Exception e) {
+            throw new DAOException("Error in search Apprenant" + e.getMessage());
+        }
+        return null;
+    }
+
+    public Apprenant searchForCreate(int matricule) throws DAOException {
+        try(Connection connexion = DBManager.getConnection()){
             String query = "SELECT * FROM apprenants WHERE matricule = ?" ;
             PreparedStatement statement = connexion.prepareStatement(query);
             statement.setInt(1, matricule);
@@ -243,5 +275,6 @@ public class ApprenantDAOImp implements SearchDAO<Apprenant> {
             throw new DAOException("Error in search Apprenant" + e.getMessage());
         }
         return null;
+
     }
 }

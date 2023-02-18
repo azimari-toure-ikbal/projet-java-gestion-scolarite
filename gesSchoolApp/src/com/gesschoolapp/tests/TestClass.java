@@ -27,8 +27,25 @@ public class TestClass {
 //        testApprenantCSV();
 //        testCSVWriter();
 //        testReadClasse(13);
-        testUpdateNote(14);
+//        testUpdateNote(14);
+//        testDeleteApprenant(34);
+        testCreateApprenant();
+//        try {
+//            System.out.println(new ApprenantDAOImp().searchByMatricule(2));
+//        } catch (DAOException e) {
+//            throw new RuntimeException(e);
+//        }
     }
+
+    public static void testDeleteApprenant(int id){
+        try {
+            ApprenantDAOImp apprenantDAOImp = new ApprenantDAOImp();
+            apprenantDAOImp.delete(id);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+
 
     public static void testUpdateNote(int idNote){
         try {
@@ -60,15 +77,15 @@ public class TestClass {
     public static void testCreateApprenant(){
         try {
             Apprenant apprenant = new Apprenant();
-            apprenant.setNom("Brady");
-            apprenant.setPrenom("Tom");
+            apprenant.setNom("Moore");
+            apprenant.setPrenom("Alexis");
             apprenant.setSexe("M");
-            apprenant.setNationalite("Gallois");
-            apprenant.setDateNaissance(LocalDate.of(2010, 7, 15));
+            apprenant.setNationalite("Anglais");
+            apprenant.setDateNaissance(LocalDate.of(2010, 2, 25));
             apprenant.setEtatPaiement(0);
             apprenant.setClasse("3eme");
             ApprenantDAOImp apprenantDAOImp = new ApprenantDAOImp();
-            apprenantDAOImp.create(apprenant);
+            System.out.println(apprenantDAOImp.create(apprenant));
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
