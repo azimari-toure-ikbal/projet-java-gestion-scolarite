@@ -125,7 +125,7 @@ public class NotesCSV implements CSVReader<Note> {
         List<Note> notes = new ArrayList<>();
 
         for (String[] line : data) {
-            if (line.length != 2) {
+            if (line.length != 3) {
                 throw new CSVException("Le fichier n'est pas au bon format");
             }
 
@@ -154,11 +154,22 @@ public class NotesCSV implements CSVReader<Note> {
                 throw new CSVException("Une erreur est survenue lors de la recherche de l'apprenant : " + e.getMessage());
             }
             note.setModule(module.getIntitule());
+
+            // Verify that the note is between 0 and 20
+            if (Integer.parseInt(line[1]) < 0 || Integer.parseInt(line[1]) > 20) {
+                throw new Mismatch("La note doit être comprise entre 0 et 20");
+            }
             note.setNote(Integer.parseInt(line[1]));
+
+            // Verify that the semester is 1 or 2
+            if (Integer.parseInt(line[2]) != 1 && Integer.parseInt(line[2]) != 2) {
+                throw new Mismatch("Le semestre doit être 1 ou 2");
+            }
+            int semestre = Integer.parseInt(line[2]);
 
             // Create the note
             try {
-                noteDAOImp.update(note);
+                noteDAOImp.update(note, semestre);
             } catch (DAOException e) {
                 throw new CSVException("Une erreur est survenue lors de la création de la note : " + e.getMessage());
             }
