@@ -10,6 +10,7 @@ import com.gesschoolapp.models.classroom.Classe;
 import com.gesschoolapp.models.classroom.Classes;
 import com.gesschoolapp.models.matieres.Note;
 import com.gesschoolapp.models.student.Apprenant;
+import com.gesschoolapp.utils.ListRubriques;
 
 import java.io.File;
 import java.sql.Connection;
@@ -22,19 +23,17 @@ public class TestClass {
     public static void main(String[] args) {
 
 //        testLastView();
-//        testGetClasses();
+        testGetClasses();
 //        testNoteCSV();
 //        testApprenantCSV();
 //        testCSVWriter();
-//        testReadClasse(13);
 //        testUpdateNote(14);
-//        testDeleteApprenant(34);
-        testCreateApprenant();
-//        try {
-//            System.out.println(new ApprenantDAOImp().searchByMatricule(2));
-//        } catch (DAOException e) {
-//            throw new RuntimeException(e);
-//        }
+//        testDeleteApprenant(31);
+//        testDeleteApprenant(36);
+//        testDeleteApprenant(37);
+//        testCreateApprenant();
+//        System.out.println(ListRubriques.getRubriques());
+//        testReadClasse(15);
     }
 
     public static void testDeleteApprenant(int id){
@@ -77,11 +76,11 @@ public class TestClass {
     public static void testCreateApprenant(){
         try {
             Apprenant apprenant = new Apprenant();
-            apprenant.setNom("Moore");
-            apprenant.setPrenom("Alexis");
+            apprenant.setNom("Bowen");
+            apprenant.setPrenom("Jamie");
             apprenant.setSexe("M");
             apprenant.setNationalite("Anglais");
-            apprenant.setDateNaissance(LocalDate.of(2010, 2, 25));
+            apprenant.setDateNaissance(LocalDate.of(2010, 8, 2));
             apprenant.setEtatPaiement(0);
             apprenant.setClasse("3eme");
             ApprenantDAOImp apprenantDAOImp = new ApprenantDAOImp();
