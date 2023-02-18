@@ -10,6 +10,7 @@ public class Paiement {
     private String rubrique;
     private LocalDate date;
     private String observation;
+    
     private String apprenant;
     private String caissier;
     private String classe;

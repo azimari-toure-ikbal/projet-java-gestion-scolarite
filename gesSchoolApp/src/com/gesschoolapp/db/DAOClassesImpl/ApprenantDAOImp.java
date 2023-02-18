@@ -26,7 +26,7 @@ public class ApprenantDAOImp implements SearchDAO<Apprenant> {
             PreparedStatement statementMat = connexion.prepareStatement(queryMat);
             ResultSet rs = statementMat.executeQuery();
             while(rs.next()){
-                matricule = rs.getInt(1) + 1;
+                matricule += rs.getInt(1) + 1;
             }
             //Generate a method to insert a Apprenant in the database
             String query = "INSERT INTO apprenants (nom, prenom, sexe, nationalite, dtNaiss, echeancier, matricule) " +
@@ -94,6 +94,10 @@ public class ApprenantDAOImp implements SearchDAO<Apprenant> {
             PreparedStatement statement = connexion.prepareStatement(query);
             statement.setInt(1, id);
             statement.executeUpdate();
+            String query2 = "DELETE FROM classeapprenant WHERE idApprenant = ?";
+            PreparedStatement statement2 = connexion.prepareStatement(query2);
+            statement2.setInt(1, id);
+            statement2.executeUpdate();
     }catch (Exception e) {
             throw new DAOException("Error while deleting Apprenant" + e.getMessage());
         }
