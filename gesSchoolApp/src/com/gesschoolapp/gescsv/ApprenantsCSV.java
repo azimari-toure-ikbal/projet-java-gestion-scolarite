@@ -106,7 +106,8 @@ public class ApprenantsCSV implements CSVReader<Apprenant>, CSVWritter<Apprenant
 
         for (String[] line : data) {
             if (line.length != 5) {
-                throw new CSVException("Le fichier n'est pas au bon format");
+                throw new CSVException("Le fichier n'est pas au bon format \n" +
+                        "Le fichier doit être au format : Prenom;Nom;Date de naissance;Nationalité;Sexe");
             }
 
             Apprenant apprenant = new Apprenant();
