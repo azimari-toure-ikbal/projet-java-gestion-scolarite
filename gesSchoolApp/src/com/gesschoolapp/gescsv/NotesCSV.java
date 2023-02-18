@@ -142,6 +142,8 @@ public class NotesCSV implements CSVReader<Note> {
             // Verify if the student is in the class
             try {
                 if (!Objects.equals(apprenantDAOImp.searchByMatricule(Integer.parseInt(line[0])).getClasse(), classse.getIntitule())) {
+                    System.out.println("L'intitulé de la classe : " + classse.getIntitule());
+                    System.out.println(apprenantDAOImp.searchByMatricule(Integer.parseInt(line[0])));
                     throw new Mismatch("L'apprenant n'est pas dans la classe");
                 }
             } catch (DAOException e) {

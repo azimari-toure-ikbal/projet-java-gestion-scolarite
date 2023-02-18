@@ -2,7 +2,10 @@ package com.gesschoolapp.view;
 
 import com.gesschoolapp.Exceptions.DAOException;
 import com.gesschoolapp.db.DAOClassesImpl.ApprenantDAOImp;
+import com.gesschoolapp.db.DAOClassesImpl.NoteDAOImp;
 import com.gesschoolapp.models.classroom.Classe;
+import com.gesschoolapp.models.matieres.Module;
+import com.gesschoolapp.models.matieres.Note;
 import com.gesschoolapp.models.student.Apprenant;
 import com.gesschoolapp.runtime.Main;
 import com.gesschoolapp.view.util.Genre;
@@ -171,6 +174,21 @@ public class ApprenantEditDialogController extends Application implements Initia
             List<Apprenant> list = new ArrayList<>(superController.getSelectedClass().getApprenants());
             list.set(list.indexOf(selectedStudent),apprenant);
             superController.getSelectedClass().setApprenants(list);
+            Note newNote = new Note();
+
+            newNote.setApprenant(apprenant);
+            List<Module> modules = superController.getSelectedClass().getModules();
+            NoteDAOImp notesData = new NoteDAOImp();
+
+            for(Module module : modules){
+                List<Note> notesList = new ArrayList<>(module.getNotes());
+                newNote.setModule(module.getIntitule());
+                Note studentNote = notesList.stream().filter(note -> note.getApprenant().getIdApprenant() == apprenant.getIdApprenant()).toList().get(0);
+                newNote.setNote(studentNote.getNote());
+//                newNote.setId();
+                notesList.set(notesList.indexOf(studentNote), newNote);
+                module.setNotes(notesList);
+            }
         } catch (DAOException e) {
             throw new RuntimeException(e);
         }

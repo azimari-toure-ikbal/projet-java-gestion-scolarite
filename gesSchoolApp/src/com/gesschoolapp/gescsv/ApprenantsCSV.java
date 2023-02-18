@@ -82,14 +82,15 @@ public class ApprenantsCSV implements CSVReader<Apprenant>, CSVWritter<Apprenant
             apprenant.setClasse("3eme");
 
             // Create the apprenant
+            Apprenant newApprenant;
             try {
-                new ApprenantDAOImp().create(apprenant);
+                newApprenant =  new ApprenantDAOImp().create(apprenant);
             } catch (DAOException e) {
                 throw new CSVException("Une erreur est survenue lors de la création de l'apprenant : " + e.getMessage());
             }
 
             // Add the apprenant to the list
-            apprenants.add(apprenant);
+            apprenants.add(newApprenant);
         }
         return apprenants;
     }
@@ -129,14 +130,15 @@ public class ApprenantsCSV implements CSVReader<Apprenant>, CSVWritter<Apprenant
             apprenant.setClasse(classe.getIntitule());
 
             // Create the apprenant
+            Apprenant newApprenant;
             try {
-                new ApprenantDAOImp().create(apprenant);
+                newApprenant =  new ApprenantDAOImp().create(apprenant);
             } catch (DAOException e) {
                 throw new CSVException("Une erreur est survenue lors de la création de l'apprenant : " + e.getMessage());
             }
 
             // Add the apprenant to the list
-            apprenants.add(apprenant);
+            apprenants.add(newApprenant);
         }
         return apprenants;
     }

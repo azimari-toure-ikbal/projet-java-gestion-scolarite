@@ -697,17 +697,16 @@ public class SecretaireUIController implements Initializable {
                 try {
                     List<String> fileContent = aCSV.readFile(file);
                     List<String[]> fileData = aCSV.getData(fileContent);
-                    List<Apprenant> importedApprenants = null;
-                    try {
-                        importedApprenants = aCSV.csvToObject(fileData, selectedClass);
-                    } catch (Mismatch e) {
-                        setMainMessageInfo(e.getMessage());
+                    List<Apprenant> importedApprenants;
+                    importedApprenants = aCSV.csvToObject(fileData, selectedClass);
+                    for(Apprenant appr : importedApprenants){
+                        System.out.println(
+                        appr.getIdApprenant()
+                        );
                     }
-
                     List<Apprenant> list = new ArrayList<>(selectedClass.getApprenants());
                     list.addAll(importedApprenants);
                     selectedClass.setApprenants(list);
-                    System.out.println("a importer" + importedApprenants.size());
                     this.setMainMessageInfo("Apprenants importés avec succès !");
                 } catch (CSVException | Mismatch e) {
                     setMainMessageInfo(e.getMessage(), 0);

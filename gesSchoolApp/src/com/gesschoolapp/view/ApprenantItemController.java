@@ -4,6 +4,8 @@ import com.gesschoolapp.Exceptions.DAOException;
 import com.gesschoolapp.db.DAOClassesImpl.ApprenantDAOImp;
 import com.gesschoolapp.db.DAOClassesImpl.ClasseDAOImp;
 import com.gesschoolapp.models.classroom.Classe;
+import com.gesschoolapp.models.matieres.Module;
+import com.gesschoolapp.models.matieres.Note;
 import com.gesschoolapp.models.student.Apprenant;
 import com.gesschoolapp.view.SecretaireUIController;
 import javafx.event.ActionEvent;
@@ -79,16 +81,19 @@ public class ApprenantItemController {
                 List<Apprenant> list = new ArrayList<>(superController.getSelectedClass().getApprenants());
                 list.removeIf(appr -> appr.getIdApprenant() == thisApprenant.getIdApprenant());
                 superController.getSelectedClass().setApprenants(list);
+
+                for(Module module : superController.getSelectedClass().getModules()){
+                    List<Note> notesList = new ArrayList<>(module.getNotes());
+                    notesList.removeIf(note -> note.getApprenant().getIdApprenant() == thisApprenant.getIdApprenant());
+                    module.setNotes(notesList);
+                }
+
                 superController.setMainMessageInfo("Élève supprimé avec succès !");
-//                superController.resetVue();
             } catch (DAOException e) {
                 throw new RuntimeException(e);
             }
         }
     }
-
-
-
 
     public void setData(Apprenant apprenant){
         thisApprenant = apprenant;
