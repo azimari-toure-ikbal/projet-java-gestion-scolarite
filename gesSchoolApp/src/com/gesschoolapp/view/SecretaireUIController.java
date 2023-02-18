@@ -937,7 +937,7 @@ public class SecretaireUIController implements Initializable {
             fxmlLoader.setLocation(getClass().getResource("ApprenantItem.fxml"));
 
             HBox hbox = fxmlLoader.load();
-            ApprenantItemController aic = fxmlLoader.getController();
+            ApprenantItemsController aic = fxmlLoader.getController();
             aic.setSuperController(this);
             aic.setData(apprenant);
 

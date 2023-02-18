@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<HBox prefHeight="64.0" prefWidth="602.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gesschoolapp.view.ApprenantItemController">
+<HBox prefHeight="64.0" prefWidth="602.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gesschoolapp.view.ApprenantItemsController">
     <children>
         <Pane prefHeight="64.0" prefWidth="48.0">
             <children>

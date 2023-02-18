@@ -25,7 +25,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-public class ApprenantItemController {
+public class ApprenantItemsController {
 
     private SecretaireUIController superController;
 
@@ -83,17 +83,20 @@ public class ApprenantItemController {
                 superController.getSelectedClass().setApprenants(list);
 
                 for(Module module : superController.getSelectedClass().getModules()){
+
                     List<Note> notesList = new ArrayList<>(module.getNotes());
                     notesList.removeIf(note -> note.getApprenant().getIdApprenant() == thisApprenant.getIdApprenant());
                     module.setNotes(notesList);
                 }
 
-                superController.setMainMessageInfo("Élève supprimé avec succès !");
             } catch (DAOException e) {
                 throw new RuntimeException(e);
             }
         }
     }
+
+
+
 
     public void setData(Apprenant apprenant){
         thisApprenant = apprenant;
