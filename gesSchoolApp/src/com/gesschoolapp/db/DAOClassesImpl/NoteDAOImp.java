@@ -96,10 +96,9 @@ public class NoteDAOImp implements DAO<Note> {
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 Note note = new Note();
-                ApprenantDAOImp apprenantDAOImp = new ApprenantDAOImp();
                 note.setId(id);
                 note.setNote(rs.getInt("valeur"));
-                note.setApprenant(apprenantDAOImp.read(rs.getInt("idApprenant")));
+                note.setApprenant(new ApprenantDAOImp().read(rs.getInt("idApprenant")));
                 note.setModule(rs.getString("intitule"));
                 return note;
             }
@@ -132,4 +131,26 @@ public class NoteDAOImp implements DAO<Note> {
         }
     }
 
+    public List<Note> getNotesOfModule(int idModule) throws DAOException {
+        try(Connection connexion = DBManager.getConnection()) {
+            String query = "SELECT n.idNote, n.valeur, m.intitule as module, n.idApprenant as apprenant " +
+                    "FROM notes n, modules m WHERE n.idModule = m.idModule AND m.idModule = ?";
+            PreparedStatement stmt = connexion.prepareStatement(query);
+            stmt.setInt(1, idModule);
+            ResultSet rs = stmt.executeQuery();
+            List<Note> notes = new ArrayList<>();
+            while (rs.next()) {
+                Note note = new Note();
+                ApprenantDAOImp apprenantDAOImp = new ApprenantDAOImp();
+                note.setId(rs.getInt("idNote"));
+                note.setNote(rs.getInt("valeur"));
+                note.setApprenant(apprenantDAOImp.read(rs.getInt("apprenant")));
+                note.setModule(rs.getString("module"));
+                notes.add(note);
+            }
+            return notes;
+        } catch (Exception e) {
+            throw new DAOException(e.getMessage() + "\nIn NoteDAOImp.getNotesOfModule()");
+        }
+    }
 }

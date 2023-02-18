@@ -23,7 +23,7 @@ public class TestClass {
     public static void main(String[] args) {
 
 //        testLastView();
-//        testGetClasses();
+        testGetClasses();
 //        testNoteCSV();
 //        testApprenantCSV();
 //        testCSVWriter();
@@ -33,7 +33,7 @@ public class TestClass {
 //        testDeleteApprenant(37);
 //        testCreateApprenant();
 //        System.out.println(ListRubriques.getRubriques());
-        testReadClasse(15);
+//        testReadClasse(15);
     }
 
     public static void testDeleteApprenant(int id){
