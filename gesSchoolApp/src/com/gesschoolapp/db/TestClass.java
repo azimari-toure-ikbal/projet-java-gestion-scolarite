@@ -19,8 +19,17 @@ public class TestClass {
     public static void main(String[] args) {
 
 //        testSearchClasse("4eme");
-//        testCreateApprenant();
 //        testConnexion();
+        testDeleteApprenant(30);
+    }
+
+    public static void testDeleteApprenant(int id){
+        try {
+            ApprenantDAOImp apprenantDAOImp = new ApprenantDAOImp();
+            apprenantDAOImp.delete(id);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
     }
 
 
@@ -47,7 +56,7 @@ public class TestClass {
             apprenant.setEtatPaiement(0);
             apprenant.setClasse("4eme");
             ApprenantDAOImp apprenantDAOImp = new ApprenantDAOImp();
-            apprenantDAOImp.create(apprenant);
+            System.out.println(apprenantDAOImp.create(apprenant));
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
