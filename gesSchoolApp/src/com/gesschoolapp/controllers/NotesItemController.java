@@ -46,6 +46,7 @@ public class NotesItemController extends Application {
     void actionBtnClicked(ActionEvent event) {
         System.out.println("CLICKED ON ACTIONS");
         editNoteTF.setVisible(!editNoteTF.isVisible());
+        editNoteTF.requestFocus();
     }
 
     public void setData(Note note){

@@ -4,13 +4,16 @@ import com.gesschoolapp.Exceptions.CSVException;
 import com.gesschoolapp.Exceptions.DAOException;
 import com.gesschoolapp.Exceptions.Mismatch;
 import com.gesschoolapp.db.DAOClassesImpl.ClasseDAOImp;
+import com.gesschoolapp.db.DAOClassesImpl.NoteDAOImp;
 import com.gesschoolapp.gescsv.ApprenantsCSV;
 import com.gesschoolapp.gescsv.NotesCSV;
 import com.gesschoolapp.models.classroom.Classe;
 import com.gesschoolapp.models.matieres.Module;
 import com.gesschoolapp.models.matieres.Note;
 import com.gesschoolapp.models.student.Apprenant;
+import com.gesschoolapp.models.users.Caissier;
 import com.gesschoolapp.models.users.Secretaire;
+import com.gesschoolapp.models.users.Utilisateur;
 import com.gesschoolapp.runtime.Main;
 import com.gesschoolapp.controllers.NotesItemController;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
@@ -73,7 +76,9 @@ public class SecretaireUIController implements Initializable {
 
     private String previousRouteLink;
 
-    private Secretaire currentUser;
+    private Utilisateur currentUser;
+
+    private boolean isCaissierSession;
 
 
     private Classe selectedClass;
@@ -162,6 +167,9 @@ public class SecretaireUIController implements Initializable {
     private FontAwesomeIcon profileIcon;
 
     @FXML
+    private FontAwesomeIcon feesIcon;
+
+    @FXML
     private FontAwesomeIcon classesIcon;
 
     @FXML
@@ -191,7 +199,13 @@ public class SecretaireUIController implements Initializable {
     private VBox classesClassesLayout;
 
     @FXML
+    private VBox userMenu;
+
+    @FXML
     private Button btnClasses;
+
+    @FXML
+    private Button btnPaiements;
 
     @FXML
     private Button btnProfile;
@@ -217,11 +231,13 @@ public class SecretaireUIController implements Initializable {
         classes = new Route("Classes", classesView, btnClasses, classesIcon);
         profile = new Route("Mon profil", profileView, btnProfile, profileIcon);
 
+        listeClasses = null;
         try {
             listeClasses = classesData.getList();
         } catch (DAOException e) {
             throw new RuntimeException(e);
         }
+
 
         // On donne une référence du super controlleur aux controlleurs filles :
         classPreview1Controller.setSuperController(this);
@@ -257,6 +273,9 @@ public class SecretaireUIController implements Initializable {
         try {
             resetSelectedClass(selectedClass);
             setListeDesApprenants(selectedClass.getApprenants());
+//            NoteDAOImp nD = new NoteDAOImp();
+//            setListeDesNotes(nD.getList().stream().
+//                    ilter(note -> Objects.equals(note.getModule(), selectedModule.getIntitule())).toList());
         } catch (DAOException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
@@ -266,6 +285,15 @@ public class SecretaireUIController implements Initializable {
 
 
     // getters et setters :
+
+
+    public boolean isCaissierSession() {
+        return isCaissierSession;
+    }
+
+    public void setCaissierSession(boolean caissierSession) {
+        isCaissierSession = caissierSession;
+    }
 
 
     public List<Classe> getListeClasses() {
@@ -328,13 +356,20 @@ public class SecretaireUIController implements Initializable {
     }
 
 
-    public Secretaire getCurrentUser() {
+    public Utilisateur getCurrentUser() {
         return currentUser;
     }
 
-    public void setCurrentUser(Secretaire currentUser) {
+    public void setCurrentUser(Utilisateur currentUser) {
 
-        this.currentUser = currentUser;
+        this.currentUser = (Secretaire) currentUser;
+        if(currentUser instanceof Secretaire){
+            setCaissierSession(false);
+            setSecretaireView();
+        }else{
+            setCaissierSession(true);
+        }
+
         welcomeText.setText(" Bonjour " + currentUser.getFullName() + ", bienvenue !");
     }
 
@@ -524,6 +559,8 @@ public class SecretaireUIController implements Initializable {
             classesIcon.setGlyphStyle("-fx-fill: white;");
         } else if (menu_section == btnProfile) {
             profileIcon.setGlyphStyle("-fx-fill: white;");
+        } else if (menu_section == btnPaiements){
+            feesIcon.setGlyphStyle("-fx-fill: white;");
         }
 
     }
@@ -540,6 +577,8 @@ public class SecretaireUIController implements Initializable {
             classesIcon.setGlyphStyle("-fx-fill: #2C7ABA;");
         } else if (menu_section == btnProfile) {
             profileIcon.setGlyphStyle("-fx-fill: #2C7ABA;");
+        } else if (menu_section == btnPaiements){
+            feesIcon.setGlyphStyle("-fx-fill: #2C7ABA;");
         }
 
         setCurrentRoute(this.getCurrentRoute());
@@ -658,7 +697,12 @@ public class SecretaireUIController implements Initializable {
                 try {
                     List<String> fileContent = aCSV.readFile(file);
                     List<String[]> fileData = aCSV.getData(fileContent);
-                    List<Apprenant> importedApprenants = aCSV.csvToObject(fileData, selectedClass);
+                    List<Apprenant> importedApprenants = null;
+                    try {
+                        importedApprenants = aCSV.csvToObject(fileData, selectedClass);
+                    } catch (Mismatch e) {
+                        setMainMessageInfo(e.getMessage());
+                    }
 
                     List<Apprenant> list = new ArrayList<>(selectedClass.getApprenants());
                     list.addAll(importedApprenants);
@@ -1089,6 +1133,12 @@ public class SecretaireUIController implements Initializable {
                 System.err.println(e);
             }
         }).start();
+    }
+
+    public void setSecretaireView(){
+        System.out.println(userMenu.lookup(".caissier_item"));
+        userMenu.getChildren().remove(userMenu.lookup(".caissier_item"));
+        classStudentsView.getChildren().remove(classStudentsView.lookup(".caissier_item"));
     }
 
 }
