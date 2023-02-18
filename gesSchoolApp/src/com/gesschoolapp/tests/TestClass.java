@@ -10,6 +10,7 @@ import com.gesschoolapp.models.classroom.Classe;
 import com.gesschoolapp.models.classroom.Classes;
 import com.gesschoolapp.models.matieres.Note;
 import com.gesschoolapp.models.student.Apprenant;
+import com.gesschoolapp.utils.ListRubriques;
 
 import java.io.File;
 import java.sql.Connection;
@@ -26,12 +27,13 @@ public class TestClass {
 //        testNoteCSV();
 //        testApprenantCSV();
 //        testCSVWriter();
-//        testReadClasse(13);
 //        testUpdateNote(14);
 //        testDeleteApprenant(31);
 //        testDeleteApprenant(36);
 //        testDeleteApprenant(37);
-        testCreateApprenant();
+//        testCreateApprenant();
+//        System.out.println(ListRubriques.getRubriques());
+        testReadClasse(15);
     }
 
     public static void testDeleteApprenant(int id){

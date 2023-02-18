@@ -709,7 +709,7 @@ public class SecretaireUIController implements Initializable {
                     selectedClass.setApprenants(list);
                     System.out.println("a importer" + importedApprenants.size());
                     this.setMainMessageInfo("Apprenants importés avec succès !");
-                } catch (CSVException | Mismatch e) {
+                } catch (CSVException e) {
                     setMainMessageInfo(e.getMessage(), 0);
                 }
             }

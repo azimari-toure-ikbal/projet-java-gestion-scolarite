@@ -1,6 +1,7 @@
 package com.gesschoolapp.models.classroom;
 
 import com.gesschoolapp.models.matieres.Module;
+import com.gesschoolapp.models.paiement.Rubrique;
 import com.gesschoolapp.models.student.Apprenant;
 
 import java.io.Serializable;
@@ -19,6 +20,7 @@ public class Classe implements Serializable, Comparable<Classe>{
     private List<Apprenant> apprenants;
     private List<Module> modules;
     private LocalDateTime views ;
+    private List<Rubrique> rubriques;
 
     //constructors
     public Classe() {
@@ -34,6 +36,19 @@ public class Classe implements Serializable, Comparable<Classe>{
         this.setApprenants(apprenants);
         this.setModules(modules);
         this.setViews(views);
+    }
+
+    public Classe(int id, String intitule, int reference, String annee, String formation, List<Apprenant> apprenants, List<Module> modules, LocalDateTime views, List<Rubrique> rubriques) {
+        //use setters
+        this.setId(id);
+        this.setIntitule(intitule);
+        this.setReference(reference);
+        this.setAnnee(annee);
+        this.setFormation(formation);
+        this.setApprenants(apprenants);
+        this.setModules(modules);
+        this.setViews(views);
+        this.setRubriques(rubriques);
     }
 
     //getters and setters
@@ -102,6 +117,15 @@ public class Classe implements Serializable, Comparable<Classe>{
         this.modules = modules;
     }
 
+
+    public List<Rubrique> getRubriques() {
+        return rubriques;
+    }
+
+    public void setRubriques(List<Rubrique> rubriques) {
+        this.rubriques = rubriques;
+    }
+
     @Override
     public String toString() {
         return "\nClasse{" +
@@ -113,6 +137,7 @@ public class Classe implements Serializable, Comparable<Classe>{
                 ", apprenants=" + apprenants +
                 ", modules=" + modules +
                 ", views=" + views +
+                ", rubriques=" + rubriques +
                 "}\n";
     }
 
