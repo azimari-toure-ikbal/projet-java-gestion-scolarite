@@ -463,7 +463,7 @@ public class SecretaireUIController implements Initializable {
 
         try {
             Module oldSelectedModule = selectedModule;
-            setListeDesModules();
+            resetListeDesModules(selectedModule);
             setListeDesApprenants();
         } catch (DAOException e) {
             throw new RuntimeException(e);
@@ -895,6 +895,33 @@ public class SecretaireUIController implements Initializable {
             modulesLayout.getChildren().add(pane);
 
         }
+
+
+    }
+    private void resetListeDesModules(Module toSelect) throws DAOException, IOException {
+        resetListeDesModules(getSelectedClass().getModules(),toSelect);
+    }
+
+    private void resetListeDesModules(List<Module> modules,Module toSelect) throws DAOException, IOException {
+        modulesLayout.getChildren().clear();
+
+        for (Module module : modules) {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("ModuleItem.fxml"));
+
+            Pane pane = fxmlLoader.load();
+            ModuleItemController mic = fxmlLoader.getController();
+            mic.setSuperController(this);
+            mic.setData(module);
+            if (toSelect == module) {
+                setSelectedModule(module);
+                mic.setAsSelected();
+            }
+
+            modulesLayout.getChildren().add(pane);
+
+        }
+
 
     }
 
