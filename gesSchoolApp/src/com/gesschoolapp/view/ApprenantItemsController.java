@@ -10,6 +10,7 @@ import com.gesschoolapp.models.student.Apprenant;
 import com.gesschoolapp.view.SecretaireUIController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -18,14 +19,12 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
-public class ApprenantItemsController {
+public class ApprenantItemsController implements Initializable {
 
     private SecretaireUIController superController;
 
@@ -42,6 +41,9 @@ public class ApprenantItemsController {
 
     @FXML
     private Label labeldNaiss;
+
+    @FXML
+    private Button etatPayement;
 
     @FXML
     private Button btnDeleteApprenant;
@@ -105,9 +107,20 @@ public class ApprenantItemsController {
 //      Parsing birthday :
         DateTimeFormatter formatters = DateTimeFormatter.ofPattern("d/MM/uuuu");
         String dNaiss = apprenant.getDateNaissance().format(formatters);
+        if (apprenant.getSexe().equals("F")) {
+            etatPayement.setText("Impayé");
+            etatPayement.setStyle("-fx-background-color: #CE4F4B;");
+            System.out.println(etatPayement);
+        }
+
 
         labeldNaiss.setText(dNaiss);
         labelGenre.setText(apprenant.getSexe());
+
+        System.out.println(superController.isCaissierSession());
+        if(superController.isCaissierSession()){
+            etatPayement.setVisible(true);
+        }
     }
 
     public SecretaireUIController getSuperController() {
@@ -116,5 +129,10 @@ public class ApprenantItemsController {
 
     public void setSuperController(SecretaireUIController superController) {
         this.superController = superController;
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
     }
 }

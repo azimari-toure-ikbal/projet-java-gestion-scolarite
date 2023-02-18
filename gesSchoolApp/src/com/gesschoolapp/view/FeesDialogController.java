@@ -7,30 +7,24 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
-import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
-public class ApprenantViewDialogController implements Initializable {
+public class FeesDialogController  implements Initializable {
     private Stage dialogStage;
     private Apprenant apprenant;
 
@@ -57,7 +51,7 @@ public class ApprenantViewDialogController implements Initializable {
         this.scene = scene;
     }
 
-    SecretaireUIController superController;
+    ApprenantViewDialogController superController;
 
     @FXML
     private Label labelClass;
@@ -117,11 +111,11 @@ public class ApprenantViewDialogController implements Initializable {
             landscape.setStyle("-fx-background-color: linear-gradient(to right, #fc67fa, #f4c4f3)");
         }
 
-        if(!superController.isCaissierSession()){
-            btnFees.setVisible(false);
-            iconCaissierItem.setVisible(false);
-            infosGrid.getChildren().remove(infosGrid.lookup(".caissier_item"));
-        }
+//        if(!superController.isCaissierSession()){
+//            btnFees.setVisible(false);
+//            iconCaissierItem.setVisible(false);
+//            infosGrid.getChildren().remove(infosGrid.lookup(".caissier_item"));
+//        }
 
         //      Parsing birthday :
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern( "dd MMM yyyy" ).withLocale( java.util.Locale.FRENCH );
@@ -135,46 +129,7 @@ public class ApprenantViewDialogController implements Initializable {
 
     @FXML
     void openFeesDialogView(ActionEvent event) {
-        try {
-        // Load the fxml file and create a new stage for the popup dialog.
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("FeesDialog.fxml"));
 
-        AnchorPane page = null;
-            page = (AnchorPane) loader.load();
-
-        // Create the dialog Stage.
-        Stage dialogStage = new Stage();
-        dialogStage.setTitle("School UP - Renseigner un paiement");
-        // Set the application icon.
-
-        dialogStage.getIcons().add(new Image("com/gesschoolapp/resources/images/app_icon.png"));
-        dialogStage.initStyle(StageStyle.UNDECORATED);
-        dialogStage.setResizable(false);
-
-
-        dialogStage.initModality(Modality.WINDOW_MODAL);
-        dialogStage.initOwner(main.getPrimaryStage());
-        Scene scene = new Scene(page);
-        dialogStage.setScene(scene);
-
-        // Set the person into the controller.
-        FeesDialogController controller = loader.getController();
-        controller.setDialogStage(dialogStage);
-        controller.setSuperController(this);
-        controller.setScene(scene);
-        controller.setMain(main);
-//        controller.setApprenant(appr);
-        controller.setDraggable();
-
-
-
-        // Show the dialog and wait until the user closes it
-        dialogStage.showAndWait();
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     @FXML
@@ -206,8 +161,9 @@ public class ApprenantViewDialogController implements Initializable {
 
     }
 
-    public void setSuperController(SecretaireUIController superController) {
+    public void setSuperController(ApprenantViewDialogController superController) {
         this.superController = superController;
     }
 
 }
+

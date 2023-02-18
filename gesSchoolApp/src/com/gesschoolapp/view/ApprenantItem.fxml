@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
 <HBox prefHeight="64.0" prefWidth="602.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gesschoolapp.view.ApprenantItemsController">
@@ -44,6 +47,21 @@
                         <Font name="Gill Sans MT" size="15.0" />
                     </font>
                 </Label>
+            <Button fx:id="etatPayement" alignment="CENTER" focusTraversable="false" layoutX="24.0" layoutY="15.0" maxHeight="35.0" maxWidth="130.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="153.0" styleClass="feesBtn" stylesheets="@../style/application.css" text="Payé" textFill="#f7fff7" visible="false">
+               <font>
+                  <Font name="Corbel Bold" size="19.0" />
+               </font>
+               <effect>
+                  <DropShadow blurType="ONE_PASS_BOX" height="12.0" offsetX="1.0" offsetY="1.0" radius="5.5" spread="0.3" width="12.0">
+                     <color>
+                        <Color red="0.7105262875556946" green="0.7105262875556946" blue="0.7105262875556946" />
+                     </color>
+                  </DropShadow>
+               </effect>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+            </Button>
             </children>
         </Pane>
         <Pane prefHeight="64.0" prefWidth="126.0">

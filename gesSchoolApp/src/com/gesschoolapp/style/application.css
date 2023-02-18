@@ -175,6 +175,21 @@
     -fx-cursor: hand;
 }
 
+.feesBtn{
+    -fx-padding: 0;
+    -fx-border-color: transparent;
+    -fx-border-radius: 0;
+    -fx-border-width: 0;
+    -fx-background-radius: 50px;
+    -fx-background-color: #5CB85C;
+    -fx-font-weight: bold;
+    -fx-font-family: System;
+    -fx-font-size: 13px;
+    -fx-text-fill: #f7fff7;
+    -fx-background-insets: 0 0 0 0, 0, 0, 0;
+    -fx-cursor: hand;
+}
+
 .virgin_menu_btn{
     -fx-padding: 0;
     -fx-border-color: transparent;

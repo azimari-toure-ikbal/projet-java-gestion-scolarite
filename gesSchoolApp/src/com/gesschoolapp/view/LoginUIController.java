@@ -112,9 +112,11 @@ public class LoginUIController implements Initializable  {
     void handleLogin(ActionEvent event) {
 
 //        String login = txtUsername.getText();
-        String login = "fatou.syla@mail.cum";
+//        String login = "fatou.syla@mail.cum";
+        String login = "marcus.sins@mail.com";
+//        String password = "fatou";
+        String password = "marcus";
 //        String password = txtPassword.getText();
-        String password = "fatou";
         if (login.isEmpty() || password.isEmpty()) {
             messageInfo.setText("Veuillez remplir tous les champs");
         } else {

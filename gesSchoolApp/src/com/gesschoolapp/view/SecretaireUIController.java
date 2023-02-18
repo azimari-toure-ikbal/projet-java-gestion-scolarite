@@ -139,6 +139,9 @@ public class SecretaireUIController implements Initializable {
     private Button btnAccueil;
 
     @FXML
+    private Label caissierEtatDePaiementLabel;
+
+    @FXML
     private TextField searchClassInput;
 
     @FXML
@@ -252,6 +255,14 @@ public class SecretaireUIController implements Initializable {
         pp_placeholder1.setFill(new ImagePattern(pp));
 //        class_preview.setImage(new Image("resources/images/plc.png"));
 
+        if(currentUser instanceof Secretaire){
+            setCaissierSession(false);
+            setSecretaireView();
+        }else{
+            setCaissierSession(true);
+        }
+            System.out.println(isCaissierSession);
+
 
         try {
 
@@ -261,7 +272,7 @@ public class SecretaireUIController implements Initializable {
             setListeDesClasses(listeClasses);
             // Liste des modules d'une classe :
             setListeDesModules();
-            setListeDesApprenants();
+//            setListeDesApprenants();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -362,12 +373,20 @@ public class SecretaireUIController implements Initializable {
 
     public void setCurrentUser(Utilisateur currentUser) {
 
-        this.currentUser = (Secretaire) currentUser;
+        this.currentUser = currentUser;
+
         if(currentUser instanceof Secretaire){
             setCaissierSession(false);
             setSecretaireView();
         }else{
             setCaissierSession(true);
+            System.out.println(isCaissierSession);
+        }
+
+        try {
+                setListeDesApprenants();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
 
         welcomeText.setText(" Bonjour " + currentUser.getFullName() + ", bienvenue !");
@@ -707,6 +726,7 @@ public class SecretaireUIController implements Initializable {
                     List<Apprenant> list = new ArrayList<>(selectedClass.getApprenants());
                     list.addAll(importedApprenants);
                     selectedClass.setApprenants(list);
+
                     this.setMainMessageInfo("Apprenants importés avec succès !");
                 } catch (CSVException | Mismatch e) {
                     setMainMessageInfo(e.getMessage(), 0);
@@ -1052,10 +1072,13 @@ public class SecretaireUIController implements Initializable {
             // Set the person into the controller.
             ApprenantViewDialogController controller = loader.getController();
             controller.setDialogStage(dialogStage);
+            controller.setSuperController(this);
             controller.setScene(scene);
             controller.setMain(mainApp);
             controller.setApprenant(appr);
             controller.setDraggable();
+
+
 
             // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();
@@ -1165,6 +1188,8 @@ public class SecretaireUIController implements Initializable {
         System.out.println(userMenu.lookup(".caissier_item"));
         userMenu.getChildren().remove(userMenu.lookup(".caissier_item"));
         classStudentsView.getChildren().remove(classStudentsView.lookup(".caissier_item"));
+        classStudentsView.getChildren().remove(classStudentsView.lookup(".caissier_item"));
+        caissierEtatDePaiementLabel.setText("Date de naissance");
     }
 
 }
