@@ -648,9 +648,7 @@ public class SecretaireUIController implements Initializable {
                     selectedModule.setNotes(list);
 
                     this.setMainMessageInfo("Notes importés avec succès !");
-                } catch (CSVException e) {
-                    setMainMessageInfo(e.getMessage(), 0);
-                } catch (Mismatch e) {
+                } catch (CSVException | Mismatch e) {
                     setMainMessageInfo(e.getMessage(), 0);
                 }
             }
@@ -667,7 +665,7 @@ public class SecretaireUIController implements Initializable {
                     selectedClass.setApprenants(list);
                     System.out.println("a importer" + importedApprenants.size());
                     this.setMainMessageInfo("Apprenants importés avec succès !");
-                } catch (CSVException e) {
+                } catch (CSVException | Mismatch e) {
                     setMainMessageInfo(e.getMessage(), 0);
                 }
             }
@@ -715,7 +713,7 @@ public class SecretaireUIController implements Initializable {
     }
 
     private void btnPrecedentIsActive(boolean state) {
-        if (state == true) {
+        if (state) {
             btnPrecedent.toFront();
             btnPrecedent.setDisable(false);
             btnPrecedent.setCursor(Cursor.HAND);
@@ -786,9 +784,7 @@ public class SecretaireUIController implements Initializable {
 
         try {
             setListeDesApprenants(newList);
-        } catch (DAOException ex) {
-            throw new RuntimeException(ex);
-        } catch (IOException ex) {
+        } catch (DAOException | IOException ex) {
             throw new RuntimeException(ex);
         }
     }

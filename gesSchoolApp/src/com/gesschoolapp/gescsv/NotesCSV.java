@@ -126,7 +126,8 @@ public class NotesCSV implements CSVReader<Note> {
 
         for (String[] line : data) {
             if (line.length != 3) {
-                throw new CSVException("Le fichier n'est pas au bon format");
+                throw new CSVException("Le fichier n'est pas au bon format \n" +
+                        "Le fichier doit être au format : matricule;note;semestre");
             }
 
             // Verify if the student exists
