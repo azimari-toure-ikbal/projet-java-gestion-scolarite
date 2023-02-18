@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 
 import com.gesschoolapp.Exceptions.DAOException;
 import com.gesschoolapp.db.DAOClassesImpl.UserDAOImp;
+import com.gesschoolapp.models.users.Caissier;
 import com.gesschoolapp.models.users.Secretaire;
 import com.gesschoolapp.models.users.Utilisateur;
 import com.gesschoolapp.runtime.Main;
@@ -121,15 +122,13 @@ public class LoginUIController implements Initializable  {
                 Utilisateur user = userDAOImp.authenticate(login, password);
                 if (user != null) {
                     if (user.getPassword().equals(password)) {
-                        if (user instanceof Secretaire) {
-
-
                             Node node = (Node) event.getSource();
                             Stage stg = (Stage) node.getScene().getWindow();
                             stg.close();
-
+                        if (user instanceof Secretaire) {
                             main.displaySecretaireUI(stg, (Secretaire) user, main);
-
+                        }else if( user instanceof Caissier){
+                            main.displaySecretaireUI(stg, (Caissier) user, main);
                         }
                     } else {
                         messageInfo.setText("Mot de passe incorrect");

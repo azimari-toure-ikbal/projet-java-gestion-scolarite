@@ -2,7 +2,11 @@ package com.gesschoolapp.view;
 
 import com.gesschoolapp.Exceptions.DAOException;
 import com.gesschoolapp.db.DAOClassesImpl.ApprenantDAOImp;
+import com.gesschoolapp.db.DAOClassesImpl.ClasseDAOImp;
+import com.gesschoolapp.db.DAOClassesImpl.NoteDAOImp;
 import com.gesschoolapp.models.classroom.Classe;
+import com.gesschoolapp.models.matieres.Module;
+import com.gesschoolapp.models.matieres.Note;
 import com.gesschoolapp.models.student.Apprenant;
 import com.gesschoolapp.runtime.Main;
 import com.gesschoolapp.view.util.Genre;
@@ -148,9 +152,24 @@ public class ApprenantAddDialogController extends Application implements Initial
 
         try {
             dialogStage.close();
-            apprenantsData.create(apprenant);
+            Apprenant newApprenant = apprenantsData.create(apprenant);
             List<Apprenant> list = new ArrayList<>(superController.getSelectedClass().getApprenants());
-            list.add(apprenant);
+            list.add(newApprenant);
+            Note newNote = new Note();
+            newNote.setApprenant(newApprenant);
+
+            newNote.setNote(0);
+            List<Module> modules = superController.getSelectedClass().getModules();
+            NoteDAOImp notesData = new NoteDAOImp();
+
+            for(Module module : modules){
+                List<Note> notesList = new ArrayList<>(module.getNotes());
+                newNote.setModule(module.getIntitule());
+//                newNote.setId();
+                notesList.add(newNote);
+                module.setNotes(notesList);
+            }
+
             superController.getSelectedClass().setApprenants(list);
         } catch (DAOException e) {
             throw new RuntimeException(e);

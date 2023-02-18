@@ -156,6 +156,8 @@ public class ApprenantEditDialogController extends Application implements Initia
         apprenant.setClasse(currentClass.getIntitule());
         apprenant.setIdApprenant(selectedStudent.getIdApprenant());
         apprenant.setEtatPaiement(selectedStudent.getEtatPaiement());
+        apprenant.setIdApprenant(selectedStudent.getIdApprenant());
+        apprenant.setMatricule(selectedStudent.getMatricule());
 
         if(apprenant.equals(selectedStudent)){
             messageInfo.setText("Vous devez d'abord au moins changer la valeur d'un champ pour modifier l'élève !");
@@ -167,7 +169,6 @@ public class ApprenantEditDialogController extends Application implements Initia
             dialogStage.close();
             apprenantsData.update(apprenant);
             List<Apprenant> list = new ArrayList<>(superController.getSelectedClass().getApprenants());
-//            selectedStudent.setNom(apprenant.getNom());
             list.set(list.indexOf(selectedStudent),apprenant);
             superController.getSelectedClass().setApprenants(list);
         } catch (DAOException e) {

@@ -1,6 +1,8 @@
 package com.gesschoolapp.runtime;
 
+import com.gesschoolapp.models.users.Caissier;
 import com.gesschoolapp.models.users.Secretaire;
+import com.gesschoolapp.models.users.Utilisateur;
 import com.gesschoolapp.view.LoginUIController;
 import com.gesschoolapp.view.LoginUIController;
 import com.gesschoolapp.view.SecretaireUIController;
@@ -137,10 +139,38 @@ public class Main extends Application {
             // Set the current stage and scene references into controller
             controller.setCurrentScene(scene);
             controller.setStage(stg);
-            controller.setCurrentUser((Secretaire) user);
+            controller.setCurrentUser(user);
             controller.setMainApp(main);
             // Makes the stage draggable
             controller.setDraggable();
+//            controller.setSecretaireView();
+
+            stg.setScene(scene);
+            stg.show();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    public void displaySecretaireUI(Stage stg, Caissier user, Main main) {
+        try{
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("../view/SecretaireUI.fxml"));
+            Parent dash = loader.load();
+
+            Scene scene = new Scene(dash);
+
+            SecretaireUIController controller = loader.getController();
+
+            // Set the current stage and scene references into controller
+            controller.setCurrentScene(scene);
+            controller.setStage(stg);
+            controller.setCurrentUser((Caissier) user);
+            controller.setMainApp(main);
+            // Makes the stage draggable
+            controller.setDraggable();
+//            controller.get
 
             stg.setScene(scene);
             stg.show();
