@@ -23,6 +23,7 @@ import javax.swing.JOptionPane;
 public class TestClass {
     public static void main(String[] args) {
 
+
 //        System.out.println("RCU" + (int) (Instant.now().getEpochSecond()/10000));
 //        testLastView();
 //        testGetClasses();
@@ -37,12 +38,45 @@ public class TestClass {
 //        System.out.println(ListRubriques.getRubriques());
 //        testReadClasse(15);
 //        testGetPaiements();
+//        testPaiement();
+        testCheckPaiement();
+//        System.out.println(LocalDate.now());
     }
 
     public static void testDeleteApprenant(int id){
         try {
             ApprenantDAOImp apprenantDAOImp = new ApprenantDAOImp();
             apprenantDAOImp.delete(id);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+
+    public static void testCheckPaiement(){
+        try {
+            Apprenant apprenant = new ApprenantDAOImp().read(40);
+            boolean check = new ClasseDAOImp().read(15).isCurrentEcheancePaid(apprenant);
+            System.out.println(new ClasseDAOImp().read(15).getCurrentEcheance());
+            System.out.println(check);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+
+
+    public static void testPaiement(){
+        try {
+            PaiementDAOImp paiementDAOImp = new PaiementDAOImp();
+            Paiement paiement = new Paiement();
+            paiement.setMontant(1000);
+            paiement.setApprenant(new ApprenantDAOImp().read(40));
+            paiement.setRubrique("inscription");
+            paiement.setDate(LocalDate.now());
+            paiement.setClasse(new ApprenantDAOImp().read(40).getClasse());
+            paiement.setCaissier("Violet Myers");
+            paiement.setObservation("Paiement d'inscription");
+
+            System.out.println(paiementDAOImp.create(paiement));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }

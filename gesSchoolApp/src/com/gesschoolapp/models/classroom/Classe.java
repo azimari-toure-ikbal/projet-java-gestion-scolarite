@@ -154,7 +154,7 @@ public class Classe implements Serializable, Comparable<Classe>{
 
     public Echeance getCurrentEcheance(){
         for (Echeance echeance : echeancier){
-            if (LocalDate.now().isAfter(echeance.getDate())){
+            if (echeance.getDate().getMonthValue() == LocalDate.now().getMonthValue()){
                 return echeance;
             }
         }
@@ -166,12 +166,17 @@ public class Classe implements Serializable, Comparable<Classe>{
      * This method return a boolean, true is the current echeance is paid, false otherwise
      * You just pass the apprenant as parameter
      *
+     *
      * @param apprenant
      * @return
      */
     public boolean isCurrentEcheancePaid(Apprenant apprenant){
+        if(apprenant.getEtatPaiement() == 0){
+            return false;
+        }
         LocalDate date = echeancier.get(apprenant.getEtatPaiement()).getDate();
-        return date.isAfter(getCurrentEcheance().getDate());
+        System.out.println("date : " + date);
+        return date.isEqual(getCurrentEcheance().getDate());
     }
 
     @Override
