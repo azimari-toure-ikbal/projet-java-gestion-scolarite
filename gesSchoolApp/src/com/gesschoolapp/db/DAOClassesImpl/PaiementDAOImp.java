@@ -19,8 +19,16 @@ public class PaiementDAOImp implements SearchDAO<Paiement> {
 
     @Override
     public Paiement create(Paiement obj) throws DAOException {
+        String rubrique = obj.getRubrique();
         //Generate a method to insert a paiement in the database
         try (Connection connection = DBManager.getConnection()) {
+            if(Objects.equals(obj.getRubrique(), "inscription") && obj.getApprenant().getEtatPaiement() > 0 ){
+                throw new DAOException("L'inscription de cet apprenant a déjà été payée");
+            }
+            if (obj.getApprenant().getEtatPaiement() == 9 && Objects.equals(obj.getRubrique(), "scolarite")){
+                throw new DAOException("Cet apprenant a déjà payé toutes ses scolarités");
+            }
+
             String query = "INSERT INTO paiements (numeroRecu, date, montant, idApprenant, classe, rubrique, caissier, observation) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, "RCU" + (int) (Instant.now().getEpochSecond()/1000));
@@ -28,19 +36,18 @@ public class PaiementDAOImp implements SearchDAO<Paiement> {
             statement.setDouble(3, obj.getMontant());
             statement.setInt(4, obj.getApprenant().getIdApprenant());
             statement.setString(5, obj.getClasse());
-            statement.setString(6, obj.getRubrique());
+            if(Objects.equals(obj.getRubrique(), "scolarite") ){
+                rubrique = obj.getRubrique() + " " + new ClasseDAOImp().search(obj.getClasse()).
+                        get(0).getEcheancier().get(obj.getApprenant().getEtatPaiement()).getDate().getMonth().toString().toLowerCase();
+            }
+            statement.setString(6, rubrique);
             statement.setString(7, obj.getCaissier());
             statement.setString(8, obj.getObservation());
+            statement.executeUpdate();
             if (Objects.equals(obj.getRubrique(), "inscription") || Objects.equals(obj.getRubrique(), "scolarite")){
                 new ApprenantDAOImp().incrementEtatPaiement(obj.getApprenant());
             }
-            if(Objects.equals(obj.getRubrique(), "inscription") && obj.getApprenant().getEtatPaiement() > 0 ){
-                throw new DAOException("L'inscription de cet apprenant a déjà été payée");
-            }
-            if (obj.getApprenant().getEtatPaiement() == 9 && Objects.equals(obj.getRubrique(), "scolarite")){
-                throw new DAOException("Cet apprenant a déjà payé toutes ses scolarités");
-            }
-            statement.executeUpdate();
+
             return getList().get(getList().size() - 1);
         } catch (Exception e) {
             throw new DAOException( "Error in PaiementDAO.create() : " + e.getMessage());
