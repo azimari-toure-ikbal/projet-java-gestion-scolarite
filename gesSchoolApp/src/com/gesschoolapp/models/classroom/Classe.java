@@ -161,6 +161,14 @@ public class Classe implements Serializable, Comparable<Classe>{
         return null;
     }
 
+    /**
+     *
+     * This method return a boolean, true is the current echeance is paid, false otherwise
+     * You just pass the apprenant as parameter
+     *
+     * @param apprenant
+     * @return
+     */
     public boolean isCurrentEcheancePaid(Apprenant apprenant){
         LocalDate date = echeancier.get(apprenant.getEtatPaiement()).getDate();
         return date.isAfter(getCurrentEcheance().getDate());
