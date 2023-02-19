@@ -139,6 +139,24 @@ public class NotesCSV implements CSVReader<Note> {
                 throw new CSVException("Une erreur est survenue lors de la recherche de l'apprenant : " + e.getMessage());
             }
 
+            // Verify if the module exists
+            try {
+                if (moduleDAOImp.search(module.getIntitule()) == null) {
+                    throw new CSVException("Le module n'existe pas");
+                }
+            } catch (DAOException e) {
+                throw new CSVException("Une erreur est survenue lors de la recherche du module : " + e.getMessage());
+            }
+
+            // Verify if the student is registered
+            try {
+                if (apprenantDAOImp.searchByMatricule(Integer.parseInt(line[0])).getEtatPaiement() == 0) {
+                    throw new CSVException("L'apprenant n'est pas inscrit");
+                }
+            } catch (DAOException e) {
+                throw new CSVException("Une erreur est survenue lors de la recherche de l'apprenant : " + e.getMessage());
+            }
+
             // Verify if the student is in the class
             try {
                 if (!Objects.equals(apprenantDAOImp.searchByMatricule(Integer.parseInt(line[0])).getClasse(), classse.getIntitule())) {
