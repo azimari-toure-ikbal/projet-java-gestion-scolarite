@@ -39,4 +39,9 @@ public class Echeancier {
     public void setEcheances(List<Echeance> echeances) {
         this.echeances = echeances;
     }
+
+    public void getCurrentEcheance() {
+
+    }
+
 }

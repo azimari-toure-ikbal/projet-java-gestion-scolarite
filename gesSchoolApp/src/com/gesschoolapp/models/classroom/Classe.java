@@ -1,6 +1,8 @@
 package com.gesschoolapp.models.classroom;
 
 import com.gesschoolapp.models.matieres.Module;
+import com.gesschoolapp.models.paiement.Echeance;
+import com.gesschoolapp.models.paiement.Echeancier;
 import com.gesschoolapp.models.paiement.Rubrique;
 import com.gesschoolapp.models.student.Apprenant;
 
@@ -21,6 +23,7 @@ public class Classe implements Serializable, Comparable<Classe>{
     private List<Module> modules;
     private LocalDateTime views ;
     private List<Rubrique> rubriques;
+    private List<Echeance> echeancier;
 
     //constructors
     public Classe() {
@@ -49,6 +52,20 @@ public class Classe implements Serializable, Comparable<Classe>{
         this.setModules(modules);
         this.setViews(views);
         this.setRubriques(rubriques);
+    }
+
+    public Classe(int id, String intitule, int reference, String annee, String formation, List<Apprenant> apprenants, List<Module> modules, LocalDateTime views, List<Rubrique> rubriques, List<Echeance> echeancier) {
+        //use setters
+        this.setId(id);
+        this.setIntitule(intitule);
+        this.setReference(reference);
+        this.setAnnee(annee);
+        this.setFormation(formation);
+        this.setApprenants(apprenants);
+        this.setModules(modules);
+        this.setViews(views);
+        this.setRubriques(rubriques);
+        this.setEcheancier(echeancier);
     }
 
     //getters and setters
@@ -126,6 +143,14 @@ public class Classe implements Serializable, Comparable<Classe>{
         this.rubriques = rubriques;
     }
 
+    public List<Echeance> getEcheancier() {
+        return echeancier;
+    }
+
+    public void setEcheancier(List<Echeance> echeancier) {
+        this.echeancier = echeancier;
+    }
+
     @Override
     public String toString() {
         return "\nClasse{" +
@@ -138,6 +163,7 @@ public class Classe implements Serializable, Comparable<Classe>{
                 ", modules=" + modules +
                 ", views=" + views +
                 ", rubriques=" + rubriques +
+                ", echeancier=" + echeancier +
                 "}\n";
     }
 

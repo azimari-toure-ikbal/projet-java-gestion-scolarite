@@ -23,7 +23,7 @@ public class TestClass {
     public static void main(String[] args) {
 
 //        testLastView();
-//        testGetClasses();
+        testGetClasses();
 //        testNoteCSV();
 //        testApprenantCSV();
 //        testCSVWriter();
