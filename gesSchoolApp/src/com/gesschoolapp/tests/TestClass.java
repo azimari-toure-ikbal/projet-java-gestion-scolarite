@@ -35,16 +35,6 @@ public class TestClass {
 //        System.out.println(ListRubriques.getRubriques());
 //        testReadClasse(15);
 //        testGetPaiements();
-
-        // Determiner le diviseur d'un nombre
-        int n = 100;
-        List<Integer> diviseurs = new ArrayList<>();
-
-        for (int i = 1; i <= n; i++) {
-            if (n % i == 0) {
-                diviseurs.add(i);
-            }
-        }
     }
 
     public static void testDeleteApprenant(int id){

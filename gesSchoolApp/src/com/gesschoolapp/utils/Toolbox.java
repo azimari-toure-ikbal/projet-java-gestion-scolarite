@@ -43,19 +43,31 @@ public class Toolbox {
         return list;
     }
 
-    public static List<Paiement> paiementsJournalier(List<Paiement> paiements, LocalDate date){
+    public static List<Paiement> paiementsJournalier(LocalDate date){
+        return null;
+    }
+    public static List<Paiement> paiementsJournalier(String date){
         return null;
     }
 
-    public static List<Paiement> paiementsHebdomadaire(List<Paiement> paiements, LocalDate date){
+    public static List<Paiement> paiementsHebdomadaire(LocalDate date){
+        return null;
+    }
+    public static List<Paiement> paiementsHebdomadaire(String date){
         return null;
     }
 
-    public static List<Paiement> paiementsMensuel(List<Paiement> paiements, LocalDate date){
+    public static List<Paiement> paiementsMensuel(LocalDate date){
+        return null;
+    }
+    public static List<Paiement> paiementsMensuel(String date){
         return null;
     }
 
-    public static List<Paiement> paiementsAnnuel(List<Paiement> paiements, LocalDate date){
+    public static List<Paiement> paiementsAnnuel(LocalDate date){
+        return null;
+    }
+    public static List<Paiement> paiementsAnnuel(String date){
         return null;
     }
 }
