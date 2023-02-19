@@ -16,3 +16,11 @@ JOURNAL DE BORD DE LA TEAM ROCKET
 		interfaces, nous avons aussi placé notre projet sur github pour faciliter le travail collaboratif.
 07/02/23: Sixième réunion, la plus agréable depuis le début en toute objectivité. Quelques problèmes se sont présentés à nous mais 
 		tous assez vite réglés pour le moment. Rien de mieux que le sentiment de progression !
+19/02/23: Petite mise au point. Depuis la dernière fois nous avons eu le temps de bien avancer et de régler plusieurs problèmes.
+		Nous avons trouvé un moyen de générer des pdf pour les bulletins, quasiment terminé l'interface sécrétaire et 
+		rapidement abordé l'interface du caissier. 
+		Nous avons aussi fait face à un problème de rapidité de notre application, notament dû à un code pas assez optimisé 
+		et cela a depuis été corrigé. La performance est désormais acceptable. Le traitement des données sera dans la mesure 
+		du possible géré par la base de donée et donc les requêtes.
+		Le temps ne nous permettras sûrement pas de tout implémenter donc nous ferons à un moment le point sur les 
+		fonctionnalités que nous mettrons de côté dans le livrable pour le prof.
