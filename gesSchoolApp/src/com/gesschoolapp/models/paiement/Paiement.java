@@ -15,6 +15,9 @@ public class Paiement {
     private String caissier;
     private String classe;
 
+    public Paiement() {
+    }
+
     public Paiement(int idPaiement, String numeroRecu, String montant, String rubrique, LocalDate date, String observation, String apprenant, String caissier, String classe) {
         //use the setters
         this.setIdPaiement(idPaiement);
