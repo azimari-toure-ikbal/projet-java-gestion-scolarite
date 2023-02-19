@@ -1,6 +1,7 @@
 package com.gesschoolapp.models.matieres;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Module implements Serializable {
@@ -67,6 +68,15 @@ public class Module implements Serializable {
         this.semestre = semestre;
     }
 
+    public List<Note> getGoodNotes(){
+        List<Note> goodNotes = new ArrayList<>();
+        for (Note note : notes) {
+            if (note.getApprenant().getEtatPaiement() > 0) {
+                goodNotes.add(note);
+            }
+        }
+        return goodNotes;
+    }
 
     @Override
     public String toString() {

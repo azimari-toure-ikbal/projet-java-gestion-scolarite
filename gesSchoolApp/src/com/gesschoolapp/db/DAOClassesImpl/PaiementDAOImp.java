@@ -34,6 +34,12 @@ public class PaiementDAOImp implements SearchDAO<Paiement> {
             if (Objects.equals(obj.getRubrique(), "inscription") || Objects.equals(obj.getRubrique(), "scolarite")){
                 new ApprenantDAOImp().incrementEtatPaiement(obj.getApprenant());
             }
+            if(Objects.equals(obj.getRubrique(), "inscription") && obj.getApprenant().getEtatPaiement() > 0 ){
+                throw new DAOException("L'inscription de cet apprenant a déjà été payée");
+            }
+            if (obj.getApprenant().getEtatPaiement() == 9 && Objects.equals(obj.getRubrique(), "scolarite")){
+                throw new DAOException("Cet apprenant a déjà payé toutes ses scolarités");
+            }
             statement.executeUpdate();
             return getList().get(getList().size() - 1);
         } catch (Exception e) {
