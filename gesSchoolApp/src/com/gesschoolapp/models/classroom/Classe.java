@@ -7,6 +7,7 @@ import com.gesschoolapp.models.paiement.Rubrique;
 import com.gesschoolapp.models.student.Apprenant;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -151,6 +152,18 @@ public class Classe implements Serializable, Comparable<Classe>{
         this.echeancier = echeancier;
     }
 
+    public Echeance getCurrentEcheance(){
+        for (Echeance echeance : echeancier){
+            if (LocalDate.now().isAfter(echeance.getDate())){
+                return echeance;
+            }
+        }
+        return null;
+    }
+
+    public boolean isCurrentEcheancePaid(Apprenant apprenant){
+return true    ;}
+
     @Override
     public String toString() {
         return "\nClasse{" +
@@ -166,6 +179,7 @@ public class Classe implements Serializable, Comparable<Classe>{
                 ", echeancier=" + echeancier +
                 "}\n";
     }
+
 
         @Override
         public int compareTo(Classe o) {

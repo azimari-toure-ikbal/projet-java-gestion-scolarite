@@ -21,7 +21,7 @@ public class PaiementDAOImp implements SearchDAO<Paiement> {
     public Paiement create(Paiement obj) throws DAOException {
         //Generate a method to insert a paiement in the database
         try (Connection connection = DBManager.getConnection()) {
-            String query = "INSERT INTO paiements (numeroRecu, date, montant, apprenant, classe, rubrique, caissier, observation) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO paiements (numeroRecu, date, montant, idApprenant, classe, rubrique, caissier, observation) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, "RCU" + (int) (Instant.now().getEpochSecond()/1000));
             statement.setString(2, obj.getDate().toString());
