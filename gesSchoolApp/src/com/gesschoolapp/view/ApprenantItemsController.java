@@ -83,12 +83,13 @@ public class ApprenantItemsController implements Initializable {
                 List<Apprenant> list = new ArrayList<>(superController.getSelectedClass().getApprenants());
                 list.removeIf(appr -> appr.getIdApprenant() == thisApprenant.getIdApprenant());
                 superController.getSelectedClass().setApprenants(list);
+                if(thisApprenant.getEtatPaiement() != 0){
+                    for(Module module : superController.getSelectedClass().getModules()){
 
-                for(Module module : superController.getSelectedClass().getModules()){
-
-                    List<Note> notesList = new ArrayList<>(module.getNotes());
-                    notesList.removeIf(note -> note.getApprenant().getIdApprenant() == thisApprenant.getIdApprenant());
-                    module.setNotes(notesList);
+                        List<Note> notesList = new ArrayList<>(module.getNotes());
+                        notesList.removeIf(note -> note.getApprenant().getIdApprenant() == thisApprenant.getIdApprenant());
+                        module.setNotes(notesList);
+                    }
                 }
 
                 superController.setMainMessageInfo("Élève supprimé avec succès !");
@@ -108,17 +109,33 @@ public class ApprenantItemsController implements Initializable {
 //      Parsing birthday :
         DateTimeFormatter formatters = DateTimeFormatter.ofPattern("d/MM/uuuu");
         String dNaiss = apprenant.getDateNaissance().format(formatters);
-        if (apprenant.getSexe().equals("F")) {
-            etatPayement.setText("Impayé");
-            etatPayement.setStyle("-fx-background-color: #CE4F4B;");
-            System.out.println(etatPayement);
-        }
+        System.out.println("etat de paiement = " + apprenant.getEtatPaiement());
+
+            if(apprenant.getEtatPaiement() == 0){
+                etatPayement.setText("Non inscrit");
+                etatPayement.setStyle("-fx-background-color: #F0B606;");
+            }else if(apprenant.getEtatPaiement() == 1){
+                if(getSuperController().getSelectedClass().isCurrentEcheancePaid(apprenant)){
+                    etatPayement.setText("Impayé");
+                    etatPayement.setStyle("-fx-background-color: #E9243B;");
+                }else{
+                    etatPayement.setText("Inscrit");
+                    etatPayement.setStyle("-fx-background-color: #57AD57;");
+                }
+            }else{
+                if(getSuperController().getSelectedClass().isCurrentEcheancePaid(apprenant)){
+                    etatPayement.setText("Impayé");
+                    etatPayement.setStyle("-fx-background-color: #E9243B;");
+                }else{
+                    etatPayement.setText("Payé");
+                    etatPayement.setStyle("-fx-background-color: #57AD57;");
+                }
+            }
 
 
         labeldNaiss.setText(dNaiss);
         labelGenre.setText(apprenant.getSexe());
 
-        System.out.println(superController.isCaissierSession());
         if(superController.isCaissierSession()){
             etatPayement.setVisible(true);
         }

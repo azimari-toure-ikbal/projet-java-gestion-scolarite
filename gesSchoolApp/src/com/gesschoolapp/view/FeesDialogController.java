@@ -1,5 +1,12 @@
 package com.gesschoolapp.view;
 
+import com.gesschoolapp.Exceptions.DAOException;
+import com.gesschoolapp.db.DAOClassesImpl.NoteDAOImp;
+import com.gesschoolapp.db.DAOClassesImpl.PaiementDAOImp;
+import com.gesschoolapp.models.matieres.Module;
+import com.gesschoolapp.models.matieres.Note;
+import com.gesschoolapp.models.paiement.Echeance;
+import com.gesschoolapp.models.paiement.Paiement;
 import com.gesschoolapp.models.paiement.Rubrique;
 import com.gesschoolapp.models.student.Apprenant;
 import com.gesschoolapp.runtime.Main;
@@ -75,6 +82,11 @@ public class FeesDialogController  implements Initializable {
     @FXML
     private TextField labelClasse;
 
+
+    @FXML
+    private Label labelScolarite;
+
+
     @FXML
     private DatePicker labelDPaiement;
 
@@ -92,6 +104,8 @@ public class FeesDialogController  implements Initializable {
 
     private Rubrique[] rubriqueList;
 
+    private String month;
+
 
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
@@ -103,7 +117,63 @@ public class FeesDialogController  implements Initializable {
         labelAnneeScolaire.setText(superController.getSelectedClass().getAnnee());
         labelDPaiement.setValue(LocalDate.now());
 
+
+
         this.apprenant = appr;
+
+        Echeance toPay = superController.getSelectedClass().getEcheancier().get(apprenant.getEtatPaiement());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern( "dd MMMM yyyy" ).withLocale( java.util.Locale.FRENCH );
+        month = toPay.getDate().format(formatter).split(" ")[1];
+
+        if(apprenant.getEtatPaiement() == 0){
+            selectRubrique.getItems().removeIf(rubr -> !rubr.equals("inscription"));
+            selectRubrique.setValue(selectRubrique.getItems().get(0));
+        }
+
+        if(apprenant.getEtatPaiement() >= 1){
+            selectRubrique.getItems().remove("inscription");
+            selectRubrique.setValue(selectRubrique.getItems().get(0));
+        }
+
+
+    }
+
+
+    @FXML
+    void onSubmit(ActionEvent event) {
+        PaiementDAOImp pDAO = new PaiementDAOImp();
+        Paiement p = new Paiement();
+        p.setApprenant(apprenant);
+        p.setCaissier(superController.getCurrentUser().getPrenom() + " " +superController.getCurrentUser().getNom());
+        p.setClasse(superController.getSelectedClass().getIntitule());
+        p.setDate(LocalDate.now());
+        p.setRubrique(selectRubrique.getValue());
+        p.setMontant(Double.parseDouble(labelMontant.getText().split(" ")[0]));
+        p.setObservation(labelObservation.getText());
+        try {
+            pDAO.create(p);
+            dialogStage.close();
+        } catch (DAOException e) {
+            throw new RuntimeException(e);
+        }
+
+        Note newNote = new Note();
+        newNote.setApprenant(apprenant);
+
+        newNote.setNote(0);
+        List<Module> modules = superController.getSelectedClass().getModules();
+        NoteDAOImp notesData = new NoteDAOImp();
+
+        for(Module module : modules){
+            List<Note> notesList = new ArrayList<>(module.getNotes());
+            newNote.setModule(module.getIntitule());
+            //                newNote.setId();
+            notesList.add(newNote);
+//            module.setNotes(notesList);
+        }
+
+        apprenant.setEtatPaiement(apprenant.getEtatPaiement()+1);
+        superController.setMainMessageInfo("Paiement renseigné avec succès ! (VOIR RECU)");
 
     }
 
@@ -148,6 +218,7 @@ public class FeesDialogController  implements Initializable {
     public void setSuperController(SecretaireUIController superController) {
         this.superController = superController;
         rubriqueList = new ArrayList<>(superController.getSelectedClass().getRubriques()).toArray(new Rubrique[superController.getSelectedClass().getRubriques().size()]);
+
         for(Rubrique rubr : rubriqueList){
             selectRubrique.getItems().add(rubr.getIntitule());
         }
@@ -160,6 +231,15 @@ public class FeesDialogController  implements Initializable {
                 .addListener( (ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
                     Rubrique item = Arrays.stream(rubriqueList).filter(rubr -> rubr.getIntitule() == newValue).toList().get(0);
                     labelMontant.setText(item.getMontant() + " FCFA");
+                    if(newValue == "inscription"){
+                        labelScolarite.setVisible(true);
+                        labelScolarite.setText("Scolarité du mois \"" + month + "\", droit d'inscription et autres... ");
+                    }else if(newValue == "scolarite"){
+                        labelScolarite.setVisible(true);
+                        labelScolarite.setText("Du mois \"" + month + "\"");
+                    }else{
+                        labelScolarite.setVisible(false);
+                    }
                 } );
 
     }

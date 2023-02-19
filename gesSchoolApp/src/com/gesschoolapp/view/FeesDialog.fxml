@@ -16,7 +16,6 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="437.0" prefWidth="758.0" style="-fx-background-color: white; -fx-border-color: #C8C8C8; -fx-border-width: 1px;" stylesheets="@../style/application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gesschoolapp.view.FeesDialogController">
    <children>
       <Pane fx:id="landscape" layoutX="24.0" layoutY="10.0" prefHeight="59.0" prefWidth="713.0" style="-fx-background-color: linear-gradient(to right, #3CA55C, #B5AC49);" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -103,7 +102,12 @@
             </DropShadow>
          </effect>
       </Button>
-      <Button fx:id="btnSubmit" layoutX="465.0" layoutY="382.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="120.0" style="-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-background-color: linear-gradient(to right, #3CA55C, #B5AC49);" styleClass="classic_btn" text="Soumettre">
+      <Label alignment="BOTTOM_RIGHT" contentDisplay="CENTER" layoutX="37.0" layoutY="238.0" text="*" textFill="#d31b1b">
+         <font>
+            <Font name="Gill Sans MT Bold" size="20.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnSubmit" layoutX="465.0" layoutY="382.0" mnemonicParsing="false" onAction="#onSubmit" prefHeight="41.0" prefWidth="120.0" style="-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-background-color: linear-gradient(to right, #3CA55C, #B5AC49);" styleClass="classic_btn" text="Soumettre">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
@@ -115,10 +119,6 @@
             </DropShadow>
          </effect>
       </Button>
-      <Label alignment="BOTTOM_RIGHT" contentDisplay="CENTER" layoutX="37.0" layoutY="238.0" text="*" textFill="#d31b1b">
-         <font>
-            <Font name="Gill Sans MT Bold" size="20.0" />
-         </font>
-      </Label>
+      <Label fx:id="labelScolarite" alignment="CENTER_RIGHT" layoutX="126.0" layoutY="267.0" prefHeight="17.0" prefWidth="324.0" text="Du mois de novembre" textFill="#587bd6" AnchorPane.rightAnchor="429.0" />
    </children>
 </AnchorPane>

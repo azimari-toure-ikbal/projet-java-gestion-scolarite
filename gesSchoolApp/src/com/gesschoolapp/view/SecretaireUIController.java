@@ -157,10 +157,16 @@ public class SecretaireUIController implements Initializable {
     private MenuButton FilterStudentInput;
 
     @FXML
-    private MenuItem getCont;
+    private MenuItem getAll;
 
     @FXML
-    private MenuItem getEnRegle;
+    private MenuItem getPaye;
+
+    @FXML
+    private MenuItem getImpaye;
+
+    @FXML
+    private MenuItem getNonInscrit;
 
     @FXML
     private TextField searchStudentHomeInput;
@@ -868,12 +874,16 @@ public class SecretaireUIController implements Initializable {
     @FXML
     public void handleStudentsFilter(ActionEvent e) {
         List<Apprenant> newList = null;
-        if(e.getSource() == getCont){
+        if(e.getSource() == getAll){
+            newList = selectedClass.getApprenants();
+        }else if(e.getSource() == getPaye){
             newList = selectedClass.getApprenants().stream().
-                    filter(appr -> appr.getEtatPaiement() == 1).toList();
+                    filter(appr -> appr.getEtatPaiement() >= 1 && !getSelectedClass().isCurrentEcheancePaid(appr)).toList();
+        } else if(e.getSource() == getImpaye){
+            newList = selectedClass.getApprenants().stream().
+                    filter(appr -> appr.getEtatPaiement() >= 1 && getSelectedClass().isCurrentEcheancePaid(appr)).toList();
         }else{
-            newList = selectedClass.getApprenants().stream().
-                    filter(appr -> appr.getEtatPaiement() == 0).toList();
+            newList = selectedClass.getApprenants().stream().filter(appr -> appr.getEtatPaiement() == 0).toList();
         }
 
         try {

@@ -162,12 +162,6 @@ public class ApprenantEditDialogController extends Application implements Initia
         apprenant.setIdApprenant(selectedStudent.getIdApprenant());
         apprenant.setMatricule(selectedStudent.getMatricule());
 
-        if(apprenant.equals(selectedStudent)){
-            messageInfo.setText("Vous devez d'abord au moins changer la valeur d'un champ pour modifier l'élève !");
-            messageInfo.setTextFill(Color.web("#e83636"));
-            return false;
-        }
-
         try {
             dialogStage.close();
             apprenantsData.update(apprenant);
@@ -175,6 +169,7 @@ public class ApprenantEditDialogController extends Application implements Initia
             list.set(list.indexOf(selectedStudent),apprenant);
             superController.getSelectedClass().setApprenants(list);
             Note newNote = new Note();
+            if(apprenant.getEtatPaiement() != 0){
 
             newNote.setApprenant(apprenant);
             List<Module> modules = superController.getSelectedClass().getModules();
@@ -188,6 +183,7 @@ public class ApprenantEditDialogController extends Application implements Initia
 //                newNote.setId();
                 notesList.set(notesList.indexOf(studentNote), newNote);
                 module.setNotes(notesList);
+            }
             }
         } catch (DAOException e) {
             throw new RuntimeException(e);

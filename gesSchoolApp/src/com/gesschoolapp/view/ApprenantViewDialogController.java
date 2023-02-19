@@ -110,6 +110,23 @@ public class ApprenantViewDialogController implements Initializable {
         labelClass.setText("Élève en " + appr.getClasse());
         labelMatricule.setText(Integer.toString(appr.getMatricule()));
         labelNationalite.setText(appr.getNationalite());
+
+        if(appr.getEtatPaiement() == 0){
+            labelEtatPaiement.setText("Non inscrit");
+        }else if(appr.getEtatPaiement() == 1){
+            if(superController.getSelectedClass().isCurrentEcheancePaid(appr)){
+                labelEtatPaiement.setText("Impayé");
+            }else{
+                labelEtatPaiement.setText("Inscrit");
+            }
+        }else{
+            if(superController.getSelectedClass().isCurrentEcheancePaid(appr)){
+                labelEtatPaiement.setText("Impayé");
+            }else{
+                labelEtatPaiement.setText("Payé");
+            }
+        }
+
         if(appr.getSexe().equals("M")){
             labelGenre.setText("Masculin");
             landscape.setStyle("-fx-background-color: linear-gradient(to right, #2c7aba, #5AB2D8)");
