@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 18, 2023 at 09:12 PM
+-- Generation Time: Feb 19, 2023 at 06:20 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -482,19 +482,12 @@ CREATE TABLE IF NOT EXISTS `paiements` (
   `montant` int(11) NOT NULL,
   `rubrique` varchar(255) NOT NULL,
   `date` datetime NOT NULL,
-  `apprenant` varchar(120) NOT NULL,
+  `idApprenant` int(11) NOT NULL,
   `caissier` varchar(40) NOT NULL,
   `classe` varchar(40) NOT NULL,
   `observation` text NOT NULL,
   PRIMARY KEY (`idPaiement`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `paiements`
---
-
-INSERT INTO `paiements` (`idPaiement`, `numeroRecu`, `montant`, `rubrique`, `date`, `apprenant`, `caissier`, `classe`, `observation`) VALUES
-(1, '696969', 690000, 'ZGBRaaaa', '2023-02-07 20:05:15', 'Jordi El Nino', 'Violet Myers', 'RedTube', 'That was hard but juicy');
 
 -- --------------------------------------------------------
 
