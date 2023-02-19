@@ -1,6 +1,7 @@
 package com.gesschoolapp.tests;
 import com.gesschoolapp.Exceptions.DAOException;
 import com.gesschoolapp.db.DAOClassesImpl.*;
+import com.gesschoolapp.models.paiement.Paiement;
 import com.gesschoolapp.serial.ArchiveManager;
 import com.gesschoolapp.Exceptions.CSVException;
 import com.gesschoolapp.db.DBManager;
@@ -10,7 +11,6 @@ import com.gesschoolapp.models.classroom.Classe;
 import com.gesschoolapp.models.classroom.Classes;
 import com.gesschoolapp.models.matieres.Note;
 import com.gesschoolapp.models.student.Apprenant;
-import com.gesschoolapp.utils.ListRubriques;
 
 import java.io.File;
 import java.sql.Connection;
@@ -34,6 +34,7 @@ public class TestClass {
 //        testCreateApprenant();
 //        System.out.println(ListRubriques.getRubriques());
 //        testReadClasse(15);
+//        testGetPaiements();
     }
 
     public static void testDeleteApprenant(int id){
@@ -256,7 +257,7 @@ public class TestClass {
 
     public static void testCSVWriter() {
         ApprenantsCSV apprenantCSV = new ApprenantsCSV();
-        File file = new File("src/com/gesschoolapp/gescsv/newapprenants.csv");
+        File file = new File("./apprenants/newapprenants.csv");
         List<Apprenant> apprenants = new ArrayList<>();
         LocalDate date = LocalDate.of(2000, 1, 1);
 
@@ -276,6 +277,17 @@ public class TestClass {
         try {
             apprenantCSV.writeCSVFile(String.valueOf(file), apprenants);
         } catch (CSVException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+
+    public static void testGetPaiements() {
+        PaiementDAOImp paiementDAOImp = new PaiementDAOImp();
+        try {
+            List<Paiement> paiements = paiementDAOImp.getList();
+            for (Paiement paiement : paiements)
+                System.out.println(paiement);
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }

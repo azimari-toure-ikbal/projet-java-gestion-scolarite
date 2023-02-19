@@ -4,10 +4,12 @@ import com.gesschoolapp.Exceptions.DAOException;
 import com.gesschoolapp.db.DAOInterfaces.SearchDAO;
 import com.gesschoolapp.db.DBManager;
 import com.gesschoolapp.models.classroom.Classe;
+import com.gesschoolapp.models.paiement.Echeance;
 import com.gesschoolapp.models.paiement.Rubrique;
-import com.gesschoolapp.utils.ListRubriques;
+import com.gesschoolapp.utils.Toolbox;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -49,6 +51,7 @@ public class ClasseDAOImp implements SearchDAO<Classe> {
                         timestamp.toLocalDateTime());
 
                 classe = new ClasseDAOImp().setRubriques(classe);
+                classe.setEcheancier(new ClasseDAOImp().getEcheancier(id));
 
                 return classe;
             }
@@ -84,6 +87,7 @@ public class ClasseDAOImp implements SearchDAO<Classe> {
                         new ApprenantDAOImp().getApprenantsOfClass(id), new ModuleDAOImp().getModulesOfClass(id),
                         timestamp.toLocalDateTime());
                 classe = new ClasseDAOImp().setRubriques(classe);
+                classe.setEcheancier(new ClasseDAOImp().getEcheancier(id));
                 classes.add(classe);
             }
         } catch (Exception e) {
@@ -120,6 +124,7 @@ public class ClasseDAOImp implements SearchDAO<Classe> {
                         new ApprenantDAOImp().getApprenantsOfClass(id), new ModuleDAOImp().getModulesOfClass(id),
                         timestamp.toLocalDateTime());
                 classe = new ClasseDAOImp().setRubriques(classe);
+                classe.setEcheancier(new ClasseDAOImp().getEcheancier(id));
                 classes.add(classe);
             }
         } catch (Exception e) {
@@ -150,7 +155,7 @@ public class ClasseDAOImp implements SearchDAO<Classe> {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, classe.getReference());
             ResultSet rs = statement.executeQuery();
-            List<Rubrique> rubriquesTemp = ListRubriques.getRubriques();
+            List<Rubrique> rubriquesTemp = Toolbox.getRubriques();
             List<Rubrique> classeRubriques = new ArrayList<>();
             classe.setRubriques(classeRubriques);
             double montant;
@@ -169,6 +174,27 @@ public class ClasseDAOImp implements SearchDAO<Classe> {
             throw new DAOException("Error in ClasseDAOImp.setRubriques()" + e.getMessage() + e.getLocalizedMessage());
         }
         return classe;
+    }
+
+    public List<Echeance> getEcheancier(int idClasse) throws DAOException {
+        List<Echeance> echeancier = new ArrayList<>();
+        try (Connection connection = DBManager.getConnection()) {
+            String query = "SELECT * FROM echeancier WHERE  idClasse = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, idClasse);
+            ResultSet rs = statement.executeQuery();
+            int id;
+            String intitule;
+            while (rs.next()){
+                id = rs.getInt("idEcheancier");
+                intitule = rs.getString("intitule");
+                LocalDate date = rs.getDate("date").toLocalDate();
+                echeancier.add(new Echeance(id, intitule, date));
+            }
+        } catch (Exception e) {
+            throw new DAOException("Error in ClasseDAOImp.getEcheancier()" + e.getMessage());
+        }
+        return echeancier;
     }
 
 }
