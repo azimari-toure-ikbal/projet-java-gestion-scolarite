@@ -1,18 +1,21 @@
 package com.gesschoolapp.view;
 
+import com.gesschoolapp.models.paiement.Rubrique;
 import com.gesschoolapp.models.student.Apprenant;
 import com.gesschoolapp.runtime.Main;
+import com.gesschoolapp.view.util.Genre;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.InputMethodEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
@@ -21,7 +24,11 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class FeesDialogController  implements Initializable {
@@ -51,44 +58,39 @@ public class FeesDialogController  implements Initializable {
         this.scene = scene;
     }
 
-    ApprenantViewDialogController superController;
+
+    SecretaireUIController superController;
+    @FXML
+    private Button btnAnnuler;
 
     @FXML
-    private Label labelClass;
+    private Button btnSubmit;
 
     @FXML
-    private Label labelDNaiss;
+    private TextField labelAnneeScolaire;
 
     @FXML
-    private Label labelGenre;
+    private TextField labelApprenant;
+
+    @FXML
+    private TextField labelClasse;
+
+    @FXML
+    private DatePicker labelDPaiement;
+
+    @FXML
+    private TextField labelMontant;
+
+    @FXML
+    private TextArea labelObservation;
 
     @FXML
     private Pane landscape;
 
     @FXML
-    private Label labelEtatPaiement;
+    private ChoiceBox<String> selectRubrique;
 
-    @FXML
-    private Label labelMatricule;
-
-    @FXML
-    private Label labelName;
-
-    @FXML
-    private Label labelNationalite;
-
-    @FXML
-    private Circle student_pp;
-
-    @FXML
-    private Button btnFees;
-
-    @FXML
-    private GridPane infosGrid;
-
-    @FXML
-    private ImageView iconCaissierItem;
-
+    private Rubrique[] rubriqueList;
 
 
     public void setDialogStage(Stage dialogStage) {
@@ -96,32 +98,10 @@ public class FeesDialogController  implements Initializable {
     }
 
     public void setApprenant(Apprenant appr) {
-
-        Image pp = new Image("com/gesschoolapp/resources/images/pp_placeholder.jpg");
-        student_pp.setFill(new ImagePattern(pp));
-        labelName.setText(appr.getPrenom() + " " + appr.getNom());
-        labelClass.setText("Élève en " + appr.getClasse());
-        labelMatricule.setText(Integer.toString(appr.getMatricule()));
-        labelNationalite.setText(appr.getNationalite());
-        if(appr.getSexe().equals("M")){
-            labelGenre.setText("Masculin");
-            landscape.setStyle("-fx-background-color: linear-gradient(to right, #2c7aba, #5AB2D8)");
-        }else if(appr.getSexe().equals("F")){
-            labelGenre.setText("Féminin");
-            landscape.setStyle("-fx-background-color: linear-gradient(to right, #fc67fa, #f4c4f3)");
-        }
-
-//        if(!superController.isCaissierSession()){
-//            btnFees.setVisible(false);
-//            iconCaissierItem.setVisible(false);
-//            infosGrid.getChildren().remove(infosGrid.lookup(".caissier_item"));
-//        }
-
-        //      Parsing birthday :
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern( "dd MMM yyyy" ).withLocale( java.util.Locale.FRENCH );
-        String dNaiss = appr.getDateNaissance().format(formatter);
-
-        labelDNaiss.setText(dNaiss);
+        labelApprenant.setText(appr.getPrenom() + " " +  appr.getNom());
+        labelClasse.setText(appr.getClasse());
+        labelAnneeScolaire.setText(superController.getSelectedClass().getAnnee());
+        labelDPaiement.setValue(LocalDate.now());
 
         this.apprenant = appr;
 
@@ -159,10 +139,29 @@ public class FeesDialogController  implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+
+
     }
 
-    public void setSuperController(ApprenantViewDialogController superController) {
+
+
+    public void setSuperController(SecretaireUIController superController) {
         this.superController = superController;
+        rubriqueList = new ArrayList<>(superController.getSelectedClass().getRubriques()).toArray(new Rubrique[superController.getSelectedClass().getRubriques().size()]);
+        for(Rubrique rubr : rubriqueList){
+            selectRubrique.getItems().add(rubr.getIntitule());
+        }
+//        messageInfo.setVisible(false);
+        selectRubrique.setValue(rubriqueList[0].getIntitule());
+        labelMontant.setText(rubriqueList[0].getMontant() + " FCFA");
+
+        selectRubrique.getSelectionModel()
+                .selectedItemProperty()
+                .addListener( (ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+                    Rubrique item = Arrays.stream(rubriqueList).filter(rubr -> rubr.getIntitule() == newValue).toList().get(0);
+                    labelMontant.setText(item.getMontant() + " FCFA");
+                } );
+
     }
 
 }

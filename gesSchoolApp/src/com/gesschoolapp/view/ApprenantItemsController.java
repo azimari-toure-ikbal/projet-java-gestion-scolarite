@@ -91,6 +91,7 @@ public class ApprenantItemsController implements Initializable {
                     module.setNotes(notesList);
                 }
 
+                superController.setMainMessageInfo("Élève supprimé avec succès !");
             } catch (DAOException e) {
                 throw new RuntimeException(e);
             }

@@ -5,6 +5,7 @@ import com.gesschoolapp.runtime.Main;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -135,46 +136,18 @@ public class ApprenantViewDialogController implements Initializable {
 
     @FXML
     void openFeesDialogView(ActionEvent event) {
-        try {
-        // Load the fxml file and create a new stage for the popup dialog.
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("FeesDialog.fxml"));
+        Timeline timeline = new Timeline();
+        KeyFrame key;
+        key = new KeyFrame(Duration.millis(50),
+                new KeyValue(dialogStage.opacityProperty(), 0));
+        timeline.getKeyFrames().add(key);
+        timeline.setOnFinished((ae) -> dialogStage.close());
+        timeline.play();
 
-        AnchorPane page = null;
-            page = (AnchorPane) loader.load();
+        Platform.runLater(() ->{
+        superController.openStudentFeesDialog(apprenant);
 
-        // Create the dialog Stage.
-        Stage dialogStage = new Stage();
-        dialogStage.setTitle("School UP - Renseigner un paiement");
-        // Set the application icon.
-
-        dialogStage.getIcons().add(new Image("com/gesschoolapp/resources/images/app_icon.png"));
-        dialogStage.initStyle(StageStyle.UNDECORATED);
-        dialogStage.setResizable(false);
-
-
-        dialogStage.initModality(Modality.WINDOW_MODAL);
-        dialogStage.initOwner(main.getPrimaryStage());
-        Scene scene = new Scene(page);
-        dialogStage.setScene(scene);
-
-        // Set the person into the controller.
-        FeesDialogController controller = loader.getController();
-        controller.setDialogStage(dialogStage);
-        controller.setSuperController(this);
-        controller.setScene(scene);
-        controller.setMain(main);
-//        controller.setApprenant(appr);
-        controller.setDraggable();
-
-
-
-        // Show the dialog and wait until the user closes it
-        dialogStage.showAndWait();
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        });
     }
 
     @FXML

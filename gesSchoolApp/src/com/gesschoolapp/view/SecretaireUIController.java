@@ -121,6 +121,9 @@ public class SecretaireUIController implements Initializable {
     @FXML
     private BorderPane profileView;
 
+    @FXML
+    private BorderPane feesView;
+
     //    Route infos :
 
     @FXML
@@ -131,6 +134,9 @@ public class SecretaireUIController implements Initializable {
 
     @FXML
     private Circle pp_placeholder1;
+
+    @FXML
+    private Circle pp_placeholder2;
 
     @FXML
     private Label routeLink;
@@ -227,12 +233,15 @@ public class SecretaireUIController implements Initializable {
     Route classes;
     Route profile;
 
+    Route fees;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         home = new Route("Accueil", homeView, btnAccueil, accueilIcon);
         classes = new Route("Classes", classesView, btnClasses, classesIcon);
         profile = new Route("Mon profil", profileView, btnProfile, profileIcon);
+        fees = new Route("Paiements",feesView,btnPaiements,feesIcon);
 
         listeClasses = null;
         try {
@@ -253,6 +262,7 @@ public class SecretaireUIController implements Initializable {
         Image pp = new Image("com/gesschoolapp/resources/images/pp_placeholder.jpg");
         pp_placeholder.setFill(new ImagePattern(pp));
         pp_placeholder1.setFill(new ImagePattern(pp));
+        pp_placeholder2.setFill(new ImagePattern(pp));
 //        class_preview.setImage(new Image("resources/images/plc.png"));
 
         if(currentUser instanceof Secretaire){
@@ -561,9 +571,11 @@ public class SecretaireUIController implements Initializable {
         accueilIcon.setGlyphStyle("-fx-fill: #2C7ABA;");
         classesIcon.setGlyphStyle("-fx-fill: #2C7ABA;");
         profileIcon.setGlyphStyle("-fx-fill: #2C7ABA;");
+        feesIcon.setGlyphStyle("-fx-fill: #2C7ABA;");
         btnAccueil.setStyle("-fx-background-color: #F4F4F4; -fx-text-fill: #959da5;");
         btnClasses.setStyle("-fx-background-color: #F4F4F4; -fx-text-fill: #959da5;");
         btnProfile.setStyle("-fx-background-color: #F4F4F4; -fx-text-fill: #959da5;");
+        btnPaiements.setStyle("-fx-background-color: #F4F4F4; -fx-text-fill: #959da5;");
     }
 
     @FXML
@@ -615,8 +627,9 @@ public class SecretaireUIController implements Initializable {
         } else if (e.getSource() == btnProfile || e.getSource() == pp_placeholder || e.getSource() == pp_placeholder1) {
             setCurrentRoute(profile);
         } else if (e.getSource() == btnPrecedent) {
-
             setCurrentRouteLink(extractPreviousRouteLink());
+        }else if(e.getSource() == btnPaiements){
+            setCurrentRoute(fees);
         }
     }
 
@@ -724,11 +737,29 @@ public class SecretaireUIController implements Initializable {
                         );
                     }
                     List<Apprenant> list = new ArrayList<>(selectedClass.getApprenants());
+
                     list.addAll(importedApprenants);
+
+                    for(Apprenant appr : importedApprenants){
+                    Note newNote = new Note();
+                    newNote.setApprenant(appr);
+
+                    newNote.setNote(0);
+                    List<Module> modules = getSelectedClass().getModules();
+                    NoteDAOImp notesData = new NoteDAOImp();
+
+                        for(Module module : modules){
+                            List<Note> notesList = new ArrayList<>(module.getNotes());
+                            newNote.setModule(module.getIntitule());
+    //                newNote.setId();
+                            notesList.add(newNote);
+                            module.setNotes(notesList);
+                        }
+                    }
                     selectedClass.setApprenants(list);
 
                     this.setMainMessageInfo("Apprenants importés avec succès !");
-                } catch (CSVException e) {
+                } catch (CSVException | Mismatch e) {
                     setMainMessageInfo(e.getMessage(), 0);
                 }
             }
@@ -1043,6 +1074,48 @@ public class SecretaireUIController implements Initializable {
             e.getMessage();
         }
 
+    }
+
+    public void openStudentFeesDialog(Apprenant appr){
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("FeesDialog.fxml"));
+
+            AnchorPane page = null;
+            page = (AnchorPane) loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("School UP - Renseigner un paiement");
+            // Set the application icon.
+
+            dialogStage.getIcons().add(new Image("com/gesschoolapp/resources/images/app_icon.png"));
+            dialogStage.initStyle(StageStyle.UNDECORATED);
+            dialogStage.setResizable(false);
+
+
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(mainApp.getPrimaryStage());
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the person into the controller.
+            FeesDialogController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setSuperController(this);
+            controller.setScene(scene);
+            controller.setMain(mainApp);
+            controller.setApprenant(appr);
+            controller.setDraggable();
+
+//        this.dialogStage.close();
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
