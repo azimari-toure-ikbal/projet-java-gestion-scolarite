@@ -8,7 +8,7 @@ import com.gesschoolapp.gescsv.reader.CSVReader;
 import com.gesschoolapp.gescsv.writter.CSVWritter;
 import com.gesschoolapp.models.classroom.Classe;
 import com.gesschoolapp.models.student.Apprenant;
-import com.gesschoolapp.utils.Utilitaire;
+import com.gesschoolapp.utils.Toolbox;
 
 import java.io.*;
 import java.time.LocalDate;
@@ -111,14 +111,14 @@ public class ApprenantsCSV implements CSVReader<Apprenant>, CSVWritter<Apprenant
             }
 
             Apprenant apprenant = new Apprenant();
-            apprenant.setPrenom(Utilitaire.capitalizeName(line[0]));
+            apprenant.setPrenom(Toolbox.capitalizeName(line[0]));
             apprenant.setNom(line[1].toUpperCase());
             // Verify if the date has format 'dd-MM-yyyy'
             if (!line[2].matches("\\d{2}-\\d{2}-\\d{4}")) {
                 throw new Mismatch("La date doit être au format 'jj-MM-aaaa'");
             }
             // Convert the date to LocalDate with format 'yyyy-MM-dd'
-            apprenant.setDateNaissance(Utilitaire.dateFornater(line[2]));
+            apprenant.setDateNaissance(Toolbox.dateFornater(line[2]));
             apprenant.setNationalite(line[3].substring(0, 1).toUpperCase() + line[3].substring(1).toLowerCase());
             apprenant.setEtatPaiement(0);
             // Verify if the sexe is 'M' or 'F'

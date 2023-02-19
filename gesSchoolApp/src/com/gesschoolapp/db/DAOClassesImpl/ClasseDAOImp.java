@@ -5,7 +5,7 @@ import com.gesschoolapp.db.DAOInterfaces.SearchDAO;
 import com.gesschoolapp.db.DBManager;
 import com.gesschoolapp.models.classroom.Classe;
 import com.gesschoolapp.models.paiement.Rubrique;
-import com.gesschoolapp.utils.ListRubriques;
+import com.gesschoolapp.utils.Toolbox;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -150,7 +150,7 @@ public class ClasseDAOImp implements SearchDAO<Classe> {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, classe.getReference());
             ResultSet rs = statement.executeQuery();
-            List<Rubrique> rubriquesTemp = ListRubriques.getRubriques();
+            List<Rubrique> rubriquesTemp = Toolbox.getRubriques();
             List<Rubrique> classeRubriques = new ArrayList<>();
             classe.setRubriques(classeRubriques);
             double montant;

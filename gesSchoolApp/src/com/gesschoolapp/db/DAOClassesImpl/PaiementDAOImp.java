@@ -23,9 +23,6 @@ public class PaiementDAOImp implements SearchDAO<Paiement> {
     public Paiement create(Paiement obj) throws DAOException {
         //Generate a method to insert a paiement in the database
         try (Connection connection = DBManager.getConnection()) {
-            if(obj.getRubrique() == ""){
-
-            }
             String query = "INSERT INTO paiements (numeroRecu, date, montant, apprenant, classe, rubrique, caissier, observation) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, obj.getNumeroRecu());
@@ -61,11 +58,10 @@ public class PaiementDAOImp implements SearchDAO<Paiement> {
     @Override
     public List<Paiement> getList() throws DAOException {
         try (Connection connection = DBManager.getConnection()) {
-            List<Paiement> paiements = new ArrayList<>();
             String query = "SELECT * FROM paiements";
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet rs = statement.executeQuery();
-
+            List<Paiement> paiements = new ArrayList<>();
             while (rs.next()) {
                 int id = rs.getInt("idPaiement");
                 String numeroRecu = rs.getString("numeroRecu");
@@ -78,17 +74,14 @@ public class PaiementDAOImp implements SearchDAO<Paiement> {
                 String observation = rs.getString("observation");
 
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-                //convert String to LocalDate
-                LocalDate formatedDate = LocalDate.parse(date, formatter);
+                LocalDate datePaiement = LocalDate.parse(date, formatter);
 
-                Paiement paiement = new Paiement(id, numeroRecu, montant, rubrique, formatedDate, observation, apprenant, caissier, classe);
-                paiements.add(paiement);
-                return paiements;
+                paiements.add(new Paiement(id, numeroRecu, montant, rubrique, datePaiement, observation, apprenant, caissier, classe));
             }
+            return paiements;
         } catch (Exception e) {
             throw new DAOException(e.getMessage());
         }
-        return null;
 }
 
     @Override
