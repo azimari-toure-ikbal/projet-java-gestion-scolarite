@@ -11,6 +11,7 @@ import com.gesschoolapp.models.classroom.Classe;
 import com.gesschoolapp.models.classroom.Classes;
 import com.gesschoolapp.models.matieres.Note;
 import com.gesschoolapp.models.student.Apprenant;
+import com.gesschoolapp.utils.Toolbox;
 
 import java.io.File;
 import java.sql.Connection;
@@ -35,6 +36,14 @@ public class TestClass {
 //        System.out.println(ListRubriques.getRubriques());
 //        testReadClasse(15);
 //        testGetPaiements();
+        LocalDate date = LocalDate.of(2023, 4, 7);
+//        System.out.println(Toolbox.paiementsJournalier(date));
+//        System.out.println(Toolbox.paiementsMensuel(date));
+//        System.out.println(Toolbox.paiementsAnnuel(date));
+        List<Paiement> paiemtsmens = Toolbox.paiementsAnnuel(date);
+        for (Paiement paiement : paiemtsmens) {
+            System.out.println(paiement);
+        }
     }
 
     public static void testDeleteApprenant(int id){
