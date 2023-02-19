@@ -293,4 +293,17 @@ public class ApprenantDAOImp implements SearchDAO<Apprenant> {
         return apprenants;
     }
 
+    public void incrementEtatPaiement(Apprenant apprenant) throws DAOException {
+        try(Connection connection = DBManager.getConnection()){
+            String query = "UPDATE apprenants SET echeancier = ? WHERE idApprenant = ? OR matricule = ? ";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, apprenant.getEtatPaiement() + 1);
+            statement.setInt(2, apprenant.getIdApprenant());
+            statement.setInt(3, apprenant.getMatricule());
+            statement.executeUpdate();
+        }catch(Exception e){
+            throw new DAOException("Error in increment Etat Paiement" + e.getMessage());
+        }
+    }
+
 }

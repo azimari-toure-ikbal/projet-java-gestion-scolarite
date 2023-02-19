@@ -15,6 +15,7 @@ import com.gesschoolapp.utils.Toolbox;
 
 import java.io.File;
 import java.sql.Connection;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -23,6 +24,7 @@ import javax.swing.JOptionPane;
 public class TestClass {
     public static void main(String[] args) {
 
+//        System.out.println("RCU" + (int) (Instant.now().getEpochSecond()/10000));
 //        testLastView();
 //        testGetClasses();
 //        testNoteCSV();

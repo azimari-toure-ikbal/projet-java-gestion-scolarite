@@ -1,21 +1,26 @@
 package com.gesschoolapp.models.paiement;
 
+import com.gesschoolapp.models.student.Apprenant;
+
 import java.time.LocalDate;
 
 public class Paiement {
     //paiement has idPaiement, numeroRecu, montant, rubrique, date, apprenant(String), caissier(String), classe(String), observation
     private int idPaiement;
     private String numeroRecu;
-    private String montant;
+    private double montant;
     private String rubrique;
     private LocalDate date;
     private String observation;
     
-    private String apprenant;
+    private Apprenant apprenant;
     private String caissier;
     private String classe;
 
-    public Paiement(int idPaiement, String numeroRecu, String montant, String rubrique, LocalDate date, String observation, String apprenant, String caissier, String classe) {
+    public Paiement() {
+    }
+
+    public Paiement(int idPaiement, String numeroRecu, double montant, String rubrique, LocalDate date, String observation, Apprenant apprenant, String caissier, String classe) {
         //use the setters
         this.setIdPaiement(idPaiement);
         this.setNumeroRecu(numeroRecu);
@@ -44,11 +49,11 @@ public class Paiement {
         this.numeroRecu = numeroRecu;
     }
 
-    public String getMontant() {
+    public double getMontant() {
         return montant;
     }
 
-    public void setMontant(String montant) {
+    public void setMontant(double montant) {
         this.montant = montant;
     }
 
@@ -76,11 +81,11 @@ public class Paiement {
         this.observation = observation;
     }
 
-    public String getApprenant() {
+    public Apprenant getApprenant() {
         return apprenant;
     }
 
-    public void setApprenant(String apprenant) {
+    public void setApprenant(Apprenant apprenant) {
         this.apprenant = apprenant;
     }
 
