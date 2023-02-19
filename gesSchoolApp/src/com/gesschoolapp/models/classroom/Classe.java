@@ -162,7 +162,9 @@ public class Classe implements Serializable, Comparable<Classe>{
     }
 
     public boolean isCurrentEcheancePaid(Apprenant apprenant){
-return true    ;}
+        LocalDate date = echeancier.get(apprenant.getEtatPaiement()).getDate();
+        return date.isAfter(getCurrentEcheance().getDate());
+    }
 
     @Override
     public String toString() {
