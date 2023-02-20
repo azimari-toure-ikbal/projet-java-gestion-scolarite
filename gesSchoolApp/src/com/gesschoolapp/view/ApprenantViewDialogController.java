@@ -114,13 +114,13 @@ public class ApprenantViewDialogController implements Initializable {
         if(appr.getEtatPaiement() == 0){
             labelEtatPaiement.setText("Non inscrit");
         }else if(appr.getEtatPaiement() == 1){
-            if(superController.getSelectedClass().isCurrentEcheancePaid(appr)){
+            if(!superController.getSelectedClass().isCurrentEcheancePaid(appr)){
                 labelEtatPaiement.setText("Impayé");
             }else{
                 labelEtatPaiement.setText("Inscrit");
             }
         }else{
-            if(superController.getSelectedClass().isCurrentEcheancePaid(appr)){
+            if(!superController.getSelectedClass().isCurrentEcheancePaid(appr)){
                 labelEtatPaiement.setText("Impayé");
             }else{
                 labelEtatPaiement.setText("Payé");

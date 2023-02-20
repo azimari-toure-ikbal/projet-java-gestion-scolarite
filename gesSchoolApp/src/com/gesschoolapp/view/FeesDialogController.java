@@ -138,6 +138,11 @@ public class FeesDialogController  implements Initializable {
             selectRubrique.setValue(selectRubrique.getItems().get(0));
         }
 
+        if(apprenant.getEtatPaiement() >= 9){
+            selectRubrique.getItems().removeIf(rubr -> !rubr.equals("inscription"));
+            selectRubrique.setValue(selectRubrique.getItems().get(0));
+        }
+
 
     }
 

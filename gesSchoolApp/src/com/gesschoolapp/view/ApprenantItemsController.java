@@ -115,7 +115,7 @@ public class ApprenantItemsController implements Initializable {
                 etatPayement.setText("Non inscrit");
                 etatPayement.setStyle("-fx-background-color: #F0B606;");
             }else if(apprenant.getEtatPaiement() == 1){
-                if(getSuperController().getSelectedClass().isCurrentEcheancePaid(apprenant)){
+                if(!getSuperController().getSelectedClass().isCurrentEcheancePaid(apprenant)){
                     etatPayement.setText("Impayé");
                     etatPayement.setStyle("-fx-background-color: #E9243B;");
                 }else{
@@ -123,7 +123,7 @@ public class ApprenantItemsController implements Initializable {
                     etatPayement.setStyle("-fx-background-color: #57AD57;");
                 }
             }else{
-                if(getSuperController().getSelectedClass().isCurrentEcheancePaid(apprenant)){
+                if(!getSuperController().getSelectedClass().isCurrentEcheancePaid(apprenant)){
                     etatPayement.setText("Impayé");
                     etatPayement.setStyle("-fx-background-color: #E9243B;");
                 }else{

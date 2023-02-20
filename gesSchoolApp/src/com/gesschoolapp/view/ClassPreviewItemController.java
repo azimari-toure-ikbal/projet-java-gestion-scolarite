@@ -66,6 +66,10 @@ public class ClassPreviewItemController implements Initializable {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern( "dd MMMM yyyy" ).withLocale( java.util.Locale.FRENCH );
         String echeance = classe.getCurrentEcheance().getDate().format(formatter);
         labelEcheance.setText(echeance);
+        if(superController.isCaissierSession()){
+            labelEcheance.setVisible(true);
+            echeanceIcon.setVisible(true);
+        }
     }
 
     public void setSuperController(SecretaireUIController controller){

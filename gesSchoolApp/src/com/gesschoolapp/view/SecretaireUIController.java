@@ -1097,10 +1097,10 @@ public class SecretaireUIController implements Initializable {
             newList = selectedClass.getApprenants();
         } else if (e.getSource() == getPaye) {
             newList = selectedClass.getApprenants().stream().
-                    filter(appr -> appr.getEtatPaiement() >= 1 && !getSelectedClass().isCurrentEcheancePaid(appr)).toList();
+                    filter(appr -> appr.getEtatPaiement() >= 1 && getSelectedClass().isCurrentEcheancePaid(appr)).toList();
         } else if (e.getSource() == getImpaye) {
             newList = selectedClass.getApprenants().stream().
-                    filter(appr -> appr.getEtatPaiement() >= 1 && getSelectedClass().isCurrentEcheancePaid(appr)).toList();
+                    filter(appr -> appr.getEtatPaiement() >= 1 && !getSelectedClass().isCurrentEcheancePaid(appr)).toList();
         } else {
             newList = selectedClass.getApprenants().stream().filter(appr -> appr.getEtatPaiement() == 0).toList();
         }
