@@ -37,7 +37,9 @@ import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
 import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 
 import javafx.scene.control.Label;
@@ -58,6 +60,7 @@ import javafx.util.Duration;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.text.DateFormatSymbols;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -157,6 +160,15 @@ public class SecretaireUIController implements Initializable {
     private ChoiceBox<Mois> monthyFeeDP;
 
     @FXML
+    private ChoiceBox<?> yearFeeDP;
+
+    @FXML
+    private ChoiceBox<Mois> yearFeeDP2;
+
+    @FXML
+    private DatePicker weekFeeDP;
+
+    @FXML
     private AnchorPane panelHebdo;
 
     @FXML
@@ -174,6 +186,9 @@ public class SecretaireUIController implements Initializable {
 
     @FXML
     private PieChart feesPie;
+
+    @FXML
+    private BarChart<Mois, Double> yearBarChart;
 
 
     private ObservableList<Paiement> dailyFeesList = FXCollections.observableArrayList();
@@ -389,7 +404,7 @@ public class SecretaireUIController implements Initializable {
 
                             break;
                         case "Hebdomadaire":
-                            panelHebdo.toFront();
+                            panelJourn.toFront();
                             feesHebdoItem.toFront();
                             break;
                         case "Mensuel":
@@ -449,64 +464,100 @@ public class SecretaireUIController implements Initializable {
 
     @FXML
     void getDailyFeeDate(ActionEvent e) {
-        LocalDate newDate = dailyFeeDP.getValue();
 
-        dailyFeesList = FXCollections.observableList(Toolbox.paiementsJournalier(newDate));
-        feesTable.setItems(dailyFeesList);
-        double totalEncaisse = 0;
-        for(Paiement paiement : dailyFeesList) {
-            totalEncaisse += paiement.getMontant();
-        };
-        feeTotal.setText("Total encaissé : " + totalEncaisse + "FCFA");
-
-
-        ObservableList<PieChart.Data> newPie = FXCollections.observableList(new ArrayList<PieChart.Data>());
-
-
-        pieData.removeAll(pieData);
-
-
-        for (Rubrique rubr : Toolbox.getRubriques()) {
-            double effectifPartiel = dailyFeesList.stream().filter(paiement -> paiement.getRubrique().equals(rubr.getIntitule())).toList().size();
-            double effectifTotal = dailyFeesList.size();
-            double pourcentage = (effectifPartiel / effectifTotal) * 100;
-            pieData.add(new PieChart.Data(rubr.getIntitule(), pourcentage));
+        if(e.getSource() == dailyFeeDP){
+            refreshFeesData(etatsDePaiement[0]);
+        }else if(e.getSource() == weekFeeDP){
+            refreshFeesData(etatsDePaiement[1]);
         }
-
     }
 
-    public void refreshFeesData() {
-        LocalDate newDate = dailyFeeDP.getValue();
+    public void refreshFeesData(String etat) {
 
-        dailyFeesList = FXCollections.observableList(Toolbox.paiementsJournalier(newDate));
-        feesTable.setItems(dailyFeesList);
-        double totalEncaisse = 0;
-        for(Paiement paiement : dailyFeesList) {
-            totalEncaisse += paiement.getMontant();
-        };
-        feeTotal.setText("Total encaissé : " + totalEncaisse + "FCFA");
+        if(etat == etatsDePaiement[0]){
 
-        ObservableList<PieChart.Data> newPie = FXCollections.observableList(new ArrayList<PieChart.Data>());
+            LocalDate newDate = dailyFeeDP.getValue();
+
+            dailyFeesList = FXCollections.observableList(Toolbox.paiementsJournalier(newDate));
+            feesTable.setItems(dailyFeesList);
+            double totalEncaisse = 0;
+            for(Paiement paiement : dailyFeesList) {
+                totalEncaisse += paiement.getMontant();
+            };
+            feeTotal.setText("Total encaissé : " + totalEncaisse + "FCFA");
+
+            ObservableList<PieChart.Data> newPie = FXCollections.observableList(new ArrayList<PieChart.Data>());
 
 
-        pieData.removeAll(pieData);
+            pieData.removeAll(pieData);
 
 
-        for (Rubrique rubr : Toolbox.getRubriques()) {
-            double effectifPartiel = dailyFeesList.stream().filter(paiement -> paiement.getRubrique().equals(rubr.getIntitule())).toList().size();
-            double effectifTotal = dailyFeesList.size();
-            double pourcentage = (effectifPartiel / effectifTotal) * 100;
-            pieData.add(new PieChart.Data(rubr.getIntitule(), pourcentage));
+            for (Rubrique rubr : Toolbox.getRubriques()) {
+                double effectifPartiel = dailyFeesList.stream().filter(paiement -> paiement.getRubrique().equals(rubr.getIntitule())).toList().size();
+                double effectifTotal = dailyFeesList.size();
+                double pourcentage = (effectifPartiel / effectifTotal) * 100;
+                pieData.add(new PieChart.Data(rubr.getIntitule(), pourcentage));
+            }
+
+            addPieTooltips();
+
+        }else if(etat == etatsDePaiement[1]){
+            LocalDate newDate = weekFeeDP.getValue();
+
+            dailyFeesList = FXCollections.observableList(Toolbox.paiementsHebdomadaire(newDate));
+            feesTable.setItems(dailyFeesList);
+            double totalEncaisse = 0;
+            for(Paiement paiement : dailyFeesList) {
+                totalEncaisse += paiement.getMontant();
+            };
+            feeTotal.setText("Total encaissé : " + totalEncaisse + "FCFA");
+
+            ObservableList<PieChart.Data> newPie = FXCollections.observableList(new ArrayList<PieChart.Data>());
+
+
+            pieData.removeAll(pieData);
+
+
+            for (Rubrique rubr : Toolbox.getRubriques()) {
+                double effectifPartiel = dailyFeesList.stream().filter(paiement -> paiement.getRubrique().equals(rubr.getIntitule())).toList().size();
+                double effectifTotal = dailyFeesList.size();
+                double pourcentage = (effectifPartiel / effectifTotal) * 100;
+                pieData.add(new PieChart.Data(rubr.getIntitule(), pourcentage));
+            }
+
+            addPieTooltips();
+        } else if(etat == etatsDePaiement[3]){
+//            String newDate = yearFeeDP.getValue();
+            String newYear = "2023";
+            LocalDate newDate = dailyFeeDP.getValue();
+
+            dailyFeesList = FXCollections.observableList(Toolbox.paiementsJournalier(newDate));
+            XYChart.Series months = new XYChart.Series();
+            // Get an array with the English month names.
+            String[] moisFR = DateFormatSymbols.getInstance(Locale.FRENCH).getMonths();
+            months.setName("Mois");
+
+
+            System.out.println(moisFR);
+            System.out.println(moisFR.length);
+            for(int i=0;i<moisFR.length;i++){
+                Double monthlyDue = 0.0;
+                for(Paiement paiement : dailyFeesList){
+                    if(paiement.getDate().getMonthValue()-1 == i){
+                        monthlyDue+= paiement.getMontant();
+                    }
+                }
+                months.getData().add(new XYChart.Data(moisFR[i],monthlyDue));
+            }
+            yearBarChart.getData().addAll(months);
         }
-
-        addPieTooltips();
     }
 
     public void resetVue() {
         try {
             resetSelectedClass(selectedClass);
             setListeDesApprenants(selectedClass.getApprenants());
-            refreshFeesData();
+            refreshFeesData(feesSpanSelect.getValue());
 
         } catch (DAOException e) {
             throw new RuntimeException(e);
