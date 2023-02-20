@@ -2,7 +2,7 @@ package com.gesschoolapp.db.DAOClassesImpl;
 
 import com.gesschoolapp.Exceptions.DAOException;
 import com.gesschoolapp.db.DAOInterfaces.DAO;
-import com.gesschoolapp.db.DAOInterfaces.SearchDAO;
+import com.gesschoolapp.db.DAOInterfaces.ModuleDAO;
 import com.gesschoolapp.db.DBManager;
 import com.gesschoolapp.models.matieres.Module;
 import com.gesschoolapp.models.matieres.Note;
@@ -13,7 +13,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ModuleDAOImp implements DAO<Module>, SearchDAO<Module> {
+public class ModuleDAOImp implements ModuleDAO {
     @Override
     public Module create(Module obj) throws DAOException {
         return null;

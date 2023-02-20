@@ -1,7 +1,7 @@
 package com.gesschoolapp.db.DAOClassesImpl;
 
 import com.gesschoolapp.Exceptions.DAOException;
-import com.gesschoolapp.db.DAOInterfaces.SearchDAO;
+import com.gesschoolapp.db.DAOInterfaces.PaiementDAO;
 import com.gesschoolapp.db.DBManager;
 import com.gesschoolapp.models.paiement.Paiement;
 
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class PaiementDAOImp implements SearchDAO<Paiement> {
+public class PaiementDAOImp implements PaiementDAO {
 
     @Override
     public Paiement create(Paiement obj) throws DAOException {

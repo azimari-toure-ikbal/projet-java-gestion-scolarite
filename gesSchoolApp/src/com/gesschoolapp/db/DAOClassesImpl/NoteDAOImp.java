@@ -1,7 +1,7 @@
 package com.gesschoolapp.db.DAOClassesImpl;
 
 import com.gesschoolapp.Exceptions.DAOException;
-import com.gesschoolapp.db.DAOInterfaces.DAO;
+import com.gesschoolapp.db.DAOInterfaces.NoteDAO;
 import com.gesschoolapp.db.DBManager;
 import com.gesschoolapp.models.matieres.Note;
 
@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NoteDAOImp implements DAO<Note> {
+public class NoteDAOImp implements NoteDAO {
     @Override
     public Note create(Note obj) throws DAOException {
         try(Connection connexion = DBManager.getConnection()) {
@@ -129,6 +129,11 @@ public class NoteDAOImp implements DAO<Note> {
         } catch (Exception e) {
             throw new DAOException(e.getMessage() + "\nIn NoteDAOImp.getList()");
         }
+    }
+
+    @Override
+    public List<Note> search(String stringToSearch) throws DAOException {
+        return null;
     }
 
     public List<Note> getNotesOfModule(int idModule) throws DAOException {

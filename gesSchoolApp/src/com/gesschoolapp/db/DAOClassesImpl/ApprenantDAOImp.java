@@ -1,7 +1,7 @@
 package com.gesschoolapp.db.DAOClassesImpl;
 
 import com.gesschoolapp.Exceptions.DAOException;
-import com.gesschoolapp.db.DAOInterfaces.SearchDAO;
+import com.gesschoolapp.db.DAOInterfaces.ApprenantDAO;
 import com.gesschoolapp.db.DBManager;
 import com.gesschoolapp.models.classroom.Classe;
 import com.gesschoolapp.models.matieres.Module;
@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ApprenantDAOImp implements SearchDAO<Apprenant> {
+public class ApprenantDAOImp implements ApprenantDAO {
 
     @Override
     public Apprenant create(Apprenant obj) throws DAOException {

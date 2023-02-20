@@ -1,8 +1,8 @@
 package com.gesschoolapp.db.DAOClassesImpl;
 
 import com.gesschoolapp.Exceptions.DAOException;
+import com.gesschoolapp.db.DAOInterfaces.DAO;
 import com.gesschoolapp.db.DAOInterfaces.LoginDAO;
-import com.gesschoolapp.db.DAOInterfaces.SearchDAO;
 import com.gesschoolapp.db.DBManager;
 import com.gesschoolapp.models.users.Admin;
 import com.gesschoolapp.models.users.Caissier;
@@ -15,7 +15,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAOImp implements SearchDAO<Utilisateur>, LoginDAO {
+public class UserDAOImp implements LoginDAO, DAO<Utilisateur> {
     @Override
     public Utilisateur authenticate(String email, String password) throws DAOException {
         try(Connection connection = DBManager.getConnection()) {
