@@ -2,7 +2,10 @@ package com.gesschoolapp.view;
 
 import com.gesschoolapp.Exceptions.DAOException;
 import com.gesschoolapp.db.DAOClassesImpl.ApprenantDAOImp;
+import com.gesschoolapp.db.DAOClassesImpl.NoteDAOImp;
 import com.gesschoolapp.models.classroom.Classe;
+import com.gesschoolapp.models.matieres.Module;
+import com.gesschoolapp.models.matieres.Note;
 import com.gesschoolapp.models.student.Apprenant;
 import com.gesschoolapp.runtime.Main;
 import com.gesschoolapp.view.util.Genre;
@@ -159,18 +162,29 @@ public class ApprenantEditDialogController extends Application implements Initia
         apprenant.setIdApprenant(selectedStudent.getIdApprenant());
         apprenant.setMatricule(selectedStudent.getMatricule());
 
-        if(apprenant.equals(selectedStudent)){
-            messageInfo.setText("Vous devez d'abord au moins changer la valeur d'un champ pour modifier l'élève !");
-            messageInfo.setTextFill(Color.web("#e83636"));
-            return false;
-        }
-
         try {
             dialogStage.close();
             apprenantsData.update(apprenant);
             List<Apprenant> list = new ArrayList<>(superController.getSelectedClass().getApprenants());
             list.set(list.indexOf(selectedStudent),apprenant);
             superController.getSelectedClass().setApprenants(list);
+            Note newNote = new Note();
+            if(apprenant.getEtatPaiement() != 0){
+
+            newNote.setApprenant(apprenant);
+            List<Module> modules = superController.getSelectedClass().getModules();
+            NoteDAOImp notesData = new NoteDAOImp();
+
+            for(Module module : modules){
+                List<Note> notesList = new ArrayList<>(module.getNotes());
+                newNote.setModule(module.getIntitule());
+                Note studentNote = notesList.stream().filter(note -> note.getApprenant().getIdApprenant() == apprenant.getIdApprenant()).toList().get(0);
+                newNote.setNote(studentNote.getNote());
+//                newNote.setId();
+                notesList.set(notesList.indexOf(studentNote), newNote);
+                module.setNotes(notesList);
+            }
+            }
         } catch (DAOException e) {
             throw new RuntimeException(e);
         }

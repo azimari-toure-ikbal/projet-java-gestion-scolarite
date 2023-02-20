@@ -10,17 +10,25 @@ import com.gesschoolapp.gescsv.NotesCSV;
 import com.gesschoolapp.models.classroom.Classe;
 import com.gesschoolapp.models.matieres.Module;
 import com.gesschoolapp.models.matieres.Note;
+import com.gesschoolapp.models.paiement.Paiement;
+import com.gesschoolapp.models.paiement.Rubrique;
 import com.gesschoolapp.models.student.Apprenant;
 import com.gesschoolapp.models.users.Caissier;
 import com.gesschoolapp.models.users.Secretaire;
 import com.gesschoolapp.models.users.Utilisateur;
 import com.gesschoolapp.runtime.Main;
 import com.gesschoolapp.controllers.NotesItemController;
+import com.gesschoolapp.utils.Toolbox;
+import com.gesschoolapp.view.util.Mois;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.beans.Observable;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,9 +37,11 @@ import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 
 import javafx.scene.control.Label;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -48,6 +58,7 @@ import javafx.util.Duration;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.*;
 
 public class SecretaireUIController implements Initializable {
@@ -71,6 +82,27 @@ public class SecretaireUIController implements Initializable {
     @FXML
     private Label mainAwaitInfo;
 
+
+    @FXML
+    private TableView<Paiement> feesTable;
+
+    @FXML
+    private Label feeTotal;
+
+    @FXML
+    private TableColumn<Paiement, Integer> idFee;
+
+    @FXML
+    private TableColumn<Paiement, Double> montantFee;
+
+    @FXML
+    private TableColumn<Paiement, String> recuFee;
+
+    @FXML
+    private TableColumn<Paiement, String> rubrFee;
+
+    @FXML
+    private TableColumn<Paiement, Apprenant> eleveFee;
 
     private Route currentRoute;
 
@@ -110,7 +142,43 @@ public class SecretaireUIController implements Initializable {
     private BorderPane classesView;
 
     @FXML
+    private AnchorPane panelJourn;
+
+    @FXML
+    private AnchorPane feesJournalierItem;
+
+    @FXML
+    private AnchorPane panelMens;
+
+    @FXML
+    private AnchorPane feesMensuelItem;
+
+    @FXML
+    private ChoiceBox<Mois> monthyFeeDP;
+
+    @FXML
+    private AnchorPane panelHebdo;
+
+    @FXML
+    private AnchorPane feesHebdoItem;
+
+    @FXML
+    private AnchorPane panelAnn;
+
+    @FXML
+    private AnchorPane feesAnnuelItem;
+
+    @FXML
     private AnchorPane classStudentsView;
+
+
+    @FXML
+    private PieChart feesPie;
+
+
+    private ObservableList<Paiement> dailyFeesList = FXCollections.observableArrayList();
+    private ObservableList<PieChart.Data> pieData = FXCollections.observableArrayList();
+
 
     @FXML
     private AnchorPane classNotesView;
@@ -120,6 +188,9 @@ public class SecretaireUIController implements Initializable {
 
     @FXML
     private BorderPane profileView;
+
+    @FXML
+    private BorderPane feesView;
 
     //    Route infos :
 
@@ -133,10 +204,16 @@ public class SecretaireUIController implements Initializable {
     private Circle pp_placeholder1;
 
     @FXML
+    private Circle pp_placeholder2;
+
+    @FXML
     private Label routeLink;
 
     @FXML
     private Button btnAccueil;
+
+    @FXML
+    private Label caissierEtatDePaiementLabel;
 
     @FXML
     private TextField searchClassInput;
@@ -148,10 +225,16 @@ public class SecretaireUIController implements Initializable {
     private MenuButton FilterStudentInput;
 
     @FXML
-    private MenuItem getCont;
+    private MenuItem getAll;
 
     @FXML
-    private MenuItem getEnRegle;
+    private MenuItem getPaye;
+
+    @FXML
+    private MenuItem getImpaye;
+
+    @FXML
+    private MenuItem getNonInscrit;
 
     @FXML
     private TextField searchStudentHomeInput;
@@ -174,6 +257,13 @@ public class SecretaireUIController implements Initializable {
 
     @FXML
     private VBox classesHomeLayout;
+
+    @FXML
+    private ChoiceBox<String> feesSpanSelect;
+
+    private String[] etatsDePaiement = {"Journalier", "Hebdomadaire", "Mensuel", "Annuel"};
+
+    private Mois[] mois = {Mois.JANVIER, Mois.FÉVRIER, Mois.MARS, Mois.AVRIL, Mois.MAI, Mois.JUIN, Mois.JUILLET, Mois.AOÛT, Mois.SEPTEMBRE, Mois.OCTOBRE, Mois.NOVEMBRE, Mois.DÉCEMBRE};
 
     @FXML
     private HBox modulesLayout;
@@ -208,6 +298,10 @@ public class SecretaireUIController implements Initializable {
     private Button btnPaiements;
 
     @FXML
+    private DatePicker dailyFeeDP;
+
+
+    @FXML
     private Button btnProfile;
 
     @FXML
@@ -224,12 +318,15 @@ public class SecretaireUIController implements Initializable {
     Route classes;
     Route profile;
 
+    Route fees;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         home = new Route("Accueil", homeView, btnAccueil, accueilIcon);
         classes = new Route("Classes", classesView, btnClasses, classesIcon);
         profile = new Route("Mon profil", profileView, btnProfile, profileIcon);
+        fees = new Route("Paiements", feesView, btnPaiements, feesIcon);
 
         listeClasses = null;
         try {
@@ -250,7 +347,16 @@ public class SecretaireUIController implements Initializable {
         Image pp = new Image("com/gesschoolapp/resources/images/pp_placeholder.jpg");
         pp_placeholder.setFill(new ImagePattern(pp));
         pp_placeholder1.setFill(new ImagePattern(pp));
+        pp_placeholder2.setFill(new ImagePattern(pp));
 //        class_preview.setImage(new Image("resources/images/plc.png"));
+
+        if (currentUser instanceof Secretaire) {
+            setCaissierSession(false);
+            setSecretaireView();
+        } else {
+            setCaissierSession(true);
+        }
+        System.out.println(isCaissierSession);
 
 
         try {
@@ -261,21 +367,147 @@ public class SecretaireUIController implements Initializable {
             setListeDesClasses(listeClasses);
             // Liste des modules d'une classe :
             setListeDesModules();
-            setListeDesApprenants();
+//            setListeDesApprenants();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+        feesSpanSelect.getItems().addAll(etatsDePaiement);
+        monthyFeeDP.getItems().addAll(mois);
+        monthyFeeDP.setValue(mois[0]);
+        feesSpanSelect.setValue(etatsDePaiement[0]);
+        feesJournalierItem.toFront();
+
+        feesSpanSelect.getSelectionModel()
+                .selectedItemProperty()
+                .addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+                    switch (newValue) {
+                        case "Journalier":
+                            panelJourn.toFront();
+                            feesJournalierItem.toFront();
+
+                            break;
+                        case "Hebdomadaire":
+                            panelHebdo.toFront();
+                            feesHebdoItem.toFront();
+                            break;
+                        case "Mensuel":
+                            panelJourn.toFront();
+                            feesMensuelItem.toFront();
+                            break;
+                        case "Annuel":
+                            panelAnn.toFront();
+                            feesAnnuelItem.toFront();
+                            break;
+                    }
+                });
+
+        idFee.setCellValueFactory(new PropertyValueFactory<Paiement, Integer>("idPaiement"));
+        montantFee.setCellValueFactory(new PropertyValueFactory<Paiement, Double>("montant"));
+        recuFee.setCellValueFactory(new PropertyValueFactory<Paiement, String>("numeroRecu"));
+        rubrFee.setCellValueFactory(new PropertyValueFactory<Paiement, String>("rubrique"));
+        eleveFee.setCellValueFactory(new PropertyValueFactory<Paiement, Apprenant>("apprenant"));
+
+        dailyFeeDP.setValue(LocalDate.now());
+        dailyFeesList = FXCollections.observableList(Toolbox.paiementsJournalier(LocalDate.now()));
+        feesTable.setItems(dailyFeesList);
+        double totalEncaisse = 0;
+        for (Paiement paiement : dailyFeesList) {
+            totalEncaisse += paiement.getMontant();
+        }
+        ;
+        feeTotal.setText("Total encaissé : " + totalEncaisse + "FCFA");
+
+
+        for (Rubrique rubr : Toolbox.getRubriques()) {
+            double effectifPartiel = dailyFeesList.stream().filter(paiement -> paiement.getRubrique().equals(rubr.getIntitule())).toList().size();
+            double effectifTotal = dailyFeesList.size();
+            double pourcentage = (effectifPartiel / effectifTotal) * 100;
+            pieData.add(new PieChart.Data(rubr.getIntitule(), pourcentage));
+        }
+
+        feesPie.setData(pieData);
+        addPieTooltips();
+
+
+    }
+
+    public void addPieTooltips() {
+        feesPie.getData().forEach(data -> {
+            List<Paiement> concernedFees = dailyFeesList.stream().filter(paiement -> paiement.getRubrique().equals(data.getName())).toList();
+            Double totalEncaisse = 0.0;
+            for (Paiement p : concernedFees) {
+                totalEncaisse += p.getMontant();
+            }
+            String more = (int) Math.ceil((data.getPieValue() / 100) * dailyFeesList.size()) + " paiement(s) encaissé(s), soit " + totalEncaisse + "FCFA";
+
+            Tooltip ttp = new Tooltip(more);
+            Tooltip.install(data.getNode(), ttp);
+        });
+    }
+
+    @FXML
+    void getDailyFeeDate(ActionEvent e) {
+        LocalDate newDate = dailyFeeDP.getValue();
+
+        dailyFeesList = FXCollections.observableList(Toolbox.paiementsJournalier(newDate));
+        feesTable.setItems(dailyFeesList);
+        double totalEncaisse = 0;
+        for(Paiement paiement : dailyFeesList) {
+            totalEncaisse += paiement.getMontant();
+        };
+        feeTotal.setText("Total encaissé : " + totalEncaisse + "FCFA");
+
+
+        ObservableList<PieChart.Data> newPie = FXCollections.observableList(new ArrayList<PieChart.Data>());
+
+
+        pieData.removeAll(pieData);
+
+
+        for (Rubrique rubr : Toolbox.getRubriques()) {
+            double effectifPartiel = dailyFeesList.stream().filter(paiement -> paiement.getRubrique().equals(rubr.getIntitule())).toList().size();
+            double effectifTotal = dailyFeesList.size();
+            double pourcentage = (effectifPartiel / effectifTotal) * 100;
+            pieData.add(new PieChart.Data(rubr.getIntitule(), pourcentage));
+        }
+
+    }
+
+    public void refreshFeesData() {
+        LocalDate newDate = dailyFeeDP.getValue();
+
+        dailyFeesList = FXCollections.observableList(Toolbox.paiementsJournalier(newDate));
+        feesTable.setItems(dailyFeesList);
+        double totalEncaisse = 0;
+        for(Paiement paiement : dailyFeesList) {
+            totalEncaisse += paiement.getMontant();
+        };
+        feeTotal.setText("Total encaissé : " + totalEncaisse + "FCFA");
+
+        ObservableList<PieChart.Data> newPie = FXCollections.observableList(new ArrayList<PieChart.Data>());
+
+
+        pieData.removeAll(pieData);
+
+
+        for (Rubrique rubr : Toolbox.getRubriques()) {
+            double effectifPartiel = dailyFeesList.stream().filter(paiement -> paiement.getRubrique().equals(rubr.getIntitule())).toList().size();
+            double effectifTotal = dailyFeesList.size();
+            double pourcentage = (effectifPartiel / effectifTotal) * 100;
+            pieData.add(new PieChart.Data(rubr.getIntitule(), pourcentage));
+        }
+
+        addPieTooltips();
     }
 
     public void resetVue() {
         try {
             resetSelectedClass(selectedClass);
             setListeDesApprenants(selectedClass.getApprenants());
-//            NoteDAOImp nD = new NoteDAOImp();
-//            setListeDesNotes(nD.getList().stream().
-//                    ilter(note -> Objects.equals(note.getModule(), selectedModule.getIntitule())).toList());
+            refreshFeesData();
+
         } catch (DAOException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
@@ -285,6 +517,20 @@ public class SecretaireUIController implements Initializable {
 
 
     // getters et setters :
+    public ObservableList<Paiement> getDailyFeesList() {
+        return this.dailyFeesList;
+    }
+
+    public void setDailyFeesList(ObservableList<Paiement> dailyFeesList) {
+        this.dailyFeesList = dailyFeesList;
+
+        for (Rubrique rubr : Toolbox.getRubriques()) {
+            int nbPaiement = dailyFeesList.stream().filter(paiement -> paiement.getRubrique().equals(rubr.getIntitule())).toList().size() / dailyFeesList.size() * 100;
+            pieData.add(new PieChart.Data(rubr.getIntitule(), nbPaiement));
+        }
+
+        feesPie.setData(pieData);
+    }
 
 
     public boolean isCaissierSession() {
@@ -362,12 +608,20 @@ public class SecretaireUIController implements Initializable {
 
     public void setCurrentUser(Utilisateur currentUser) {
 
-        this.currentUser = (Secretaire) currentUser;
-        if(currentUser instanceof Secretaire){
+        this.currentUser = currentUser;
+
+        if (currentUser instanceof Secretaire) {
             setCaissierSession(false);
             setSecretaireView();
-        }else{
+        } else {
             setCaissierSession(true);
+            System.out.println(isCaissierSession);
+        }
+
+        try {
+            setListeDesApprenants();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
 
         welcomeText.setText(" Bonjour " + currentUser.getFullName() + ", bienvenue !");
@@ -463,7 +717,7 @@ public class SecretaireUIController implements Initializable {
 
         try {
             Module oldSelectedModule = selectedModule;
-            setListeDesModules();
+            resetListeDesModules(selectedModule);
             setListeDesApprenants();
         } catch (DAOException e) {
             throw new RuntimeException(e);
@@ -542,9 +796,11 @@ public class SecretaireUIController implements Initializable {
         accueilIcon.setGlyphStyle("-fx-fill: #2C7ABA;");
         classesIcon.setGlyphStyle("-fx-fill: #2C7ABA;");
         profileIcon.setGlyphStyle("-fx-fill: #2C7ABA;");
+        feesIcon.setGlyphStyle("-fx-fill: #2C7ABA;");
         btnAccueil.setStyle("-fx-background-color: #F4F4F4; -fx-text-fill: #959da5;");
         btnClasses.setStyle("-fx-background-color: #F4F4F4; -fx-text-fill: #959da5;");
         btnProfile.setStyle("-fx-background-color: #F4F4F4; -fx-text-fill: #959da5;");
+        btnPaiements.setStyle("-fx-background-color: #F4F4F4; -fx-text-fill: #959da5;");
     }
 
     @FXML
@@ -559,7 +815,7 @@ public class SecretaireUIController implements Initializable {
             classesIcon.setGlyphStyle("-fx-fill: white;");
         } else if (menu_section == btnProfile) {
             profileIcon.setGlyphStyle("-fx-fill: white;");
-        } else if (menu_section == btnPaiements){
+        } else if (menu_section == btnPaiements) {
             feesIcon.setGlyphStyle("-fx-fill: white;");
         }
 
@@ -577,7 +833,7 @@ public class SecretaireUIController implements Initializable {
             classesIcon.setGlyphStyle("-fx-fill: #2C7ABA;");
         } else if (menu_section == btnProfile) {
             profileIcon.setGlyphStyle("-fx-fill: #2C7ABA;");
-        } else if (menu_section == btnPaiements){
+        } else if (menu_section == btnPaiements) {
             feesIcon.setGlyphStyle("-fx-fill: #2C7ABA;");
         }
 
@@ -596,8 +852,9 @@ public class SecretaireUIController implements Initializable {
         } else if (e.getSource() == btnProfile || e.getSource() == pp_placeholder || e.getSource() == pp_placeholder1) {
             setCurrentRoute(profile);
         } else if (e.getSource() == btnPrecedent) {
-
             setCurrentRouteLink(extractPreviousRouteLink());
+        } else if (e.getSource() == btnPaiements) {
+            setCurrentRoute(fees);
         }
     }
 
@@ -697,19 +954,37 @@ public class SecretaireUIController implements Initializable {
                 try {
                     List<String> fileContent = aCSV.readFile(file);
                     List<String[]> fileData = aCSV.getData(fileContent);
-                    List<Apprenant> importedApprenants = null;
-                    try {
-                        importedApprenants = aCSV.csvToObject(fileData, selectedClass);
-                    } catch (Mismatch e) {
-                        setMainMessageInfo(e.getMessage());
+                    List<Apprenant> importedApprenants;
+                    importedApprenants = aCSV.csvToObject(fileData, selectedClass);
+                    for (Apprenant appr : importedApprenants) {
+                        System.out.println(
+                                appr.getIdApprenant()
+                        );
                     }
-
                     List<Apprenant> list = new ArrayList<>(selectedClass.getApprenants());
+
                     list.addAll(importedApprenants);
+
+                    for (Apprenant appr : importedApprenants) {
+                        Note newNote = new Note();
+                        newNote.setApprenant(appr);
+
+                        newNote.setNote(0);
+                        List<Module> modules = getSelectedClass().getModules();
+                        NoteDAOImp notesData = new NoteDAOImp();
+
+                        for (Module module : modules) {
+                            List<Note> notesList = new ArrayList<>(module.getNotes());
+                            newNote.setModule(module.getIntitule());
+                            //                newNote.setId();
+                            notesList.add(newNote);
+                            module.setNotes(notesList);
+                        }
+                    }
                     selectedClass.setApprenants(list);
-                    System.out.println("a importer" + importedApprenants.size());
+
                     this.setMainMessageInfo("Apprenants importés avec succès !");
-                } catch (CSVException e) {
+                } catch (CSVException | Mismatch e) {
                     setMainMessageInfo(e.getMessage(), 0);
                 }
             }
@@ -818,12 +1093,16 @@ public class SecretaireUIController implements Initializable {
     @FXML
     public void handleStudentsFilter(ActionEvent e) {
         List<Apprenant> newList = null;
-        if(e.getSource() == getCont){
+        if (e.getSource() == getAll) {
+            newList = selectedClass.getApprenants();
+        } else if (e.getSource() == getPaye) {
             newList = selectedClass.getApprenants().stream().
-                    filter(appr -> appr.getEtatPaiement() == 1).toList();
-        }else{
+                    filter(appr -> appr.getEtatPaiement() >= 1 && !getSelectedClass().isCurrentEcheancePaid(appr)).toList();
+        } else if (e.getSource() == getImpaye) {
             newList = selectedClass.getApprenants().stream().
-                    filter(appr -> appr.getEtatPaiement() == 0).toList();
+                    filter(appr -> appr.getEtatPaiement() >= 1 && getSelectedClass().isCurrentEcheancePaid(appr)).toList();
+        } else {
+            newList = selectedClass.getApprenants().stream().filter(appr -> appr.getEtatPaiement() == 0).toList();
         }
 
         try {
@@ -836,14 +1115,14 @@ public class SecretaireUIController implements Initializable {
     @FXML
     public void handleStudentSearch(KeyEvent e) {
         String toSearch = "";
-        toSearch +=searchStudentInput.getText();
+        toSearch += searchStudentInput.getText();
 
         List<Apprenant> found = new ArrayList<>();
         System.out.println(toSearch);
         try {
 
-            for (Apprenant appr: selectedClass.getApprenants()) {
-                if(appr.getNom().contains(toSearch) || appr.getPrenom().contains(toSearch) || Integer.toString(appr.getMatricule()).contains(toSearch)){
+            for (Apprenant appr : selectedClass.getApprenants()) {
+                if (appr.getNom().contains(toSearch) || appr.getPrenom().contains(toSearch) || Integer.toString(appr.getMatricule()).contains(toSearch)) {
                     found.add(appr);
                 }
             }
@@ -853,8 +1132,8 @@ public class SecretaireUIController implements Initializable {
         }
     }
 
-        private void setListeDesClasses(List<Classe> classes) throws DAOException, IOException {
-        classesClassesLayout.getChildren(). clear();
+    private void setListeDesClasses(List<Classe> classes) throws DAOException, IOException {
+        classesClassesLayout.getChildren().clear();
         for (Classe classe : classes) {
 
             FXMLLoader fxmlLoader = new FXMLLoader();
@@ -873,11 +1152,11 @@ public class SecretaireUIController implements Initializable {
         }
     }
 
-        private void setListeDesModules() throws DAOException, IOException {
-            setListeDesModules(selectedClass.getModules());
-        }
+    private void setListeDesModules() throws DAOException, IOException {
+        setListeDesModules(selectedClass.getModules());
+    }
 
-        private void setListeDesModules(List<Module> modules) throws DAOException, IOException {
+    private void setListeDesModules(List<Module> modules) throws DAOException, IOException {
         modulesLayout.getChildren().clear();
 
         for (Module module : modules) {
@@ -897,11 +1176,40 @@ public class SecretaireUIController implements Initializable {
 
         }
 
+
+    }
+
+    private void resetListeDesModules(Module toSelect) throws DAOException, IOException {
+        resetListeDesModules(getSelectedClass().getModules(), toSelect);
+    }
+
+    private void resetListeDesModules(List<Module> modules, Module toSelect) throws DAOException, IOException {
+        modulesLayout.getChildren().clear();
+
+        for (Module module : modules) {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("ModuleItem.fxml"));
+
+            Pane pane = fxmlLoader.load();
+            ModuleItemController mic = fxmlLoader.getController();
+            mic.setSuperController(this);
+            mic.setData(module);
+            if (toSelect == module) {
+                setSelectedModule(module);
+                mic.setAsSelected();
+            }
+
+            modulesLayout.getChildren().add(pane);
+
+        }
+
+
     }
 
     public void setListeDesApprenants() throws DAOException, IOException {
         setListeDesApprenants(selectedClass.getApprenants());
     }
+
     public void setListeDesApprenants(List<Apprenant> apprenants) throws DAOException, IOException {
         studentsLayout.getChildren().clear();
 
@@ -911,7 +1219,7 @@ public class SecretaireUIController implements Initializable {
             fxmlLoader.setLocation(getClass().getResource("ApprenantItem.fxml"));
 
             HBox hbox = fxmlLoader.load();
-            ApprenantItemController aic = fxmlLoader.getController();
+            ApprenantItemsController aic = fxmlLoader.getController();
             aic.setSuperController(this);
             aic.setData(apprenant);
 
@@ -925,6 +1233,7 @@ public class SecretaireUIController implements Initializable {
     public void setListeDesNotes() throws DAOException, IOException {
         setListeDesNotes(selectedModule.getNotes());
     }
+
     public void setListeDesNotes(List<Note> notes) throws DAOException, IOException {
         System.out.println(" SETTED LISTE DES NOTES ");
         notesLayout.getChildren().clear();
@@ -969,18 +1278,17 @@ public class SecretaireUIController implements Initializable {
     }
 
 
+    private void clearListeDesClasses() {
 
-    private void clearListeDesClasses(){
-
-        while (classesClassesLayout.getChildren().size() != 0){
-        classesClassesLayout.getChildren().remove(classesClassesLayout.lookup(".class_card"));
+        while (classesClassesLayout.getChildren().size() != 0) {
+            classesClassesLayout.getChildren().remove(classesClassesLayout.lookup(".class_card"));
         }
 
     }
 
     @FXML
-    private void onSemestreClicked(ActionEvent e){
-            setSelectedSemestre((Button) e.getSource());
+    private void onSemestreClicked(ActionEvent e) {
+        setSelectedSemestre((Button) e.getSource());
     }
 
     @FXML
@@ -997,6 +1305,48 @@ public class SecretaireUIController implements Initializable {
             e.getMessage();
         }
 
+    }
+
+    public void openStudentFeesDialog(Apprenant appr) {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("FeesDialog.fxml"));
+
+            AnchorPane page = null;
+            page = (AnchorPane) loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("School UP - Renseigner un paiement");
+            // Set the application icon.
+
+            dialogStage.getIcons().add(new Image("com/gesschoolapp/resources/images/app_icon.png"));
+            dialogStage.initStyle(StageStyle.UNDECORATED);
+            dialogStage.setResizable(false);
+
+
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(mainApp.getPrimaryStage());
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the person into the controller.
+            FeesDialogController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setSuperController(this);
+            controller.setScene(scene);
+            controller.setMain(mainApp);
+            controller.setApprenant(appr);
+            controller.setDraggable();
+
+//        this.dialogStage.close();
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
@@ -1026,10 +1376,12 @@ public class SecretaireUIController implements Initializable {
             // Set the person into the controller.
             ApprenantViewDialogController controller = loader.getController();
             controller.setDialogStage(dialogStage);
+            controller.setSuperController(this);
             controller.setScene(scene);
             controller.setMain(mainApp);
             controller.setApprenant(appr);
             controller.setDraggable();
+
 
             // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();
@@ -1039,46 +1391,46 @@ public class SecretaireUIController implements Initializable {
         }
     }
 
-        @FXML
-        public void openStudentAddDialog(ActionEvent event) {
-            try {
-                // Load the fxml file and create a new stage for the popup dialog.
-                FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(getClass().getResource("ApprenantAddDialog.fxml"));
+    @FXML
+    public void openStudentAddDialog(ActionEvent event) {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("ApprenantAddDialog.fxml"));
 
-                AnchorPane page = (AnchorPane) loader.load();
+            AnchorPane page = (AnchorPane) loader.load();
 
-                // Create the dialog Stage.
-                Stage dialogStage = new Stage();
-                dialogStage.setTitle("School UP - Ajouter un élève");
-                // Set the application icon.
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("School UP - Ajouter un élève");
+            // Set the application icon.
 
-                dialogStage.getIcons().add(new Image("com/gesschoolapp/resources/images/app_icon.png"));
-                dialogStage.initStyle(StageStyle.UNDECORATED);
+            dialogStage.getIcons().add(new Image("com/gesschoolapp/resources/images/app_icon.png"));
+            dialogStage.initStyle(StageStyle.UNDECORATED);
 //                dialogStage.stageStyle(stageStyle.I);
-                dialogStage.setResizable(false);
+            dialogStage.setResizable(false);
 
 
-                dialogStage.initModality(Modality.WINDOW_MODAL);
-                dialogStage.initOwner(mainApp.getPrimaryStage());
-                Scene scene = new Scene(page);
-                dialogStage.setScene(scene);
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(mainApp.getPrimaryStage());
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
 
-                // Set the person into the controller.
-                ApprenantAddDialogController controller = loader.getController();
-                controller.setDialogStage(dialogStage);
-                controller.setMain(mainApp);
-                controller.setScene(scene);
-                controller.setSuperController(this);
-                controller.setCurrentClass(selectedClass);
-                controller.setDraggable();
+            // Set the person into the controller.
+            ApprenantAddDialogController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setMain(mainApp);
+            controller.setScene(scene);
+            controller.setSuperController(this);
+            controller.setCurrentClass(selectedClass);
+            controller.setDraggable();
 
-                // Show the dialog and wait until the user closes it
-                dialogStage.showAndWait();
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void openStudentEditDialog(Apprenant selectedAppr) {
@@ -1123,22 +1475,23 @@ public class SecretaireUIController implements Initializable {
         }
     }
 
-    public static void setTimeout(Runnable runnable, int delay){
+    public static void setTimeout(Runnable runnable, int delay) {
         new Thread(() -> {
             try {
                 Thread.sleep(delay);
                 runnable.run();
-            }
-            catch (Exception e){
+            } catch (Exception e) {
                 System.err.println(e);
             }
         }).start();
     }
 
-    public void setSecretaireView(){
+    public void setSecretaireView() {
         System.out.println(userMenu.lookup(".caissier_item"));
         userMenu.getChildren().remove(userMenu.lookup(".caissier_item"));
         classStudentsView.getChildren().remove(classStudentsView.lookup(".caissier_item"));
+        classStudentsView.getChildren().remove(classStudentsView.lookup(".caissier_item"));
+        caissierEtatDePaiementLabel.setText("Date de naissance");
     }
 
 }

@@ -94,6 +94,7 @@ public class Apprenant implements Serializable {
         this.dateNaissance = dateNaissance;
     }
 
+
     public String getSexe() {
         return sexe;
     }
@@ -124,8 +125,9 @@ public class Apprenant implements Serializable {
 
     @Override
     public String toString() {
-        return "\nApprenant{" + "idApprenant=" + idApprenant + ", matricule=" + matricule + ", prenom=" + prenom + ", nom=" + nom + ", dateNaissance=" + dateNaissance + ", sexe="
-                + sexe + ", nationalite=" + nationalite + ", etatPaiement=" + etatPaiement + ", classe=" + classe +
-                "}\n";
+//        return "\nApprenant{" + "idApprenant=" + idApprenant + ", matricule=" + matricule + ", prenom=" + prenom + ", nom=" + nom + ", dateNaissance=" + dateNaissance + ", sexe="
+//                + sexe + ", nationalite=" + nationalite + ", etatPaiement=" + etatPaiement + ", classe=" + classe +
+//                "}\n";
+        return prenom + " " + nom;
     }
 }

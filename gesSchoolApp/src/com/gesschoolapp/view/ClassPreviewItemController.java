@@ -11,6 +11,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -20,6 +22,14 @@ public class ClassPreviewItemController implements Initializable {
 
     @FXML
     private Label labelAnnee;
+
+    @FXML
+    private Label labelEcheance;
+
+
+    @FXML
+    private ImageView echeanceIcon;
+
 
     @FXML
     private Label labelFormation;
@@ -53,10 +63,17 @@ public class ClassPreviewItemController implements Initializable {
         labelIntitule.setText(classe.getIntitule());
         labelFormation.setText(classe.getFormation());
         labelAnnee.setText(classe.getAnnee());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern( "dd MMMM yyyy" ).withLocale( java.util.Locale.FRENCH );
+        String echeance = classe.getCurrentEcheance().getDate().format(formatter);
+        labelEcheance.setText(echeance);
     }
 
     public void setSuperController(SecretaireUIController controller){
         this.superController = controller;
+        if(superController.isCaissierSession()){
+            labelEcheance.setVisible(true);
+            echeanceIcon.setVisible(true);
+        }
     }
 
     @FXML

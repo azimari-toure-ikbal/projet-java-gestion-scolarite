@@ -137,9 +137,9 @@ public class Main extends Application {
             SecretaireUIController controller = loader.getController();
 
             // Set the current stage and scene references into controller
+            controller.setCurrentUser(user);
             controller.setCurrentScene(scene);
             controller.setStage(stg);
-            controller.setCurrentUser(user);
             controller.setMainApp(main);
             // Makes the stage draggable
             controller.setDraggable();
@@ -164,9 +164,9 @@ public class Main extends Application {
             SecretaireUIController controller = loader.getController();
 
             // Set the current stage and scene references into controller
+            controller.setCurrentUser(user);
             controller.setCurrentScene(scene);
             controller.setStage(stg);
-            controller.setCurrentUser((Caissier) user);
             controller.setMainApp(main);
             // Makes the stage draggable
             controller.setDraggable();
