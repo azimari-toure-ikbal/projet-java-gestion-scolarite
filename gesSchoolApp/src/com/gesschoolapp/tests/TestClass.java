@@ -11,11 +11,16 @@ import com.gesschoolapp.models.classroom.Classe;
 import com.gesschoolapp.models.classroom.Classes;
 import com.gesschoolapp.models.matieres.Note;
 import com.gesschoolapp.models.student.Apprenant;
+import com.gesschoolapp.utils.Toolbox;
 
 import java.io.File;
 import java.sql.Connection;
+import java.text.DateFormatSymbols;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
+import java.time.temporal.ChronoField;
 import java.util.*;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
@@ -39,8 +44,21 @@ public class TestClass {
 //        testReadClasse(15);
 //        testGetPaiements();
 //        testPaiement();
-        testCheckPaiement();
+//        testCheckPaiement();
 //        System.out.println(LocalDate.now());
+        LocalDate date = LocalDate.of(2020, 1, 1);
+        LocalDate date2 = LocalDate.of(2023, 2, 7);
+        LocalDate date3 = LocalDate.of(2023, 2, 5);
+//        System.out.println(Objects.equals(date2.getYear(), Integer.parseInt("2023")));
+        // format month in french
+//        System.out.println(date2.getMonth());
+//        System.out.println(date2.get(ChronoField.ALIGNED_WEEK_OF_YEAR));
+//        System.out.println(date3.get(ChronoField.ALIGNED_WEEK_OF_YEAR));
+//        System.out.println(Toolbox.paiementsHebdomadaire(date));
+//        System.out.println(Toolbox.paiementsHebdomadaire(date2));
+        System.out.println(Toolbox.paiementsMensuel("juin", "2020"));
+        System.out.println("--------------------------------------");
+        System.out.println(Toolbox.paiementsAnnuel("2023"));
     }
 
     public static void testDeleteApprenant(int id){

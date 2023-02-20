@@ -7,8 +7,12 @@ import com.gesschoolapp.models.paiement.Paiement;
 import com.gesschoolapp.models.paiement.Rubrique;
 
 import java.time.LocalDate;
+import java.time.format.TextStyle;
+import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 
 public class Toolbox {
 
@@ -57,47 +61,26 @@ public class Toolbox {
         return null;
     }
     public static List<Paiement> paiementsHebdomadaire(LocalDate date){
-        return null;
-    }
-    public static List<Paiement> paiementsMensuel(LocalDate date){
         PaiementDAOImp paiementDAOImp = new PaiementDAOImp();
         try {
             List<Paiement> list = paiementDAOImp.getList();
             // Verify if the paiement date is equal to the date passed as parameter
-            list.removeIf(paiement -> paiement.getDate().getMonthValue() != date.getMonthValue());
+            list.removeIf(paiement -> paiement.getDate().get(ChronoField.ALIGNED_WEEK_OF_YEAR) != date.get(ChronoField.ALIGNED_WEEK_OF_YEAR));
             return list;
         } catch (DAOException e) {
             System.out.println(e.getMessage());
         }
-        return null;
-    }
-    public static List<Paiement> paiementsAnnuel(LocalDate date){
-        PaiementDAOImp paiementDAOImp = new PaiementDAOImp();
-        try {
-            List<Paiement> list = paiementDAOImp.getList();
-            // Verify if the paiement date is equal to the date passed as parameter
-            list.removeIf(paiement -> paiement.getDate().getYear() != date.getYear());
-            return list;
-        } catch (DAOException e) {
-            System.out.println(e.getMessage());
-        }
+
         return null;
     }
 
-
-    public static List<Paiement> paiementsJournalier(String date) throws Mismatch {
-        // Verify if the date is in the correct format
-        if (!date.matches("\\d{2}-\\d{2}-\\d{4}")) {
-            throw new Mismatch("La date doit être au format 'dd-MM-yyyy'");
-        }
-        // Parse the date to LocalDate
-        LocalDate localDate = dateFornater(date);
+    public static List<Paiement> paiementsMensuel(String month, String year) {
 
         PaiementDAOImp paiementDAOImp = new PaiementDAOImp();
         try {
             List<Paiement> list = paiementDAOImp.getList();
-            // Verify if the paiement date is equal to the date passed as parameter
-            list.removeIf(paiement -> !paiement.getDate().equals(localDate));
+            // Verify if the paiement date month is equal to the month passed as parameter
+            list.removeIf(paiement -> !paiement.getDate().getMonth().getDisplayName(TextStyle.FULL, Locale.FRENCH).equalsIgnoreCase(month) || !Objects.equals(paiement.getDate().getYear(), Integer.parseInt(year)));
             return list;
         } catch (DAOException e) {
             System.out.println(e.getMessage());
@@ -105,45 +88,12 @@ public class Toolbox {
         return null;
     }
 
-    public static List<Paiement> paiementsHebdomadaire(String date){
-        return null;
-    }
-
-    public static List<Paiement> paiementsMensuel(String date) throws Mismatch {
-        // Verify if the date is in the correct format
-        if (!date.matches("\\d{2}-\\d{2}-\\d{4}")) {
-            throw new Mismatch("La date doit être au format 'dd-MM-yyyy'");
-        }
-
-        // Parse the date to LocalDate
-        LocalDate localDate = dateFornater(date);
-
+    public static List<Paiement> paiementsAnnuel(String year) {
         PaiementDAOImp paiementDAOImp = new PaiementDAOImp();
         try {
             List<Paiement> list = paiementDAOImp.getList();
-            // Verify if the paiement date is equal to the date passed as parameter
-            list.removeIf(paiement -> paiement.getDate().getMonthValue() != localDate.getMonthValue());
-            return list;
-        } catch (DAOException e) {
-            System.out.println(e.getMessage());
-        }
-        return null;
-    }
-
-    public static List<Paiement> paiementsAnnuel(String date) throws Mismatch {
-        // Verify if the date is in the correct format
-        if (!date.matches("\\d{2}-\\d{2}-\\d{4}")) {
-            throw new Mismatch("La date doit être au format 'dd-MM-yyyy'");
-        }
-
-        // Parse the date to LocalDate
-        LocalDate localDate = dateFornater(date);
-
-        PaiementDAOImp paiementDAOImp = new PaiementDAOImp();
-        try {
-            List<Paiement> list = paiementDAOImp.getList();
-            // Verify if the paiement date is equal to the date passed as parameter
-            list.removeIf(paiement -> paiement.getDate().getYear() != localDate.getYear());
+            // Verify if the paiement date month is equal to the month passed as parameter
+            list.removeIf(paiement -> !Objects.equals(paiement.getDate().getYear(), Integer.parseInt(year)));
             return list;
         } catch (DAOException e) {
             System.out.println(e.getMessage());
@@ -151,3 +101,49 @@ public class Toolbox {
         return null;
     }
 }
+
+//    public static List<Paiement> paiementsMensuel(LocalDate date){
+//        PaiementDAOImp paiementDAOImp = new PaiementDAOImp();
+//        try {
+//            List<Paiement> list = paiementDAOImp.getList();
+//            // Verify if the paiement date is equal to the date passed as parameter
+//            list.removeIf(paiement -> paiement.getDate().getMonthValue() != date.getMonthValue());
+//            return list;
+//        } catch (DAOException e) {
+//            System.out.println(e.getMessage());
+//        }
+//        return null;
+//    }
+//    public static List<Paiement> paiementsAnnuel(LocalDate date){
+//        PaiementDAOImp paiementDAOImp = new PaiementDAOImp();
+//        try {
+//            List<Paiement> list = paiementDAOImp.getList();
+//            // Verify if the paiement date is equal to the date passed as parameter
+//            list.removeIf(paiement -> paiement.getDate().getYear() != date.getYear());
+//            return list;
+//        } catch (DAOException e) {
+//            System.out.println(e.getMessage());
+//        }
+//        return null;
+//    }
+
+
+//    public static List<Paiement> paiementsJournalier(String date) throws Mismatch {
+//        // Verify if the date is in the correct format
+//        if (!date.matches("\\d{2}-\\d{2}-\\d{4}")) {
+//            throw new Mismatch("La date doit être au format 'dd-MM-yyyy'");
+//        }
+//        // Parse the date to LocalDate
+//        LocalDate localDate = dateFornater(date);
+//
+//        PaiementDAOImp paiementDAOImp = new PaiementDAOImp();
+//        try {
+//            List<Paiement> list = paiementDAOImp.getList();
+//            // Verify if the paiement date is equal to the date passed as parameter
+//            list.removeIf(paiement -> !paiement.getDate().equals(localDate));
+//            return list;
+//        } catch (DAOException e) {
+//            System.out.println(e.getMessage());
+//        }
+//        return null;
+//    }
