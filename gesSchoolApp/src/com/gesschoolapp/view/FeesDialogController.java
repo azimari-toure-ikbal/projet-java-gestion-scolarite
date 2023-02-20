@@ -119,11 +119,14 @@ public class FeesDialogController  implements Initializable {
 
 
 
+
         this.apprenant = appr;
 
         Echeance toPay = superController.getSelectedClass().getEcheancier().get(apprenant.getEtatPaiement());
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern( "dd MMMM yyyy" ).withLocale( java.util.Locale.FRENCH );
         month = toPay.getDate().format(formatter).split(" ")[1];
+
+        labelScolarite.setText("Du mois \"" + month + "\"");
 
         if(apprenant.getEtatPaiement() == 0){
             selectRubrique.getItems().removeIf(rubr -> !rubr.equals("inscription"));
@@ -171,8 +174,9 @@ public class FeesDialogController  implements Initializable {
             notesList.add(newNote);
 //            module.setNotes(notesList);
         }
-
-        apprenant.setEtatPaiement(apprenant.getEtatPaiement()+1);
+        if(selectRubrique.getValue() != "tenue"){
+            apprenant.setEtatPaiement(apprenant.getEtatPaiement()+1);
+        }
         superController.setMainMessageInfo("Paiement renseigné avec succès ! (VOIR RECU)");
 
     }

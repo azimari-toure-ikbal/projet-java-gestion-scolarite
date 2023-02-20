@@ -46,9 +46,9 @@
 }
 
 .table-view {
-    -fx-base: #1d1d1d;
-    -fx-control-inner-background: #1d1d1d;
-    -fx-background-color: #1d1d1d;
+    -fx-base: transparent;
+    -fx-control-inner-background: transparent;
+    -fx-background-color:  linear-gradient(to right, #2c7aba,#2c7aba, #5AB2D8);
     -fx-padding: 5;
 }
 
@@ -60,20 +60,24 @@
     -fx-background-color: transparent;
 }
 
+.table-view .column-header{
+    -fx-pref-height: 30px;
+}
+
 .table-view .column-header, .table-view .filler {
-    -fx-size: 35;
-    -fx-border-width: 0 0 1 0;
+    -fx-size: 15px;
+    -fx-border-width: 0 0 0.5 0;
     -fx-background-color: transparent;
     -fx-border-color: 
         transparent
         transparent
-        derive(-fx-base, 80%) 
+        white
         transparent;
     -fx-border-insets: 0 10 1 0;
 }
 
 .table-view .column-header{
-    -fx-font-size: 20pt;
+    -fx-font-size: 11pt;
     -fx-font-family: "Segoe UI Light";
     -fx-text-fill: white;
     -fx-alignment: center-left;
