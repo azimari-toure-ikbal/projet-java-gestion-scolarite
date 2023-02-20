@@ -38,7 +38,7 @@ public class TestClass {
 //        System.out.println(ListRubriques.getRubriques());
 //        testReadClasse(15);
 //        testGetPaiements();
-//        testPaiement();
+        testPaiement();
         testCheckPaiement();
 //        System.out.println(LocalDate.now());
     }
@@ -70,11 +70,11 @@ public class TestClass {
             Paiement paiement = new Paiement();
             paiement.setMontant(1000);
             paiement.setApprenant(new ApprenantDAOImp().read(40));
-            paiement.setRubrique("inscription");
+            paiement.setRubrique("scolarite");
             paiement.setDate(LocalDate.now());
             paiement.setClasse(new ApprenantDAOImp().read(40).getClasse());
             paiement.setCaissier("Violet Myers");
-            paiement.setObservation("Paiement d'inscription");
+            paiement.setObservation("Paiement de scolarite");
 
             System.out.println(paiementDAOImp.create(paiement));
         } catch (Exception e) {

@@ -9,6 +9,7 @@ import com.gesschoolapp.models.student.Apprenant;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Classe implements Serializable, Comparable<Classe>{
@@ -176,7 +177,21 @@ public class Classe implements Serializable, Comparable<Classe>{
         }
         LocalDate date = echeancier.get(apprenant.getEtatPaiement()).getDate();
         System.out.println("date : " + date);
-        return date.isEqual(getCurrentEcheance().getDate());
+
+        if(date.getMonthValue() >= getCurrentEcheance().getDate().getMonthValue()){
+            return true;
+        }
+        return false;
+    }
+
+    public List<Apprenant> getGoodApprenants(){
+        List<Apprenant> goodApprenants = new ArrayList<>();
+        for (Apprenant apprenant : apprenants){
+            if (apprenant.getEtatPaiement() > 0){
+                goodApprenants.add(apprenant);
+            }
+        }
+        return goodApprenants;
     }
 
     @Override
