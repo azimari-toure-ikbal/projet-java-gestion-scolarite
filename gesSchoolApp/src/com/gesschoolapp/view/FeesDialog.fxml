@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="437.0" prefWidth="758.0" style="-fx-background-color: white; -fx-border-color: #C8C8C8; -fx-border-width: 1px;" stylesheets="@../style/application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gesschoolapp.view.FeesDialogController">
+   <children>
+      <Pane fx:id="landscape" layoutX="24.0" layoutY="10.0" prefHeight="59.0" prefWidth="713.0" style="-fx-background-color: linear-gradient(to right, #3CA55C, #B5AC49);" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <ImageView fitHeight="43.0" fitWidth="43.0" layoutX="358.0" layoutY="8.0">
+               <image>
+                  <Image url="@../resources/images/cash_icon.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Label layoutX="47.0" layoutY="100.0" prefHeight="35.0" prefWidth="83.0" text="Elève :" textFill="#3c3a3a" AnchorPane.leftAnchor="47.0">
+         <font>
+            <Font name="Gill Sans MT Bold" size="15.0" />
+         </font>
+         <padding>
+            <Insets right="2.0" />
+         </padding>
+      </Label>
+      <TextField fx:id="labelApprenant" disable="true" editable="false" focusTraversable="false" layoutX="110.0" layoutY="103.0" prefHeight="30.0" prefWidth="216.0" style="-fx-padding: 0 0 0 10px;" text="Ikbal Azimari TOURE" AnchorPane.leftAnchor="110.0" />
+      <Label layoutX="47.0" layoutY="165.0" prefHeight="35.0" prefWidth="83.0" text="Classe :" textFill="#3c3a3a" AnchorPane.leftAnchor="47.0">
+         <font>
+            <Font name="Gill Sans MT Bold" size="15.0" />
+         </font>
+         <padding>
+            <Insets right="2.0" />
+         </padding>
+      </Label>
+      <TextField fx:id="labelClasse" disable="true" editable="false" focusTraversable="false" layoutX="110.0" layoutY="168.0" prefHeight="30.0" prefWidth="216.0" style="-fx-padding: 0 0 0 10px;" text="LPTI3 - DAR" AnchorPane.leftAnchor="110.0" />
+      <Label layoutX="48.5" layoutY="232.0" prefHeight="35.0" prefWidth="133.0" text="Rubrique :" textFill="#3c3a3a" AnchorPane.leftAnchor="48.0">
+         <font>
+            <Font name="Gill Sans MT Bold" size="15.0" />
+         </font>
+         <padding>
+            <Insets right="2.0" />
+         </padding>
+      </Label>
+      <ChoiceBox fx:id="selectRubrique" layoutX="144.5" layoutY="236.0" prefHeight="27.0" prefWidth="185.0" style="-fx-background-color: white; -fx-padding: 0 0 0 3px; -fx-border-width: 0.5px; -fx-border-color: BABABA; -fx-border-radius: 3px; -fx-background-radius: 3px;" AnchorPane.leftAnchor="144.0">
+         <effect>
+            <InnerShadow blurType="GAUSSIAN" height="10.0" offsetY="1.0" radius="4.5" width="10.0">
+               <color>
+                  <Color red="0.729411780834198" green="0.729411780834198" blue="0.729411780834198" />
+               </color>
+            </InnerShadow>
+         </effect>
+      </ChoiceBox>
+      <Label layoutX="393.0" layoutY="102.0" prefHeight="35.0" prefWidth="83.0" text="Montant :" textFill="#3c3a3a" AnchorPane.rightAnchor="237.0">
+         <font>
+            <Font name="Gill Sans MT Bold" size="15.0" />
+         </font>
+         <padding>
+            <Insets right="2.0" />
+         </padding>
+      </Label>
+      <TextField fx:id="labelMontant" disable="true" editable="false" focusTraversable="false" layoutX="472.0" layoutY="104.0" prefHeight="30.0" prefWidth="204.0" style="-fx-padding: 0 0 0 10px;" text="23.000 FCFA" AnchorPane.rightAnchor="37.0" />
+      <Label layoutX="393.0" layoutY="165.0" prefHeight="35.0" prefWidth="173.0" text="Date du paiement :" textFill="#3c3a3a" AnchorPane.rightAnchor="147.0">
+         <font>
+            <Font name="Gill Sans MT Bold" size="15.0" />
+         </font>
+         <padding>
+            <Insets right="2.0" />
+         </padding>
+      </Label>
+      <DatePicker fx:id="labelDPaiement" disable="true" editable="false" layoutX="543.0" layoutY="164.0" prefHeight="39.0" prefWidth="133.0" promptText="jj/mm/aa" style="-fx-background-color: white; -fx-border-insets: 1 1 1 1; -fx-border-width: 1px; -fx-border-color: #BABABA; -fx-border-radius: 2px;" AnchorPane.rightAnchor="37.0" />
+      <Label layoutX="47.0" layoutY="296.0" prefHeight="35.0" prefWidth="133.0" text="Année scolaire :" textFill="#3c3a3a" AnchorPane.leftAnchor="47.0">
+         <font>
+            <Font name="Gill Sans MT Bold" size="15.0" />
+         </font>
+         <padding>
+            <Insets right="2.0" />
+         </padding>
+      </Label>
+      <TextField fx:id="labelAnneeScolaire" disable="true" editable="false" focusTraversable="false" layoutX="175.0" layoutY="299.0" prefHeight="30.0" prefWidth="151.0" style="-fx-padding: 0 0 0 10px;" text="2022-2023" AnchorPane.leftAnchor="175.0" />
+      <TextArea fx:id="labelObservation" layoutX="438.0" layoutY="236.0" prefHeight="92.0" prefWidth="284.0" promptText="Observation (facultatif)" AnchorPane.rightAnchor="36.0" />
+      <Button fx:id="btnAnnuler" layoutX="602.0" layoutY="382.0" mnemonicParsing="false" onAction="#onClose" prefHeight="41.0" prefWidth="120.0" style="-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-background-color: linear-gradient(to right, #D23342, #ED213A);" styleClass="classic_btn" text="Annuler">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <effect>
+            <DropShadow offsetX="2.0" offsetY="2.0" spread="0.09">
+               <color>
+                  <Color red="0.7647058963775635" green="0.7647058963775635" blue="0.7647058963775635" />
+               </color>
+            </DropShadow>
+         </effect>
+      </Button>
+      <Label alignment="BOTTOM_RIGHT" contentDisplay="CENTER" layoutX="37.0" layoutY="238.0" text="*" textFill="#d31b1b">
+         <font>
+            <Font name="Gill Sans MT Bold" size="20.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnSubmit" layoutX="465.0" layoutY="382.0" mnemonicParsing="false" onAction="#onSubmit" prefHeight="41.0" prefWidth="120.0" style="-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-background-color: linear-gradient(to right, #3CA55C, #B5AC49);" styleClass="classic_btn" text="Soumettre">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <effect>
+            <DropShadow offsetX="2.0" offsetY="2.0" spread="0.09">
+               <color>
+                  <Color red="0.7647058963775635" green="0.7647058963775635" blue="0.7647058963775635" />
+               </color>
+            </DropShadow>
+         </effect>
+      </Button>
+      <Label fx:id="labelScolarite" alignment="CENTER_RIGHT" layoutX="126.0" layoutY="267.0" prefHeight="17.0" prefWidth="324.0" text="Du mois de novembre" textFill="#587bd6" AnchorPane.rightAnchor="429.0" />
+   </children>
+</AnchorPane>

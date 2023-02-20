@@ -177,7 +177,15 @@ public class Classe implements Serializable, Comparable<Classe>{
         }
         LocalDate date = echeancier.get(apprenant.getEtatPaiement()).getDate();
         System.out.println("date : " + date);
-        return date.isEqual(getCurrentEcheance().getDate());
+
+        if(date.isAfter(getCurrentEcheance().getDate()) || date.isEqual(getCurrentEcheance().getDate())){
+            System.out.println(date + " >= " + getCurrentEcheance().getDate());
+            return true;
+        }
+        System.out.println(date + " < " + getCurrentEcheance().getDate());
+
+
+        return false;
     }
 
     public List<Apprenant> getGoodApprenants(){

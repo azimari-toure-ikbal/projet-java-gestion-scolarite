@@ -57,7 +57,42 @@ public class ApprenantsCSV implements CSVReader<Apprenant>, CSVWritter<Apprenant
 
     @Override
     public List<Apprenant> csvToObject(List<String[]> data) throws CSVException {
-        return null;
+        // Verify if the list is not empty
+        if (data.isEmpty()) {
+            throw new CSVException("La liste est vide");
+        }
+
+        List<Apprenant> apprenants = new ArrayList<>();
+
+        for (String[] line : data) {
+            if (line.length != 5) {
+                throw new CSVException("Le fichier n'est pas au bon format");
+            }
+
+            Apprenant apprenant = new Apprenant();
+            apprenant.setPrenom(line[0].substring(0, 1).toUpperCase() + line[0].substring(1).toLowerCase());
+            apprenant.setNom(line[1].toUpperCase());
+            apprenant.setDateNaissance(LocalDate.parse(line[2]));
+            apprenant.setNationalite(line[3].substring(0, 1).toUpperCase() + line[3].substring(1).toLowerCase());
+            apprenant.setEtatPaiement(0);
+            apprenant.setSexe(line[4].toUpperCase());
+            // generate matricule
+            int matricule = 105;
+            apprenant.setMatricule(matricule++);
+            apprenant.setClasse("3eme");
+
+            // Create the apprenant
+            Apprenant newApprenant;
+            try {
+                newApprenant =  new ApprenantDAOImp().create(apprenant);
+            } catch (DAOException e) {
+                throw new CSVException("Une erreur est survenue lors de la création de l'apprenant : " + e.getMessage());
+            }
+
+            // Add the apprenant to the list
+            apprenants.add(newApprenant);
+        }
+        return apprenants;
     }
 
     public List<Apprenant> csvToObject(List<String[]> data, Classe classe) throws CSVException, Mismatch {
@@ -75,7 +110,6 @@ public class ApprenantsCSV implements CSVReader<Apprenant>, CSVWritter<Apprenant
                 throw new CSVException("Le fichier n'est pas au bon format \n" +
                         "Le fichier doit être au format : Prenom;Nom;Date de naissance;Nationalité;Sexe");
             }
-
 
             Apprenant apprenant = new Apprenant();
             apprenant.setPrenom(Toolbox.capitalizeName(line[0]));
@@ -96,14 +130,15 @@ public class ApprenantsCSV implements CSVReader<Apprenant>, CSVWritter<Apprenant
             apprenant.setClasse(classe.getIntitule());
 
             // Create the apprenant
+            Apprenant newApprenant;
             try {
-                new ApprenantDAOImp().create(apprenant);
+                newApprenant =  new ApprenantDAOImp().create(apprenant);
             } catch (DAOException e) {
                 throw new CSVException("Une erreur est survenue lors de la création de l'apprenant : " + e.getMessage());
             }
 
             // Add the apprenant to the list
-            apprenants.add(apprenant);
+            apprenants.add(newApprenant);
         }
         return apprenants;
     }

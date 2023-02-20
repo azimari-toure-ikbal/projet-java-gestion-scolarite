@@ -17,7 +17,7 @@
       </Label>
       <Line endX="114.0" layoutX="129.0" layoutY="96.0" startX="-100.0" strokeWidth="0.2" AnchorPane.leftAnchor="28.5" AnchorPane.rightAnchor="28.5" />
       <ImageView fx:id="class_preview" fitHeight="170.0" fitWidth="230.0" layoutX="22.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true" />
-      <Label layoutX="28.5" layoutY="376.0" text="Intitulé : " AnchorPane.leftAnchor="28.5">
+      <Label layoutX="28.5" layoutY="376.0" text="Intitulé : " AnchorPane.leftAnchor="29.0">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>
@@ -37,17 +37,17 @@
             <Font size="17.0" />
          </font>
       </Label>
-      <Label layoutX="28.5" layoutY="399.0" text="Formation : " AnchorPane.leftAnchor="28.5">
+      <Label layoutX="29.0" layoutY="399.0" text="Formation : " AnchorPane.leftAnchor="29.0">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>
       </Label>
-      <Label layoutX="29.0" layoutY="422.0" text="Année scolaire : ">
+      <Label layoutX="29.0" layoutY="422.0" text="Année scolaire : " AnchorPane.leftAnchor="29.0">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>
       </Label>
-      <Label fx:id="nbStudents" layoutX="25.0" layoutY="448.0" text="??? élèves, ??? modules" textFill="#93989e" AnchorPane.leftAnchor="28.5">
+      <Label fx:id="nbStudents" layoutX="29.0" layoutY="448.0" text="??? élèves, ??? modules" textFill="#93989e" AnchorPane.leftAnchor="29.0">
          <font>
             <Font size="17.0" />
          </font>
@@ -81,5 +81,15 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
+      <Label fx:id="labelEcheance" layoutX="50.0" layoutY="477.0" prefHeight="26.0" prefWidth="174.0" text="3 Novembre 2022" textFill="#48a74c" visible="false">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="echeanceIcon" fitHeight="22.0" fitWidth="22.0" layoutX="25.0" layoutY="479.0" visible="false" AnchorPane.leftAnchor="25.0">
+         <image>
+            <Image url="@../resources/images/bill_icon.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
