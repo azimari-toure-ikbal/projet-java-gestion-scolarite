@@ -41,6 +41,17 @@ public class TestClass {
         testPaiement();
         testCheckPaiement();
 //        System.out.println(LocalDate.now());
+        testGetAnnees();
+    }
+
+    public static void testGetAnnees(){
+        try {
+            List
+                    <String> annees = new PaiementDAOImp().getAnnees();
+            System.out.println(annees);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
     }
 
     public static void testDeleteApprenant(int id){

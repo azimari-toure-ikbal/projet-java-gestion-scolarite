@@ -154,4 +154,19 @@ public class PaiementDAOImp implements SearchDAO<Paiement> {
         }
         return paiements;
     }
+
+    public List<String> getAnnees() throws DAOException {
+        try (Connection connection = DBManager.getConnection()) {
+            String query = "SELECT DISTINCT YEAR(date) FROM paiements";
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet rs = statement.executeQuery();
+            List<String> annees = new ArrayList<>();
+            while (rs.next()) {
+                annees.add(rs.getString(1));
+            }
+            return annees;
+        } catch (Exception e) {
+            throw new DAOException(e.getMessage());
+        }
+    }
 }
