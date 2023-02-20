@@ -29,7 +29,7 @@ public class PaiementDAOImp implements SearchDAO<Paiement> {
                 throw new DAOException("Cet apprenant a déjà payé toutes ses scolarités");
             }
 
-            String query = "INSERT INTO paiements (numeroRecu, date, montant, idApprenant, classe, rubrique, caissier, observation) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO paiements (numeroRecu, date, montant, idApprenant, classe, rubrique, caissier, observation, apprenant ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, "RCU" + (int) (Instant.now().getEpochSecond()/1000));
             statement.setString(2, obj.getDate().toString());
@@ -43,6 +43,7 @@ public class PaiementDAOImp implements SearchDAO<Paiement> {
             statement.setString(6, rubrique);
             statement.setString(7, obj.getCaissier());
             statement.setString(8, obj.getObservation());
+            statement.setString(9, obj.getApprenant().getFullName());
             statement.executeUpdate();
             if (Objects.equals(obj.getRubrique(), "inscription") || Objects.equals(obj.getRubrique(), "scolarite")){
                 new ApprenantDAOImp().incrementEtatPaiement(obj.getApprenant());
@@ -85,6 +86,7 @@ public class PaiementDAOImp implements SearchDAO<Paiement> {
             String rubrique;
             String caissier;
             String observation;
+            String nomApprenant;
             while (rs.next()) {
                 id = rs.getInt("idPaiement");
                 numeroRecu = rs.getString("numeroRecu");
@@ -95,10 +97,11 @@ public class PaiementDAOImp implements SearchDAO<Paiement> {
                 rubrique = rs.getString("rubrique");
                 caissier = rs.getString("caissier");
                 observation = rs.getString("observation");
+                nomApprenant = rs.getString("apprenant");
 
                 LocalDate datePaiement = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
-                paiements.add(new Paiement(id, numeroRecu, montant, rubrique, datePaiement, observation, new ApprenantDAOImp().read(idApprenant), caissier, classe));
+                paiements.add(new Paiement(id, numeroRecu, montant, rubrique, datePaiement, observation, caissier, classe, nomApprenant, new ApprenantDAOImp().read(idApprenant)));
             }
             return paiements;
         } catch (Exception e) {
@@ -127,6 +130,7 @@ public class PaiementDAOImp implements SearchDAO<Paiement> {
             String rubrique;
             String caissier;
             String observation;
+            String nomApprenant;
             while (rs.next()) {
                 id = rs.getInt("idPaiement");
                 numeroRecu = rs.getString("numeroRecu");
@@ -137,15 +141,32 @@ public class PaiementDAOImp implements SearchDAO<Paiement> {
                 rubrique = rs.getString("rubrique");
                 caissier = rs.getString("caissier");
                 observation = rs.getString("observation");
+                nomApprenant = rs.getString("apprenant");
 
                 LocalDate formatedDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
                 Paiement paiement = new Paiement(id, numeroRecu, montant, rubrique, formatedDate, observation, new ApprenantDAOImp().read(idApprenant) , caissier, classe);
+                paiement.setNameApprenant(nomApprenant);
                 paiements.add(paiement);
             }
         } catch (Exception e) {
             throw new DAOException(e.getMessage());
         }
         return paiements;
+    }
+
+    public List<String> getAnnees() throws DAOException {
+        try (Connection connection = DBManager.getConnection()) {
+            String query = "SELECT DISTINCT YEAR(date) FROM paiements";
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet rs = statement.executeQuery();
+            List<String> annees = new ArrayList<>();
+            while (rs.next()) {
+                annees.add(rs.getString(1));
+            }
+            return annees;
+        } catch (Exception e) {
+            throw new DAOException(e.getMessage());
+        }
     }
 }

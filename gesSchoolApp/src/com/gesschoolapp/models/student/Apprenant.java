@@ -119,6 +119,10 @@ public class Apprenant implements Serializable {
         this.etatPaiement = etatPaiement;
     }
 
+    public String getFullName() {
+    	return this.prenom + " " + this.nom;
+    }
+
     @Override
     public String toString() {
 //        return "\nApprenant{" + "idApprenant=" + idApprenant + ", matricule=" + matricule + ", prenom=" + prenom + ", nom=" + nom + ", dateNaissance=" + dateNaissance + ", sexe="

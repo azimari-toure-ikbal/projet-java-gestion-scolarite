@@ -17,7 +17,22 @@ public class Paiement {
     private String caissier;
     private String classe;
 
+    private String nameApprenant;
+
     public Paiement() {
+    }
+
+    public Paiement(int idPaiement, String numeroRecu, double montant, String rubrique, LocalDate date, String observation, String caissier, String classe,  String nameApprenant, Apprenant apprenant) {
+        //use the setters
+        this.setIdPaiement(idPaiement);
+        this.setNumeroRecu(numeroRecu);
+        this.setMontant(montant);
+        this.setRubrique(rubrique);
+        this.setDate(date);
+        this.setObservation(observation);
+        this.setNameApprenant(nameApprenant);
+        this.setCaissier(caissier);
+        this.setClasse(classe);
     }
 
     public Paiement(int idPaiement, String numeroRecu, double montant, String rubrique, LocalDate date, String observation, Apprenant apprenant, String caissier, String classe) {
@@ -31,6 +46,14 @@ public class Paiement {
         this.setApprenant(apprenant);
         this.setCaissier(caissier);
         this.setClasse(classe);
+    }
+
+    public String getNameApprenant() {
+        return nameApprenant;
+    }
+
+    public void setNameApprenant(String nameApprenant) {
+        this.nameApprenant = nameApprenant;
     }
 
     public int getIdPaiement() {
@@ -117,6 +140,7 @@ public class Paiement {
                 ", apprenant='" + apprenant + '\'' +
                 ", caissier='" + caissier + '\'' +
                 ", classe='" + classe + '\'' +
+                ", nameApprenant='" + nameApprenant + '\'' +
                 "}\n";
     }
 }
