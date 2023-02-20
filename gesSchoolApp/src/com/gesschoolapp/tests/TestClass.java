@@ -39,7 +39,7 @@ public class TestClass {
 //        testReadClasse(15);
 //        testGetPaiements();
         testPaiement();
-//        testCheckPaiement();
+        testCheckPaiement();
 //        System.out.println(LocalDate.now());
     }
 
