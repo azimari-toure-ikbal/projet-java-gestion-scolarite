@@ -2,8 +2,9 @@ package com.gesschoolapp.db.DAOClassesImpl;
 
 import com.gesschoolapp.Exceptions.DAOException;
 import com.gesschoolapp.db.DAOInterfaces.DAO;
-import com.gesschoolapp.db.DAOInterfaces.LoginDAO;
+import com.gesschoolapp.db.DAOInterfaces.UserDAO;
 import com.gesschoolapp.db.DBManager;
+import com.gesschoolapp.models.actions.Notification;
 import com.gesschoolapp.models.users.Admin;
 import com.gesschoolapp.models.users.Caissier;
 import com.gesschoolapp.models.users.Secretaire;
@@ -12,10 +13,13 @@ import com.gesschoolapp.models.users.Utilisateur;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAOImp implements LoginDAO, DAO<Utilisateur> {
+public class UserDAOImp implements UserDAO, DAO<Utilisateur> {
     @Override
     public Utilisateur authenticate(String email, String password) throws DAOException {
         try(Connection connection = DBManager.getConnection()) {
@@ -47,6 +51,32 @@ public class UserDAOImp implements LoginDAO, DAO<Utilisateur> {
             throw new DAOException(e.getMessage());
         }
         return null;
+    }
+
+    @Override
+    public List<Notification> getNotifs(String name) throws DAOException {
+
+        try(Connection connection = DBManager.getConnection()) {
+           //get a list of notifications(String message, LocalDateTime date) from notifications table
+            //where utilisateur = name, and return it
+            String query = "SELECT * FROM notifications WHERE utilisateur=?";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, name);
+            ResultSet rs = ps.executeQuery();
+            List<Notification> notifs = new ArrayList<>();
+            while (rs.next()) {
+                String message = rs.getString("message");
+                String stringDate = rs.getString("date");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                //convert String to LocalDate
+                LocalDateTime date = LocalDateTime.parse(stringDate, formatter);
+
+                notifs.add(new Notification(message, date));
+            }
+            return notifs;
+        } catch (Exception e) {
+            throw new DAOException(e.getMessage());
+        }
     }
 
     @Override
@@ -211,6 +241,5 @@ public class UserDAOImp implements LoginDAO, DAO<Utilisateur> {
             throw new DAOException(e.getMessage());
         }
         return null;
-
     }
 }

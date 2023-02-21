@@ -26,6 +26,7 @@ public class Actions implements Serializable {
     }
 
     public void add(Action action) {
+        action.setIdAction(listActions.size());
         listActions.add(action);
     }
 

@@ -1,5 +1,6 @@
 package com.gesschoolapp.models.actions;
 
+import com.gesschoolapp.db.DAOClassesImpl.ActionDAOImp;
 import com.gesschoolapp.view.util.ActionType;
 
 import java.io.Serializable;
@@ -81,5 +82,20 @@ public class Action implements Serializable {
 
     public void setAction(ActionType action) {
         this.action = action;
+    }
+
+    public void cancelAction(String admin){
+        new ActionDAOImp().cancelAction(this, admin);
+    }
+
+    @Override
+    public String toString() {
+        return "Action{" +
+                "idAction=" + idAction +
+                ", object=" + object +
+                ", actor='" + actor + '\'' +
+                ", action=" + action +
+                ", date=" + date +
+                '}';
     }
 }

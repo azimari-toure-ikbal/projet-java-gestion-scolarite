@@ -132,7 +132,7 @@ public class NoteDAOImp implements NoteDAO {
     @Override
     public Note read(int id) throws DAOException {
         try(Connection connexion = DBManager.getConnection()) {
-            String query = "SELECT n.valeur, m.intitule as intitule, n.idApprenant FROM notes n, modules m, apprenants a WHERE idNote = ? AND a.echeancier > 0";
+            String query = "SELECT n.valeur, m.intitule as intitule, n.idApprenant FROM notes n, modules m, apprenants a WHERE idNote = ? ";
             PreparedStatement stmt = connexion.prepareStatement(query);
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();

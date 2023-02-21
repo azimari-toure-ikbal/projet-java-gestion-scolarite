@@ -128,6 +128,6 @@ public class Apprenant implements Serializable {
 //        return "\nApprenant{" + "idApprenant=" + idApprenant + ", matricule=" + matricule + ", prenom=" + prenom + ", nom=" + nom + ", dateNaissance=" + dateNaissance + ", sexe="
 //                + sexe + ", nationalite=" + nationalite + ", etatPaiement=" + etatPaiement + ", classe=" + classe +
 //                "}\n";
-        return prenom + " " + nom;
+        return getFullName();
     }
 }

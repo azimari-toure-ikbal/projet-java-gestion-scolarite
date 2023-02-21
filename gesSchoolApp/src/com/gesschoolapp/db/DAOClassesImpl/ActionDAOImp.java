@@ -12,6 +12,7 @@ import com.gesschoolapp.view.util.ActionType;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class ActionDAOImp implements ActionDAO {
@@ -22,9 +23,18 @@ public class ActionDAOImp implements ActionDAO {
         if(action.getObject() instanceof Apprenant){
             message = "L'action " + action.getAction() + " sur l'apprenant " + ((Apprenant)action.getObject()).getFullName() + " a été annulée par l'administrateur " + admin + " le " + LocalDateTime.now() + ".";
             switch (action.getAction()){
-                case ADD -> cancelAddApprenant((Apprenant) action.getObject());
-                case DELETE -> cancelDeleteApprenant((Apprenant) action.getObject());
-                case UPDATE -> cancelUpdateApprenant((Apprenant) action.getObject());
+                case ADD -> {
+                    cancelAddApprenant((Apprenant) action.getObject());
+                    break;
+                }
+                case DELETE -> {
+                    cancelDeleteApprenant((Apprenant) action.getObject());
+                    break;
+                }
+                case UPDATE -> {
+                    cancelUpdateApprenant((Apprenant) action.getObject());
+                    break;
+                }
             }
         }
         else if(action.getObject() instanceof Module){
@@ -47,6 +57,7 @@ public class ActionDAOImp implements ActionDAO {
                 cancelAddPaiement((Paiement) action.getObject());
             }
         }
+        System.out.println(message);
         if(!message.equals(""))
             addNotification(action.getActor(), admin, message);
     }
@@ -58,8 +69,9 @@ public class ActionDAOImp implements ActionDAO {
             PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setString(1, utilisateur);
             stmt.setString(2, admin);
-            stmt.setString(3, String.valueOf(LocalDateTime.now()));
+            stmt.setString(3, String.valueOf(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))));
             stmt.setString(4, message);
+            stmt.executeUpdate();
         }catch (Exception e){
             System.out.println("Error in addNotification() : " + e.getMessage());
         }
@@ -67,6 +79,7 @@ public class ActionDAOImp implements ActionDAO {
 
     @Override
     public void cancelAddApprenant(Apprenant apprenant){
+        System.out.println(apprenant.getIdApprenant());
         ApprenantDAOImp apprenantDAOImp = new ApprenantDAOImp();
         try{
             apprenantDAOImp.delete(apprenant.getIdApprenant(), "admin");
@@ -80,6 +93,7 @@ public class ActionDAOImp implements ActionDAO {
         ApprenantDAOImp apprenantDAOImp = new ApprenantDAOImp();
         try{
             apprenantDAOImp.create(apprenant, "admin");
+            System.out.println("Apprenant " + apprenant.getFullName() + " restored");
         }catch (Exception e){
             System.out.println("Error in cancelDeleteApprenant() : " + e.getMessage());
         }

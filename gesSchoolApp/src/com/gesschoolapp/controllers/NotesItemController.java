@@ -76,7 +76,7 @@ public class NotesItemController extends Application {
 
             thisNote.setNote(noteValue);
             try {
-                notesData.update(thisNote);
+                notesData.update(thisNote, "");
             } catch (DAOException e) {
                 throw new RuntimeException(e);
             }

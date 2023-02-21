@@ -85,7 +85,7 @@ public class ApprenantDAOImp implements ApprenantDAO {
                 Action action = new Action();
                 action.setAction(ActionType.ADD);
                 action.setActor(user);
-                action.setObject(obj);
+                action.setObject(addedApprenant);
                 action.setDate(LocalDateTime.now());
                 ActionManager.add(action);
             }
@@ -130,6 +130,15 @@ public class ApprenantDAOImp implements ApprenantDAO {
     public void delete(int id, String user) throws DAOException {
         try(Connection connexion = DBManager.getConnection()){
 
+            if(!Objects.equals(user, "admin")){
+                Action action = new Action();
+                action.setAction(ActionType.DELETE);
+                action.setActor(user);
+                action.setObject(this.read(id));
+                action.setDate(LocalDateTime.now());
+                ActionManager.add(action);
+            }
+
             String query = "DELETE FROM apprenants WHERE idApprenant = ?";
             PreparedStatement statement = connexion.prepareStatement(query);
             statement.setInt(1, id);
@@ -144,17 +153,7 @@ public class ApprenantDAOImp implements ApprenantDAO {
             PreparedStatement statement3 = connexion.prepareStatement(query3);
             statement3.setInt(1, id);
             statement3.executeUpdate();
-
-
-            if(!Objects.equals(user, "admin")){
-                Action action = new Action();
-                action.setAction(ActionType.DELETE);
-                action.setActor(user);
-                action.setObject(this.read(id));
-                action.setDate(LocalDateTime.now());
-                ActionManager.add(action);
-            }
-    }catch (Exception e) {
+        }catch (Exception e) {
             throw new DAOException("Error while deleting Apprenant" + e.getMessage());
         }
     }
