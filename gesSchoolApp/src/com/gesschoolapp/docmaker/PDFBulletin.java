@@ -46,14 +46,17 @@ public class PDFBulletin {
             studentInfo.add(new Phrase("\nNationalité: Américain"));
             studentInfo.add(new Phrase("\nDate de naissance: 01/01/2000"));
             studentInfo.add(new Phrase("\nLieu de naissance: New York, NY"));
+
+
             document.add(studentInfo);
 
             // Ajouter le tableau des notes
-            PdfPTable table = new PdfPTable(4);
+            PdfPTable table = new PdfPTable(2);
 
             // Ajouter un margin top de 20px
             table.setSpacingBefore(20f);
 
+            // Ajouter les titres des colonnes
             table.addCell(new Phrase("Module", new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD)));
             table.addCell(new Phrase("Note", new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD)));
 

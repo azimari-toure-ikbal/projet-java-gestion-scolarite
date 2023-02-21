@@ -1,7 +1,9 @@
 package com.gesschoolapp.tests;
 import com.gesschoolapp.Exceptions.DAOException;
+import com.gesschoolapp.Exceptions.PDFException;
 import com.gesschoolapp.db.DAOClassesImpl.*;
 import com.gesschoolapp.db.DAOInterfaces.ApprenantDAO;
+import com.gesschoolapp.docmaker.PDFGenerator;
 import com.gesschoolapp.models.actions.Actions;
 import com.gesschoolapp.models.actions.Notification;
 import com.gesschoolapp.models.paiement.Paiement;
@@ -53,6 +55,16 @@ public class TestClass {
 //        testCancelActions();
 //        testGetNotifs();
 //        System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYY-MM-dd HH:mm:ss")));
+        PaiementDAOImp paiementDAOImp = new PaiementDAOImp();
+        try {
+            List<Paiement> paiements = paiementDAOImp.getList();
+            Paiement paiement = paiements.get(0);
+            PDFGenerator.recuGenerator(paiement);
+        } catch (DAOException e) {
+            e.printStackTrace();
+        } catch (PDFException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
