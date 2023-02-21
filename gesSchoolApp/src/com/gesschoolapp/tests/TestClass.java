@@ -43,14 +43,26 @@ public class TestClass {
 //        testCreateApprenant();
 //        System.out.println(ListRubriques.getRubriques());
 //        testReadClasse(15);
-//        testGetPaiements();
+        testGetPaiements();
+//        testGetApprenant(1);
 //        testPaiement();
 //        testCheckPaiement();
+//        testCreateApprenant();
 //        System.out.println(LocalDate.now());
 //        testGetAnnees();
 //        testCancelActions();
-        testGetNotifs();
+//        testGetNotifs();
 //        System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYY-MM-dd HH:mm:ss")));
+    }
+
+
+    public static void testGetApprenant(int idApprenant){
+        try {
+            Apprenant apprenant = new ApprenantDAOImp().read(idApprenant);
+            System.out.println(apprenant);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
     }
 
     public static void testGetNotifs(){
@@ -111,10 +123,10 @@ public class TestClass {
             PaiementDAOImp paiementDAOImp = new PaiementDAOImp();
             Paiement paiement = new Paiement();
             paiement.setMontant(1000);
-            paiement.setApprenant(new ApprenantDAOImp().read(40));
+            paiement.setApprenant(new ApprenantDAOImp().read(1));
             paiement.setRubrique("scolarite");
             paiement.setDate(LocalDate.now());
-            paiement.setClasse(new ApprenantDAOImp().read(40).getClasse());
+            paiement.setClasse(new ApprenantDAOImp().read(1     ).getClasse());
             paiement.setCaissier("Violet Myers");
             paiement.setObservation("Paiement de scolarite");
 

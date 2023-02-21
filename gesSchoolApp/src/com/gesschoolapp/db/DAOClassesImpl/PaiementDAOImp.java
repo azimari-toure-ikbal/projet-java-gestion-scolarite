@@ -125,7 +125,7 @@ public class PaiementDAOImp implements PaiementDAO {
                 nomApprenant = rs.getString("apprenant");
 
                 LocalDate datePaiement = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-
+                
                 paiements.add(new Paiement(id, numeroRecu, montant, rubrique, datePaiement, observation, caissier, classe, nomApprenant, new ApprenantDAOImp().read(idApprenant)));
             }
             return paiements;
