@@ -5,6 +5,7 @@ import com.gesschoolapp.Exceptions.DAOException;
 import com.gesschoolapp.Exceptions.Mismatch;
 import com.gesschoolapp.db.DAOClassesImpl.ClasseDAOImp;
 import com.gesschoolapp.db.DAOClassesImpl.NoteDAOImp;
+import com.gesschoolapp.db.DAOClassesImpl.PaiementDAOImp;
 import com.gesschoolapp.gescsv.ApprenantsCSV;
 import com.gesschoolapp.gescsv.NotesCSV;
 import com.gesschoolapp.models.classroom.Classe;
@@ -13,19 +14,15 @@ import com.gesschoolapp.models.matieres.Note;
 import com.gesschoolapp.models.paiement.Paiement;
 import com.gesschoolapp.models.paiement.Rubrique;
 import com.gesschoolapp.models.student.Apprenant;
-import com.gesschoolapp.models.users.Caissier;
 import com.gesschoolapp.models.users.Secretaire;
 import com.gesschoolapp.models.users.Utilisateur;
 import com.gesschoolapp.runtime.Main;
 import com.gesschoolapp.controllers.NotesItemController;
 import com.gesschoolapp.utils.Toolbox;
-import com.gesschoolapp.view.util.Mois;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
-import javafx.beans.Observable;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -123,6 +120,9 @@ public class SecretaireUIController implements Initializable {
 
     private ClasseDAOImp classesData = new ClasseDAOImp();
 
+    private PaiementDAOImp paiementsData = new PaiementDAOImp();
+
+
     // On récupère la liste ici même des classes pour éviter les répétitions de requête
 
     private List<Classe> listeClasses;
@@ -145,31 +145,28 @@ public class SecretaireUIController implements Initializable {
     private BorderPane classesView;
 
     @FXML
-    private AnchorPane panelJourn;
+    private AnchorPane panelFeesState;
 
     @FXML
     private AnchorPane feesJournalierItem;
 
     @FXML
-    private AnchorPane panelMens;
+    private AnchorPane panelEmpty;
 
     @FXML
     private AnchorPane feesMensuelItem;
 
     @FXML
-    private ChoiceBox<Mois> monthyFeeDP;
+    private ChoiceBox<String> monthyFeeDP;
 
     @FXML
-    private ChoiceBox<?> yearFeeDP;
+    private ChoiceBox<String> yearFeeDP;
 
     @FXML
-    private ChoiceBox<Mois> yearFeeDP2;
+    private ChoiceBox<String> yearFeeDP2;
 
     @FXML
     private DatePicker weekFeeDP;
-
-    @FXML
-    private AnchorPane panelHebdo;
 
     @FXML
     private AnchorPane feesHebdoItem;
@@ -188,7 +185,7 @@ public class SecretaireUIController implements Initializable {
     private PieChart feesPie;
 
     @FXML
-    private BarChart<Mois, Double> yearBarChart;
+    private BarChart<String, Double> yearBarChart;
 
 
     private ObservableList<Paiement> dailyFeesList = FXCollections.observableArrayList();
@@ -229,6 +226,9 @@ public class SecretaireUIController implements Initializable {
 
     @FXML
     private Label caissierEtatDePaiementLabel;
+
+    @FXML
+    private Label labelYearlyDue;
 
     @FXML
     private TextField searchClassInput;
@@ -278,8 +278,7 @@ public class SecretaireUIController implements Initializable {
 
     private String[] etatsDePaiement = {"Journalier", "Hebdomadaire", "Mensuel", "Annuel"};
 
-    private Mois[] mois = {Mois.JANVIER, Mois.FÉVRIER, Mois.MARS, Mois.AVRIL, Mois.MAI, Mois.JUIN, Mois.JUILLET, Mois.AOÛT, Mois.SEPTEMBRE, Mois.OCTOBRE, Mois.NOVEMBRE, Mois.DÉCEMBRE};
-
+    private String[] mois = DateFormatSymbols.getInstance(Locale.FRENCH).getMonths();
     @FXML
     private HBox modulesLayout;
 
@@ -390,39 +389,88 @@ public class SecretaireUIController implements Initializable {
 
         feesSpanSelect.getItems().addAll(etatsDePaiement);
         monthyFeeDP.getItems().addAll(mois);
+        try {
+            yearFeeDP.getItems().addAll(paiementsData.getAnnees());
+            yearFeeDP.setValue(paiementsData.getAnnees().get(0));
+            refreshFeesData(etatsDePaiement[3]);
+            yearFeeDP2.getItems().addAll(paiementsData.getAnnees());
+            yearFeeDP2.setValue(paiementsData.getAnnees().get(0));
+        } catch (DAOException e) {
+            throw new RuntimeException(e);
+        }
+
+
         monthyFeeDP.setValue(mois[0]);
         feesSpanSelect.setValue(etatsDePaiement[0]);
         feesJournalierItem.toFront();
+        panelFeesState.toFront();
 
         feesSpanSelect.getSelectionModel()
                 .selectedItemProperty()
                 .addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
                     switch (newValue) {
                         case "Journalier":
-                            panelJourn.toFront();
+                            panelFeesState.toFront();
                             feesJournalierItem.toFront();
-
+                            dailyFeeDP.setValue(LocalDate.now());
+                            refreshFeesData(etatsDePaiement[0]);
                             break;
                         case "Hebdomadaire":
-                            panelJourn.toFront();
+                            panelFeesState.toFront();
                             feesHebdoItem.toFront();
+                            weekFeeDP.setValue(LocalDate.now());
+                            refreshFeesData(etatsDePaiement[1]);
                             break;
                         case "Mensuel":
-                            panelJourn.toFront();
+                            panelFeesState.toFront();
+                            monthyFeeDP.setValue(mois[LocalDate.now().getMonthValue() - 1]);
+                            try {
+                                yearFeeDP2.setValue(paiementsData.getAnnees().get(0));
+                            } catch (DAOException e) {
+                                throw new RuntimeException(e);
+                            }
                             feesMensuelItem.toFront();
+                            refreshFeesData(etatsDePaiement[2]);
                             break;
                         case "Annuel":
                             panelAnn.toFront();
                             feesAnnuelItem.toFront();
+                            try {
+                                yearFeeDP.setValue(paiementsData.getAnnees().get(0));
+                            } catch (DAOException e) {
+                                throw new RuntimeException(e);
+                            }
+                            feesAnnuelItem.toFront();
+                            refreshFeesData(etatsDePaiement[3]);
                             break;
+                        default:
+                            System.out.println("Erreur dans la navigation des paiements");
                     }
+                });
+
+        yearFeeDP2.getSelectionModel()
+                .selectedItemProperty()
+                .addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+                    refreshFeesData(etatsDePaiement[2]);
+                });
+
+        yearFeeDP.getSelectionModel()
+                .selectedItemProperty()
+                .addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+                    refreshFeesData(etatsDePaiement[3]);
+                });
+
+        monthyFeeDP.getSelectionModel()
+                .selectedItemProperty()
+                .addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+                    refreshFeesData(etatsDePaiement[2]);
                 });
 
         idFee.setCellValueFactory(new PropertyValueFactory<Paiement, Integer>("idPaiement"));
         montantFee.setCellValueFactory(new PropertyValueFactory<Paiement, Double>("montant"));
         recuFee.setCellValueFactory(new PropertyValueFactory<Paiement, String>("numeroRecu"));
         rubrFee.setCellValueFactory(new PropertyValueFactory<Paiement, String>("rubrique"));
-        eleveFee.setCellValueFactory(new PropertyValueFactory<Paiement, Apprenant>("apprenant"));
+        eleveFee.setCellValueFactory(new PropertyValueFactory<Paiement, Apprenant>("nameApprenant"));
 
         dailyFeeDP.setValue(LocalDate.now());
         dailyFeesList = FXCollections.observableList(Toolbox.paiementsJournalier(LocalDate.now()));
@@ -475,10 +523,15 @@ public class SecretaireUIController implements Initializable {
     public void refreshFeesData(String etat) {
 
         if(etat == etatsDePaiement[0]){
+            panelFeesState.toFront();
 
             LocalDate newDate = dailyFeeDP.getValue();
 
             dailyFeesList = FXCollections.observableList(Toolbox.paiementsJournalier(newDate));
+
+            if(dailyFeesList.size() == 0){
+                panelEmpty.toFront();
+            }
             feesTable.setItems(dailyFeesList);
             double totalEncaisse = 0;
             for(Paiement paiement : dailyFeesList) {
@@ -493,7 +546,7 @@ public class SecretaireUIController implements Initializable {
 
 
             for (Rubrique rubr : Toolbox.getRubriques()) {
-                double effectifPartiel = dailyFeesList.stream().filter(paiement -> paiement.getRubrique().equals(rubr.getIntitule())).toList().size();
+                double effectifPartiel = dailyFeesList.stream().filter(paiement -> paiement.getRubrique().split(" ")[0].equals(rubr.getIntitule())).toList().size();
                 double effectifTotal = dailyFeesList.size();
                 double pourcentage = (effectifPartiel / effectifTotal) * 100;
                 pieData.add(new PieChart.Data(rubr.getIntitule(), pourcentage));
@@ -502,9 +555,14 @@ public class SecretaireUIController implements Initializable {
             addPieTooltips();
 
         }else if(etat == etatsDePaiement[1]){
+            panelFeesState.toFront();
+
             LocalDate newDate = weekFeeDP.getValue();
 
             dailyFeesList = FXCollections.observableList(Toolbox.paiementsHebdomadaire(newDate));
+            if(dailyFeesList.size() == 0){
+                panelEmpty.toFront();
+            }
             feesTable.setItems(dailyFeesList);
             double totalEncaisse = 0;
             for(Paiement paiement : dailyFeesList) {
@@ -519,37 +577,82 @@ public class SecretaireUIController implements Initializable {
 
 
             for (Rubrique rubr : Toolbox.getRubriques()) {
-                double effectifPartiel = dailyFeesList.stream().filter(paiement -> paiement.getRubrique().equals(rubr.getIntitule())).toList().size();
+                double effectifPartiel = dailyFeesList.stream().filter(paiement -> paiement.getRubrique().equals(rubr.getIntitule().split(" ")[0])).toList().size();
                 double effectifTotal = dailyFeesList.size();
                 double pourcentage = (effectifPartiel / effectifTotal) * 100;
                 pieData.add(new PieChart.Data(rubr.getIntitule(), pourcentage));
             }
 
             addPieTooltips();
-        } else if(etat == etatsDePaiement[3]){
-//            String newDate = yearFeeDP.getValue();
-            String newYear = "2023";
-            LocalDate newDate = dailyFeeDP.getValue();
+        } else if(etat == etatsDePaiement[2]){
+            panelFeesState.toFront();
 
-            dailyFeesList = FXCollections.observableList(Toolbox.paiementsJournalier(newDate));
-            XYChart.Series months = new XYChart.Series();
-            // Get an array with the English month names.
-            String[] moisFR = DateFormatSymbols.getInstance(Locale.FRENCH).getMonths();
-            months.setName("Mois");
-
-
-            System.out.println(moisFR);
-            System.out.println(moisFR.length);
-            for(int i=0;i<moisFR.length;i++){
-                Double monthlyDue = 0.0;
-                for(Paiement paiement : dailyFeesList){
-                    if(paiement.getDate().getMonthValue()-1 == i){
-                        monthlyDue+= paiement.getMontant();
-                    }
-                }
-                months.getData().add(new XYChart.Data(moisFR[i],monthlyDue));
+            String newMonth = monthyFeeDP.getValue().toString();
+            String newYear = yearFeeDP2.getValue().toString();
+            System.out.println(newMonth + " - " + newYear);
+            dailyFeesList = FXCollections.observableList(Toolbox.paiementsMensuel(newMonth,newYear));
+            if(dailyFeesList.size() == 0){
+                panelEmpty.toFront();
             }
-            yearBarChart.getData().addAll(months);
+            feesTable.setItems(dailyFeesList);
+            double totalEncaisse = 0;
+            for(Paiement paiement : dailyFeesList) {
+                totalEncaisse += paiement.getMontant();
+            };
+            feeTotal.setText("Total encaissé : " + totalEncaisse + "FCFA");
+
+            ObservableList<PieChart.Data> newPie = FXCollections.observableList(new ArrayList<PieChart.Data>());
+
+
+            pieData.removeAll(pieData);
+
+
+            for (Rubrique rubr : Toolbox.getRubriques()) {
+                double effectifPartiel = dailyFeesList.stream().filter(paiement -> paiement.getRubrique().equals(rubr.getIntitule().split(" ")[0])).toList().size();
+                double effectifTotal = dailyFeesList.size();
+                double pourcentage = (effectifPartiel / effectifTotal) * 100;
+                pieData.add(new PieChart.Data(rubr.getIntitule(), pourcentage));
+            }
+
+            addPieTooltips();
+
+        }else if(etat == etatsDePaiement[3]){
+            panelAnn.toFront();
+
+            yearBarChart.getData().clear();
+            yearBarChart.layout();
+
+            System.out.println(yearBarChart.getData().size());
+            String newYear = yearFeeDP.getValue();
+
+            dailyFeesList = FXCollections.observableList(Toolbox.paiementsAnnuel(newYear));
+            if(dailyFeesList.size() == 0){
+                panelEmpty.toFront();
+            }
+
+            for(Rubrique rubr: Toolbox.getRubriques()){
+            XYChart.Series months = new XYChart.Series();
+                String[] moisFR = mois;
+                months.setName(rubr.getIntitule());
+
+
+                System.out.println(moisFR);
+                System.out.println(moisFR.length);
+                Double yearlyDue = 0.0;
+                for(int i=0;i<moisFR.length;i++){
+                    Double monthlyDue = 0.0;
+                    for(Paiement paiement : dailyFeesList){
+                        if(paiement.getDate().getMonthValue() -1 == i && paiement.getRubrique().equals(rubr.getIntitule().split(" ")[0])){
+                            monthlyDue+= paiement.getMontant();
+                            yearlyDue+= monthlyDue;
+                        }
+                    }
+                    labelYearlyDue.setText("Bilan annuel : " + yearlyDue + " FCFA");
+                    months.getData().add(new XYChart.Data(moisFR[i],monthlyDue));
+                }
+                System.out.println();
+                yearBarChart.getData().addAll(months);
+            }
         }
     }
 
