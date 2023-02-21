@@ -87,7 +87,7 @@ public class UserDAOImp implements LoginDAO, DAO<Utilisateur> {
     }
 
     @Override
-    public Utilisateur create(Utilisateur obj) throws DAOException {
+    public Utilisateur create(Utilisateur obj, String user) throws DAOException {
         //Utilisateur has idUtilisateur, nom, prenom, email, password, numero, type
         //INSERT INTO utilisateurs (nom, prenom, email, password, numero, type) VALUES (?,?,?,?,?,?)
         //if obj instance of Admin -> type = "administrateur"
@@ -111,7 +111,7 @@ public class UserDAOImp implements LoginDAO, DAO<Utilisateur> {
     }
 
     @Override
-    public void update(Utilisateur obj) throws DAOException {
+    public void update(Utilisateur obj, String user) throws DAOException {
         //UPDATE utilisateurs SET nom=?, prenom=?, email=?, password=?, numero=?, type=? WHERE idUtilisateur=?
         try {
             Connection connection = DBManager.getConnection();
@@ -132,7 +132,7 @@ public class UserDAOImp implements LoginDAO, DAO<Utilisateur> {
     }
 
     @Override
-    public void delete(int id) throws DAOException {
+    public void delete(int id, String user) throws DAOException {
         try {
             Connection connection = DBManager.getConnection();
             String query = "DELETE FROM utilisateurs WHERE idUtilisateur=?";

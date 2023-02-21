@@ -14,7 +14,6 @@ public class Action implements Serializable {
     private ActionType action;
     private LocalDateTime date;
 
-
     public Action() {
     }
 

@@ -3,22 +3,27 @@ package com.gesschoolapp.db.DAOClassesImpl;
 import com.gesschoolapp.Exceptions.DAOException;
 import com.gesschoolapp.db.DAOInterfaces.ApprenantDAO;
 import com.gesschoolapp.db.DBManager;
+import com.gesschoolapp.models.actions.Action;
 import com.gesschoolapp.models.classroom.Classe;
 import com.gesschoolapp.models.matieres.Module;
 import com.gesschoolapp.models.student.Apprenant;
+import com.gesschoolapp.serial.ActionManager;
+import com.gesschoolapp.view.util.ActionType;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ApprenantDAOImp implements ApprenantDAO {
 
     @Override
-    public Apprenant create(Apprenant obj) throws DAOException {
+    public Apprenant create(Apprenant obj, String user) throws DAOException {
         try(Connection connexion = DBManager.getConnection()){
             int matricule = 100;
             String queryMat = "SELECT MAX(matricule) FROM apprenants";
@@ -28,18 +33,34 @@ public class ApprenantDAOImp implements ApprenantDAO {
                 matricule += rs.getInt(1) + 1;
             }
             //Generate a method to insert a Apprenant in the database
-            String query = "INSERT INTO apprenants (nom, prenom, sexe, nationalite, dtNaiss, echeancier, matricule) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-            PreparedStatement statement = connexion.prepareStatement(query);
-            statement.setString(1, obj.getNom());
-            statement.setString(2, obj.getPrenom());
-            statement.setString(3, obj.getSexe());
-            statement.setString(4, obj.getNationalite());
-            statement.setString(5, obj.getDateNaissance().toString());
-            statement.setInt(6, obj.getEtatPaiement());
-            statement.setInt(7, matricule);
-            statement.executeUpdate();
+            if(obj.getIdApprenant() != 0){
+                String query = "INSERT INTO apprenants (idApprenant, nom, prenom, sexe, nationalite, dtNaiss, echeancier"
+                        + ", matricule) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                PreparedStatement statement = connexion.prepareStatement(query);
+                statement.setInt(1, obj.getIdApprenant());
+                statement.setString(2, obj.getNom());
+                statement.setString(3, obj.getPrenom());
+                statement.setString(4, obj.getSexe());
+                statement.setString(5, obj.getNationalite());
+                statement.setString(6, obj.getDateNaissance().toString());
+                statement.setInt(7, obj.getEtatPaiement());
+                statement.setInt(8, matricule);
+                statement.executeUpdate();
+            }else{
+                String query = "INSERT INTO apprenants (nom, prenom, sexe, nationalite, dtNaiss, echeancier, matricule) "
+                        + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+                PreparedStatement statement = connexion.prepareStatement(query);
+                statement.setString(1, obj.getNom());
+                statement.setString(2, obj.getPrenom());
+                statement.setString(3, obj.getSexe());
+                statement.setString(4, obj.getNationalite());
+                statement.setString(5, obj.getDateNaissance().toString());
+                statement.setInt(6, obj.getEtatPaiement());
+                statement.setInt(7, matricule);
+                statement.executeUpdate();
+            }
 
             Classe classe = new ClasseDAOImp().search(obj.getClasse()).get(0);
             Apprenant apprenant = this.searchForCreate(matricule);
@@ -58,17 +79,28 @@ public class ApprenantDAOImp implements ApprenantDAO {
                 statement3.setInt(2, module.getId());
                 statement3.executeUpdate();
             }
-            return this.searchByMatricule(matricule);
+            Apprenant addedApprenant = this.searchByMatricule(matricule);
+
+            if(!Objects.equals(user, "admin")){
+                Action action = new Action();
+                action.setAction(ActionType.ADD);
+                action.setActor(user);
+                action.setObject(obj);
+                action.setDate(LocalDateTime.now());
+                ActionManager.add(action);
+            }
+            return addedApprenant;
         }catch (Exception e) {
             throw new DAOException("Error while creating Apprenant" + e.getMessage());
         }
     }
 
     @Override
-    public void update(Apprenant obj) throws DAOException {
+    public void update(Apprenant obj, String user) throws DAOException {
 
         try(Connection connection = DBManager.getConnection() ){
-            String query = "UPDATE apprenants SET nom = ?, prenom = ?, sexe = ?, nationalite = ?, dtNaiss = ?, echeancier = ? WHERE idApprenant = ?";
+            String query = "UPDATE apprenants SET nom = ?, prenom = ?, sexe = ?, nationalite = ?, dtNaiss = ?, " +
+                    "echeancier = ? WHERE idApprenant = ?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, obj.getNom());
             statement.setString(2, obj.getPrenom());
@@ -78,6 +110,16 @@ public class ApprenantDAOImp implements ApprenantDAO {
             statement.setInt(6, obj.getEtatPaiement());
             statement.setInt(7, obj.getIdApprenant());
             statement.executeUpdate();
+
+            if(!Objects.equals(user, "admin")){
+                Action action = new Action();
+                action.setAction(ActionType.UPDATE);
+                action.setActor(user);
+                action.setObject(obj);
+                action.setDate(LocalDateTime.now());
+                ActionManager.add(action);
+            }
+
         }catch (Exception e) {
             throw new DAOException("Error while updating Apprenant" + e.getMessage());
         }
@@ -85,16 +127,33 @@ public class ApprenantDAOImp implements ApprenantDAO {
     }
 
     @Override
-    public void delete(int id) throws DAOException {
+    public void delete(int id, String user) throws DAOException {
         try(Connection connexion = DBManager.getConnection()){
+
             String query = "DELETE FROM apprenants WHERE idApprenant = ?";
             PreparedStatement statement = connexion.prepareStatement(query);
             statement.setInt(1, id);
             statement.executeUpdate();
+
             String query2 = "DELETE FROM classeapprenant WHERE idApprenant = ?";
             PreparedStatement statement2 = connexion.prepareStatement(query2);
             statement2.setInt(1, id);
             statement2.executeUpdate();
+
+            String query3 = "DELETE FROM notes WHERE idApprenant = ?";
+            PreparedStatement statement3 = connexion.prepareStatement(query3);
+            statement3.setInt(1, id);
+            statement3.executeUpdate();
+
+
+            if(!Objects.equals(user, "admin")){
+                Action action = new Action();
+                action.setAction(ActionType.DELETE);
+                action.setActor(user);
+                action.setObject(this.read(id));
+                action.setDate(LocalDateTime.now());
+                ActionManager.add(action);
+            }
     }catch (Exception e) {
             throw new DAOException("Error while deleting Apprenant" + e.getMessage());
         }
@@ -306,4 +365,17 @@ public class ApprenantDAOImp implements ApprenantDAO {
         }
     }
 
+    public void decrementEtatPaiement(Apprenant apprenant) throws DAOException {
+        try(Connection connection = DBManager.getConnection()){
+            String query = "UPDATE apprenants SET echeancier = ? WHERE idApprenant = ? OR matricule = ? ";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, apprenant.getEtatPaiement() - 1);
+            statement.setInt(2, apprenant.getIdApprenant());
+            statement.setInt(3, apprenant.getMatricule());
+            statement.executeUpdate();
+        }catch(Exception e){
+            throw new DAOException("Error in decrement Etat Paiement" + e.getMessage());
+        }
+
+    }
 }
