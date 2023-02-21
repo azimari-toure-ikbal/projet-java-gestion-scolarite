@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 20, 2023 at 10:51 PM
+-- Generation Time: Feb 21, 2023 at 05:05 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -39,14 +39,7 @@ CREATE TABLE IF NOT EXISTS `apprenants` (
   `matricule` int(11) NOT NULL,
   PRIMARY KEY (`idApprenant`),
   UNIQUE KEY `matricule` (`matricule`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `apprenants`
---
-
-INSERT INTO `apprenants` (`idApprenant`, `prenom`, `nom`, `dtNaiss`, `nationalite`, `echeancier`, `sexe`, `matricule`) VALUES
-(40, 'Jamie', 'Bowen', '2010-08-02', 'Anglais', 7, 'M', 101);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -120,7 +113,7 @@ INSERT INTO `classes` (`idClasse`, `intitule`, `reference`, `annee`, `formation`
 (12, '6eme', 7, '2022/2023', 'College', '2023-02-18 21:02:50'),
 (13, '5eme', 7, '2022/2023', 'College', '2023-02-15 19:45:07'),
 (14, '4eme', 8, '2022/2023', 'College', '2023-02-18 21:02:55'),
-(15, '3eme', 8, '2022/2023', 'College', '2023-02-19 20:31:09'),
+(15, '3eme', 8, '2022/2023', 'College', '2023-02-21 16:37:34'),
 (16, '1ere année', 9, '2022/2023', 'Froid/Climatisation', '2023-02-15 19:45:07'),
 (17, '2e année', 9, '2022/2023', 'Froid/Climatisation', '2023-02-15 19:45:07'),
 (18, '3e année', 9, '2022/2023', 'Froid/Climatisation', '2023-02-19 20:29:16');
@@ -481,27 +474,30 @@ CREATE TABLE IF NOT EXISTS `notes` (
   PRIMARY KEY (`idNote`),
   KEY `idModule` (`idModule`),
   KEY `idApprenant` (`idApprenant`)
-) ENGINE=InnoDB AUTO_INCREMENT=126 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `notes`
+-- Table structure for table `notifications`
 --
 
-INSERT INTO `notes` (`idNote`, `valeur`, `idApprenant`, `idModule`) VALUES
-(112, 0, 40, 11),
-(113, 0, 40, 12),
-(114, 0, 40, 13),
-(115, 0, 40, 14),
-(116, 0, 40, 15),
-(117, 0, 40, 16),
-(118, 0, 40, 17),
-(119, 0, 40, 32),
-(120, 0, 40, 33),
-(121, 0, 40, 34),
-(122, 0, 40, 35),
-(123, 0, 40, 36),
-(124, 0, 40, 37),
-(125, 0, 40, 38);
+DROP TABLE IF EXISTS `notifications`;
+CREATE TABLE IF NOT EXISTS `notifications` (
+  `idNotification` int(11) NOT NULL AUTO_INCREMENT,
+  `utilisateur` varchar(120) NOT NULL,
+  `admin` varchar(120) NOT NULL,
+  `date` datetime NOT NULL,
+  `message` text NOT NULL,
+  PRIMARY KEY (`idNotification`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `notifications`
+--
+
+INSERT INTO `notifications` (`idNotification`, `utilisateur`, `admin`, `date`, `message`) VALUES
+(2, 'Natasha Nice', 'Angela White', '2023-02-21 16:30:07', 'This is actually a test');
 
 -- --------------------------------------------------------
 
@@ -522,24 +518,7 @@ CREATE TABLE IF NOT EXISTS `paiements` (
   `observation` text NOT NULL,
   `apprenant` varchar(110) NOT NULL,
   PRIMARY KEY (`idPaiement`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `paiements`
---
-
-INSERT INTO `paiements` (`idPaiement`, `numeroRecu`, `montant`, `rubrique`, `date`, `idApprenant`, `caissier`, `classe`, `observation`, `apprenant`) VALUES
-(14, 'RCU1676911', 1000, 'scolarite october', '2023-02-20 00:00:00', 40, 'Violet Myers', '3eme', 'Paiement de scolarite', 'Jamie Bowen'),
-(15, 'RCU1676911', 1000, 'scolarite november', '2023-02-20 00:00:00', 40, 'Violet Myers', '3eme', 'Paiement de scolarite', 'Jamie Bowen'),
-(16, 'RCU1676911', 1000, 'scolarite december', '2023-02-20 00:00:00', 40, 'Violet Myers', '3eme', 'Paiement de scolarite', 'Jamie Bowen'),
-(17, 'RCU1676911', 1000, 'scolarite january', '2023-02-20 00:00:00', 40, 'Violet Myers', '3eme', 'Paiement de scolarite', 'Jamie Bowen'),
-(18, 'RCU1676911', 1000, 'scolarite october', '2023-02-20 00:00:00', 40, 'Violet Myers', '3eme', 'Paiement de scolarite', 'Jamie Bowen'),
-(19, 'RCU1676911', 1000, 'scolarite november', '2023-02-20 00:00:00', 40, 'Violet Myers', '3eme', 'Paiement de scolarite', 'Jamie Bowen'),
-(20, 'RCU1676911', 1000, 'scolarite december', '2023-02-20 00:00:00', 40, 'Violet Myers', '3eme', 'Paiement de scolarite', 'Jamie Bowen'),
-(21, 'RCU1676911', 1000, 'scolarite january', '2023-02-20 00:00:00', 40, 'Violet Myers', '3eme', 'Paiement de scolarite', 'Jamie Bowen'),
-(22, 'RCU1676911', 1000, 'scolarite february', '2023-02-20 00:00:00', 40, 'Violet Myers', '3eme', 'Paiement de scolarite', 'Jamie Bowen'),
-(23, 'RCU1676931', 1000, 'scolarite february', '2023-02-20 00:00:00', 40, 'Violet Myers', '3eme', 'Paiement de scolarite', 'Jamie Bowen'),
-(24, 'RCU1676931', 1000, 'scolarite february', '2023-02-20 00:00:00', 40, 'Violet Myers', '3eme', 'Paiement de scolarite', 'Jamie Bowen');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -639,4 +618,3 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
