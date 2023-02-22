@@ -44,7 +44,7 @@ public class PDFGenerator {
             document.add(dateNum);
 
             // Ajout des informations de paiement
-            Paragraph nom = new Paragraph("Reçu de : " + paiement.getApprenant().getPrenom() + " " + paiement.getApprenant().getNom(), new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD, BaseColor.BLACK));
+            Paragraph nom = new Paragraph("Reçu de : " + paiement.getApprenant().getFullName(), new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD, BaseColor.BLACK));
             nom.setSpacingBefore(10f);
             document.add(nom);
             Paragraph classe = new Paragraph("En classe de : " + paiement.getApprenant().getClasse(), new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD, BaseColor.BLACK));

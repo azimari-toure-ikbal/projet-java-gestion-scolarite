@@ -10,6 +10,7 @@ import com.gesschoolapp.gescsv.reader.CSVReader;
 import com.gesschoolapp.models.classroom.Classe;
 import com.gesschoolapp.models.matieres.Module;
 import com.gesschoolapp.models.matieres.Note;
+import com.gesschoolapp.models.users.Utilisateur;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -107,7 +108,7 @@ public class NotesCSV implements CSVReader<Note> {
      * @throws CSVException
      * @throws Mismatch
      */
-    public List<Note> csvToObject(List<String[]> data, Module module, Classe classse) throws CSVException, Mismatch {
+    public List<Note> csvToObject(List<String[]> data, Module module, Classe classse, Utilisateur utilisateur) throws CSVException, Mismatch {
         // Verify if the list is not empty
         if (data.isEmpty()) {
             throw new CSVException("La liste est vide");
@@ -188,7 +189,7 @@ public class NotesCSV implements CSVReader<Note> {
 
             // Create the note
             try {
-                noteDAOImp.update(note, semestre, "");
+                noteDAOImp.update(note, semestre, utilisateur.getFullName());
             } catch (DAOException e) {
                 throw new CSVException("Une erreur est survenue lors de la création de la note : " + e.getMessage());
             }
