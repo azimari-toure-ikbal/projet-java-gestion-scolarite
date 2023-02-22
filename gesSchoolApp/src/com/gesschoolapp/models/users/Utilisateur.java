@@ -27,7 +27,7 @@ public abstract class Utilisateur {
         this.setEmail(email);
         this.setPassword(password);
         this.setNumero(numero);
-        this.setFullName(nom + " " + prenom);
+        this.setFullName(prenom + " " + nom);
     }
 
     public int getId() {

@@ -61,6 +61,41 @@
     -fx-cursor: hand;
 }
 
+
+.table-view .column-header-background {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header{
+    -fx-pref-height: 30px;
+}
+
+.table-view .column-header, .table-view .filler {
+    -fx-size: 15px;
+    -fx-border-width: 0 0 0.5 0;
+    -fx-background-color: transparent;
+    -fx-border-color:
+        transparent
+        transparent
+        white
+        transparent;
+    -fx-border-insets: 0 10 1 0;
+}
+
+.table-view .column-header{
+    -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: white;
+    -fx-alignment: center-left;
+    -fx-opacity: 1;
+}
+
+
+
+.table-view:focused .table-row-cell:filled:focused:selected {
+    -fx-background-color: -fx-focus-color;
+}
+
 .classic_btn:hover{
     -fx-background-color: red;
 }

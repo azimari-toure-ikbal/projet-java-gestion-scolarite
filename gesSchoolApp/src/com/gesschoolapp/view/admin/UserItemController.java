@@ -1,9 +1,17 @@
 package com.gesschoolapp.view.admin;
 
+import com.gesschoolapp.Exceptions.DAOException;
+import com.gesschoolapp.db.DAOClassesImpl.ApprenantDAOImp;
+import com.gesschoolapp.db.DAOClassesImpl.UserDAOImp;
+import com.gesschoolapp.models.matieres.Module;
+import com.gesschoolapp.models.matieres.Note;
+import com.gesschoolapp.models.student.Apprenant;
 import com.gesschoolapp.models.users.Utilisateur;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -12,6 +20,9 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
 import java.sql.SQLOutput;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class UserItemController {
 
@@ -55,11 +66,39 @@ public class UserItemController {
 
     @FXML
     void actionBtnClicked(ActionEvent event) {
+        if(event.getSource() == btnViewChartUser){
+            superController.openUserChartDialog(user);
+        }
 
+        if(event.getSource() == btnEditUser){
+            superController.openUserEditDialog(user);
+        }
+
+        if(event.getSource() == btnDeleteUser){
+            //ask for confirmation
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Suppression");
+            alert.setHeaderText("Vous êtes sur le point de supprimer l'utilisateur " + user.getFullName());
+            alert.setContentText("Voulez-vous continuer ?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                UserDAOImp uData = new UserDAOImp();
+
+                try {
+                    uData.delete(user.getId(), superController.getCurrentUser().getFullName());
+                    List<Utilisateur> list = new ArrayList<>(superController.getUsersList());
+                    list.removeIf(usr -> usr.getId() == user.getId());
+                    superController.setUsersList(list);
+                    superController.setMainMessageInfo("Utilisateur supprimé avec succès !");
+                } catch (DAOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
     }
 
     public void setData(Utilisateur utilisateur){
-        labelNom.setText(utilisateur.getFullName());
+        labelNom.setText(utilisateur.getPrenom() + " " + utilisateur.getNom());
         labelLogin.setText(utilisateur.getEmail());
         labelPassword.setText(utilisateur.getPassword());
         labelNum.setText(utilisateur.getNumero());
