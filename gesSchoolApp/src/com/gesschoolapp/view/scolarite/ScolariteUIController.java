@@ -391,7 +391,7 @@ public class ScolariteUIController implements Initializable {
             List<String> annees = paiementsData.getAnnees();
 
             if(annees.size() == 0){
-                
+                panelEmpty.toFront();
             }else{
                 yearFeeDP.getItems().addAll(paiementsData.getAnnees());
                 yearFeeDP.setValue(paiementsData.getAnnees().get(0));
@@ -1375,9 +1375,10 @@ public class ScolariteUIController implements Initializable {
 
         if(apprenants.size() != 0){
             studentsLayout.getChildren().clear();
-        }
+        }else{
 
-        System.out.println("Liste des apprenants" + apprenants);
+
+        System.out.println(apprenants.size());
 
         for (Apprenant apprenant : apprenants) {
             FXMLLoader fxmlLoader = new FXMLLoader();
@@ -1399,6 +1400,7 @@ public class ScolariteUIController implements Initializable {
             studentsLayout.getChildren().add(hbox);
 
         }
+        }
     }
 
 
@@ -1407,7 +1409,10 @@ public class ScolariteUIController implements Initializable {
     }
 
     public void setListeDesNotes(List<Note> notes) throws DAOException, IOException {
-        notesLayout.getChildren().clear();
+
+        if(notes.size() != 0){
+            notesLayout.getChildren().clear();
+        }
         for (Note note : notes) {
 
 

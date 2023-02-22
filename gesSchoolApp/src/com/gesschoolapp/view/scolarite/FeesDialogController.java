@@ -153,6 +153,7 @@ public class FeesDialogController  implements Initializable {
         p.setObservation(labelObservation.getText());
         try {
             pDAO.create(p, superController.getCurrentUser().getFullName());
+            
             dialogStage.close();
         } catch (DAOException e) {
             throw new RuntimeException(e);
