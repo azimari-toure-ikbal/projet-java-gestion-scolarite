@@ -4,6 +4,7 @@ import com.gesschoolapp.models.users.Admin;
 import com.gesschoolapp.models.users.Utilisateur;
 import com.gesschoolapp.runtime.Main;
 import com.gesschoolapp.view.util.Route;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -41,8 +42,18 @@ public class AdminUIController implements Initializable {
 
     private Admin currentUser;
 
+    private Button selectedUserType;
+
 
     // ##### JAVAFX NODES :
+
+    public Button getSelectedUserType() {
+        return selectedUserType;
+    }
+
+    public void setSelectedUserType(Button selectedUserType) {
+        this.selectedUserType = selectedUserType;
+    }
 
     // -- Menu :
 
@@ -98,6 +109,15 @@ public class AdminUIController implements Initializable {
 
 
     private String previousRouteLink;
+
+    // ##### OTHERS :
+
+    @FXML
+    private Button btnSecretaires;
+
+    @FXML
+    private Button btnCaissiers;
+
 
     // ##### INIT :
 
@@ -242,6 +262,23 @@ public class AdminUIController implements Initializable {
             }
         }
         return sb.toString();
+    }
+
+    @FXML
+    void handleSelectedUserType(ActionEvent event) {
+        if(event.getSource() == btnCaissiers){
+        btnSecretaires.setStyle("    -fx-text-fill: #BABABA;\n" +
+                "    -fx-border-width: 0 0 0px 0;");
+        btnCaissiers.setStyle("   -fx-text-fill: #3c3a3a;\n" +
+                "    -fx-border-width: 0 0 2px 0;\n" +
+                "    -fx-border-color: #5099D0;");
+        }else{
+        btnCaissiers.setStyle("    -fx-text-fill: #BABABA;\n" +
+                "    -fx-border-width: 0 0 0px 0;");
+        btnSecretaires.setStyle("   -fx-text-fill: #3c3a3a;\n" +
+                    "    -fx-border-width: 0 0 2px 0;\n" +
+                    "    -fx-border-color: #5099D0;");
+        }
     }
 }
 

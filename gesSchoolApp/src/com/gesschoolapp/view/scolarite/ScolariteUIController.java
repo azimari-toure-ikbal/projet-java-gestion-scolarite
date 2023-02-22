@@ -1375,10 +1375,9 @@ public class ScolariteUIController implements Initializable {
 
         if(apprenants.size() != 0){
             studentsLayout.getChildren().clear();
-        }else{
+        }
 
 
-        System.out.println(apprenants.size());
 
         for (Apprenant apprenant : apprenants) {
             FXMLLoader fxmlLoader = new FXMLLoader();
@@ -1399,7 +1398,6 @@ public class ScolariteUIController implements Initializable {
 
             studentsLayout.getChildren().add(hbox);
 
-        }
         }
     }
 
