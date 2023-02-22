@@ -1,4 +1,4 @@
-package com.gesschoolapp.view;
+package com.gesschoolapp.view.scolarite;
 
 import com.gesschoolapp.models.student.Apprenant;
 import com.gesschoolapp.runtime.Main;
@@ -8,26 +8,20 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
-import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
@@ -58,7 +52,7 @@ public class ApprenantViewDialogController implements Initializable {
         this.scene = scene;
     }
 
-    SecretaireUIController superController;
+    ScolariteUIController superController;
 
     @FXML
     private Label labelClass;
@@ -196,7 +190,7 @@ public class ApprenantViewDialogController implements Initializable {
 
     }
 
-    public void setSuperController(SecretaireUIController superController) {
+    public void setSuperController(ScolariteUIController superController) {
         this.superController = superController;
     }
 

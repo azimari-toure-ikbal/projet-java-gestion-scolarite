@@ -3,7 +3,7 @@ package com.gesschoolapp.controllers;
 import com.gesschoolapp.Exceptions.DAOException;
 import com.gesschoolapp.db.DAOClassesImpl.NoteDAOImp;
 import com.gesschoolapp.models.matieres.Note;
-import com.gesschoolapp.view.SecretaireUIController;
+import com.gesschoolapp.view.scolarite.ScolariteUIController;
 import com.gesschoolapp.view.util.Regex;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -19,7 +19,7 @@ public class NotesItemController extends Application {
 
     NoteDAOImp notesData = new NoteDAOImp();
 
-    private SecretaireUIController superController;
+    private ScolariteUIController superController;
 
     private Note thisNote;
 
@@ -69,18 +69,18 @@ public class NotesItemController extends Application {
 
             int noteValue = Integer.parseInt(newNote.split("/")[0]);
 
-            if(noteValue > 20){
-                superController.setMainMessageInfo("Valeur supérieure à la note maximale !",0);
+            if(noteValue > 20 || noteValue < 0){
+                superController.setMainMessageInfo("La note doit être comprise entre 0 et 20 !",0);
                 return false;
             }
 
             thisNote.setNote(noteValue);
             try {
-                notesData.update(thisNote);
+                System.out.println(thisNote + " - " + superController.getSelectedSemestreIndex());
+                notesData.update(thisNote,superController.getSelectedSemestreIndex());
             } catch (DAOException e) {
                 throw new RuntimeException(e);
             }
-            thisNote.setNote(noteValue);
             superController.setMainMessageInfo("Note modifiée avec succès !",1);
             editNoteTF.setVisible(false);
 
@@ -88,11 +88,11 @@ public class NotesItemController extends Application {
         return true;
     }
 
-    public SecretaireUIController getSuperController() {
+    public ScolariteUIController getSuperController() {
         return superController;
     }
 
-    public void setSuperController(SecretaireUIController superController) {
+    public void setSuperController(ScolariteUIController superController) {
         this.superController = superController;
     }
 

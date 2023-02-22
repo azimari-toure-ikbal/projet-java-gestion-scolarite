@@ -34,7 +34,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="userInterface" prefHeight="655.0" prefWidth="1178.0" stylesheets="@../style/application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gesschoolapp.view.SecretaireUIController">
+<AnchorPane fx:id="userInterface" prefHeight="655.0" prefWidth="1178.0" stylesheets="@../../style/application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gesschoolapp.view.scolarite.ScolariteUIController">
    <children>
       <BorderPane layoutX="86.0" layoutY="52.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
@@ -44,7 +44,7 @@
                      <children>
                         <ImageView fitHeight="46.0" fitWidth="43.0">
                            <image>
-                              <Image url="@../resources/images/schoolup_logo.png" />
+                              <Image url="@../../resources/images/schoolup_logo.png" />
                            </image>
                         </ImageView>
                         <Pane prefHeight="63.0" prefWidth="111.0">
@@ -121,7 +121,7 @@
                   <Button layoutX="21.0" layoutY="592.0" mnemonicParsing="false" onAction="#handleDisconnect" prefHeight="31.0" prefWidth="182.0" styleClass="disconnect_btn" text="    Déconnexion" AnchorPane.bottomAnchor="24.0" />
                   <ImageView fitHeight="21.0" fitWidth="23.0" layoutX="45.0" layoutY="605.0">
                      <image>
-                        <Image url="@../resources/images/disconnect_icon.png" />
+                        <Image url="@../../resources/images/disconnect_icon.png" />
                      </image>
                   </ImageView>
                </children>
@@ -130,140 +130,6 @@
          <center>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #EAEFF8;" BorderPane.alignment="CENTER">
                <children>
-                  <BorderPane fx:id="homeView" layoutX="4.0" layoutY="25.0" prefHeight="589.0" prefWidth="667.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <center>
-                        <AnchorPane BorderPane.alignment="CENTER">
-                           <BorderPane.margin>
-                              <Insets />
-                           </BorderPane.margin>
-                           <children>
-                              <AnchorPane fx:id="" layoutY="5.0" prefHeight="655.0" prefWidth="732.0" style="-fx-background-color: #EAEFF8;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <children>
-                                    <Label contentDisplay="RIGHT" layoutX="20.0" layoutY="19.0" prefHeight="24.0" prefWidth="76.0" text="Accueil" textFill="#323a3f" AnchorPane.leftAnchor="20.0">
-                                       <font>
-                                          <Font name="Gill Sans MT" size="25.0" />
-                                       </font>
-                                       <opaqueInsets>
-                                          <Insets left="22.0" />
-                                       </opaqueInsets>
-                                    </Label>
-                                    <Button layoutX="561.0" layoutY="24.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="60.0" styleClass="notif_btn" textFill="#e6eff2" AnchorPane.rightAnchor="78.0" AnchorPane.topAnchor="22.0">
-                                       <graphic>
-                                          <ImageView fitHeight="23.0" fitWidth="23.0">
-                                             <image>
-                                                <Image url="@../resources/images/bell_reminder_icon.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                    </Button>
-                                    <Circle fx:id="pp_placeholder" fill="DODGERBLUE" layoutX="638.0" layoutY="43.0" onMouseClicked="#handleNavigation" radius="24.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="profile_pic" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="19.0" />
-                                    <Circle fill="DODGERBLUE" layoutX="579.0" layoutY="39.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" AnchorPane.rightAnchor="97.0" AnchorPane.topAnchor="30.0" />
-                                    <Label fx:id="welcomeText" layoutX="20.0" layoutY="50.0" prefHeight="28.0" prefWidth="519.0" text="Bonjour {user}, bienvenue !" textFill="#84898d">
-                                       <font>
-                                          <Font size="19.0" />
-                                       </font>
-                                       <graphic>
-                                          <ImageView fitHeight="27.0" fitWidth="22.0">
-                                             <image>
-                                                <Image url="@../resources/images/hello_icon.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                    </Label>
-                                    <Label contentDisplay="RIGHT" layoutX="23.0" layoutY="129.0" prefHeight="29.0" prefWidth="144.0" text="Accès rapide" textFill="#323a3f" AnchorPane.leftAnchor="23.0" AnchorPane.topAnchor="129.0">
-                                       <font>
-                                          <Font name="Gill Sans MT" size="20.0" />
-                                       </font>
-                                       <opaqueInsets>
-                                          <Insets left="22.0" />
-                                       </opaqueInsets>
-                                    </Label>
-                                    <TextField fx:id="searchStudentHomeInput" layoutX="452.0" layoutY="124.0" prefHeight="42.0" prefWidth="231.0" promptText="Rechercher un élève" style="-fx-background-radius: 10px; -fx-border-radius: 10px;" styleClass="search_student" AnchorPane.rightAnchor="20.0">
-                                       <opaqueInsets>
-                                          <Insets left="12.0" right="12.0" />
-                                       </opaqueInsets>
-                                       <padding>
-                                          <Insets left="40.0" />
-                                       </padding>
-                                    </TextField>
-                                    <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="445.0" layoutY="135.0" AnchorPane.leftAnchor="445.0" AnchorPane.rightAnchor="217.0">
-                                       <image>
-                                          <Image url="@../resources/images/loop_icon.png" />
-                                       </image>
-                                    </ImageView>
-                                    <Label contentDisplay="RIGHT" layoutX="23.0" layoutY="299.0" prefHeight="29.0" prefWidth="144.0" text="Classes récentes" textFill="#323a3f" AnchorPane.leftAnchor="23.0" AnchorPane.topAnchor="299.0">
-                                       <font>
-                                          <Font name="Gill Sans MT" size="20.0" />
-                                       </font>
-                                       <opaqueInsets>
-                                          <Insets left="22.0" />
-                                       </opaqueInsets>
-                                    </Label>
-                                    <Button fx:id="viewAllClasses" layoutX="431.0" layoutY="292.0" mnemonicParsing="false" onMouseClicked="#handleNavigation" prefHeight="42.0" prefWidth="136.0" style="-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-background-color: linear-gradient(to right, #2c7aba, #5AB2D8);" styleClass="classic_btn" text="   Voir tout" AnchorPane.rightAnchor="20.0">
-                                       <opaqueInsets>
-                                          <Insets />
-                                       </opaqueInsets>
-                                    </Button>
-                                    <HBox layoutX="23.0" layoutY="359.0" prefHeight="309.0" prefWidth="636.0" style="-fx-background-color: #EAEFF8;" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="18.0">
-                                       <children>
-                                          <VBox>
-                                             <HBox.margin>
-                                                <Insets />
-                                             </HBox.margin>
-                                             <children>
-                                                <HBox alignment="CENTER_LEFT" prefHeight="55.0" prefWidth="200.0">
-                                                   <children>
-                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="75.0" textAlignment="CENTER" textFill="#656565">
-                                                         <font>
-                                                            <Font name="Corbel" size="20.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="106.0" text="Intitulé" textAlignment="CENTER" textFill="#656565">
-                                                         <font>
-                                                            <Font name="Corbel" size="20.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="225.0" text="Formation" textAlignment="CENTER" textFill="#656565">
-                                                         <font>
-                                                            <Font name="Corbel" size="20.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="195.0" text="Année scolaire" textAlignment="CENTER" textFill="#656565">
-                                                         <font>
-                                                            <Font name="Corbel" size="20.0" />
-                                                         </font>
-                                                      </Label>
-                                                   </children>
-                                                   <VBox.margin>
-                                                      <Insets left="5.0" right="5.0" />
-                                                   </VBox.margin>
-                                                </HBox>
-                                                <ScrollPane hbarPolicy="NEVER" prefHeight="272.0" prefWidth="645.0" style="-fx-background-color: transparent;" vbarPolicy="NEVER">
-                                                   <content>
-                                                      <VBox fx:id="classesHomeLayout" minHeight="269.0" prefWidth="635.0" spacing="7.0" style="-fx-background-color: #EAEFF8;" />
-                                                   </content>
-                                                   <padding>
-                                                      <Insets left="5.0" right="5.0" />
-                                                   </padding>
-                                                </ScrollPane>
-                                             </children>
-                                          </VBox>
-                                       </children>
-                                    </HBox>
-                                    <ImageView layoutX="538.0" layoutY="302.0" AnchorPane.leftAnchor="538.0">
-                                       <image>
-                                          <Image url="@../resources/images/eye_icon.png" />
-                                       </image>
-                                    </ImageView>
-                                 </children>
-                              </AnchorPane>
-                           </children>
-                        </AnchorPane>
-                     </center>
-                     <right>
-                        <fx:include fx:id="classPreview2" source="ClassPreviewItem.fxml" />
-                     </right>
-                  </BorderPane>
                   <BorderPane fx:id="profileView" layoutX="24.0" layoutY="45.0" prefHeight="589.0" prefWidth="667.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <center>
                         <AnchorPane BorderPane.alignment="CENTER">
@@ -275,793 +141,6 @@
                            </children>
                         </AnchorPane>
                      </center>
-                  </BorderPane>
-                  <BorderPane fx:id="classesView" layoutX="14.0" layoutY="35.0" prefHeight="589.0" prefWidth="667.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <center>
-                        <AnchorPane BorderPane.alignment="CENTER">
-                           <BorderPane.margin>
-                              <Insets />
-                           </BorderPane.margin>
-                           <children>
-                              <AnchorPane fx:id="classMainView" prefHeight="655.0" prefWidth="577.0" style="-fx-background-color: #EAEFF8;">
-                                 <children>
-                                    <Label contentDisplay="RIGHT" layoutX="20.0" layoutY="19.0" prefHeight="24.0" prefWidth="76.0" text="Classes" textFill="#323a3f" AnchorPane.leftAnchor="20.0">
-                                       <font>
-                                          <Font name="Gill Sans MT" size="25.0" />
-                                       </font>
-                                       <opaqueInsets>
-                                          <Insets left="22.0" />
-                                       </opaqueInsets>
-                                    </Label>
-                                    <Button layoutX="561.0" layoutY="24.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="60.0" styleClass="notif_btn" textFill="#e6eff2" AnchorPane.rightAnchor="78.0" AnchorPane.topAnchor="22.0">
-                                       <graphic>
-                                          <ImageView fitHeight="23.0" fitWidth="23.0">
-                                             <image>
-                                                <Image url="@../resources/images/bell_reminder_icon.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                    </Button>
-                                    <Circle fx:id="pp_placeholder1" fill="DODGERBLUE" layoutX="638.0" layoutY="43.0" onMouseClicked="#handleNavigation" radius="24.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="profile_pic" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="19.0" />
-                                    <Circle fill="DODGERBLUE" layoutX="579.0" layoutY="39.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" AnchorPane.rightAnchor="97.0" AnchorPane.topAnchor="30.0" />
-                                    <Label fx:id="routeLink" layoutX="42.0" layoutY="50.0" prefHeight="28.0" prefWidth="507.0" text="/{selectedClass}" textFill="#84898d" AnchorPane.leftAnchor="44.0" AnchorPane.topAnchor="50.0">
-                                       <font>
-                                          <Font size="15.0" />
-                                       </font>
-                                    </Label>
-                                    <Label contentDisplay="RIGHT" layoutX="24.0" layoutY="109.0" prefHeight="29.0" prefWidth="144.0" text="Liste des classes" textFill="#323a3f" AnchorPane.leftAnchor="23.0" AnchorPane.topAnchor="129.0">
-                                       <font>
-                                          <Font name="Gill Sans MT" size="20.0" />
-                                       </font>
-                                       <opaqueInsets>
-                                          <Insets left="22.0" />
-                                       </opaqueInsets>
-                                    </Label>
-                                    <TextField fx:id="searchClassInput" layoutX="431.0" layoutY="124.0" onKeyReleased="#handleClassSearch" prefHeight="42.0" prefWidth="231.0" promptText="Rechercher une classe" style="-fx-background-radius: 10px; -fx-border-radius: 10px;" styleClass="search_student" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="124.0">
-                                       <opaqueInsets>
-                                          <Insets left="12.0" right="12.0" />
-                                       </opaqueInsets>
-                                       <padding>
-                                          <Insets left="40.0" />
-                                       </padding>
-                                    </TextField>
-                                    <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="445.0" layoutY="135.0" AnchorPane.leftAnchor="445.0" AnchorPane.rightAnchor="217.0">
-                                       <image>
-                                          <Image url="@../resources/images/loop_icon.png" />
-                                       </image>
-                                    </ImageView>
-                                    <HBox layoutX="18.0" layoutY="185.0" prefHeight="451.0" prefWidth="646.0" style="-fx-background-color: #EAEFF8;" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="18.0">
-                                       <children>
-                                          <VBox>
-                                             <HBox.margin>
-                                                <Insets />
-                                             </HBox.margin>
-                                             <children>
-                                                <HBox alignment="CENTER_LEFT" prefHeight="55.0" prefWidth="200.0">
-                                                   <children>
-                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="75.0" textAlignment="CENTER" textFill="#656565">
-                                                         <font>
-                                                            <Font name="Corbel" size="20.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="106.0" text="Intitulé" textAlignment="CENTER" textFill="#656565">
-                                                         <font>
-                                                            <Font name="Corbel" size="20.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="225.0" text="Formation" textAlignment="CENTER" textFill="#656565">
-                                                         <font>
-                                                            <Font name="Corbel" size="20.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="195.0" text="Année scolaire" textAlignment="CENTER" textFill="#656565">
-                                                         <font>
-                                                            <Font name="Corbel" size="20.0" />
-                                                         </font>
-                                                      </Label>
-                                                   </children>
-                                                   <VBox.margin>
-                                                      <Insets left="5.0" right="5.0" />
-                                                   </VBox.margin>
-                                                </HBox>
-                                                <ScrollPane hbarPolicy="NEVER" prefHeight="422.0" prefWidth="645.0" style="-fx-background-color: transparent;" vbarPolicy="NEVER">
-                                                   <content>
-                                                      <VBox fx:id="classesClassesLayout" minHeight="414.0" prefWidth="635.0" spacing="7.0" style="-fx-background-color: #EAEFF8;">
-                                                         <cursor>
-                                                            <Cursor fx:constant="DEFAULT" />
-                                                         </cursor>
-                                                      </VBox>
-                                                   </content>
-                                                   <padding>
-                                                      <Insets left="5.0" right="5.0" />
-                                                   </padding>
-                                                </ScrollPane>
-                                             </children>
-                                          </VBox>
-                                       </children>
-                                    </HBox>
-                                    <ImageView fx:id="btnPrecedent" layoutX="29.0" layoutY="65.0" onMouseClicked="#handleNavigation" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="55.0">
-                                       <image>
-                                          <Image url="@../resources/images/back_icon.png" />
-                                       </image>
-                                       <cursor>
-                                          <Cursor fx:constant="HAND" />
-                                       </cursor>
-                                    </ImageView>
-                                    <ImageView disable="true" focusTraversable="true" layoutX="20.0" layoutY="55.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="55.0">
-                                       <image>
-                                          <Image url="@../resources/images/disabled_back_icon.png" />
-                                       </image>
-                                       <cursor>
-                                          <Cursor fx:constant="TEXT" />
-                                       </cursor>
-                                    </ImageView>
-                                 </children>
-                              </AnchorPane>
-                              <AnchorPane fx:id="classNotesView" prefHeight="561.0" prefWidth="682.0" style="-fx-background-color: EAEFF8;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-                                 <children>
-                                    <HBox alignment="CENTER" layoutX="39.0" layoutY="71.0" prefHeight="88.0" prefWidth="603.0" style="-fx-background-color: transparent;" styleClass="module_menu" AnchorPane.leftAnchor="39.0" AnchorPane.rightAnchor="39.0" AnchorPane.topAnchor="71.0">
-                                       <children>
-                                          <ScrollPane hbarPolicy="ALWAYS" maxHeight="116.0" maxWidth="744.0" prefHeight="94.0" prefWidth="612.0" style="-fx-background-radius: 20px;" styleClass="module_menu_scrollpane" vbarPolicy="NEVER">
-                                             <HBox.margin>
-                                                <Insets bottom="-5.0" left="35.0" right="35.0" top="-1.0" />
-                                             </HBox.margin>
-                                             <content>
-                                                <HBox fx:id="modulesLayout" minWidth="532.0" prefHeight="84.0" spacing="5.0" style="-fx-background-color: #EAEFF8;">
-                                                   <children>
-                                                      <Pane fx:id="moduleCard" prefHeight="84.0" prefWidth="96.0" style="-fx-background-color: EAEFF8;">
-                                                         <children>
-                                                            <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="8.0" layoutY="2.0">
-                                                               <image>
-                                                                  <Image url="@../resources/images/closed_folder.png" />
-                                                               </image>
-                                                               <cursor>
-                                                                  <Cursor fx:constant="DEFAULT" />
-                                                               </cursor>
-                                                            </ImageView>
-                                                            <Label fx:id="moduleName" alignment="CENTER" layoutX="10.0" layoutY="26.0" prefHeight="38.0" prefWidth="78.0" text="Sciences de la vie et de la terre" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS" wrapText="true">
-                                                               <font>
-                                                                  <Font name="System Bold Italic" size="9.0" />
-                                                               </font>
-                                                               <cursor>
-                                                                  <Cursor fx:constant="DEFAULT" />
-                                                               </cursor>
-                                                               <padding>
-                                                                  <Insets left="3.0" right="3.0" />
-                                                               </padding>
-                                                            </Label>
-                                                         </children>
-                                                         <cursor>
-                                                            <Cursor fx:constant="DEFAULT" />
-                                                         </cursor>
-                                                      </Pane>
-                                                      <Pane fx:id="moduleCard1" prefHeight="84.0" prefWidth="96.0" style="-fx-background-color: EAEFF8;">
-                                                         <children>
-                                                            <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="8.0" layoutY="2.0">
-                                                               <image>
-                                                                  <Image url="@../resources/images/closed_folder.png" />
-                                                               </image>
-                                                               <cursor>
-                                                                  <Cursor fx:constant="DEFAULT" />
-                                                               </cursor>
-                                                            </ImageView>
-                                                            <Label fx:id="moduleName1" alignment="CENTER" layoutX="10.0" layoutY="26.0" prefHeight="38.0" prefWidth="78.0" text="Sciences de la vie et de la terre" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS" wrapText="true">
-                                                               <font>
-                                                                  <Font name="System Bold Italic" size="9.0" />
-                                                               </font>
-                                                               <cursor>
-                                                                  <Cursor fx:constant="DEFAULT" />
-                                                               </cursor>
-                                                               <padding>
-                                                                  <Insets left="3.0" right="3.0" />
-                                                               </padding>
-                                                            </Label>
-                                                         </children>
-                                                         <cursor>
-                                                            <Cursor fx:constant="DEFAULT" />
-                                                         </cursor>
-                                                      </Pane>
-                                                      <Pane fx:id="moduleCard2" prefHeight="84.0" prefWidth="96.0" style="-fx-background-color: EAEFF8;">
-                                                         <children>
-                                                            <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="8.0" layoutY="2.0">
-                                                               <image>
-                                                                  <Image url="@../resources/images/closed_folder.png" />
-                                                               </image>
-                                                               <cursor>
-                                                                  <Cursor fx:constant="DEFAULT" />
-                                                               </cursor>
-                                                            </ImageView>
-                                                            <Label fx:id="moduleName2" alignment="CENTER" layoutX="10.0" layoutY="26.0" prefHeight="38.0" prefWidth="78.0" text="Sciences de la vie et de la terre" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS" wrapText="true">
-                                                               <font>
-                                                                  <Font name="System Bold Italic" size="9.0" />
-                                                               </font>
-                                                               <cursor>
-                                                                  <Cursor fx:constant="DEFAULT" />
-                                                               </cursor>
-                                                               <padding>
-                                                                  <Insets left="3.0" right="3.0" />
-                                                               </padding>
-                                                            </Label>
-                                                         </children>
-                                                         <cursor>
-                                                            <Cursor fx:constant="DEFAULT" />
-                                                         </cursor>
-                                                      </Pane>
-                                                      <Pane fx:id="moduleCard3" prefHeight="84.0" prefWidth="96.0" style="-fx-background-color: EAEFF8;">
-                                                         <children>
-                                                            <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="8.0" layoutY="2.0">
-                                                               <image>
-                                                                  <Image url="@../resources/images/closed_folder.png" />
-                                                               </image>
-                                                               <cursor>
-                                                                  <Cursor fx:constant="DEFAULT" />
-                                                               </cursor>
-                                                            </ImageView>
-                                                            <Label fx:id="moduleName3" alignment="CENTER" layoutX="10.0" layoutY="26.0" prefHeight="38.0" prefWidth="78.0" text="Sciences de la vie et de la terre" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS" wrapText="true">
-                                                               <font>
-                                                                  <Font name="System Bold Italic" size="9.0" />
-                                                               </font>
-                                                               <cursor>
-                                                                  <Cursor fx:constant="DEFAULT" />
-                                                               </cursor>
-                                                               <padding>
-                                                                  <Insets left="3.0" right="3.0" />
-                                                               </padding>
-                                                            </Label>
-                                                         </children>
-                                                         <cursor>
-                                                            <Cursor fx:constant="DEFAULT" />
-                                                         </cursor>
-                                                      </Pane>
-                                                      <Pane fx:id="moduleCard4" prefHeight="84.0" prefWidth="96.0" style="-fx-background-color: EAEFF8;">
-                                                         <children>
-                                                            <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="8.0" layoutY="2.0">
-                                                               <image>
-                                                                  <Image url="@../resources/images/closed_folder.png" />
-                                                               </image>
-                                                               <cursor>
-                                                                  <Cursor fx:constant="DEFAULT" />
-                                                               </cursor>
-                                                            </ImageView>
-                                                            <Label fx:id="moduleName4" alignment="CENTER" layoutX="10.0" layoutY="26.0" prefHeight="38.0" prefWidth="78.0" text="Sciences de la vie et de la terre" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS" wrapText="true">
-                                                               <font>
-                                                                  <Font name="System Bold Italic" size="9.0" />
-                                                               </font>
-                                                               <cursor>
-                                                                  <Cursor fx:constant="DEFAULT" />
-                                                               </cursor>
-                                                               <padding>
-                                                                  <Insets left="3.0" right="3.0" />
-                                                               </padding>
-                                                            </Label>
-                                                         </children>
-                                                         <cursor>
-                                                            <Cursor fx:constant="DEFAULT" />
-                                                         </cursor>
-                                                      </Pane>
-                                                      <Pane fx:id="moduleCard5" prefHeight="84.0" prefWidth="96.0" style="-fx-background-color: EAEFF8;">
-                                                         <children>
-                                                            <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="8.0" layoutY="2.0">
-                                                               <image>
-                                                                  <Image url="@../resources/images/closed_folder.png" />
-                                                               </image>
-                                                               <cursor>
-                                                                  <Cursor fx:constant="DEFAULT" />
-                                                               </cursor>
-                                                            </ImageView>
-                                                            <Label fx:id="moduleName5" alignment="CENTER" layoutX="10.0" layoutY="26.0" prefHeight="38.0" prefWidth="78.0" text="Sciences de la vie et de la terre" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS" wrapText="true">
-                                                               <font>
-                                                                  <Font name="System Bold Italic" size="9.0" />
-                                                               </font>
-                                                               <cursor>
-                                                                  <Cursor fx:constant="DEFAULT" />
-                                                               </cursor>
-                                                               <padding>
-                                                                  <Insets left="3.0" right="3.0" />
-                                                               </padding>
-                                                            </Label>
-                                                         </children>
-                                                         <cursor>
-                                                            <Cursor fx:constant="DEFAULT" />
-                                                         </cursor>
-                                                      </Pane>
-                                                      <Pane fx:id="moduleCard6" prefHeight="84.0" prefWidth="96.0" style="-fx-background-color: EAEFF8;">
-                                                         <children>
-                                                            <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="8.0" layoutY="2.0">
-                                                               <image>
-                                                                  <Image url="@../resources/images/closed_folder.png" />
-                                                               </image>
-                                                               <cursor>
-                                                                  <Cursor fx:constant="DEFAULT" />
-                                                               </cursor>
-                                                            </ImageView>
-                                                            <Label fx:id="moduleName6" alignment="CENTER" layoutX="10.0" layoutY="26.0" prefHeight="38.0" prefWidth="78.0" text="Sciences de la vie et de la terre" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS" wrapText="true">
-                                                               <font>
-                                                                  <Font name="System Bold Italic" size="9.0" />
-                                                               </font>
-                                                               <cursor>
-                                                                  <Cursor fx:constant="DEFAULT" />
-                                                               </cursor>
-                                                               <padding>
-                                                                  <Insets left="3.0" right="3.0" />
-                                                               </padding>
-                                                            </Label>
-                                                         </children>
-                                                         <cursor>
-                                                            <Cursor fx:constant="DEFAULT" />
-                                                         </cursor>
-                                                      </Pane>
-                                                   </children>
-                                                   <cursor>
-                                                      <Cursor fx:constant="DEFAULT" />
-                                                   </cursor>
-                                                   <padding>
-                                                      <Insets left="-2.0" />
-                                                   </padding>
-                                                </HBox>
-                                             </content>
-                                          </ScrollPane>
-                                       </children>
-                                    </HBox>
-                                    <ButtonBar layoutX="58.0" layoutY="25.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="351.0" style="-fx-padding: 0; -fx-border-color: #84898d; -fx-border-width: 0 0 0.2px 0;" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="0.0">
-                                      <buttons>
-                                          <Button fx:id="btnSemestre2" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#onSemestreClicked" prefHeight="50.0" prefWidth="117.0" styleClass="virgin_menu_btn" text="2nd semestre" textAlignment="CENTER" textFill="#84898d">
-                                             <font>
-                                                <Font size="18.0" />
-                                             </font>
-                                          </Button>
-                                          <Button fx:id="btnSemestre1" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#onSemestreClicked" prefHeight="50.0" prefWidth="117.0" styleClass="virgin_menu_btn" text="1er semestre" textAlignment="CENTER" textFill="#84898d">
-                                             <font>
-                                                <Font size="18.0" />
-                                             </font>
-                                          </Button>
-                                      </buttons>
-                                    </ButtonBar>
-                                    <HBox layoutX="59.0" layoutY="189.0" prefHeight="264.0" prefWidth="562.0" style="-fx-background-color: white;" AnchorPane.leftAnchor="59.0" AnchorPane.rightAnchor="61.0" AnchorPane.topAnchor="189.0">
-                                       <children>
-                                          <VBox alignment="CENTER" prefHeight="239.0" prefWidth="562.0">
-                                             <HBox.margin>
-                                                <Insets />
-                                             </HBox.margin>
-                                             <children>
-                                                <HBox alignment="CENTER_LEFT" prefHeight="86.0" prefWidth="636.0" style="-fx-border-width: 0 0 0.1px 0; -fx-border-color: black;">
-                                                   <children>
-                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="48.0" text="#" textAlignment="CENTER" textFill="#656565">
-                                                         <font>
-                                                            <Font name="Corbel" size="15.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="220.0" text="Élève" textAlignment="CENTER" textFill="#656565">
-                                                         <font>
-                                                            <Font name="Corbel" size="15.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="232.0" text="Note" textAlignment="CENTER" textFill="#656565">
-                                                         <font>
-                                                            <Font name="Corbel" size="15.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="117.0" text="Actions" textAlignment="CENTER" textFill="#656565">
-                                                         <font>
-                                                            <Font name="Corbel" size="15.0" />
-                                                         </font>
-                                                      </Label>
-                                                   </children>
-                                                   <VBox.margin>
-                                                      <Insets left="10.0" right="10.0" />
-                                                   </VBox.margin>
-                                                   <padding>
-                                                      <Insets left="10.0" right="10.0" />
-                                                   </padding>
-                                                </HBox>
-                                                <ScrollPane hbarPolicy="NEVER" prefHeight="232.0" prefWidth="621.0" style="-fx-background-color: transparent;" vbarPolicy="NEVER">
-                                                   <content>
-                                                      <VBox fx:id="notesLayout" minHeight="206.0" prefWidth="561.0" spacing="7.0" style="-fx-background-color: white;">
-                                                         <cursor>
-                                                            <Cursor fx:constant="DEFAULT" />
-                                                         </cursor>
-                                                         <children>
-                                                            <HBox prefHeight="64.0" prefWidth="602.0">
-                                                               <children>
-                                                                  <Pane prefHeight="64.0" prefWidth="48.0">
-                                                                     <children>
-                                                                        <Label fx:id="labelIntitule1" alignment="CENTER" layoutY="19.0" prefHeight="26.0" prefWidth="33.0" text="103" textFill="#3c3a3a">
-                                                                           <font>
-                                                                              <Font name="Gill Sans MT" size="15.0" />
-                                                                           </font>
-                                                                        </Label>
-                                                                     </children>
-                                                                  </Pane>
-                                                                  <Pane prefHeight="64.0" prefWidth="220.0">
-                                                                     <children>
-                                                                        <Label fx:id="labelIntitule11" alignment="CENTER" layoutX="12.0" layoutY="19.0" prefHeight="26.0" prefWidth="176.0" text="Ikbal AZIMARI TOURE" textFill="#3c3a3a">
-                                                                           <font>
-                                                                              <Font name="Gill Sans MT" size="15.0" />
-                                                                           </font>
-                                                                        </Label>
-                                                                     </children>
-                                                                  </Pane>
-                                                                  <Pane prefWidth="232.0">
-                                                                     <children>
-                                                                        <Label alignment="CENTER" contentDisplay="CENTER" layoutY="21.0" prefHeight="23.0" prefWidth="209.0" text="19.5/20" textAlignment="CENTER" textFill="#3c3a3a">
-                                                                           <font>
-                                                                              <Font name="Gill Sans MT" size="15.0" />
-                                                                           </font>
-                                                                        </Label>
-                                                                     </children>
-                                                                  </Pane>
-                                                                  <Pane prefHeight="64.0" prefWidth="126.0">
-                                                                     <children>
-                                                                        <ImageView disable="true" fitHeight="23.0" fitWidth="23.0" layoutX="20.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
-                                                                           <image>
-                                                                              <Image url="@../resources/images/eye_alt_icon.png" />
-                                                                           </image>
-                                                                           <cursor>
-                                                                              <Cursor fx:constant="HAND" />
-                                                                           </cursor>
-                                                                        </ImageView>
-                                                                        <ImageView disable="true" fitHeight="23.0" fitWidth="23.0" layoutX="56.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
-                                                                           <image>
-                                                                              <Image url="@../resources/images/edit_alt_icon.png" />
-                                                                           </image>
-                                                                           <cursor>
-                                                                              <Cursor fx:constant="HAND" />
-                                                                           </cursor>
-                                                                        </ImageView>
-                                                                     </children>
-                                                                  </Pane>
-                                                               </children>
-                                                               <VBox.margin>
-                                                                  <Insets />
-                                                               </VBox.margin>
-                                                            </HBox>
-                                                            <HBox prefHeight="64.0" prefWidth="602.0">
-                                                               <children>
-                                                                  <Pane prefHeight="64.0" prefWidth="48.0">
-                                                                     <children>
-                                                                        <Label fx:id="labelIntitule11" alignment="CENTER" layoutY="19.0" prefHeight="26.0" prefWidth="33.0" text="103" textFill="#3c3a3a">
-                                                                           <font>
-                                                                              <Font name="Gill Sans MT" size="15.0" />
-                                                                           </font>
-                                                                        </Label>
-                                                                     </children>
-                                                                  </Pane>
-                                                                  <Pane prefHeight="64.0" prefWidth="220.0">
-                                                                     <children>
-                                                                        <Label fx:id="labelIntitule111" alignment="CENTER" layoutX="12.0" layoutY="19.0" prefHeight="26.0" prefWidth="176.0" text="Ikbal AZIMARI TOURE" textFill="#3c3a3a">
-                                                                           <font>
-                                                                              <Font name="Gill Sans MT" size="15.0" />
-                                                                           </font>
-                                                                        </Label>
-                                                                     </children>
-                                                                  </Pane>
-                                                                  <Pane prefWidth="232.0">
-                                                                     <children>
-                                                                        <Label alignment="CENTER" contentDisplay="CENTER" layoutY="21.0" prefHeight="23.0" prefWidth="209.0" text="19.5/20" textAlignment="CENTER" textFill="#3c3a3a">
-                                                                           <font>
-                                                                              <Font name="Gill Sans MT" size="15.0" />
-                                                                           </font>
-                                                                        </Label>
-                                                                     </children>
-                                                                  </Pane>
-                                                                  <Pane prefHeight="64.0" prefWidth="126.0">
-                                                                     <children>
-                                                                        <ImageView disable="true" fitHeight="23.0" fitWidth="23.0" layoutX="20.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
-                                                                           <image>
-                                                                              <Image url="@../resources/images/eye_alt_icon.png" />
-                                                                           </image>
-                                                                           <cursor>
-                                                                              <Cursor fx:constant="HAND" />
-                                                                           </cursor>
-                                                                        </ImageView>
-                                                                        <ImageView disable="true" fitHeight="23.0" fitWidth="23.0" layoutX="56.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
-                                                                           <image>
-                                                                              <Image url="@../resources/images/edit_alt_icon.png" />
-                                                                           </image>
-                                                                           <cursor>
-                                                                              <Cursor fx:constant="HAND" />
-                                                                           </cursor>
-                                                                        </ImageView>
-                                                                     </children>
-                                                                  </Pane>
-                                                               </children>
-                                                            </HBox>
-                                                            <HBox prefHeight="64.0" prefWidth="602.0">
-                                                               <children>
-                                                                  <Pane prefHeight="64.0" prefWidth="48.0">
-                                                                     <children>
-                                                                        <Label fx:id="labelIntitule11" alignment="CENTER" layoutY="19.0" prefHeight="26.0" prefWidth="33.0" text="103" textFill="#3c3a3a">
-                                                                           <font>
-                                                                              <Font name="Gill Sans MT" size="15.0" />
-                                                                           </font>
-                                                                        </Label>
-                                                                     </children>
-                                                                  </Pane>
-                                                                  <Pane prefHeight="64.0" prefWidth="220.0">
-                                                                     <children>
-                                                                        <Label fx:id="labelIntitule112" alignment="CENTER" layoutX="12.0" layoutY="19.0" prefHeight="26.0" prefWidth="176.0" text="Ikbal AZIMARI TOURE" textFill="#3c3a3a">
-                                                                           <font>
-                                                                              <Font name="Gill Sans MT" size="15.0" />
-                                                                           </font>
-                                                                        </Label>
-                                                                     </children>
-                                                                  </Pane>
-                                                                  <Pane prefWidth="232.0">
-                                                                     <children>
-                                                                        <Label alignment="CENTER" contentDisplay="CENTER" layoutY="21.0" prefHeight="23.0" prefWidth="209.0" text="19.5/20" textAlignment="CENTER" textFill="#3c3a3a">
-                                                                           <font>
-                                                                              <Font name="Gill Sans MT" size="15.0" />
-                                                                           </font>
-                                                                        </Label>
-                                                                     </children>
-                                                                  </Pane>
-                                                                  <Pane prefHeight="64.0" prefWidth="126.0">
-                                                                     <children>
-                                                                        <ImageView disable="true" fitHeight="23.0" fitWidth="23.0" layoutX="20.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
-                                                                           <image>
-                                                                              <Image url="@../resources/images/eye_alt_icon.png" />
-                                                                           </image>
-                                                                           <cursor>
-                                                                              <Cursor fx:constant="HAND" />
-                                                                           </cursor>
-                                                                        </ImageView>
-                                                                        <ImageView disable="true" fitHeight="23.0" fitWidth="23.0" layoutX="56.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
-                                                                           <image>
-                                                                              <Image url="@../resources/images/edit_alt_icon.png" />
-                                                                           </image>
-                                                                           <cursor>
-                                                                              <Cursor fx:constant="HAND" />
-                                                                           </cursor>
-                                                                        </ImageView>
-                                                                     </children>
-                                                                  </Pane>
-                                                               </children>
-                                                            </HBox>
-                                                         </children>
-                                                         <padding>
-                                                            <Insets left="13.0" right="13.0" />
-                                                         </padding>
-                                                      </VBox>
-                                                   </content>
-                                                </ScrollPane>
-                                             </children>
-                                          </VBox>
-                                       </children>
-                                    </HBox>
-                                    <Button fx:id="btnImportNotes" layoutX="25.0" layoutY="498.0" mnemonicParsing="false" onAction="#handleFileImport" onMouseClicked="#handleNavigation" prefHeight="37.0" prefWidth="149.0" styleClass="default_btn" text="Importer (CSV)">
-                                       <opaqueInsets>
-                                          <Insets />
-                                       </opaqueInsets>
-                                    </Button>
-                                    <Button fx:id="viewAllClasses12" disable="true" layoutX="532.0" layoutY="497.0" mnemonicParsing="false" onAction="#openStudentAddDialog" onMouseClicked="#handleNavigation" prefHeight="39.0" prefWidth="125.0" style="-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-background-color: linear-gradient(to right, #2c7aba, #5AB2D8);" styleClass="classic_btn" text="  Générer">
-                                       <opaqueInsets>
-                                          <Insets />
-                                       </opaqueInsets>
-                                    </Button>
-                                    <ImageView disable="true" fitHeight="23.0" fitWidth="23.0" layoutX="542.0" layoutY="504.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../resources/images/notes_icon.png" />
-                                       </image>
-                                    </ImageView>
-                                    <ProgressBar layoutX="280.0" layoutY="515.0" prefHeight="18.0" prefWidth="120.0" progress="0.79" />
-                                    <Label layoutX="293.0" layoutY="497.0" prefHeight="16.0" prefWidth="101.0" text="2 modules restants" textFill="#84898d">
-                                       <font>
-                                          <Font size="11.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </AnchorPane>
-                              <AnchorPane fx:id="classStudentsView" layoutX="10.0" layoutY="10.0" prefHeight="560.0" prefWidth="682.0" style="-fx-background-color: #EAEFF8;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-                                 <children>
-                                    <Label fx:id="classListName" contentDisplay="RIGHT" layoutX="23.0" layoutY="34.0" prefHeight="29.0" prefWidth="372.0" text="Elèves en {selectedClass}" textFill="#323a3f" AnchorPane.leftAnchor="23.0" AnchorPane.topAnchor="34.0">
-                                       <font>
-                                          <Font name="Gill Sans MT" size="20.0" />
-                                       </font>
-                                       <opaqueInsets>
-                                          <Insets left="22.0" />
-                                       </opaqueInsets>
-                                    </Label>
-                                    <TextField fx:id="searchStudentInput" layoutX="431.0" layoutY="29.0" onKeyReleased="#handleStudentSearch" prefHeight="42.0" prefWidth="231.0" promptText="Rechercher un étudiant" style="-fx-background-radius: 10px; -fx-border-radius: 10px;" styleClass="search_student" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="29.0">
-                                       <opaqueInsets>
-                                          <Insets left="12.0" right="12.0" />
-                                       </opaqueInsets>
-                                       <padding>
-                                          <Insets left="40.0" />
-                                       </padding>
-                                    </TextField>
-                                    <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="445.0" layoutY="40.0" AnchorPane.leftAnchor="445.0" AnchorPane.rightAnchor="217.0">
-                                       <image>
-                                          <Image url="@../resources/images/loop_icon.png" />
-                                       </image>
-                                    </ImageView>
-                                    <HBox layoutX="18.0" layoutY="194.0" prefHeight="349.0" prefWidth="656.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="194.0">
-                                       <children>
-                                          <VBox alignment="CENTER" prefHeight="349.0" prefWidth="659.0">
-                                             <HBox.margin>
-                                                <Insets />
-                                             </HBox.margin>
-                                             <children>
-                                                <HBox alignment="CENTER_LEFT" prefHeight="58.0" prefWidth="636.0" style="-fx-border-width: 0 0 0.1px 0; -fx-border-color: black;">
-                                                   <children>
-                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="48.0" text="#" textAlignment="CENTER" textFill="#656565">
-                                                         <font>
-                                                            <Font name="Corbel" size="15.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="220.0" text="Nom &amp; prénom" textAlignment="CENTER" textFill="#656565">
-                                                         <font>
-                                                            <Font name="Corbel" size="15.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="49.0" text="Genre" textAlignment="CENTER" textFill="#656565">
-                                                         <font>
-                                                            <Font name="Corbel" size="15.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <Label fx:id="caissierEtatDePaiementLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="183.0" text="Etat de paiement" textAlignment="CENTER" textFill="#656565">
-                                                         <font>
-                                                            <Font name="Corbel" size="15.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="117.0" text="Actions" textAlignment="CENTER" textFill="#656565">
-                                                         <font>
-                                                            <Font name="Corbel" size="15.0" />
-                                                         </font>
-                                                      </Label>
-                                                   </children>
-                                                   <VBox.margin>
-                                                      <Insets left="10.0" right="10.0" />
-                                                   </VBox.margin>
-                                                   <padding>
-                                                      <Insets left="10.0" right="10.0" />
-                                                   </padding>
-                                                </HBox>
-                                                <ScrollPane hbarPolicy="NEVER" prefHeight="312.0" prefWidth="645.0" style="-fx-background-color: transparent;" vbarPolicy="NEVER">
-                                                   <content>
-                                                      <VBox fx:id="studentsLayout" minHeight="305.0" prefWidth="652.0" spacing="7.0" style="-fx-background-color: white;">
-                                                         <cursor>
-                                                            <Cursor fx:constant="DEFAULT" />
-                                                         </cursor>
-                                                         <children>
-                                                            <HBox prefHeight="64.0" prefWidth="602.0">
-                                                               <children>
-                                                                  <Pane prefHeight="64.0" prefWidth="48.0">
-                                                                     <children>
-                                                                        <Label fx:id="labelIntitule" alignment="CENTER" layoutY="19.0" prefHeight="26.0" prefWidth="48.0" text="3" textFill="#3c3a3a">
-                                                                           <font>
-                                                                              <Font name="Gill Sans MT" size="15.0" />
-                                                                           </font>
-                                                                        </Label>
-                                                                     </children>
-                                                                  </Pane>
-                                                                  <Pane prefHeight="64.0" prefWidth="220.0">
-                                                                     <children>
-                                                                        <Label fx:id="labelIntitule1" alignment="CENTER" layoutX="12.0" layoutY="19.0" prefHeight="26.0" prefWidth="195.0" text="Mouhamed Lawal Dan Azoumi" textFill="#3c3a3a">
-                                                                           <font>
-                                                                              <Font name="Gill Sans MT" size="15.0" />
-                                                                           </font>
-                                                                        </Label>
-                                                                     </children>
-                                                                  </Pane>
-                                                                  <Pane prefHeight="64.0" prefWidth="49.0">
-                                                                     <children>
-                                                                        <Label alignment="CENTER" contentDisplay="CENTER" layoutY="21.0" prefHeight="23.0" prefWidth="56.0" text="M" textAlignment="CENTER" textFill="#3c3a3a">
-                                                                           <font>
-                                                                              <Font name="Gill Sans MT" size="15.0" />
-                                                                           </font>
-                                                                        </Label>
-                                                                     </children>
-                                                                  </Pane>
-                                                                  <Pane prefWidth="183.0">
-                                                                     <children>
-                                                                        <Label alignment="CENTER" contentDisplay="CENTER" layoutY="21.0" prefHeight="23.0" prefWidth="183.0" text="4/05/2023" textAlignment="CENTER" textFill="#3c3a3a">
-                                                                           <font>
-                                                                              <Font name="Gill Sans MT" size="15.0" />
-                                                                           </font>
-                                                                        </Label>
-                                                                     </children>
-                                                                  </Pane>
-                                                                  <Pane prefHeight="64.0" prefWidth="126.0">
-                                                                     <children>
-                                                                        <ImageView disable="true" fitHeight="23.0" fitWidth="23.0" layoutX="15.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
-                                                                           <image>
-                                                                              <Image url="@../resources/images/eye_alt_icon.png" />
-                                                                           </image>
-                                                                           <cursor>
-                                                                              <Cursor fx:constant="HAND" />
-                                                                           </cursor>
-                                                                        </ImageView>
-                                                                        <ImageView disable="true" fitHeight="23.0" fitWidth="23.0" layoutX="49.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
-                                                                           <image>
-                                                                              <Image url="@../resources/images/edit_alt_icon.png" />
-                                                                           </image>
-                                                                           <cursor>
-                                                                              <Cursor fx:constant="HAND" />
-                                                                           </cursor>
-                                                                        </ImageView>
-                                                                        <ImageView disable="true" fitHeight="23.0" fitWidth="23.0" layoutX="82.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
-                                                                           <image>
-                                                                              <Image url="@../resources/images/trash_alt_icon.png" />
-                                                                           </image>
-                                                                           <cursor>
-                                                                              <Cursor fx:constant="HAND" />
-                                                                           </cursor>
-                                                                        </ImageView>
-                                                                     </children>
-                                                                  </Pane>
-                                                               </children>
-                                                               <VBox.margin>
-                                                                  <Insets />
-                                                               </VBox.margin>
-                                                            </HBox>
-                                                         </children>
-                                                         <padding>
-                                                            <Insets left="13.0" right="13.0" />
-                                                         </padding>
-                                                      </VBox>
-                                                   </content>
-                                                   <padding>
-                                                      <Insets left="5.0" right="5.0" />
-                                                   </padding>
-                                                </ScrollPane>
-                                             </children>
-                                          </VBox>
-                                       </children>
-                                    </HBox>
-                                    <Button fx:id="viewAllClasses1" layoutX="15.0" layoutY="133.0" mnemonicParsing="false" onAction="#openStudentAddDialog" onMouseClicked="#handleNavigation" prefHeight="41.0" prefWidth="104.0" style="-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-background-color: linear-gradient(to right, #2c7aba, #5AB2D8);" styleClass="classic_btn" text="      Ajouter">
-                                       <opaqueInsets>
-                                          <Insets />
-                                       </opaqueInsets>
-                                    </Button>
-                                    <ImageView disable="true" fitHeight="23.0" fitWidth="23.0" layoutX="24.0" layoutY="142.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../resources/images/student_icon.png" />
-                                       </image>
-                                    </ImageView>
-                                    <Button fx:id="btnImportStudents" layoutX="210.0" layoutY="133.0" mnemonicParsing="false" onAction="#handleFileImport" onMouseClicked="#handleNavigation" prefHeight="42.0" prefWidth="109.0" styleClass="default_btn" text="Importer">
-                                       <opaqueInsets>
-                                          <Insets />
-                                       </opaqueInsets>
-                                    </Button>
-                                    <Button fx:id="viewAllClasses111" layoutX="337.0" layoutY="133.0" mnemonicParsing="false" onAction="#handleFileExport" onMouseClicked="#handleNavigation" prefHeight="42.0" prefWidth="149.0" styleClass="default_btn" text="Exporter (Excel)">
-                                       <opaqueInsets>
-                                          <Insets />
-                                       </opaqueInsets>
-                                       <font>
-                                          <Font size="9.0" />
-                                       </font>
-                                    </Button>
-                                    <MenuButton fx:id="filterStudentsInput" alignment="CENTER" contentDisplay="BOTTOM" layoutX="565.0" layoutY="132.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="101.0" style="-fx-background-color: linear-gradient(to right, #2c7aba, #5AB2D8); -fx-background-radius: 10px;" text="Filtre" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
-                                      <items>
-                                        <MenuItem fx:id="getAll" mnemonicParsing="false" onAction="#handleStudentsFilter" style="-fx-pref-width: 95px;" text="Tous" />
-                                        <MenuItem fx:id="getPaye" mnemonicParsing="false" onAction="#handleStudentsFilter" text="Payé/Inscrit" />
-                                          <MenuItem fx:id="getImpaye" mnemonicParsing="false" onAction="#handleStudentsFilter" style="-fx-pref-width: 95px;" text="Impayé" />
-                                          <MenuItem fx:id="getNonInscrit" mnemonicParsing="false" onAction="#handleStudentsFilter" style="-fx-pref-width: 95px;" text="Non inscrit" />
-                                      </items>
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                       <cursor>
-                                          <Cursor fx:constant="HAND" />
-                                       </cursor>
-                                       <styleClass>
-                                          <String fx:value="filterItem" />
-                                          <String fx:value="caissier_item" />
-                                       </styleClass>
-                                    </MenuButton>
-                                    <ImageView disable="true" fitHeight="16.0" fitWidth="16.0" layoutX="632.0" layoutY="146.0" styleClass="caissier_item">
-                                       <image>
-                                          <Image url="@../resources/images/expand_arrow.png" />
-                                       </image>
-                                    </ImageView>
-                                 </children>
-                              </AnchorPane>
-                           </children>
-                        </AnchorPane>
-                     </center>
-                     <right>
-                        <fx:include fx:id="classPreview1" source="ClassPreviewItem.fxml" />
-                     </right>
                   </BorderPane>
                   <BorderPane fx:id="feesView" layoutX="24.0" layoutY="45.0" prefHeight="589.0" prefWidth="667.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <center>
@@ -1084,14 +163,14 @@
                                        <graphic>
                                           <ImageView fitHeight="23.0" fitWidth="23.0">
                                              <image>
-                                                <Image url="@../resources/images/bell_reminder_icon.png" />
+                                                <Image url="@../../resources/images/bell_reminder_icon.png" />
                                              </image>
                                           </ImageView>
                                        </graphic>
                                     </Button>
                                     <Circle fx:id="pp_placeholder2" fill="DODGERBLUE" layoutX="503.0" layoutY="46.0" onMouseClicked="#handleNavigation" radius="24.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="profile_pic" AnchorPane.topAnchor="22.0" />
                                     <Circle fill="DODGERBLUE" layoutX="445.0" layoutY="39.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" AnchorPane.topAnchor="33.0" />
-                                    <Label fx:id="routeLink1" layoutX="42.0" layoutY="50.0" prefHeight="28.0" prefWidth="507.0" text="/{selectedClass}" textFill="#84898d" AnchorPane.leftAnchor="44.0" AnchorPane.topAnchor="50.0">
+                                    <Label fx:id="routeLink1" layoutX="42.0" layoutY="50.0" prefHeight="28.0" prefWidth="507.0" text="/accueil" textFill="#84898d" AnchorPane.leftAnchor="44.0" AnchorPane.topAnchor="50.0">
                                        <font>
                                           <Font size="15.0" />
                                        </font>
@@ -1106,7 +185,7 @@
                                     </Label>
                                     <ImageView fx:id="btnPrecedent1" layoutX="29.0" layoutY="65.0" onMouseClicked="#handleNavigation" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="55.0">
                                        <image>
-                                          <Image url="@../resources/images/back_icon.png" />
+                                          <Image url="@../../resources/images/back_icon.png" />
                                        </image>
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
@@ -1114,7 +193,7 @@
                                     </ImageView>
                                     <ImageView disable="true" focusTraversable="true" layoutX="20.0" layoutY="55.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="55.0">
                                        <image>
-                                          <Image url="@../resources/images/disabled_back_icon.png" />
+                                          <Image url="@../../resources/images/disabled_back_icon.png" />
                                        </image>
                                        <cursor>
                                           <Cursor fx:constant="TEXT" />
@@ -1189,7 +268,7 @@
                                        <children>
                                           <ImageView fitHeight="204.0" fitWidth="276.0" layoutX="318.0" layoutY="81.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@../resources/images/empty_placeholder.png" />
+                                                <Image url="@../../resources/images/empty_placeholder.png" />
                                              </image>
                                           </ImageView>
                                           <Label contentDisplay="RIGHT" layoutX="251.0" layoutY="309.0" prefHeight="29.0" prefWidth="406.0" text="Oops ! Aucun résultat n'a été trouvé :/" textFill="#323a3f">
@@ -1302,17 +381,753 @@
                         </AnchorPane>
                      </center>
                   </BorderPane>
+                  <BorderPane fx:id="homeView" layoutX="4.0" layoutY="25.0" prefHeight="589.0" prefWidth="667.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <center>
+                        <AnchorPane BorderPane.alignment="CENTER">
+                           <BorderPane.margin>
+                              <Insets />
+                           </BorderPane.margin>
+                           <children>
+                              <AnchorPane fx:id="" layoutY="5.0" prefHeight="655.0" prefWidth="732.0" style="-fx-background-color: #EAEFF8;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <Label contentDisplay="RIGHT" layoutX="20.0" layoutY="19.0" prefHeight="24.0" prefWidth="76.0" text="Accueil" textFill="#323a3f" AnchorPane.leftAnchor="20.0">
+                                       <font>
+                                          <Font name="Gill Sans MT" size="25.0" />
+                                       </font>
+                                       <opaqueInsets>
+                                          <Insets left="22.0" />
+                                       </opaqueInsets>
+                                    </Label>
+                                    <Button layoutX="561.0" layoutY="24.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="60.0" styleClass="notif_btn" textFill="#e6eff2" AnchorPane.rightAnchor="78.0" AnchorPane.topAnchor="22.0">
+                                       <graphic>
+                                          <ImageView fitHeight="23.0" fitWidth="23.0">
+                                             <image>
+                                                <Image url="@../../resources/images/bell_reminder_icon.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                    <Circle fx:id="pp_placeholder" fill="DODGERBLUE" layoutX="638.0" layoutY="43.0" onMouseClicked="#handleNavigation" radius="24.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="profile_pic" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="19.0" />
+                                    <Circle fill="DODGERBLUE" layoutX="579.0" layoutY="39.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" AnchorPane.rightAnchor="97.0" AnchorPane.topAnchor="30.0" />
+                                    <Label fx:id="welcomeText" layoutX="20.0" layoutY="50.0" prefHeight="28.0" prefWidth="519.0" text="Bonjour {user}, bienvenue !" textFill="#84898d">
+                                       <font>
+                                          <Font size="19.0" />
+                                       </font>
+                                       <graphic>
+                                          <ImageView fitHeight="27.0" fitWidth="22.0">
+                                             <image>
+                                                <Image url="@../../resources/images/hello_icon.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Label>
+                                    <Label contentDisplay="RIGHT" layoutX="23.0" layoutY="129.0" prefHeight="29.0" prefWidth="144.0" text="Accès rapide" textFill="#323a3f" AnchorPane.leftAnchor="23.0" AnchorPane.topAnchor="129.0">
+                                       <font>
+                                          <Font name="Gill Sans MT" size="20.0" />
+                                       </font>
+                                       <opaqueInsets>
+                                          <Insets left="22.0" />
+                                       </opaqueInsets>
+                                    </Label>
+                                    <TextField fx:id="searchStudentHomeInput" layoutX="452.0" layoutY="124.0" prefHeight="42.0" prefWidth="231.0" promptText="Rechercher un élève" style="-fx-background-radius: 10px; -fx-border-radius: 10px;" styleClass="search_student" AnchorPane.rightAnchor="20.0">
+                                       <opaqueInsets>
+                                          <Insets left="12.0" right="12.0" />
+                                       </opaqueInsets>
+                                       <padding>
+                                          <Insets left="40.0" />
+                                       </padding>
+                                    </TextField>
+                                    <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="445.0" layoutY="135.0" AnchorPane.leftAnchor="445.0" AnchorPane.rightAnchor="217.0">
+                                       <image>
+                                          <Image url="@../../resources/images/loop_icon.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label contentDisplay="RIGHT" layoutX="23.0" layoutY="299.0" prefHeight="29.0" prefWidth="144.0" text="Classes récentes" textFill="#323a3f" AnchorPane.leftAnchor="23.0" AnchorPane.topAnchor="299.0">
+                                       <font>
+                                          <Font name="Gill Sans MT" size="20.0" />
+                                       </font>
+                                       <opaqueInsets>
+                                          <Insets left="22.0" />
+                                       </opaqueInsets>
+                                    </Label>
+                                    <Button fx:id="viewAllClasses" layoutX="431.0" layoutY="292.0" mnemonicParsing="false" onMouseClicked="#handleNavigation" prefHeight="42.0" prefWidth="136.0" style="-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-background-color: linear-gradient(to right, #2c7aba, #5AB2D8);" styleClass="classic_btn" text="   Voir tout" AnchorPane.rightAnchor="20.0">
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                    </Button>
+                                    <HBox layoutX="23.0" layoutY="359.0" prefHeight="309.0" prefWidth="636.0" style="-fx-background-color: #EAEFF8;" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="18.0">
+                                       <children>
+                                          <VBox>
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                             <children>
+                                                <HBox alignment="CENTER_LEFT" prefHeight="55.0" prefWidth="200.0">
+                                                   <children>
+                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="75.0" textAlignment="CENTER" textFill="#656565">
+                                                         <font>
+                                                            <Font name="Corbel" size="20.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="106.0" text="Intitulé" textAlignment="CENTER" textFill="#656565">
+                                                         <font>
+                                                            <Font name="Corbel" size="20.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="225.0" text="Formation" textAlignment="CENTER" textFill="#656565">
+                                                         <font>
+                                                            <Font name="Corbel" size="20.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="195.0" text="Année scolaire" textAlignment="CENTER" textFill="#656565">
+                                                         <font>
+                                                            <Font name="Corbel" size="20.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                   <VBox.margin>
+                                                      <Insets left="5.0" right="5.0" />
+                                                   </VBox.margin>
+                                                </HBox>
+                                                <ScrollPane hbarPolicy="NEVER" prefHeight="272.0" prefWidth="645.0" style="-fx-background-color: transparent;" vbarPolicy="NEVER">
+                                                   <content>
+                                                      <VBox fx:id="classesHomeLayout" minHeight="269.0" prefWidth="635.0" spacing="7.0" style="-fx-background-color: #EAEFF8;" />
+                                                   </content>
+                                                   <padding>
+                                                      <Insets left="5.0" right="5.0" />
+                                                   </padding>
+                                                </ScrollPane>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                    <ImageView layoutX="538.0" layoutY="302.0" AnchorPane.leftAnchor="538.0">
+                                       <image>
+                                          <Image url="@../../resources/images/eye_icon.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                     </center>
+                     <right>
+                        <fx:include fx:id="classPreview2" source="ClassPreviewItem.fxml" />
+                     </right>
+                  </BorderPane>
+                  <BorderPane fx:id="classesView" layoutX="14.0" layoutY="35.0" prefHeight="589.0" prefWidth="667.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <center>
+                        <AnchorPane BorderPane.alignment="CENTER">
+                           <BorderPane.margin>
+                              <Insets />
+                           </BorderPane.margin>
+                           <children>
+                              <AnchorPane fx:id="classMainView" prefHeight="655.0" prefWidth="577.0" style="-fx-background-color: #EAEFF8;">
+                                 <children>
+                                    <Label contentDisplay="RIGHT" layoutX="20.0" layoutY="19.0" prefHeight="24.0" prefWidth="76.0" text="Classes" textFill="#323a3f" AnchorPane.leftAnchor="20.0">
+                                       <font>
+                                          <Font name="Gill Sans MT" size="25.0" />
+                                       </font>
+                                       <opaqueInsets>
+                                          <Insets left="22.0" />
+                                       </opaqueInsets>
+                                    </Label>
+                                    <Button layoutX="561.0" layoutY="24.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="60.0" styleClass="notif_btn" textFill="#e6eff2" AnchorPane.rightAnchor="78.0" AnchorPane.topAnchor="22.0">
+                                       <graphic>
+                                          <ImageView fitHeight="23.0" fitWidth="23.0">
+                                             <image>
+                                                <Image url="@../../resources/images/bell_reminder_icon.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                    <Circle fx:id="pp_placeholder1" fill="DODGERBLUE" layoutX="638.0" layoutY="43.0" onMouseClicked="#handleNavigation" radius="24.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="profile_pic" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="19.0" />
+                                    <Circle fill="DODGERBLUE" layoutX="579.0" layoutY="39.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" AnchorPane.rightAnchor="97.0" AnchorPane.topAnchor="30.0" />
+                                    <Label fx:id="routeLink" layoutX="42.0" layoutY="50.0" prefHeight="28.0" prefWidth="507.0" text="/{selectedClass}" textFill="#84898d" AnchorPane.leftAnchor="44.0" AnchorPane.topAnchor="50.0">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label contentDisplay="RIGHT" layoutX="24.0" layoutY="109.0" prefHeight="29.0" prefWidth="144.0" text="Liste des classes" textFill="#323a3f" AnchorPane.leftAnchor="23.0" AnchorPane.topAnchor="129.0">
+                                       <font>
+                                          <Font name="Gill Sans MT" size="20.0" />
+                                       </font>
+                                       <opaqueInsets>
+                                          <Insets left="22.0" />
+                                       </opaqueInsets>
+                                    </Label>
+                                    <TextField fx:id="searchClassInput" layoutX="431.0" layoutY="124.0" onKeyReleased="#handleClassSearch" prefHeight="42.0" prefWidth="231.0" promptText="Rechercher une classe" style="-fx-background-radius: 10px; -fx-border-radius: 10px;" styleClass="search_student" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="124.0">
+                                       <opaqueInsets>
+                                          <Insets left="12.0" right="12.0" />
+                                       </opaqueInsets>
+                                       <padding>
+                                          <Insets left="40.0" />
+                                       </padding>
+                                    </TextField>
+                                    <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="445.0" layoutY="135.0" AnchorPane.leftAnchor="445.0" AnchorPane.rightAnchor="217.0">
+                                       <image>
+                                          <Image url="@../../resources/images/loop_icon.png" />
+                                       </image>
+                                    </ImageView>
+                                    <HBox layoutX="18.0" layoutY="185.0" prefHeight="451.0" prefWidth="646.0" style="-fx-background-color: #EAEFF8;" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="18.0">
+                                       <children>
+                                          <VBox>
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                             <children>
+                                                <HBox alignment="CENTER_LEFT" prefHeight="55.0" prefWidth="200.0">
+                                                   <children>
+                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="75.0" textAlignment="CENTER" textFill="#656565">
+                                                         <font>
+                                                            <Font name="Corbel" size="20.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="106.0" text="Intitulé" textAlignment="CENTER" textFill="#656565">
+                                                         <font>
+                                                            <Font name="Corbel" size="20.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="225.0" text="Formation" textAlignment="CENTER" textFill="#656565">
+                                                         <font>
+                                                            <Font name="Corbel" size="20.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="195.0" text="Année scolaire" textAlignment="CENTER" textFill="#656565">
+                                                         <font>
+                                                            <Font name="Corbel" size="20.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                   <VBox.margin>
+                                                      <Insets left="5.0" right="5.0" />
+                                                   </VBox.margin>
+                                                </HBox>
+                                                <ScrollPane hbarPolicy="NEVER" prefHeight="422.0" prefWidth="645.0" style="-fx-background-color: transparent;" vbarPolicy="NEVER">
+                                                   <content>
+                                                      <VBox fx:id="classesClassesLayout" minHeight="414.0" prefWidth="635.0" spacing="7.0" style="-fx-background-color: #EAEFF8;">
+                                                         <cursor>
+                                                            <Cursor fx:constant="DEFAULT" />
+                                                         </cursor>
+                                                      </VBox>
+                                                   </content>
+                                                   <padding>
+                                                      <Insets left="5.0" right="5.0" />
+                                                   </padding>
+                                                </ScrollPane>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                    <ImageView fx:id="btnPrecedent" layoutX="29.0" layoutY="65.0" onMouseClicked="#handleNavigation" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="55.0">
+                                       <image>
+                                          <Image url="@../../resources/images/back_icon.png" />
+                                       </image>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </ImageView>
+                                    <ImageView disable="true" focusTraversable="true" layoutX="20.0" layoutY="55.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="55.0">
+                                       <image>
+                                          <Image url="@../../resources/images/disabled_back_icon.png" />
+                                       </image>
+                                       <cursor>
+                                          <Cursor fx:constant="TEXT" />
+                                       </cursor>
+                                    </ImageView>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane fx:id="classNotesView" prefHeight="561.0" prefWidth="682.0" style="-fx-background-color: EAEFF8;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                 <children>
+                                    <HBox alignment="CENTER" layoutX="39.0" layoutY="71.0" prefHeight="88.0" prefWidth="603.0" style="-fx-background-color: transparent;" styleClass="module_menu" AnchorPane.leftAnchor="39.0" AnchorPane.rightAnchor="39.0" AnchorPane.topAnchor="71.0">
+                                       <children>
+                                          <ScrollPane hbarPolicy="ALWAYS" maxHeight="116.0" maxWidth="744.0" prefHeight="94.0" prefWidth="612.0" style="-fx-background-radius: 20px;" styleClass="module_menu_scrollpane" vbarPolicy="NEVER">
+                                             <HBox.margin>
+                                                <Insets bottom="-5.0" left="35.0" right="35.0" top="-1.0" />
+                                             </HBox.margin>
+                                             <content>
+                                                <HBox fx:id="modulesLayout" minWidth="532.0" prefHeight="84.0" spacing="5.0" style="-fx-background-color: #EAEFF8;">
+                                                   <children>
+                                                      <Pane fx:id="moduleCard" prefHeight="84.0" prefWidth="96.0" style="-fx-background-color: EAEFF8;">
+                                                         <children>
+                                                            <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="8.0" layoutY="2.0">
+                                                               <image>
+                                                                  <Image url="@../../resources/images/closed_folder.png" />
+                                                               </image>
+                                                               <cursor>
+                                                                  <Cursor fx:constant="DEFAULT" />
+                                                               </cursor>
+                                                            </ImageView>
+                                                            <Label fx:id="moduleName" alignment="CENTER" layoutX="10.0" layoutY="26.0" prefHeight="38.0" prefWidth="78.0" text="Sciences de la vie et de la terre" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS" wrapText="true">
+                                                               <font>
+                                                                  <Font name="System Bold Italic" size="9.0" />
+                                                               </font>
+                                                               <cursor>
+                                                                  <Cursor fx:constant="DEFAULT" />
+                                                               </cursor>
+                                                               <padding>
+                                                                  <Insets left="3.0" right="3.0" />
+                                                               </padding>
+                                                            </Label>
+                                                         </children>
+                                                         <cursor>
+                                                            <Cursor fx:constant="DEFAULT" />
+                                                         </cursor>
+                                                      </Pane>
+                                                      <Pane fx:id="moduleCard1" prefHeight="84.0" prefWidth="96.0" style="-fx-background-color: EAEFF8;">
+                                                         <children>
+                                                            <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="8.0" layoutY="2.0">
+                                                               <image>
+                                                                  <Image url="@../../resources/images/closed_folder.png" />
+                                                               </image>
+                                                               <cursor>
+                                                                  <Cursor fx:constant="DEFAULT" />
+                                                               </cursor>
+                                                            </ImageView>
+                                                            <Label fx:id="moduleName1" alignment="CENTER" layoutX="10.0" layoutY="26.0" prefHeight="38.0" prefWidth="78.0" text="Sciences de la vie et de la terre" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS" wrapText="true">
+                                                               <font>
+                                                                  <Font name="System Bold Italic" size="9.0" />
+                                                               </font>
+                                                               <cursor>
+                                                                  <Cursor fx:constant="DEFAULT" />
+                                                               </cursor>
+                                                               <padding>
+                                                                  <Insets left="3.0" right="3.0" />
+                                                               </padding>
+                                                            </Label>
+                                                         </children>
+                                                         <cursor>
+                                                            <Cursor fx:constant="DEFAULT" />
+                                                         </cursor>
+                                                      </Pane>
+                                                      <Pane fx:id="moduleCard2" prefHeight="84.0" prefWidth="96.0" style="-fx-background-color: EAEFF8;">
+                                                         <children>
+                                                            <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="8.0" layoutY="2.0">
+                                                               <image>
+                                                                  <Image url="@../../resources/images/closed_folder.png" />
+                                                               </image>
+                                                               <cursor>
+                                                                  <Cursor fx:constant="DEFAULT" />
+                                                               </cursor>
+                                                            </ImageView>
+                                                            <Label fx:id="moduleName2" alignment="CENTER" layoutX="10.0" layoutY="26.0" prefHeight="38.0" prefWidth="78.0" text="Sciences de la vie et de la terre" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS" wrapText="true">
+                                                               <font>
+                                                                  <Font name="System Bold Italic" size="9.0" />
+                                                               </font>
+                                                               <cursor>
+                                                                  <Cursor fx:constant="DEFAULT" />
+                                                               </cursor>
+                                                               <padding>
+                                                                  <Insets left="3.0" right="3.0" />
+                                                               </padding>
+                                                            </Label>
+                                                         </children>
+                                                         <cursor>
+                                                            <Cursor fx:constant="DEFAULT" />
+                                                         </cursor>
+                                                      </Pane>
+                                                      <Pane fx:id="moduleCard3" prefHeight="84.0" prefWidth="96.0" style="-fx-background-color: EAEFF8;">
+                                                         <children>
+                                                            <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="8.0" layoutY="2.0">
+                                                               <image>
+                                                                  <Image url="@../../resources/images/closed_folder.png" />
+                                                               </image>
+                                                               <cursor>
+                                                                  <Cursor fx:constant="DEFAULT" />
+                                                               </cursor>
+                                                            </ImageView>
+                                                            <Label fx:id="moduleName3" alignment="CENTER" layoutX="10.0" layoutY="26.0" prefHeight="38.0" prefWidth="78.0" text="Sciences de la vie et de la terre" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS" wrapText="true">
+                                                               <font>
+                                                                  <Font name="System Bold Italic" size="9.0" />
+                                                               </font>
+                                                               <cursor>
+                                                                  <Cursor fx:constant="DEFAULT" />
+                                                               </cursor>
+                                                               <padding>
+                                                                  <Insets left="3.0" right="3.0" />
+                                                               </padding>
+                                                            </Label>
+                                                         </children>
+                                                         <cursor>
+                                                            <Cursor fx:constant="DEFAULT" />
+                                                         </cursor>
+                                                      </Pane>
+                                                      <Pane fx:id="moduleCard4" prefHeight="84.0" prefWidth="96.0" style="-fx-background-color: EAEFF8;">
+                                                         <children>
+                                                            <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="8.0" layoutY="2.0">
+                                                               <image>
+                                                                  <Image url="@../../resources/images/closed_folder.png" />
+                                                               </image>
+                                                               <cursor>
+                                                                  <Cursor fx:constant="DEFAULT" />
+                                                               </cursor>
+                                                            </ImageView>
+                                                            <Label fx:id="moduleName4" alignment="CENTER" layoutX="10.0" layoutY="26.0" prefHeight="38.0" prefWidth="78.0" text="Sciences de la vie et de la terre" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS" wrapText="true">
+                                                               <font>
+                                                                  <Font name="System Bold Italic" size="9.0" />
+                                                               </font>
+                                                               <cursor>
+                                                                  <Cursor fx:constant="DEFAULT" />
+                                                               </cursor>
+                                                               <padding>
+                                                                  <Insets left="3.0" right="3.0" />
+                                                               </padding>
+                                                            </Label>
+                                                         </children>
+                                                         <cursor>
+                                                            <Cursor fx:constant="DEFAULT" />
+                                                         </cursor>
+                                                      </Pane>
+                                                      <Pane fx:id="moduleCard5" prefHeight="84.0" prefWidth="96.0" style="-fx-background-color: EAEFF8;">
+                                                         <children>
+                                                            <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="8.0" layoutY="2.0">
+                                                               <image>
+                                                                  <Image url="@../../resources/images/closed_folder.png" />
+                                                               </image>
+                                                               <cursor>
+                                                                  <Cursor fx:constant="DEFAULT" />
+                                                               </cursor>
+                                                            </ImageView>
+                                                            <Label fx:id="moduleName5" alignment="CENTER" layoutX="10.0" layoutY="26.0" prefHeight="38.0" prefWidth="78.0" text="Sciences de la vie et de la terre" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS" wrapText="true">
+                                                               <font>
+                                                                  <Font name="System Bold Italic" size="9.0" />
+                                                               </font>
+                                                               <cursor>
+                                                                  <Cursor fx:constant="DEFAULT" />
+                                                               </cursor>
+                                                               <padding>
+                                                                  <Insets left="3.0" right="3.0" />
+                                                               </padding>
+                                                            </Label>
+                                                         </children>
+                                                         <cursor>
+                                                            <Cursor fx:constant="DEFAULT" />
+                                                         </cursor>
+                                                      </Pane>
+                                                      <Pane fx:id="moduleCard6" prefHeight="84.0" prefWidth="96.0" style="-fx-background-color: EAEFF8;">
+                                                         <children>
+                                                            <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="8.0" layoutY="2.0">
+                                                               <image>
+                                                                  <Image url="@../../resources/images/closed_folder.png" />
+                                                               </image>
+                                                               <cursor>
+                                                                  <Cursor fx:constant="DEFAULT" />
+                                                               </cursor>
+                                                            </ImageView>
+                                                            <Label fx:id="moduleName6" alignment="CENTER" layoutX="10.0" layoutY="26.0" prefHeight="38.0" prefWidth="78.0" text="Sciences de la vie et de la terre" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS" wrapText="true">
+                                                               <font>
+                                                                  <Font name="System Bold Italic" size="9.0" />
+                                                               </font>
+                                                               <cursor>
+                                                                  <Cursor fx:constant="DEFAULT" />
+                                                               </cursor>
+                                                               <padding>
+                                                                  <Insets left="3.0" right="3.0" />
+                                                               </padding>
+                                                            </Label>
+                                                         </children>
+                                                         <cursor>
+                                                            <Cursor fx:constant="DEFAULT" />
+                                                         </cursor>
+                                                      </Pane>
+                                                   </children>
+                                                   <cursor>
+                                                      <Cursor fx:constant="DEFAULT" />
+                                                   </cursor>
+                                                   <padding>
+                                                      <Insets left="-2.0" />
+                                                   </padding>
+                                                </HBox>
+                                             </content>
+                                          </ScrollPane>
+                                       </children>
+                                    </HBox>
+                                    <ButtonBar layoutX="58.0" layoutY="25.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="351.0" style="-fx-padding: 0; -fx-border-color: #84898d; -fx-border-width: 0 0 0.2px 0;" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="0.0">
+                                      <buttons>
+                                          <Button fx:id="btnSemestre2" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#onSemestreClicked" prefHeight="50.0" prefWidth="117.0" styleClass="virgin_menu_btn" text="2nd semestre" textAlignment="CENTER" textFill="#84898d">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Button>
+                                          <Button fx:id="btnSemestre1" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#onSemestreClicked" prefHeight="50.0" prefWidth="117.0" styleClass="virgin_menu_btn" text="1er semestre" textAlignment="CENTER" textFill="#84898d">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Button>
+                                      </buttons>
+                                    </ButtonBar>
+                                    <HBox layoutX="59.0" layoutY="189.0" prefHeight="264.0" prefWidth="562.0" style="-fx-background-color: white;" AnchorPane.leftAnchor="59.0" AnchorPane.rightAnchor="61.0" AnchorPane.topAnchor="189.0">
+                                       <children>
+                                          <VBox alignment="CENTER" prefHeight="239.0" prefWidth="562.0">
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                             <children>
+                                                <HBox alignment="CENTER_LEFT" prefHeight="86.0" prefWidth="636.0" style="-fx-border-width: 0 0 0.1px 0; -fx-border-color: black;">
+                                                   <children>
+                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="48.0" text="#" textAlignment="CENTER" textFill="#656565">
+                                                         <font>
+                                                            <Font name="Corbel" size="15.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="220.0" text="Élève" textAlignment="CENTER" textFill="#656565">
+                                                         <font>
+                                                            <Font name="Corbel" size="15.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="232.0" text="Note" textAlignment="CENTER" textFill="#656565">
+                                                         <font>
+                                                            <Font name="Corbel" size="15.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="117.0" text="Actions" textAlignment="CENTER" textFill="#656565">
+                                                         <font>
+                                                            <Font name="Corbel" size="15.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" right="10.0" />
+                                                   </VBox.margin>
+                                                   <padding>
+                                                      <Insets left="10.0" right="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <ScrollPane hbarPolicy="NEVER" prefHeight="232.0" prefWidth="621.0" style="-fx-background-color: transparent;" vbarPolicy="NEVER">
+                                                   <content>
+                                                      <VBox fx:id="notesLayout" minHeight="206.0" prefWidth="561.0" spacing="7.0" style="-fx-background-color: white;">
+                                                         <cursor>
+                                                            <Cursor fx:constant="DEFAULT" />
+                                                         </cursor>
+                                                         <padding>
+                                                            <Insets left="13.0" right="13.0" />
+                                                         </padding>
+                                                         <children>
+                                                            <HBox>
+                                                               <children>
+                                                                  <AnchorPane prefHeight="206.0" prefWidth="535.0">
+                                                                     <children>
+                                                                        <ImageView fitHeight="97.0" fitWidth="149.0" layoutX="203.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
+                                                                           <image>
+                                                                              <Image url="@../../resources/images/empty_placeholder.png" />
+                                                                           </image>
+                                                                        </ImageView>
+                                                                        <Label contentDisplay="RIGHT" layoutX="86.0" layoutY="149.0" prefHeight="29.0" prefWidth="380.0" text="Oops ! Aucune note n'a été trouvé :/" textFill="#323a3f">
+                                                                           <font>
+                                                                              <Font name="Gill Sans MT" size="25.0" />
+                                                                           </font>
+                                                                           <opaqueInsets>
+                                                                              <Insets left="22.0" />
+                                                                           </opaqueInsets>
+                                                                        </Label>
+                                                                     </children>
+                                                                  </AnchorPane>
+                                                               </children>
+                                                            </HBox>
+                                                         </children>
+                                                      </VBox>
+                                                   </content>
+                                                </ScrollPane>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                    <Button fx:id="btnImportNotes" layoutX="25.0" layoutY="498.0" mnemonicParsing="false" onAction="#handleFileImport" onMouseClicked="#handleNavigation" prefHeight="37.0" prefWidth="149.0" styleClass="default_btn" text="Importer (CSV)">
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                    </Button>
+                                    <Button fx:id="viewAllClasses12" disable="true" layoutX="532.0" layoutY="497.0" mnemonicParsing="false" onAction="#openStudentAddDialog" onMouseClicked="#handleNavigation" prefHeight="39.0" prefWidth="125.0" style="-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-background-color: linear-gradient(to right, #2c7aba, #5AB2D8);" styleClass="classic_btn" text="  Générer">
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                    </Button>
+                                    <ImageView disable="true" fitHeight="23.0" fitWidth="23.0" layoutX="542.0" layoutY="504.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/images/notes_icon.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ProgressBar layoutX="280.0" layoutY="515.0" prefHeight="18.0" prefWidth="120.0" progress="0.79" />
+                                    <Label layoutX="293.0" layoutY="497.0" prefHeight="16.0" prefWidth="101.0" text="2 modules restants" textFill="#84898d">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane fx:id="classStudentsView" layoutX="10.0" layoutY="10.0" prefHeight="560.0" prefWidth="682.0" style="-fx-background-color: #EAEFF8;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                 <children>
+                                    <Label fx:id="classListName" contentDisplay="RIGHT" layoutX="23.0" layoutY="34.0" prefHeight="29.0" prefWidth="372.0" text="Elèves en {selectedClass}" textFill="#323a3f" AnchorPane.leftAnchor="23.0" AnchorPane.topAnchor="34.0">
+                                       <font>
+                                          <Font name="Gill Sans MT" size="20.0" />
+                                       </font>
+                                       <opaqueInsets>
+                                          <Insets left="22.0" />
+                                       </opaqueInsets>
+                                    </Label>
+                                    <TextField fx:id="searchStudentInput" layoutX="431.0" layoutY="29.0" onKeyReleased="#handleStudentSearch" prefHeight="42.0" prefWidth="231.0" promptText="Rechercher un étudiant" style="-fx-background-radius: 10px; -fx-border-radius: 10px;" styleClass="search_student" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="29.0">
+                                       <opaqueInsets>
+                                          <Insets left="12.0" right="12.0" />
+                                       </opaqueInsets>
+                                       <padding>
+                                          <Insets left="40.0" />
+                                       </padding>
+                                    </TextField>
+                                    <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="445.0" layoutY="40.0" AnchorPane.leftAnchor="445.0" AnchorPane.rightAnchor="217.0">
+                                       <image>
+                                          <Image url="@../../resources/images/loop_icon.png" />
+                                       </image>
+                                    </ImageView>
+                                    <HBox layoutX="18.0" layoutY="194.0" prefHeight="349.0" prefWidth="656.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="194.0">
+                                       <children>
+                                          <VBox alignment="CENTER" prefHeight="349.0" prefWidth="659.0">
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                             <children>
+                                                <HBox alignment="CENTER_LEFT" prefHeight="58.0" prefWidth="636.0" style="-fx-border-width: 0 0 0.1px 0; -fx-border-color: black;">
+                                                   <children>
+                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="48.0" text="#" textAlignment="CENTER" textFill="#656565">
+                                                         <font>
+                                                            <Font name="Corbel" size="15.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="220.0" text="Nom &amp; prénom" textAlignment="CENTER" textFill="#656565">
+                                                         <font>
+                                                            <Font name="Corbel" size="15.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="49.0" text="Genre" textAlignment="CENTER" textFill="#656565">
+                                                         <font>
+                                                            <Font name="Corbel" size="15.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label fx:id="caissierEtatDePaiementLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="183.0" text="Etat de paiement" textAlignment="CENTER" textFill="#656565">
+                                                         <font>
+                                                            <Font name="Corbel" size="15.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="117.0" text="Actions" textAlignment="CENTER" textFill="#656565">
+                                                         <font>
+                                                            <Font name="Corbel" size="15.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" right="10.0" />
+                                                   </VBox.margin>
+                                                   <padding>
+                                                      <Insets left="10.0" right="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <ScrollPane hbarPolicy="NEVER" prefHeight="312.0" prefWidth="645.0" style="-fx-background-color: transparent;" vbarPolicy="NEVER">
+                                                   <content>
+                                                      <VBox fx:id="studentsLayout" minHeight="305.0" prefWidth="652.0" spacing="7.0" style="-fx-background-color: white;">
+                                                         <cursor>
+                                                            <Cursor fx:constant="DEFAULT" />
+                                                         </cursor>
+                                                         <padding>
+                                                            <Insets left="13.0" right="13.0" />
+                                                         </padding>
+                                                         <children>
+                                                            <HBox>
+                                                               <children>
+                                                                  <AnchorPane prefHeight="243.0" prefWidth="626.0">
+                                                                     <children>
+                                                                        <ImageView fitHeight="135.0" fitWidth="152.0" layoutX="231.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
+                                                                           <image>
+                                                                              <Image url="@../../resources/images/empty_placeholder.png" />
+                                                                           </image>
+                                                                        </ImageView>
+                                                                        <Label contentDisplay="RIGHT" layoutX="123.0" layoutY="194.0" prefHeight="29.0" prefWidth="380.0" text="Oops ! Aucun élève n'a été trouvé :/" textFill="#323a3f">
+                                                                           <font>
+                                                                              <Font name="Gill Sans MT" size="25.0" />
+                                                                           </font>
+                                                                           <opaqueInsets>
+                                                                              <Insets left="22.0" />
+                                                                           </opaqueInsets>
+                                                                        </Label>
+                                                                     </children>
+                                                                  </AnchorPane>
+                                                               </children>
+                                                            </HBox>
+                                                         </children>
+                                                      </VBox>
+                                                   </content>
+                                                   <padding>
+                                                      <Insets left="5.0" right="5.0" />
+                                                   </padding>
+                                                </ScrollPane>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                    <Button fx:id="viewAllClasses1" layoutX="15.0" layoutY="133.0" mnemonicParsing="false" onAction="#openStudentAddDialog" onMouseClicked="#handleNavigation" prefHeight="41.0" prefWidth="104.0" style="-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-background-color: linear-gradient(to right, #2c7aba, #5AB2D8);" styleClass="classic_btn" text="      Ajouter">
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                    </Button>
+                                    <ImageView disable="true" fitHeight="23.0" fitWidth="23.0" layoutX="24.0" layoutY="142.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/images/student_icon.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Button fx:id="btnImportStudents" layoutX="210.0" layoutY="133.0" mnemonicParsing="false" onAction="#handleFileImport" onMouseClicked="#handleNavigation" prefHeight="42.0" prefWidth="109.0" styleClass="default_btn" text="Importer">
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                    </Button>
+                                    <Button fx:id="viewAllClasses111" layoutX="337.0" layoutY="133.0" mnemonicParsing="false" onAction="#handleFileExport" onMouseClicked="#handleNavigation" prefHeight="42.0" prefWidth="149.0" styleClass="default_btn" text="Exporter (Excel)">
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                       <font>
+                                          <Font size="9.0" />
+                                       </font>
+                                    </Button>
+                                    <MenuButton fx:id="filterStudentsInput" alignment="CENTER" contentDisplay="BOTTOM" layoutX="565.0" layoutY="132.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="101.0" style="-fx-background-color: linear-gradient(to right, #2c7aba, #5AB2D8); -fx-background-radius: 10px;" text="Filtre" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
+                                      <items>
+                                        <MenuItem fx:id="getAll" mnemonicParsing="false" onAction="#handleStudentsFilter" style="-fx-pref-width: 95px;" text="Tous" />
+                                        <MenuItem fx:id="getPaye" mnemonicParsing="false" onAction="#handleStudentsFilter" text="Payé/Inscrit" />
+                                          <MenuItem fx:id="getImpaye" mnemonicParsing="false" onAction="#handleStudentsFilter" style="-fx-pref-width: 95px;" text="Impayé" />
+                                          <MenuItem fx:id="getNonInscrit" mnemonicParsing="false" onAction="#handleStudentsFilter" style="-fx-pref-width: 95px;" text="Non inscrit" />
+                                      </items>
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <styleClass>
+                                          <String fx:value="filterItem" />
+                                          <String fx:value="caissier_item" />
+                                       </styleClass>
+                                    </MenuButton>
+                                    <ImageView disable="true" fitHeight="16.0" fitWidth="16.0" layoutX="632.0" layoutY="146.0" styleClass="caissier_item">
+                                       <image>
+                                          <Image url="@../../resources/images/expand_arrow.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                     </center>
+                     <right>
+                        <fx:include fx:id="classPreview1" source="ClassPreviewItem.fxml" />
+                     </right>
+                  </BorderPane>
                </children></AnchorPane>
          </center>
       </BorderPane>
       <ImageView fx:id="minIcon1" onMouseClicked="#onMinimize" style="-fx-cursor: hand;" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="5.0">
          <image>
-            <Image url="@../resources/images/minimize_icon.png" />
+            <Image url="@../../resources/images/minimize_icon.png" />
          </image>
       </ImageView>
       <ImageView fx:id="btn_close1" fitHeight="16.0" fitWidth="16.0" onMouseClicked="#handleExit" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;" styleClass="-fx-cursor" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <image>
-            <Image url="@../resources/images/close_icon.png" />
+            <Image url="@../../resources/images/close_icon.png" />
          </image>
       </ImageView>
       <Label fx:id="mainMessageInfo" alignment="CENTER" layoutX="395.0" prefHeight="48.0" prefWidth="363.0" style="-fx-background-color: #5CB85C; -fx-background-radius: 0 0 5px 5px;" text="Utilisateur ajouté avec succès !" textFill="WHITE" visible="false" AnchorPane.leftAnchor="395.0" AnchorPane.rightAnchor="425.0" AnchorPane.topAnchor="0.0">

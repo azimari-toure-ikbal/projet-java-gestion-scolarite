@@ -1,11 +1,11 @@
 package com.gesschoolapp.runtime;
 
+import com.gesschoolapp.models.users.Admin;
 import com.gesschoolapp.models.users.Caissier;
 import com.gesschoolapp.models.users.Secretaire;
-import com.gesschoolapp.models.users.Utilisateur;
-import com.gesschoolapp.view.LoginUIController;
-import com.gesschoolapp.view.LoginUIController;
-import com.gesschoolapp.view.SecretaireUIController;
+import com.gesschoolapp.view.admin.AdminUIController;
+import com.gesschoolapp.view.login.LoginUIController;
+import com.gesschoolapp.view.scolarite.ScolariteUIController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -52,7 +52,7 @@ public class Main extends Application {
     public void initLayout() {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource("../view/LoginUI.fxml"));
+            loader.setLocation(Main.class.getResource("../view/login/LoginUI.fxml"));
             Parent dash = loader.load();
             Scene scene = new Scene(dash);
 
@@ -129,12 +129,12 @@ public class Main extends Application {
     public void displaySecretaireUI(Stage stg, Secretaire user, Main main) {
         try{
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("../view/SecretaireUI.fxml"));
+            loader.setLocation(getClass().getResource("../view/scolarite/ScolariteUI.fxml"));
             Parent dash = loader.load();
 
             Scene scene = new Scene(dash);
 
-            SecretaireUIController controller = loader.getController();
+            ScolariteUIController controller = loader.getController();
 
             // Set the current stage and scene references into controller
             controller.setCurrentUser(user);
@@ -153,15 +153,15 @@ public class Main extends Application {
 
     }
 
-    public void displaySecretaireUI(Stage stg, Caissier user, Main main) {
+    public void displayCaissierUI(Stage stg, Caissier user, Main main) {
         try{
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("../view/SecretaireUI.fxml"));
+            loader.setLocation(getClass().getResource("../view/scolarite/ScolariteUI.fxml"));
             Parent dash = loader.load();
 
             Scene scene = new Scene(dash);
 
-            SecretaireUIController controller = loader.getController();
+            ScolariteUIController controller = loader.getController();
 
             // Set the current stage and scene references into controller
             controller.setCurrentUser(user);
@@ -171,6 +171,32 @@ public class Main extends Application {
             // Makes the stage draggable
             controller.setDraggable();
 //            controller.get
+
+            stg.setScene(scene);
+            stg.show();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    public void displayAdminUI(Stage stg, Admin user, Main main) {
+        try{
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("../view/admin/AdminUI.fxml"));
+            Parent dash = loader.load();
+
+            Scene scene = new Scene(dash);
+
+            AdminUIController controller = loader.getController();
+
+            // Set the current stage and scene references into controller
+            controller.setCurrentUser(user);
+            controller.setCurrentScene(scene);
+            controller.setStage(stg);
+            controller.setMainApp(main);
+            // Makes the stage draggable
+            controller.setDraggable();
 
             stg.setScene(scene);
             stg.show();

@@ -3,6 +3,8 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -11,7 +13,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<HBox prefHeight="64.0" prefWidth="602.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gesschoolapp.view.ApprenantItemsController">
+<HBox prefHeight="64.0" prefWidth="602.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gesschoolapp.view.scolarite.ApprenantItemsController">
     <children>
         <Pane prefHeight="64.0" prefWidth="48.0">
             <children>
@@ -19,7 +21,25 @@
                     <font>
                         <Font name="Gill Sans MT" size="15.0" />
                     </font>
+               <tooltip>
+                  <Tooltip text="Empty Tooltip" />
+               </tooltip>
                 </Label>
+            <ToolBar fx:id="notSubscribedWarning" layoutX="17.0" layoutY="-2.0" prefHeight="26.0" prefWidth="32.0" style="-fx-background-color: transparent;" visible="false">
+               <items>
+                  <ImageView fitHeight="27.0" fitWidth="31.0">
+                     <image>
+                        <Image url="@../../resources/images/warning_icon.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+               </items>
+               <tooltip>
+                  <Tooltip text="Cet étudiant n'est pas inscrit, il n'apparaîtra pas dans la liste des notes de la classe." />
+               </tooltip>
+            </ToolBar>
             </children>
         </Pane>
         <Pane prefHeight="64.0" prefWidth="220.0">
@@ -47,7 +67,7 @@
                         <Font name="Gill Sans MT" size="15.0" />
                     </font>
                 </Label>
-            <Button fx:id="etatPayement" alignment="CENTER" focusTraversable="false" layoutX="24.0" layoutY="15.0" maxHeight="35.0" maxWidth="130.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="153.0" styleClass="feesBtn" stylesheets="@../style/application.css" text="Payé" textFill="#f7fff7" visible="false">
+            <Button fx:id="etatPayement" alignment="CENTER" focusTraversable="false" layoutX="24.0" layoutY="15.0" maxHeight="35.0" maxWidth="130.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="153.0" styleClass="feesBtn" stylesheets="@../../style/application.css" text="Payé" textFill="#f7fff7" visible="false">
                <font>
                   <Font name="Corbel Bold" size="19.0" />
                </font>
@@ -70,7 +90,7 @@
                     <graphic>
                         <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../resources/images/trash_alt_icon.png" />
+                                <Image url="@../../resources/images/trash_alt_icon.png" />
                             </image>
                         </ImageView>
                     </graphic>
@@ -79,7 +99,7 @@
                     <graphic>
                         <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true" smooth="false">
                             <image>
-                                <Image url="@../resources/images/eye_alt_icon.png" />
+                                <Image url="@../../resources/images/eye_alt_icon.png" />
                             </image>
                         </ImageView>
                     </graphic>
@@ -88,7 +108,7 @@
                     <graphic>
                         <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../resources/images/edit_alt_icon.png" />
+                                <Image url="@../../resources/images/edit_alt_icon.png" />
                             </image>
                         </ImageView>
                     </graphic>

@@ -9,11 +9,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="moduleCard" prefHeight="84.0" prefWidth="96.0" style="-fx-background-color: EAEFF8;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gesschoolapp.view.ModuleItemController">
+<Pane fx:id="moduleCard" prefHeight="84.0" prefWidth="96.0" style="-fx-background-color: EAEFF8;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gesschoolapp.view.scolarite.ModuleItemController">
    <children>
       <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="8.0" layoutY="2.0">
          <image>
-            <Image url="@../resources/images/closed_folder.png" />
+            <Image url="@../../resources/images/closed_folder.png" />
          </image>
          <cursor>
             <Cursor fx:constant="DEFAULT" />

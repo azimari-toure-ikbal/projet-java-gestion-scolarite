@@ -1,4 +1,4 @@
-package com.gesschoolapp.view;
+package com.gesschoolapp.view.scolarite;
 
 import com.gesschoolapp.models.classroom.Classe;
 import javafx.fxml.FXML;
@@ -13,7 +13,7 @@ import java.util.ResourceBundle;
 
 public class ClassItemController implements Initializable {
 
-    private SecretaireUIController superController;
+    private ScolariteUIController superController;
 
 
     @FXML
@@ -56,11 +56,11 @@ public class ClassItemController implements Initializable {
         classCard.setStyle("-fx-background-color: #fff;-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);");
     }
 
-    public SecretaireUIController getSuperController() {
+    public ScolariteUIController getSuperController() {
         return superController;
     }
 
-    public void setSuperController(SecretaireUIController superController) {
+    public void setSuperController(ScolariteUIController superController) {
         this.superController = superController;
     }
 

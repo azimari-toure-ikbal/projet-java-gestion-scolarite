@@ -1,4 +1,4 @@
-package com.gesschoolapp.view;
+package com.gesschoolapp.view.scolarite;
 
 import com.gesschoolapp.Exceptions.DAOException;
 import com.gesschoolapp.db.DAOClassesImpl.NoteDAOImp;
@@ -10,7 +10,6 @@ import com.gesschoolapp.models.paiement.Paiement;
 import com.gesschoolapp.models.paiement.Rubrique;
 import com.gesschoolapp.models.student.Apprenant;
 import com.gesschoolapp.runtime.Main;
-import com.gesschoolapp.view.util.Genre;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -20,13 +19,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.InputMethodEvent;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -66,7 +59,7 @@ public class FeesDialogController  implements Initializable {
     }
 
 
-    SecretaireUIController superController;
+    ScolariteUIController superController;
     @FXML
     private Button btnAnnuler;
 
@@ -164,7 +157,6 @@ public class FeesDialogController  implements Initializable {
         } catch (DAOException e) {
             throw new RuntimeException(e);
         }
-
         Note newNote = new Note();
         newNote.setApprenant(apprenant);
 
@@ -175,10 +167,11 @@ public class FeesDialogController  implements Initializable {
         for(Module module : modules){
             List<Note> notesList = new ArrayList<>(module.getNotes());
             newNote.setModule(module.getIntitule());
-            //                newNote.setId();
+//            Note
             notesList.add(newNote);
-//            module.setNotes(notesList);
+            module.setNotes(notesList);
         }
+
         if(selectRubrique.getValue() != "tenue"){
             apprenant.setEtatPaiement(apprenant.getEtatPaiement()+1);
         }
@@ -224,7 +217,7 @@ public class FeesDialogController  implements Initializable {
 
 
 
-    public void setSuperController(SecretaireUIController superController) {
+    public void setSuperController(ScolariteUIController superController) {
         this.superController = superController;
         rubriqueList = new ArrayList<>(superController.getSelectedClass().getRubriques()).toArray(new Rubrique[superController.getSelectedClass().getRubriques().size()]);
 

@@ -1,4 +1,4 @@
-package com.gesschoolapp.view;
+package com.gesschoolapp.view.scolarite;
 
 import com.gesschoolapp.models.matieres.Module;
 import javafx.event.ActionEvent;
@@ -10,14 +10,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 import java.util.ResourceBundle;
 
 public class ModuleItemController implements Initializable {
 
-    private SecretaireUIController superController;
+    private ScolariteUIController superController;
 
 
     @FXML
@@ -38,7 +35,6 @@ public class ModuleItemController implements Initializable {
 
     @FXML
     void onClickModule(ActionEvent event) {
-        System.out.println("CLICKED ON MODULE : " + thisModule.getIntitule());
         this.setAsSelected();
     }
 
@@ -49,11 +45,11 @@ public class ModuleItemController implements Initializable {
         ((Label) ((Pane) moduleCard).getChildren().get(1)).setStyle("-fx-font-size:7px;-fx-font-weight:bold;-fx-font-style:italic;-fx-padding: 8px 0 0 0;");
     }
 
-    public SecretaireUIController getSuperController() {
+    public ScolariteUIController getSuperController() {
         return superController;
     }
 
-    public void setSuperController(SecretaireUIController superController) {
+    public void setSuperController(ScolariteUIController superController) {
         this.superController = superController;
     }
 

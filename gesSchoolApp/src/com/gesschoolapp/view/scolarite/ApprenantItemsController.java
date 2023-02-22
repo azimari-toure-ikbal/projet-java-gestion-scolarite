@@ -1,32 +1,22 @@
-package com.gesschoolapp.view;
+package com.gesschoolapp.view.scolarite;
 
 import com.gesschoolapp.Exceptions.DAOException;
 import com.gesschoolapp.db.DAOClassesImpl.ApprenantDAOImp;
-import com.gesschoolapp.db.DAOClassesImpl.ClasseDAOImp;
-import com.gesschoolapp.models.classroom.Classe;
 import com.gesschoolapp.models.matieres.Module;
 import com.gesschoolapp.models.matieres.Note;
 import com.gesschoolapp.models.student.Apprenant;
-import com.gesschoolapp.view.SecretaireUIController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
+import javafx.scene.control.*;
 
 import java.net.URL;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class ApprenantItemsController implements Initializable {
 
-    private SecretaireUIController superController;
+    private ScolariteUIController superController;
 
     private Apprenant thisApprenant;
 
@@ -38,6 +28,9 @@ public class ApprenantItemsController implements Initializable {
 
     @FXML
     private Label labelNom;
+
+    @FXML
+    private ToolBar notSubscribedWarning;
 
     @FXML
     private Label labeldNaiss;
@@ -68,7 +61,6 @@ public class ApprenantItemsController implements Initializable {
 
     @FXML
     void deleteBtnClicked(ActionEvent event) {
-        System.out.println("clc ce fdp");
         //ask for confirmation
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Suppression");
@@ -109,12 +101,13 @@ public class ApprenantItemsController implements Initializable {
 //      Parsing birthday :
         DateTimeFormatter formatters = DateTimeFormatter.ofPattern("d/MM/uuuu");
         String dNaiss = apprenant.getDateNaissance().format(formatters);
-        System.out.println("etat de paiement = " + apprenant.getEtatPaiement());
 
             if(apprenant.getEtatPaiement() == 0){
+                notSubscribedWarning.setVisible(true);
                 etatPayement.setText("Non inscrit");
                 etatPayement.setStyle("-fx-background-color: #F0B606;");
             }else if(apprenant.getEtatPaiement() == 1){
+                    notSubscribedWarning.setVisible(false);
                 if(!getSuperController().getSelectedClass().isCurrentEcheancePaid(apprenant)){
                     etatPayement.setText("Impayé");
                     etatPayement.setStyle("-fx-background-color: #E9243B;");
@@ -123,6 +116,7 @@ public class ApprenantItemsController implements Initializable {
                     etatPayement.setStyle("-fx-background-color: #57AD57;");
                 }
             }else{
+                notSubscribedWarning.setVisible(false);
                 if(!getSuperController().getSelectedClass().isCurrentEcheancePaid(apprenant)){
                     etatPayement.setText("Impayé");
                     etatPayement.setStyle("-fx-background-color: #E9243B;");
@@ -141,12 +135,17 @@ public class ApprenantItemsController implements Initializable {
         }
     }
 
-    public SecretaireUIController getSuperController() {
+    public ScolariteUIController getSuperController() {
         return superController;
     }
 
-    public void setSuperController(SecretaireUIController superController) {
+    public void setSuperController(ScolariteUIController superController) {
         this.superController = superController;
+
+    }
+
+    public void setCaissierView(){
+            etatPayement.setVisible(true);
     }
 
     @Override

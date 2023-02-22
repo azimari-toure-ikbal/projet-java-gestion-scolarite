@@ -1,4 +1,4 @@
-package com.gesschoolapp.view;
+package com.gesschoolapp.view.scolarite;
 
 import com.gesschoolapp.Exceptions.DAOException;
 import com.gesschoolapp.db.DAOClassesImpl.ApprenantDAOImp;
@@ -31,11 +31,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class ApprenantEditDialogController extends Application implements Initializable {
+public class ApprenantAddDialogController extends Application implements Initializable {
 
     private Classe currentClass;
-    private Apprenant selectedStudent;
-
 
     // Reference to the main com.gesschoolapp
     private Main main;
@@ -43,7 +41,7 @@ public class ApprenantEditDialogController extends Application implements Initia
     // Reference to the current scene
     private Scene scene;
 
-    private SecretaireUIController superController;
+    private ScolariteUIController superController;
 
     public Main getMain() {
         return main;
@@ -55,19 +53,6 @@ public class ApprenantEditDialogController extends Application implements Initia
 
     public Scene getScene() {
         return scene;
-    }
-    public void setSelectedStudent(Apprenant selectedStudent) {
-        this.selectedStudent = selectedStudent;
-        labelNom.setText(selectedStudent.getNom());
-        labelPrenom.setText(selectedStudent.getPrenom());
-        labelNationalite.setText(selectedStudent.getNationalite());
-        if(selectedStudent.getSexe().equals("M")){
-            selectGenre.setValue(Genre.MASCULIN);
-        }else{
-            selectGenre.setValue(Genre.FEMININ);
-        }
-
-        labelDNaiss.setValue(selectedStudent.getDateNaissance());
     }
 
     public void setScene(Scene scene) {
@@ -154,42 +139,27 @@ public class ApprenantEditDialogController extends Application implements Initia
         }else if(genre == Genre.FEMININ){
             apprenant.setSexe("F");
         }
-
         apprenant.setDateNaissance(dNaiss);
         apprenant.setClasse(currentClass.getIntitule());
-        apprenant.setIdApprenant(selectedStudent.getIdApprenant());
-        apprenant.setEtatPaiement(selectedStudent.getEtatPaiement());
-        apprenant.setIdApprenant(selectedStudent.getIdApprenant());
-        apprenant.setMatricule(selectedStudent.getMatricule());
+
+            if(apprenant instanceof Apprenant){
+                messageInfo.setVisible(true);
+                messageInfo.setText("Patientez...");
+                messageInfo.setTextFill(Color.web("#5CB85C"));
+            }
 
         try {
             dialogStage.close();
-            apprenantsData.update(apprenant);
+            Apprenant newApprenant = apprenantsData.create(apprenant);
             List<Apprenant> list = new ArrayList<>(superController.getSelectedClass().getApprenants());
-            list.set(list.indexOf(selectedStudent),apprenant);
+            list.add(newApprenant);
+
             superController.getSelectedClass().setApprenants(list);
-            Note newNote = new Note();
-            if(apprenant.getEtatPaiement() != 0){
-
-            newNote.setApprenant(apprenant);
-            List<Module> modules = superController.getSelectedClass().getModules();
-            NoteDAOImp notesData = new NoteDAOImp();
-
-            for(Module module : modules){
-                List<Note> notesList = new ArrayList<>(module.getNotes());
-                newNote.setModule(module.getIntitule());
-                Note studentNote = notesList.stream().filter(note -> note.getApprenant().getIdApprenant() == apprenant.getIdApprenant()).toList().get(0);
-                newNote.setNote(studentNote.getNote());
-//                newNote.setId();
-                notesList.set(notesList.indexOf(studentNote), newNote);
-                module.setNotes(notesList);
-            }
-            }
         } catch (DAOException e) {
             throw new RuntimeException(e);
         }
 
-        superController.setMainMessageInfo("Élève modifié avec succès !");
+        superController.setMainMessageInfo("Élève ajouté avec succès !");
         return true;
     }
 
@@ -219,7 +189,9 @@ public class ApprenantEditDialogController extends Application implements Initia
     }
 
 
-
+    public static void main(String[] args) {
+        launch(args);
+    }
 
     @Override
     public void start(Stage primaryStage) {
@@ -237,14 +209,10 @@ public class ApprenantEditDialogController extends Application implements Initia
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         selectGenre.getItems().addAll(genres);
-        System.out.println(messageInfo);
         messageInfo.setVisible(false);
-//        System.out.println(labelName);
-//        System.out.println(selectedStudent);
         selectGenre.setValue(Genre.MASCULIN);
-
     }
-    public void setSuperController(SecretaireUIController superController) {
+    public void setSuperController(ScolariteUIController superController) {
         this.superController = superController;
     }
 }

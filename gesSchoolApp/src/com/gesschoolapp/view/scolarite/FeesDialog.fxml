@@ -16,13 +16,13 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="437.0" prefWidth="758.0" style="-fx-background-color: white; -fx-border-color: #C8C8C8; -fx-border-width: 1px;" stylesheets="@../style/application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gesschoolapp.view.FeesDialogController">
+<AnchorPane prefHeight="437.0" prefWidth="758.0" style="-fx-background-color: white; -fx-border-color: #C8C8C8; -fx-border-width: 1px;" stylesheets="@../../style/application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gesschoolapp.view.scolarite.FeesDialogController">
    <children>
       <Pane fx:id="landscape" layoutX="24.0" layoutY="10.0" prefHeight="59.0" prefWidth="713.0" style="-fx-background-color: linear-gradient(to right, #3CA55C, #B5AC49);" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <ImageView fitHeight="43.0" fitWidth="43.0" layoutX="358.0" layoutY="8.0">
                <image>
-                  <Image url="@../resources/images/cash_icon.png" />
+                  <Image url="@../../resources/images/cash_icon.png" />
                </image>
             </ImageView>
          </children>

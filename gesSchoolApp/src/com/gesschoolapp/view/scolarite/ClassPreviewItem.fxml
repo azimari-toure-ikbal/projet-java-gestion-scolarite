@@ -8,7 +8,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="655.0" prefWidth="272.0" style="-fx-background-color: #F4F4F4;" stylesheets="@../style/application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gesschoolapp.view.ClassPreviewItemController">
+<AnchorPane prefHeight="655.0" prefWidth="272.0" style="-fx-background-color: #F4F4F4;" stylesheets="@../../style/application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gesschoolapp.view.scolarite.ClassPreviewItemController">
    <children>
       <Label layoutX="35.0" layoutY="48.0" text="Aperçu de la classe" textFill="#b8bfc6">
          <font>
@@ -57,7 +57,7 @@
          <graphic>
             <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../resources/images/student_icon.png" />
+                  <Image url="@../../resources/images/student_icon.png" />
                </image>
             </ImageView>
          </graphic>
@@ -66,7 +66,7 @@
          <graphic>
             <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../resources/images/notes_icon.png" />
+                  <Image url="@../../resources/images/notes_icon.png" />
                </image>
             </ImageView>
          </graphic>
@@ -81,14 +81,14 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Label fx:id="labelEcheance" layoutX="50.0" layoutY="477.0" prefHeight="26.0" prefWidth="174.0" text="3 Novembre 2022" textFill="#48a74c" visible="false">
+      <Label fx:id="labelEcheance" layoutX="50.0" layoutY="477.0" prefHeight="26.0" prefWidth="174.0" text="3 Novembre 2022" textFill="#48a74c">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <ImageView fx:id="echeanceIcon" fitHeight="22.0" fitWidth="22.0" layoutX="25.0" layoutY="479.0" visible="false" AnchorPane.leftAnchor="25.0">
+      <ImageView fx:id="echeanceIcon" fitHeight="22.0" fitWidth="22.0" layoutX="25.0" layoutY="479.0" AnchorPane.leftAnchor="25.0">
          <image>
-            <Image url="@../resources/images/bill_icon.png" />
+            <Image url="@../../resources/images/bill_icon.png" />
          </image>
       </ImageView>
    </children>

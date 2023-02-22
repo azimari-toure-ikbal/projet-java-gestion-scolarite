@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="655.0" prefWidth="1178.0" style="-fx-background-color: white; -fx-border-color: #715502; -fx-border-width: 0.5px;" stylesheets="@../../style/admindashboard.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gesschoolapp.view.admin.AdminUIController">
+   <children>
+      <BorderPane layoutX="436.0" layoutY="117.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(to bottom, #2c7aba,#2c7aba, #2c7aba, #5AB2D8);" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: F5F5F5;" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
+               <children>
+                  <BorderPane fx:id="dashView" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: red;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <BorderPane fx:id="classesView" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: blue;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <BorderPane fx:id="logsView" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: yellow;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <BorderPane fx:id="profileView" layoutX="10.0" layoutY="71.0" prefHeight="507.0" prefWidth="954.0" style="-fx-background-color: #F3F3F3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <BorderPane fx:id="usersView" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #F3F3F3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <center>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <ButtonBar cache="true" layoutX="14.0" layoutY="14.0" prefHeight="55.0" prefWidth="235.0" style="-fx-background-color: white; -fx-background-radius: 10px; -fx-padding: 0 10px;">
+                                <buttons>
+                                  <Button mnemonicParsing="false" prefHeight="55.0" prefWidth="116.0" styleClass="selectUser_menu" text="Secrétaires" />
+                                    <Button mnemonicParsing="false" prefHeight="63.0" prefWidth="100.0" styleClass="selectUser_menu" text="Caissiers" />
+                                </buttons>
+                                 <effect>
+                                    <DropShadow blurType="ONE_PASS_BOX" height="20.5" radius="9.625" width="20.0">
+                                       <color>
+                                          <Color red="0.8684210777282715" green="0.8684210777282715" blue="0.8684210777282715" />
+                                       </color>
+                                    </DropShadow>
+                                 </effect>
+                              </ButtonBar>
+                           </children>
+                        </AnchorPane>
+                     </center>
+                  </BorderPane>
+               </children>
+            </AnchorPane>
+         </center>
+         <left>
+            <AnchorPane prefHeight="655.0" prefWidth="223.0" style="-fx-background-color: #5099d0;" BorderPane.alignment="CENTER">
+               <children>
+                  <VBox prefHeight="339.0" prefWidth="223.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                     <children>
+                        <Button fx:id="btnDashboard" alignment="BASELINE_LEFT" graphicTextGap="13.0" lineSpacing="5.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#handleNavigation" onMouseEntered="#handleHoverOn" onMouseExited="#handleHoverOff" prefHeight="65.0" prefWidth="223.0" styleClass="menu_section" text="Dashboard" textFill="#5099d0">
+                           <graphic>
+                              <ImageView fitHeight="24.0" fitWidth="24.0" opacity="0.8" pickOnBounds="true" preserveRatio="true" style="-fx-padding: 0 3px 0 0;">
+                                 <image>
+                                    <Image url="@../../resources/images/dash_icon_admin.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnUtilisateurs" alignment="BASELINE_LEFT" graphicTextGap="13.0" lineSpacing="5.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#handleNavigation" onMouseEntered="#handleHoverOn" onMouseExited="#handleHoverOff" prefHeight="65.0" prefWidth="263.0" styleClass="menu_section" text="Utilisateurs" textFill="#a2d6eb">
+                           <graphic>
+                              <ImageView fitHeight="24.0" fitWidth="24.0" opacity="0.8" pickOnBounds="true" preserveRatio="true" style="-fx-padding: 0 3px 0 0;">
+                                 <image>
+                                    <Image url="@../../resources/images/users_icon_admin.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnClasses" alignment="BASELINE_LEFT" graphicTextGap="13.0" lineSpacing="5.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#handleNavigation" onMouseEntered="#handleHoverOn" onMouseExited="#handleHoverOff" prefHeight="65.0" prefWidth="263.0" styleClass="menu_section" text="Classes" textFill="#a2d6eb">
+                           <graphic>
+                              <ImageView fitHeight="24.0" fitWidth="24.0" opacity="0.8" pickOnBounds="true" preserveRatio="true" style="-fx-padding: 0 3px 0 0;">
+                                 <image>
+                                    <Image url="@../../resources/images/school_icon_admin.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnLogs" alignment="BASELINE_LEFT" graphicTextGap="13.0" lineSpacing="5.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#handleNavigation" onMouseEntered="#handleHoverOn" onMouseExited="#handleHoverOff" prefHeight="65.0" prefWidth="263.0" styleClass="menu_section" text="Logs" textFill="#a2d6eb">
+                           <graphic>
+                              <ImageView fitHeight="24.0" fitWidth="24.0" opacity="0.8" pickOnBounds="true" preserveRatio="true" style="-fx-padding: 0 3px 0 0;">
+                                 <image>
+                                    <Image url="@../../resources/images/logs_icon_admin.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnProfile" alignment="BASELINE_LEFT" graphicTextGap="13.0" lineSpacing="5.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#handleNavigation" onMouseEntered="#handleHoverOn" onMouseExited="#handleHoverOff" prefHeight="65.0" prefWidth="223.0" styleClass="menu_section" text="Mon profil" textFill="#a1d5eb">
+                           <graphic>
+                              <ImageView fitHeight="24.0" fitWidth="24.0" opacity="0.8" pickOnBounds="true" preserveRatio="true" style="-fx-padding: 0 3px 0 0;">
+                                 <image>
+                                    <Image url="@../../resources/images/profile_icon_admin.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+         </left>
+         <top>
+            <AnchorPane prefHeight="76.0" prefWidth="954.0" style="-fx-background-color: #2C7ABA;" BorderPane.alignment="CENTER">
+               <children>
+                  <Circle fx:id="pp_placeholder" fill="DODGERBLUE" layoutX="984.0" layoutY="38.0" onMouseClicked="#handleNavigation" radius="19.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="profile_pic" />
+                  <Label layoutX="1009.0" layoutY="30.0" text="admin@mail.com" textFill="WHITE" AnchorPane.rightAnchor="59.0">
+                     <font>
+                        <Font name="Corbel Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label cacheShape="false" contentDisplay="RIGHT" layoutX="75.0" layoutY="11.0" prefHeight="32.0" prefWidth="113.0" style="-fx-font-weight: bold; -fx-text-fill: white;" text="School Up" textFill="#93a0a8">
+                     <font>
+                        <Font name="Gill Sans MT Bold" size="22.0" />
+                     </font>
+                     <opaqueInsets>
+                        <Insets left="22.0" />
+                     </opaqueInsets>
+                  </Label>
+                  <ImageView fitHeight="43.0" fitWidth="43.0" layoutX="22.0" layoutY="13.0">
+                     <image>
+                        <Image url="@../../resources/images/app_icon_mini.png" />
+                     </image>
+                  </ImageView>
+                  <Label cacheShape="false" contentDisplay="RIGHT" layoutX="73.0" layoutY="31.0" prefHeight="32.0" prefWidth="106.0" style="-fx-font-weight: bold;" text="/admindashboard" textFill="#ff8795">
+                     <opaqueInsets>
+                        <Insets left="22.0" />
+                     </opaqueInsets>
+                     <font>
+                        <Font name="Corbel Italic" size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField layoutX="451.0" layoutY="19.0" prefHeight="38.0" prefWidth="275.0" promptText="Recherchez quelque chose" style="-fx-background-radius: 10px;">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </TextField>
+                  <ImageView fitHeight="23.0" fitWidth="23.0" layoutX="691.0" layoutY="27.0">
+                     <image>
+                        <Image url="@../../resources/images/loop_icon.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </top>
+      </BorderPane>
+      <ImageView fx:id="minIcon1" layoutX="1157.0" layoutY="5.0" onMouseClicked="#onMinimize" style="-fx-cursor: hand;" AnchorPane.rightAnchor="5.0">
+         <image>
+            <Image url="@../../resources/images/minimize_icon.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

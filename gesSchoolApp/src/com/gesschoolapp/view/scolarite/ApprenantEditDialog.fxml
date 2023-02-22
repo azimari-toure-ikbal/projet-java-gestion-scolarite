@@ -20,11 +20,11 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="589.0" prefWidth="526.0" style="-fx-background-color: white; -fx-border-width: 0.5px; -fx-border-color: #C8C8C8;" stylesheets="@../style/application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gesschoolapp.view.ApprenantAddDialogController">
+<AnchorPane prefHeight="589.0" prefWidth="526.0" style="-fx-background-color: white; -fx-border-width: 0.5px; -fx-border-color: #C8C8C8;" stylesheets="@../../style/application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gesschoolapp.view.scolarite.ApprenantEditDialogController">
    <children>
-      <Pane layoutX="14.0" prefHeight="163.0" prefWidth="526.0" style="-fx-background-color: linear-gradient(to right, #11998e, #38ef7d);" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Pane layoutX="14.0" prefHeight="163.0" prefWidth="526.0" style="-fx-background-color: linear-gradient(to right, #F2B601, #F3E87B);" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label alignment="CENTER" contentDisplay="RIGHT" layoutX="83.0" layoutY="68.0" prefHeight="29.0" prefWidth="361.0" text="Ajouter un élève" textFill="WHITE">
+            <Label alignment="CENTER" contentDisplay="RIGHT" layoutX="83.0" layoutY="68.0" prefHeight="29.0" prefWidth="361.0" text="Modifier un élève" textFill="WHITE">
                <font>
                   <Font name="Corbel Bold" size="40.0" />
                </font>
@@ -32,16 +32,16 @@
                   <Insets left="22.0" />
                </opaqueInsets>
             </Label>
-            <ImageView disable="true" fitHeight="41.0" fitWidth="57.0" layoutX="243.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView layoutX="240.0" layoutY="20.0">
                <image>
-                  <Image url="@../resources/images/student_icon.png" />
+                  <Image url="@../../resources/images/edit_icon.png" />
                </image>
             </ImageView>
          </children>
       </Pane>
       <SplitPane layoutX="3.0" layoutY="151.0" orientation="VERTICAL" prefHeight="440.0" prefWidth="522.0" AnchorPane.bottomAnchor="0.5" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="150.0">
-        <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+         <items>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
                   <Button fx:id="btnAnnuler" layoutX="392.0" layoutY="387.0" mnemonicParsing="false" onAction="#onClose" prefHeight="41.0" prefWidth="120.0" style="-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-background-color: linear-gradient(to right, #D23342, #ED213A);" styleClass="classic_btn" text="Annuler">
                      <opaqueInsets>
@@ -56,17 +56,17 @@
                      </effect>
                   </Button>
                   <GridPane hgap="15.0" layoutX="170.0" layoutY="141.0" vgap="15.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="50.0">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
                      <children>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                            <children>
@@ -167,7 +167,7 @@
                         </HBox>
                      </children>
                   </GridPane>
-                  <Button fx:id="btnAjouter" layoutX="263.0" layoutY="387.0" mnemonicParsing="false" onAction="#onFormSubmit" prefHeight="41.0" prefWidth="120.0" style="-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-background-color: linear-gradient(to right, #11998e, #38ef7d);" styleClass="classic_btn" text="Ajouter">
+                  <Button fx:id="btnAjouter" layoutX="263.0" layoutY="387.0" mnemonicParsing="false" onAction="#onFormSubmit" prefHeight="41.0" prefWidth="120.0" style="-fx-background-radius: 10px; -fx-border-width: 0px; -fx-border-radius: 10px; -fx-background-color: linear-gradient(to right, #F2B601, #F3E87B);" styleClass="classic_btn" text="Modifier">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
@@ -186,7 +186,7 @@
                   </Label>
                </children>
             </AnchorPane>
-        </items>
+         </items>
       </SplitPane>
    </children>
    <effect>
