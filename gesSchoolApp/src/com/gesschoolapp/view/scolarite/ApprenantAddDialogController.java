@@ -150,9 +150,8 @@ public class ApprenantAddDialogController extends Application implements Initial
 
         try {
             dialogStage.close();
-            Apprenant newApprenant = apprenantsData.create(apprenant, "");
+            Apprenant newApprenant = apprenantsData.create(apprenant,superController.getCurrentUser().getFullName());
             List<Apprenant> list = new ArrayList<>(superController.getSelectedClass().getApprenants());
-            list.add(newApprenant);
 
             superController.getSelectedClass().setApprenants(list);
         } catch (DAOException e) {

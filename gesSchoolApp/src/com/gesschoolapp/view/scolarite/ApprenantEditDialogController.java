@@ -164,7 +164,7 @@ public class ApprenantEditDialogController extends Application implements Initia
 
         try {
             dialogStage.close();
-            apprenantsData.update(apprenant, "");
+            apprenantsData.update(apprenant, superController.getCurrentUser().getFullName());
             List<Apprenant> list = new ArrayList<>(superController.getSelectedClass().getApprenants());
             list.set(list.indexOf(selectedStudent),apprenant);
             superController.getSelectedClass().setApprenants(list);
