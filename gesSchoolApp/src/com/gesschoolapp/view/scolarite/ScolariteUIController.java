@@ -481,7 +481,7 @@ public class ScolariteUIController implements Initializable {
 
 
         for (Rubrique rubr : Toolbox.getRubriques()) {
-            double effectifPartiel = dailyFeesList.stream().filter(paiement -> paiement.getRubrique().equals(rubr.getIntitule())).toList().size();
+            double effectifPartiel = dailyFeesList.stream().filter(paiement -> paiement.getRubrique().split(" ")[0].equals(rubr.getIntitule())).toList().size();
             double effectifTotal = dailyFeesList.size();
             double pourcentage = (effectifPartiel / effectifTotal) * 100;
             pieData.add(new PieChart.Data(rubr.getIntitule(), pourcentage));
@@ -495,7 +495,7 @@ public class ScolariteUIController implements Initializable {
 
     public void addPieTooltips() {
         feesPie.getData().forEach(data -> {
-            List<Paiement> concernedFees = dailyFeesList.stream().filter(paiement -> paiement.getRubrique().equals(data.getName())).toList();
+            List<Paiement> concernedFees = dailyFeesList.stream().filter(paiement -> paiement.getRubrique().split(" ")[0].equals(data.getName())).toList();
             Double totalEncaisse = 0.0;
             for (Paiement p : concernedFees) {
                 totalEncaisse += p.getMontant();
@@ -574,7 +574,7 @@ public class ScolariteUIController implements Initializable {
 
 
             for (Rubrique rubr : Toolbox.getRubriques()) {
-                double effectifPartiel = dailyFeesList.stream().filter(paiement -> paiement.getRubrique().equals(rubr.getIntitule().split(" ")[0])).toList().size();
+                double effectifPartiel = dailyFeesList.stream().filter(paiement -> paiement.getRubrique().split(" ")[0].equals(rubr.getIntitule().split(" ")[0])).toList().size();
                 double effectifTotal = dailyFeesList.size();
                 double pourcentage = (effectifPartiel / effectifTotal) * 100;
                 pieData.add(new PieChart.Data(rubr.getIntitule(), pourcentage));
@@ -604,7 +604,7 @@ public class ScolariteUIController implements Initializable {
 
 
             for (Rubrique rubr : Toolbox.getRubriques()) {
-                double effectifPartiel = dailyFeesList.stream().filter(paiement -> paiement.getRubrique().equals(rubr.getIntitule().split(" ")[0])).toList().size();
+                double effectifPartiel = dailyFeesList.stream().filter(paiement -> paiement.getRubrique().split(" ")[0].equals(rubr.getIntitule().split(" ")[0])).toList().size();
                 double effectifTotal = dailyFeesList.size();
                 double pourcentage = (effectifPartiel / effectifTotal) * 100;
                 pieData.add(new PieChart.Data(rubr.getIntitule(), pourcentage));
@@ -635,7 +635,7 @@ public class ScolariteUIController implements Initializable {
                 for(int i=0;i<moisFR.length;i++){
                     Double monthlyDue = 0.0;
                     for(Paiement paiement : dailyFeesList){
-                        if(paiement.getDate().getMonthValue() -1 == i && paiement.getRubrique().equals(rubr.getIntitule().split(" ")[0])){
+                        if(paiement.getDate().getMonthValue() -1 == i && paiement.getRubrique().split(" ")[0].equals(rubr.getIntitule().split(" ")[0])){
                             monthlyDue+= paiement.getMontant();
                             yearlyDue+= monthlyDue;
                         }
@@ -671,7 +671,7 @@ public class ScolariteUIController implements Initializable {
         this.dailyFeesList = dailyFeesList;
 
         for (Rubrique rubr : Toolbox.getRubriques()) {
-            int nbPaiement = dailyFeesList.stream().filter(paiement -> paiement.getRubrique().equals(rubr.getIntitule())).toList().size() / dailyFeesList.size() * 100;
+            int nbPaiement = dailyFeesList.stream().filter(paiement -> paiement.getRubrique().split(" ")[0].equals(rubr.getIntitule())).toList().size() / dailyFeesList.size() * 100;
             pieData.add(new PieChart.Data(rubr.getIntitule(), nbPaiement));
         }
 
