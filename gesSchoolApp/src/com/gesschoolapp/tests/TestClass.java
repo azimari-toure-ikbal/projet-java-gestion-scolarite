@@ -7,6 +7,7 @@ import com.gesschoolapp.docmaker.PDFGenerator;
 import com.gesschoolapp.models.actions.Actions;
 import com.gesschoolapp.models.actions.Notification;
 import com.gesschoolapp.models.paiement.Paiement;
+import com.gesschoolapp.models.users.Utilisateur;
 import com.gesschoolapp.serial.ActionManager;
 import com.gesschoolapp.serial.ArchiveManager;
 import com.gesschoolapp.Exceptions.CSVException;
@@ -64,7 +65,7 @@ public class TestClass {
 //        testReadClasse(15);
 //        testGetPaiements();
 //        testGetApprenant(1);
-        testPaiement();
+//        testPaiement();
 //        testCheckPaiement();
 //        testCreateApprenant();
 //        System.out.println(LocalDate.now());
@@ -72,15 +73,15 @@ public class TestClass {
 //        testCancelActions();
 //        testGetNotifs();
 //        System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYY-MM-dd HH:mm:ss")));
-        PaiementDAOImp paiementDAOImp = new PaiementDAOImp();
+        testGetUtilisateurs();
+    }
+
+    public static void testGetUtilisateurs(){
         try {
-            List<Paiement> paiements = paiementDAOImp.getList();
-            Paiement paiement = paiements.get(0);
-            PDFGenerator.recuGenerator(paiement);
-        } catch (DAOException e) {
-            e.printStackTrace();
-        } catch (PDFException e) {
-            throw new RuntimeException(e);
+            List<Utilisateur> utilisateurs = new UserDAOImp().getList();
+            System.out.println(utilisateurs);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
 

@@ -224,10 +224,6 @@ public class UserDAOImp implements UserDAO, DAO<Utilisateur> {
                 String type = resultSet.getString("type");
                 String password = resultSet.getString("password");
 
-                System.out.println("idUtilisateur = " + idUtilisateur);
-                System.out.println("nom = " + nom);
-                System.out.println("prenom = " + prenom);
-                System.out.println("numero = " + numero);
                 switch (type) {
                     case "administrateur" -> users.add(new Admin(idUtilisateur, nom, prenom, numero, type, password));
                     case "secretaire" -> users.add(new Secretaire(idUtilisateur, nom, prenom, numero, type, password));
@@ -237,9 +233,9 @@ public class UserDAOImp implements UserDAO, DAO<Utilisateur> {
                     }
                 }
             }
+            return users;
         } catch (Exception e) {
             throw new DAOException(e.getMessage());
         }
-        return null;
     }
 }
