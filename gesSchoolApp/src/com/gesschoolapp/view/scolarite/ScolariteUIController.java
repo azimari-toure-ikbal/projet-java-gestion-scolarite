@@ -1102,7 +1102,7 @@ public class ScolariteUIController implements Initializable {
 
                     List<String> fileContent = nCSV.readFile(file);
                     List<String[]> fileData = nCSV.getData(fileContent);
-                    List<Note> importedNotes = nCSV.csvToObject(fileData, selectedModule, selectedClass);
+                    List<Note> importedNotes = nCSV.csvToObject(fileData, selectedModule, selectedClass,this.currentUser);
                     List<Note> list = new ArrayList<>(selectedModule.getNotes());
                     list.addAll(importedNotes);
                     selectedModule.setNotes(list);
@@ -1119,7 +1119,7 @@ public class ScolariteUIController implements Initializable {
                     List<String> fileContent = aCSV.readFile(file);
                     List<String[]> fileData = aCSV.getData(fileContent);
                     List<Apprenant> importedApprenants;
-                    importedApprenants = aCSV.csvToObject(fileData, selectedClass);
+                    importedApprenants = aCSV.csvToObject(fileData, selectedClass,this.currentUser);
 
                     List<Apprenant> list = new ArrayList<>(selectedClass.getApprenants());
 
