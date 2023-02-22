@@ -34,8 +34,8 @@
                            <children>
                               <ButtonBar cache="true" layoutX="14.0" layoutY="14.0" prefHeight="55.0" prefWidth="235.0" style="-fx-background-color: white; -fx-background-radius: 10px; -fx-padding: 0 10px;">
                                 <buttons>
-                                  <Button mnemonicParsing="false" prefHeight="55.0" prefWidth="116.0" styleClass="selectUser_menu" text="Secrétaires" />
-                                    <Button mnemonicParsing="false" prefHeight="63.0" prefWidth="100.0" styleClass="selectUser_menu" text="Caissiers" />
+                                  <Button fx:id="btnSecretaires" mnemonicParsing="false" onAction="#handleSelectedUserType" prefHeight="55.0" prefWidth="116.0" styleClass="selectUser_menu" text="Secrétaires" />
+                                    <Button fx:id="btnCaissiers" mnemonicParsing="false" onAction="#handleSelectedUserType" prefHeight="63.0" prefWidth="100.0" styleClass="selectUser_menu" text="Caissiers" />
                                 </buttons>
                                  <effect>
                                     <DropShadow blurType="ONE_PASS_BOX" height="20.5" radius="9.625" width="20.0">
