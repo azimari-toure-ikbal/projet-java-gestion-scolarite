@@ -237,9 +237,9 @@ public class UserDAOImp implements UserDAO, DAO<Utilisateur> {
                     }
                 }
             }
+            return users;
         } catch (Exception e) {
             throw new DAOException(e.getMessage());
         }
-        return null;
     }
 }

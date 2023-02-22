@@ -1,6 +1,4 @@
-.button {
-    -fx-padding: 0;
-}
+
 
 .menu_section{
     -fx-border-color: #5488FF;
@@ -33,6 +31,45 @@
     -fx-text-fill: #3c3a3a;
     -fx-border-width: 0 0 2px 0;
     -fx-border-color: #5099D0;
+}
+
+.virgin_btn{
+    -fx-padding: 0;
+    -fx-border-color: transparent;
+    -fx-border-radius: 0;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-background-color: white;
+    -fx-font-family: System;
+    -fx-font-size: 11px;
+    -fx-text-fill: white;
+    -fx-background-insets: 0 0 0 0, 0, 0, 0;
+    -fx-cursor: hand;
+}
+
+.classic_btn {
+    -fx-padding: 5 10 5 10;
+    -fx-border-color: #1D52A0;
+    -fx-border-radius: 5;
+    -fx-border-width: 0.3;
+    -fx-background-radius: 5;
+    -fx-background-color: #2C7ABA ;
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 12pt;
+    -fx-text-fill: #fff;
+    -fx-background-insets: 0 0 0 0, 0, 1, 2;
+    -fx-cursor: hand;
+}
+
+.classic_btn:hover{
+    -fx-background-color: red;
+}
+
+.classic_btn:focused{
+    -fx-border-width: 0, 0;
+    -fx-border-style: solid, segments(0, 0);
+    -fx-border-radius: 0, 0;
+    -fx-border-insets: 0;
 }
 
 

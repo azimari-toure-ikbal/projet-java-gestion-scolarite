@@ -1,27 +1,37 @@
 package com.gesschoolapp.view.admin;
 
+import com.gesschoolapp.Exceptions.DAOException;
+import com.gesschoolapp.db.DAOClassesImpl.UserDAOImp;
+import com.gesschoolapp.models.student.Apprenant;
 import com.gesschoolapp.models.users.Admin;
+import com.gesschoolapp.models.users.Caissier;
 import com.gesschoolapp.models.users.Utilisateur;
 import com.gesschoolapp.runtime.Main;
+import com.gesschoolapp.utils.Toolbox;
+import com.gesschoolapp.view.scolarite.ApprenantItemsController;
+import com.gesschoolapp.view.scolarite.ApprenantViewDialogController;
 import com.gesschoolapp.view.util.Route;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
+import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class AdminUIController implements Initializable {
@@ -47,13 +57,7 @@ public class AdminUIController implements Initializable {
 
     // ##### JAVAFX NODES :
 
-    public Button getSelectedUserType() {
-        return selectedUserType;
-    }
 
-    public void setSelectedUserType(Button selectedUserType) {
-        this.selectedUserType = selectedUserType;
-    }
 
     // -- Menu :
 
@@ -75,6 +79,9 @@ public class AdminUIController implements Initializable {
     private Circle pp_placeholder;
 
     @FXML
+    private Label mainMessageInfo;
+
+    @FXML
     private Button btnUtilisateurs;
 
     @FXML
@@ -91,6 +98,10 @@ public class AdminUIController implements Initializable {
 
     @FXML
     private BorderPane logsView;
+
+    @FXML
+    private VBox usersLayout;
+
 
 
     //  #### ROUTES :
@@ -118,8 +129,16 @@ public class AdminUIController implements Initializable {
     @FXML
     private Button btnCaissiers;
 
+    @FXML
+    private Button btnAdmins;
+
+    //  #### DAOS :
+
+    UserDAOImp userData = new UserDAOImp();
+    List<Utilisateur> usersList;
 
     // ##### INIT :
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -138,11 +157,77 @@ public class AdminUIController implements Initializable {
         // --- Init route :
         setCurrentRoute(users);
 
+        // --- Init values :
+        setSelectedUserType(btnSecretaires);
+
+        try {
+            usersList = userData.getList();
+            System.out.println("L" + usersList);
+        } catch (DAOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        setListeDesUtilisateurs(usersList);
 
     }
 
 
     // ##### GETTERS AND SETTERS :
+
+    public List<Utilisateur> getUsersList() {
+        return usersList;
+    }
+
+    public void setUsersList(List<Utilisateur> usersList) {
+        this.usersList = usersList;
+    }
+
+
+    public Button getSelectedUserType() {
+        return selectedUserType;
+    }
+
+    public String getSelectedUserTypeStringified() {
+        if(getSelectedUserType() == btnAdmins){
+            return "administrateur";
+        }else if(getSelectedUserType() == btnCaissiers){
+            return "caissier";
+        }else if(getSelectedUserType() == btnSecretaires){
+            return "secretaire";
+        }
+        return null;
+    }
+
+
+    public void setSelectedUserType(Button selectedUserType) {
+        this.selectedUserType = selectedUserType;
+        if(selectedUserType == btnCaissiers){
+            btnSecretaires.setStyle("    -fx-text-fill: #BABABA;\n" +
+                    "    -fx-border-width: 0 0 0px 0;");
+            btnAdmins.setStyle("    -fx-text-fill: #BABABA;\n" +
+                    "    -fx-border-width: 0 0 0px 0;");
+            btnCaissiers.setStyle("   -fx-text-fill: #3c3a3a;\n" +
+                    "    -fx-border-width: 0 0 2px 0;\n" +
+                    "    -fx-border-color: #5099D0;");
+        }else if(selectedUserType == btnSecretaires){
+            btnCaissiers.setStyle("    -fx-text-fill: #BABABA;\n" +
+                    "    -fx-border-width: 0 0 0px 0;");
+            btnAdmins.setStyle("    -fx-text-fill: #BABABA;\n" +
+                    "    -fx-border-width: 0 0 0px 0;");
+            btnSecretaires.setStyle("   -fx-text-fill: #3c3a3a;\n" +
+                    "    -fx-border-width: 0 0 2px 0;\n" +
+                    "    -fx-border-color: #5099D0;");
+        }else if(selectedUserType == btnAdmins){
+            btnCaissiers.setStyle("    -fx-text-fill: #BABABA;\n" +
+                    "    -fx-border-width: 0 0 0px 0;");
+            btnSecretaires.setStyle("    -fx-text-fill: #BABABA;\n" +
+                    "    -fx-border-width: 0 0 0px 0;");
+            btnAdmins.setStyle("   -fx-text-fill: #3c3a3a;\n" +
+                    "    -fx-border-width: 0 0 2px 0;\n" +
+                    "    -fx-border-color: #5099D0;");
+        }
+    }
 
     public Admin getCurrentUser() {
         return currentUser;
@@ -203,6 +288,34 @@ public class AdminUIController implements Initializable {
     public void onMinimize(MouseEvent event) {
         this.getStage().setIconified(true);
     }
+
+    public void setMainMessageInfo(String msg) {
+        setMainMessageInfo(msg, 1);
+    }
+
+    public void setMainMessageInfo(String msg, int status) {
+        mainMessageInfo.setText(msg);
+
+        if (status == 0) {
+            mainMessageInfo.setStyle("-fx-background-color: #CE4F4B;-fx-background-radius: 0 0 5px 5px;");
+        } else if (status == 1) {
+            mainMessageInfo.setStyle("-fx-background-color:  #5CB85C;-fx-background-radius: 0 0 5px 5px;");
+        } else {
+            mainMessageInfo.setStyle("-fx-background-color: #007AF2;-fx-background-radius: 0 0 5px 5px;");
+        }
+
+        if (msg.length() == 0) {
+            mainMessageInfo.setVisible(false);
+        } else {
+            mainMessageInfo.setVisible(true);
+            Toolbox.setTimeout(() -> mainMessageInfo.setVisible(false), 10000);
+        }
+
+        if (status != 0)
+            resetVue();
+
+    }
+
 
 
     // ##### NAVIGATION & ROUTAGE :
@@ -266,20 +379,138 @@ public class AdminUIController implements Initializable {
 
     @FXML
     void handleSelectedUserType(ActionEvent event) {
-        if(event.getSource() == btnCaissiers){
-        btnSecretaires.setStyle("    -fx-text-fill: #BABABA;\n" +
-                "    -fx-border-width: 0 0 0px 0;");
-        btnCaissiers.setStyle("   -fx-text-fill: #3c3a3a;\n" +
-                "    -fx-border-width: 0 0 2px 0;\n" +
-                "    -fx-border-color: #5099D0;");
-        }else{
-        btnCaissiers.setStyle("    -fx-text-fill: #BABABA;\n" +
-                "    -fx-border-width: 0 0 0px 0;");
-        btnSecretaires.setStyle("   -fx-text-fill: #3c3a3a;\n" +
-                    "    -fx-border-width: 0 0 2px 0;\n" +
-                    "    -fx-border-color: #5099D0;");
+        setSelectedUserType((Button) event.getSource());
+        setListeDesUtilisateurs();
+    }
+
+    // ##### VUE SETTERS,RESETTERS :
+
+    private void resetVue() {
+        setListeDesUtilisateurs();
+    }
+
+
+    public void setListeDesUtilisateurs(){
+        setListeDesUtilisateurs(usersList);
+    }
+    public void setListeDesUtilisateurs(List<Utilisateur> users) {
+
+        if (users.size() != 0) {
+            usersLayout.getChildren().clear();
+        }
+
+        if (getSelectedUserType() == btnCaissiers) {
+            users = users.stream().filter(utilisateur -> utilisateur.getType().equals("caissier")).toList();
+        } else if (getSelectedUserType() == btnSecretaires) {
+            users = users.stream().filter(utilisateur -> utilisateur.getType().equals("secretaire")).toList();
+        } else if (getSelectedUserType() == btnAdmins) {
+            users = users.stream().filter(utilisateur -> utilisateur.getType().equals("administrateur")).toList();
+        }
+
+        for (Utilisateur user : users) {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("UserItem.fxml"));
+            System.out.println("ça retourne : " + user.getType());
+            HBox hbox = null;
+            try {
+                hbox = fxmlLoader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            UserItemController uic = fxmlLoader.getController();
+            uic.setSuperController(this);
+            uic.setData(user);
+
+
+            usersLayout.getChildren().add(hbox);
+
         }
     }
-}
+
+        // #### HANDLE DIALOG BOXES :
+
+    @FXML
+    void openUserAddDialog(ActionEvent event) {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("UserAddDialog.fxml"));
+
+            AnchorPane page = (AnchorPane) loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("School UP Admin - Ajouter un utilisateur");
+            // Set the application icon.
+
+            dialogStage.getIcons().add(new Image("com/gesschoolapp/resources/images/app_icon.png"));
+            dialogStage.initStyle(StageStyle.UNDECORATED);
+            dialogStage.setResizable(false);
+
+
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(mainApp.getPrimaryStage());
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the person into the controller.
+            UserAddDialogController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setSuperController(this);
+            controller.setScene(scene);
+            controller.setMain(mainApp);
+            controller.setDraggable();
+
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+        public void openUserViewDialog(Utilisateur user) {
+            try {
+                // Load the fxml file and create a new stage for the popup dialog.
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("UserViewDialog.fxml"));
+
+                AnchorPane page = (AnchorPane) loader.load();
+
+                // Create the dialog Stage.
+                Stage dialogStage = new Stage();
+                dialogStage.setTitle("School UP Admin - Profil utilisateur");
+                // Set the application icon.
+
+                dialogStage.getIcons().add(new Image("com/gesschoolapp/resources/images/app_icon.png"));
+                dialogStage.initStyle(StageStyle.UNDECORATED);
+                dialogStage.setResizable(false);
+
+
+                dialogStage.initModality(Modality.WINDOW_MODAL);
+                dialogStage.initOwner(mainApp.getPrimaryStage());
+                Scene scene = new Scene(page);
+                dialogStage.setScene(scene);
+
+                // Set the person into the controller.
+                UserViewDialogController controller = loader.getController();
+                controller.setDialogStage(dialogStage);
+                controller.setSuperController(this);
+                controller.setScene(scene);
+                controller.setMain(mainApp);
+                controller.setData(user);
+                controller.setDraggable();
+
+
+                // Show the dialog and wait until the user closes it
+                dialogStage.showAndWait();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 

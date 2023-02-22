@@ -11,6 +11,10 @@ public abstract class Utilisateur {
     protected String  numero;
     protected String fullName;
 
+    public Utilisateur(){
+
+    };
+
 
     public Utilisateur(int id, String nom, String prenom, String email, String password, String numero) {
         this(nom, prenom, email, password, numero);

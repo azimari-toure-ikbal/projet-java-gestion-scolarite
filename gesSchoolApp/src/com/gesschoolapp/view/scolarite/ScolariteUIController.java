@@ -917,7 +917,7 @@ public class ScolariteUIController implements Initializable {
             mainMessageInfo.setVisible(false);
         } else {
             mainMessageInfo.setVisible(true);
-            setTimeout(() -> mainMessageInfo.setVisible(false), 10000);
+            Toolbox.setTimeout(() -> mainMessageInfo.setVisible(false), 10000);
         }
 
         if (status != 0)
@@ -1648,17 +1648,6 @@ public class ScolariteUIController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public static void setTimeout(Runnable runnable, int delay) {
-        new Thread(() -> {
-            try {
-                Thread.sleep(delay);
-                runnable.run();
-            } catch (Exception e) {
-                System.err.println(e);
-            }
-        }).start();
     }
 
     public void setSecretaireView() {
