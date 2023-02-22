@@ -388,11 +388,17 @@ public class ScolariteUIController implements Initializable {
         feesSpanSelect.getItems().addAll(etatsDePaiement);
         monthyFeeDP.getItems().addAll(mois);
         try {
-            yearFeeDP.getItems().addAll(paiementsData.getAnnees());
-            yearFeeDP.setValue(paiementsData.getAnnees().get(0));
-            refreshFeesData(etatsDePaiement[3]);
-            yearFeeDP2.getItems().addAll(paiementsData.getAnnees());
-            yearFeeDP2.setValue(paiementsData.getAnnees().get(0));
+            List<String> annees = paiementsData.getAnnees();
+
+            if(annees.size() == 0){
+                
+            }else{
+                yearFeeDP.getItems().addAll(paiementsData.getAnnees());
+                yearFeeDP.setValue(paiementsData.getAnnees().get(0));
+                refreshFeesData(etatsDePaiement[3]);
+                yearFeeDP2.getItems().addAll(paiementsData.getAnnees());
+                yearFeeDP2.setValue(paiementsData.getAnnees().get(0));
+            }
         } catch (DAOException e) {
             throw new RuntimeException(e);
         }
