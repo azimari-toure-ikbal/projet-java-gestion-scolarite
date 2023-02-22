@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<HBox fx:id="cardHbox" prefHeight="81.0" prefWidth="895.0" stylesheets="@../../style/admindashboard.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gesschoolapp.view.admin.UserItemController">
+   <children>
+      <Pane prefHeight="81.0" prefWidth="70.0">
+         <children>
+            <Circle fx:id="pp_placeholder" fill="DODGERBLUE" layoutX="35.0" layoutY="41.0" radius="21.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="profile_pic" />
+         </children>
+      </Pane>
+      <Pane prefHeight="81.0" prefWidth="183.0">
+         <children>
+            <Label fx:id="labelNom" alignment="CENTER" layoutX="-1.0" layoutY="28.0" prefHeight="26.0" prefWidth="186.0" text="Mouhamed Lawal Dan Azoumi" textFill="#3c3a3a">
+               <font>
+                  <Font name="Gill Sans MT" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane prefHeight="81.0" prefWidth="142.0">
+         <children>
+            <Label fx:id="labelLogin" alignment="CENTER" layoutX="-1.0" layoutY="28.0" prefHeight="26.0" prefWidth="146.0" text="lawal@mail.com" textFill="#3c3a3a">
+               <font>
+                  <Font name="Gill Sans MT" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane prefHeight="81.0" prefWidth="142.0">
+         <children>
+            <Label fx:id="labelPassword" alignment="CENTER" layoutX="-1.0" layoutY="28.0" prefHeight="26.0" prefWidth="146.0" text="ilovenicki02testt" textFill="#3c3a3a">
+               <font>
+                  <Font name="Gill Sans MT" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane prefHeight="81.0" prefWidth="152.0">
+         <children>
+            <Label fx:id="labelNum" alignment="CENTER" layoutX="-1.0" layoutY="28.0" prefHeight="26.0" prefWidth="154.0" text="+221 76 793 23 97" textFill="#3c3a3a">
+               <font>
+                  <Font name="Gill Sans MT" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <HBox fx:id="panelActions" alignment="CENTER" prefHeight="81.0" prefWidth="182.0">
+         <children>
+            <Button fx:id="btnViewUser" alignment="CENTER" mnemonicParsing="false" onAction="#handleOpenUserView" style="-fx-pref-height: 40px; -fx-pref-width: 40px;" styleClass="virgin_btn" textAlignment="CENTER">
+               <graphic>
+                  <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true" smooth="false">
+                     <image>
+                        <Image url="@../../resources/images/eye_alt_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="btnEditUser" alignment="CENTER" mnemonicParsing="false" onAction="#actionBtnClicked" style="-fx-pref-height: 40px; -fx-pref-width: 40px;" styleClass="virgin_btn" textAlignment="CENTER">
+               <graphic>
+                  <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true" smooth="false">
+                     <image>
+                        <Image url="@../../resources/images/edit_alt_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="btnDeleteUser" alignment="CENTER" mnemonicParsing="false" onAction="#actionBtnClicked" style="-fx-pref-height: 40px; -fx-pref-width: 40px;" styleClass="virgin_btn" textAlignment="CENTER">
+               <graphic>
+                  <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true" smooth="false">
+                     <image>
+                        <Image url="@../../resources/images/trash_alt_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="btnViewChartUser" alignment="CENTER" mnemonicParsing="false" onAction="#actionBtnClicked" style="-fx-pref-height: 40px; -fx-pref-width: 40px;" textAlignment="CENTER">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true" smooth="false" styleClass="caissier_item">
+                     <image>
+                        <Image url="@../../resources/images/pie_chart_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <styleClass>
+                  <String fx:value="virgin_btn" />
+                  <String fx:value="caissier_item" />
+               </styleClass>
+            </Button>
+         </children>
+      </HBox>
+   </children>
+</HBox>

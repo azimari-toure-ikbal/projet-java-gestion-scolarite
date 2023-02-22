@@ -174,6 +174,7 @@ public class ApprenantViewDialogController implements Initializable {
         } catch (Exception e) {e.printStackTrace();}
     }
 
+
     public void setDraggable() {
 
         scene.getRoot().setOnMousePressed(e ->{
@@ -189,6 +190,7 @@ public class ApprenantViewDialogController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
+
 
     public void setSuperController(ScolariteUIController superController) {
         this.superController = superController;
