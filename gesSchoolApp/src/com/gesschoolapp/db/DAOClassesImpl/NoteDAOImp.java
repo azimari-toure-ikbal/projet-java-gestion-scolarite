@@ -196,7 +196,6 @@ public class NoteDAOImp implements NoteDAO {
                 note.setModule(rs.getString("module"));
                 notes.add(note);
             }
-            System.out.println(notes);
             return notes;
         } catch (Exception e) {
             throw new DAOException(e.getMessage() + "\nIn NoteDAOImp.getNotesOfModule()");

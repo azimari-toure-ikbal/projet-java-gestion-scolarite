@@ -12,11 +12,88 @@ import com.itextpdf.text.pdf.PdfWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class PDFGenerator {
 
+    public static void cerficatScolariteGenerator(Apprenant apprenant) throws PDFException {
+        // Initialisation du document PDF
+        Document document = new Document();
+        try {
+            // Création du fichier PDF
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("storage/certificats/" + apprenant.getNom() + "_" + apprenant.getPrenom() + "_" + LocalDate.now() + ".pdf"));
+
+            // Ouverture du document
+            document.open();
+
+            // Ajout du titre
+            Paragraph title = new Paragraph("CERTIFICAT DE SCOLARITE", new Font(Font.FontFamily.TIMES_ROMAN, 20, Font.BOLD, BaseColor.BLACK));
+            title.setAlignment(Element.ALIGN_CENTER);
+            title.setSpacingAfter(30f);
+            document.add(title);
+
+            // Ajout du logo de l'établissement à gauche
+            Image logo = Image.getInstance("src/com/gesschoolapp/resources/images/schoolup_logo.png");
+            logo.scaleAbsolute(80, 80);
+            document.add(logo);
+
+            // Ajout de la date à droite
+            Paragraph date = new Paragraph("Date : " + new SimpleDateFormat("dd-MM-yyyy").format(new Date()), new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK));
+            date.setAlignment(Element.ALIGN_RIGHT);
+            date.setSpacingAfter(30f);
+            document.add(date);
+
+            // Ajout du corps du document
+            Paragraph body = new Paragraph("Certifie que " + apprenant.getFullName() + " est bel et bien inscrit(e) dans notre établissement et qu'il/elle est actuellement en " + apprenant.getClasse() + ".", new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK));
+            body.setSpacingAfter(30f);
+            document.add(body);
+
+            // Ajout du bas de page
+            Paragraph footer = new Paragraph("Fait à Dakar, le " + new SimpleDateFormat("dd-MM-yyyy").format(new Date()), new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK));
+            footer.setAlignment(Element.ALIGN_RIGHT);
+            footer.setSpacingAfter(30f);
+            document.add(footer);
+
+            // Ajout de la signature
+            Image signature = Image.getInstance("src/com/gesschoolapp/resources/images/compta.png");
+            signature.scaleAbsolute(200, 100);
+            signature.setAlignment(Element.ALIGN_RIGHT);
+            document.add(signature);
+
+            // Ajout du nom du directeur
+            Paragraph director = new Paragraph("Dr. Moustapha DIOP", new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK));
+            director.setAlignment(Element.ALIGN_RIGHT);
+            director.setSpacingAfter(30f);
+            document.add(director);
+
+            // Ajout du poste du directeur
+            Paragraph directorPost = new Paragraph("Directeur Général", new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK));
+            directorPost.setAlignment(Element.ALIGN_RIGHT);
+            directorPost.setSpacingAfter(30f);
+            document.add(directorPost);
+
+            // Ajout du nom de l'établissement
+            Paragraph schoolName = new Paragraph("Ecole Supérieure de Gestion", new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK));
+            schoolName.setAlignment(Element.ALIGN_RIGHT);
+            schoolName.setSpacingAfter(30f);
+            document.add(schoolName);
+
+            // Ajout du logo de l'établissement à droite
+            Image schoolLogo = Image.getInstance("src/com/gesschoolapp/resources/images/schoolup_logo.png");
+            schoolLogo.scaleAbsolute(80, 80);
+            schoolLogo.setAlignment(Element.ALIGN_RIGHT);
+            document.add(schoolLogo);
+
+            // Fermeture du document
+            document.close();
+        } catch (DocumentException e) {
+            throw new PDFException("Error : Unable to create PDF document !");
+        } catch (IOException e) {
+            throw new PDFException("Error : Unable to open PDF document !" + e.getMessage());
+        }
+    }
     public static void recuGenerator(Paiement paiement) throws PDFException {
         // Initialisation du document PDF
         Document document = new Document();

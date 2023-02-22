@@ -6,13 +6,16 @@ public class Notification {
     //Notification has a message and a date (LocalDateTime)
     private String message;
     private LocalDateTime date;
+    private boolean seen;
 
     public Notification() {
+        this.seen = false;
     }
 
     public Notification(String message, LocalDateTime date) {
         this.message = message;
         this.date = date;
+        this.seen = false;
     }
 
     public String getMessage() {
@@ -29,6 +32,14 @@ public class Notification {
 
     public void setDate(LocalDateTime date) {
         this.date = date;
+    }
+
+    public boolean isSeen() {
+        return seen;
+    }
+
+    public void setSeen(boolean seen) {
+        this.seen = seen;
     }
 
     @Override

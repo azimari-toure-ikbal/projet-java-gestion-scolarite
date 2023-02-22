@@ -13,8 +13,35 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Toolbox {
+
+    public static void setTimeout(Runnable runnable, int delay) {
+        new Thread(() -> {
+            try {
+                Thread.sleep(delay);
+                runnable.run();
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        }).start();
+    }
+
+
+    public static boolean phoneNumberFormatChecker(String numberAdressen) {
+        Pattern pattern = Pattern.compile("(77|78|75|70|76)[0-9]{7}$", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(numberAdressen);
+        return matcher.find();
+    }
+
+    public static boolean emailFormatChecker(String emailAdressen) {
+        Pattern pattern = Pattern.compile("^[A-Z0-9_!#$%&'*+/=?`{|}~^-]+(?:\\.[A-Z0-9_!#$%&'*+/=?`{|}~^-]+↵\n" +
+                ")*@[A-Z0-9-]+(?:\\.[A-Z0-9-]+)*$", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(emailAdressen);
+        return matcher.find();
+    }
 
     public static String capitalizeName(String name) {
         String[] words = name.split(" ");

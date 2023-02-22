@@ -391,7 +391,7 @@ public class ScolariteUIController implements Initializable {
             List<String> annees = paiementsData.getAnnees();
 
             if(annees.size() == 0){
-                
+                panelEmpty.toFront();
             }else{
                 yearFeeDP.getItems().addAll(paiementsData.getAnnees());
                 yearFeeDP.setValue(paiementsData.getAnnees().get(0));
@@ -917,7 +917,7 @@ public class ScolariteUIController implements Initializable {
             mainMessageInfo.setVisible(false);
         } else {
             mainMessageInfo.setVisible(true);
-            setTimeout(() -> mainMessageInfo.setVisible(false), 10000);
+            Toolbox.setTimeout(() -> mainMessageInfo.setVisible(false), 10000);
         }
 
         if (status != 0)
@@ -1377,7 +1377,7 @@ public class ScolariteUIController implements Initializable {
             studentsLayout.getChildren().clear();
         }
 
-        System.out.println("Liste des apprenants" + apprenants);
+
 
         for (Apprenant apprenant : apprenants) {
             FXMLLoader fxmlLoader = new FXMLLoader();
@@ -1407,7 +1407,10 @@ public class ScolariteUIController implements Initializable {
     }
 
     public void setListeDesNotes(List<Note> notes) throws DAOException, IOException {
-        notesLayout.getChildren().clear();
+
+        if(notes.size() != 0){
+            notesLayout.getChildren().clear();
+        }
         for (Note note : notes) {
 
 
@@ -1645,17 +1648,6 @@ public class ScolariteUIController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public static void setTimeout(Runnable runnable, int delay) {
-        new Thread(() -> {
-            try {
-                Thread.sleep(delay);
-                runnable.run();
-            } catch (Exception e) {
-                System.err.println(e);
-            }
-        }).start();
     }
 
     public void setSecretaireView() {

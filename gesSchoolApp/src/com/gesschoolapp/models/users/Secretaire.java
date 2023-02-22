@@ -6,6 +6,9 @@ public class Secretaire extends Utilisateur {
         super(id, nom, prenom, email, password, numero);
     }
 
+    public Secretaire(){
+    }
+
     public Secretaire(String nom, String prenom, String email, String password, String numero) {
         super(nom, prenom, email, password, numero);
     }

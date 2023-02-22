@@ -1,8 +1,10 @@
 package com.gesschoolapp.view.scolarite;
 
 import com.gesschoolapp.Exceptions.DAOException;
+import com.gesschoolapp.Exceptions.PDFException;
 import com.gesschoolapp.db.DAOClassesImpl.NoteDAOImp;
 import com.gesschoolapp.db.DAOClassesImpl.PaiementDAOImp;
+import com.gesschoolapp.docmaker.PDFGenerator;
 import com.gesschoolapp.models.matieres.Module;
 import com.gesschoolapp.models.matieres.Note;
 import com.gesschoolapp.models.paiement.Echeance;
@@ -152,7 +154,13 @@ public class FeesDialogController  implements Initializable {
         p.setMontant(Double.parseDouble(labelMontant.getText().split(" ")[0]));
         p.setObservation(labelObservation.getText());
         try {
-            pDAO.create(p, superController.getCurrentUser().getFullName());
+            Paiement toGenerate = pDAO.create(p, superController.getCurrentUser().getFullName());
+            try {
+                PDFGenerator.recuGenerator(toGenerate);
+            } catch (PDFException e) {
+                throw new RuntimeException(e);
+            }
+
             dialogStage.close();
         } catch (DAOException e) {
             throw new RuntimeException(e);
