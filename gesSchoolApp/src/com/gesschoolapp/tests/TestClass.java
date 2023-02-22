@@ -28,6 +28,23 @@ import java.util.*;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 
+//
+//        try(Connection connection = DBManager.getConnection()){
+//            String sql = "INSERT INTO candidat (prenom, nom, niveau_etude, examen_prepare, ecole_origine, adresse, code) VALUES (?,?,?,?,?,?,?)";
+//            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+//            preparedStatement.setString(1, candidat.getPrenom());
+//            preparedStatement.setString(2, candidat.getNom());
+//            preparedStatement.setString(3, candidat.getNiveauEtude());
+//            preparedStatement.setString(4, candidat.getExamenPrepare());
+//            preparedStatement.setString(5, candidat.getEcoleOrigine());
+//            preparedStatement.setString(6, candidat.getAdresse());
+//            preparedStatement.setInt(7, candidat.getCode());
+//            preparedStatement.executeUpdate();
+//        }catch (Exception e){
+//            System.err.println( "Error while creating the candidat : " +  e.getMessage());
+//        }
+//    }
+
 public class TestClass {
     public static void main(String[] args) {
 
@@ -45,9 +62,9 @@ public class TestClass {
 //        testCreateApprenant();
 //        System.out.println(ListRubriques.getRubriques());
 //        testReadClasse(15);
-        testGetPaiements();
+//        testGetPaiements();
 //        testGetApprenant(1);
-//        testPaiement();
+        testPaiement();
 //        testCheckPaiement();
 //        testCreateApprenant();
 //        System.out.println(LocalDate.now());
