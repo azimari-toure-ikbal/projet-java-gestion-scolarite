@@ -106,4 +106,18 @@ public abstract class Utilisateur {
             return "caissier";
         return "utilisateur";
     }
+
+    @Override
+    public String toString() {
+        return "Utilisateur{" +
+                "id=" + id +
+                ", prenom='" + prenom + '\'' +
+                ", nom='" + nom + '\'' +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", numero='" + numero + '\'' +
+                ", fullName='" + fullName + '\'' +
+                '}';
+    }
 }

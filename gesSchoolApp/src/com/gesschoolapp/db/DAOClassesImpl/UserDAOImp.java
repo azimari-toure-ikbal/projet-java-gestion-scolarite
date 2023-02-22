@@ -223,15 +223,12 @@ public class UserDAOImp implements UserDAO, DAO<Utilisateur> {
                 String numero = resultSet.getString("numero");
                 String type = resultSet.getString("type");
                 String password = resultSet.getString("password");
+                String email = resultSet.getString("email");
 
-                System.out.println("idUtilisateur = " + idUtilisateur);
-                System.out.println("nom = " + nom);
-                System.out.println("prenom = " + prenom);
-                System.out.println("numero = " + numero);
                 switch (type) {
-                    case "administrateur" -> users.add(new Admin(idUtilisateur, nom, prenom, numero, type, password));
-                    case "secretaire" -> users.add(new Secretaire(idUtilisateur, nom, prenom, numero, type, password));
-                    case "caissier" -> users.add(new Caissier(idUtilisateur, nom, prenom, numero, type, password));
+                    case "administrateur" -> users.add(new Admin(idUtilisateur, nom, prenom, email, password, numero));
+                    case "secretaire" -> users.add(new Secretaire(idUtilisateur, nom, prenom, email, password, numero));
+                    case "caissier" -> users.add(new Caissier(idUtilisateur, nom, prenom, email, password, numero));
                     default -> {
                         users.add(null);
                     }
