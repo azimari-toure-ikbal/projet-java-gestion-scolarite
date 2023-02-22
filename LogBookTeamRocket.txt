@@ -24,3 +24,9 @@ JOURNAL DE BORD DE LA TEAM ROCKET
 		du possible géré par la base de donée et donc les requêtes.
 		Le temps ne nous permettras sûrement pas de tout implémenter donc nous ferons à un moment le point sur les 
 		fonctionnalités que nous mettrons de côté dans le livrable pour le prof.
+21/02/23: L'interface du caissier est à présent terminée, nous pouvons passer à l'interface de l'administrateur tandis que nous 
+		venons de trouver un moyen de récupérer la liste des actions effectuées et de les annuler. Les fonctions sont toutes 
+		prêtes et n'attendent qu'à être utilisées dans les controlleurs. Mine de rien nous avons bien avancé et nous pourrons 
+		bientôt en revenir aux diagrammes que verion bêta que nous avons afin de les adapter aux contraintes que l'implémentation
+		nous a imposé.
+		

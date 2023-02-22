@@ -150,7 +150,7 @@ public class ApprenantAddDialogController extends Application implements Initial
 
         try {
             dialogStage.close();
-            Apprenant newApprenant = apprenantsData.create(apprenant);
+            Apprenant newApprenant = apprenantsData.create(apprenant, "");
             List<Apprenant> list = new ArrayList<>(superController.getSelectedClass().getApprenants());
             list.add(newApprenant);
 

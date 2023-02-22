@@ -88,7 +88,7 @@ public class NotesCSV implements CSVReader<Note> {
 
             // Create the note
             try {
-                noteDAOImp.create(note);
+                noteDAOImp.create(note, "");
             } catch (DAOException e) {
                 throw new CSVException("Une erreur est survenue lors de la création de la note : " + e.getMessage());
             }
@@ -188,7 +188,7 @@ public class NotesCSV implements CSVReader<Note> {
 
             // Create the note
             try {
-                noteDAOImp.update(note, semestre);
+                noteDAOImp.update(note, semestre, "");
             } catch (DAOException e) {
                 throw new CSVException("Une erreur est survenue lors de la création de la note : " + e.getMessage());
             }

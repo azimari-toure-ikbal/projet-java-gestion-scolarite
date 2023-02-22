@@ -76,8 +76,9 @@ public class NotesItemController extends Application {
 
             thisNote.setNote(noteValue);
             try {
-                System.out.println(thisNote + " - " + superController.getSelectedSemestreIndex());
-                notesData.update(thisNote,superController.getSelectedSemestreIndex());
+
+                notesData.update(thisNote, "");
+
             } catch (DAOException e) {
                 throw new RuntimeException(e);
             }

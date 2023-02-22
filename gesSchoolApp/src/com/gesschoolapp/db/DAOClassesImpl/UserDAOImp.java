@@ -1,9 +1,10 @@
 package com.gesschoolapp.db.DAOClassesImpl;
 
 import com.gesschoolapp.Exceptions.DAOException;
-import com.gesschoolapp.db.DAOInterfaces.LoginDAO;
-import com.gesschoolapp.db.DAOInterfaces.SearchDAO;
+import com.gesschoolapp.db.DAOInterfaces.DAO;
+import com.gesschoolapp.db.DAOInterfaces.UserDAO;
 import com.gesschoolapp.db.DBManager;
+import com.gesschoolapp.models.actions.Notification;
 import com.gesschoolapp.models.users.Admin;
 import com.gesschoolapp.models.users.Caissier;
 import com.gesschoolapp.models.users.Secretaire;
@@ -12,10 +13,13 @@ import com.gesschoolapp.models.users.Utilisateur;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAOImp implements SearchDAO<Utilisateur>, LoginDAO {
+public class UserDAOImp implements UserDAO, DAO<Utilisateur> {
     @Override
     public Utilisateur authenticate(String email, String password) throws DAOException {
         try(Connection connection = DBManager.getConnection()) {
@@ -47,6 +51,32 @@ public class UserDAOImp implements SearchDAO<Utilisateur>, LoginDAO {
             throw new DAOException(e.getMessage());
         }
         return null;
+    }
+
+    @Override
+    public List<Notification> getNotifs(String name) throws DAOException {
+
+        try(Connection connection = DBManager.getConnection()) {
+           //get a list of notifications(String message, LocalDateTime date) from notifications table
+            //where utilisateur = name, and return it
+            String query = "SELECT * FROM notifications WHERE utilisateur=?";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, name);
+            ResultSet rs = ps.executeQuery();
+            List<Notification> notifs = new ArrayList<>();
+            while (rs.next()) {
+                String message = rs.getString("message");
+                String stringDate = rs.getString("date");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                //convert String to LocalDate
+                LocalDateTime date = LocalDateTime.parse(stringDate, formatter);
+
+                notifs.add(new Notification(message, date));
+            }
+            return notifs;
+        } catch (Exception e) {
+            throw new DAOException(e.getMessage());
+        }
     }
 
     @Override
@@ -87,7 +117,7 @@ public class UserDAOImp implements SearchDAO<Utilisateur>, LoginDAO {
     }
 
     @Override
-    public Utilisateur create(Utilisateur obj) throws DAOException {
+    public Utilisateur create(Utilisateur obj, String user) throws DAOException {
         //Utilisateur has idUtilisateur, nom, prenom, email, password, numero, type
         //INSERT INTO utilisateurs (nom, prenom, email, password, numero, type) VALUES (?,?,?,?,?,?)
         //if obj instance of Admin -> type = "administrateur"
@@ -111,7 +141,7 @@ public class UserDAOImp implements SearchDAO<Utilisateur>, LoginDAO {
     }
 
     @Override
-    public void update(Utilisateur obj) throws DAOException {
+    public void update(Utilisateur obj, String user) throws DAOException {
         //UPDATE utilisateurs SET nom=?, prenom=?, email=?, password=?, numero=?, type=? WHERE idUtilisateur=?
         try {
             Connection connection = DBManager.getConnection();
@@ -132,7 +162,7 @@ public class UserDAOImp implements SearchDAO<Utilisateur>, LoginDAO {
     }
 
     @Override
-    public void delete(int id) throws DAOException {
+    public void delete(int id, String user) throws DAOException {
         try {
             Connection connection = DBManager.getConnection();
             String query = "DELETE FROM utilisateurs WHERE idUtilisateur=?";
@@ -211,6 +241,5 @@ public class UserDAOImp implements SearchDAO<Utilisateur>, LoginDAO {
             throw new DAOException(e.getMessage());
         }
         return null;
-
     }
 }

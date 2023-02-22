@@ -1,31 +1,123 @@
 package com.gesschoolapp.db.DAOClassesImpl;
 
 import com.gesschoolapp.Exceptions.DAOException;
-import com.gesschoolapp.db.DAOInterfaces.DAO;
-import com.gesschoolapp.db.DAOInterfaces.SearchDAO;
+import com.gesschoolapp.db.DAOInterfaces.ModuleDAO;
 import com.gesschoolapp.db.DBManager;
+import com.gesschoolapp.models.actions.Action;
 import com.gesschoolapp.models.matieres.Module;
 import com.gesschoolapp.models.matieres.Note;
+import com.gesschoolapp.models.student.Apprenant;
+import com.gesschoolapp.serial.ActionManager;
+import com.gesschoolapp.view.util.ActionType;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-public class ModuleDAOImp implements DAO<Module>, SearchDAO<Module> {
+public class ModuleDAOImp implements ModuleDAO {
     @Override
-    public Module create(Module obj) throws DAOException {
-        return null;
+    public Module create(Module obj, String user) throws DAOException {
+
+        try(Connection connection =  DBManager.getConnection() ){
+
+            if(obj.getId() == 0 ){
+                String query = "INSERT INTO modules (intitule, idClasse, semestre ) VALUES (?, ?, ?)";
+                PreparedStatement stmt = connection.prepareStatement(query);
+                stmt.setString(1, obj.getIntitule());
+                stmt.setInt(2, new ClasseDAOImp().search(obj.getClasse()).get(0).getId());
+                stmt.setInt(3, obj.getSemestre());
+                stmt.executeQuery();
+            }else{
+                String query = "INSERT INTO modules (idModule, intitule, idClasse, semestre ) VALUES (?, ?, ?, ?)";
+                PreparedStatement stmt = connection.prepareStatement(query);
+                stmt.setInt(1, obj.getId());
+                stmt.setString(2, obj.getIntitule());
+                stmt.setInt(3, new ClasseDAOImp().search(obj.getClasse()).get(0).getId());
+                stmt.setInt(4, obj.getSemestre());
+                stmt.executeQuery();
+            }
+
+            List<Apprenant> apprenants = new ClasseDAOImp().search(obj.getClasse()).get(0).getApprenants();
+
+            for (Apprenant apprenant : apprenants) {
+                String query2 = "INSERT INTO notes (idApprenant, idModule, valeur) VALUES (?, ?, ?, ?, ?)";
+                PreparedStatement stmt2 = connection.prepareStatement(query2);
+                stmt2.setInt(1, apprenant.getIdApprenant());
+                stmt2.setInt(2, new ModuleDAOImp().search(obj.getIntitule()).get(0).getId());
+                stmt2.setDouble(3, 0);
+                stmt2.executeQuery();
+            }
+
+
+            if(!Objects.equals(user, "admin")){
+                Action action = new Action();
+                action.setActor(user);
+                action.setAction(ActionType.ADD);
+                action.setObject(obj);
+                action.setDate(LocalDateTime.now());
+                ActionManager.add(action);
+            }
+            return new ModuleDAOImp().search(obj.getIntitule()).get(0);
+        }catch(Exception e){
+            throw new DAOException("Error while creating module : " + e.getMessage());
+        }
     }
 
     @Override
-    public void update(Module obj) throws DAOException {
+    public void update(Module obj, String user) throws DAOException {
 
+        try(Connection connection =  DBManager.getConnection() ){
+            String query = "UPDATE modules SET intitule = ?, idClasse = ?, semestre = ? WHERE idModule = ?";
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setString(1, obj.getIntitule());
+            stmt.setInt(2, new ClasseDAOImp().search(obj.getClasse()).get(0).getId());
+            stmt.setInt(3, obj.getSemestre());
+            stmt.setInt(4, obj.getId());
+            stmt.executeQuery();
+
+            if(!Objects.equals(user, "admin")){
+                Action action = new Action();
+                action.setActor(user);
+                action.setAction(ActionType.UPDATE);
+                action.setObject(obj);
+                action.setDate(LocalDateTime.now());
+                ActionManager.add(action);
+            }
+
+        }catch(Exception e){
+            throw new DAOException("Error while updating module : " + e.getMessage());
+        }
     }
 
     @Override
-    public void delete(int id) throws DAOException {
+    public void delete(int id, String user) throws DAOException {
+
+        try(Connection connection =  DBManager.getConnection() ){
+            String query = "DELETE FROM modules WHERE idModule = ?";
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setInt(1, id);
+            stmt.executeQuery();
+
+            String query2 = "DELETE FROM notes WHERE idModule = ?";
+            PreparedStatement stmt2 = connection.prepareStatement(query2);
+            stmt2.setInt(1, id);
+            stmt2.executeQuery();
+
+            if(!Objects.equals(user, "admin")){
+                Action action = new Action();
+                action.setActor(user);
+                action.setAction(ActionType.DELETE);
+                action.setObject(new ModuleDAOImp().read(id));
+                action.setDate(LocalDateTime.now());
+                ActionManager.add(action);
+            }
+        }catch(Exception e){
+            throw new DAOException("Error while deleting module : " + e.getMessage());
+        }
 
     }
 

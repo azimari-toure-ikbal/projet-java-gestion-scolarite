@@ -1,7 +1,13 @@
 package com.gesschoolapp.tests;
 import com.gesschoolapp.Exceptions.DAOException;
+import com.gesschoolapp.Exceptions.PDFException;
 import com.gesschoolapp.db.DAOClassesImpl.*;
+import com.gesschoolapp.db.DAOInterfaces.ApprenantDAO;
+import com.gesschoolapp.docmaker.PDFGenerator;
+import com.gesschoolapp.models.actions.Actions;
+import com.gesschoolapp.models.actions.Notification;
 import com.gesschoolapp.models.paiement.Paiement;
+import com.gesschoolapp.serial.ActionManager;
 import com.gesschoolapp.serial.ArchiveManager;
 import com.gesschoolapp.Exceptions.CSVException;
 import com.gesschoolapp.db.DBManager;
@@ -16,6 +22,8 @@ import java.io.File;
 import java.sql.Connection;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
@@ -37,17 +45,64 @@ public class TestClass {
 //        testCreateApprenant();
 //        System.out.println(ListRubriques.getRubriques());
 //        testReadClasse(15);
-//        testGetPaiements();
-        testPaiement();
-        testCheckPaiement();
+        testGetPaiements();
+//        testGetApprenant(1);
+//        testPaiement();
+//        testCheckPaiement();
+//        testCreateApprenant();
 //        System.out.println(LocalDate.now());
-        testGetAnnees();
+//        testGetAnnees();
+//        testCancelActions();
+//        testGetNotifs();
+//        System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYY-MM-dd HH:mm:ss")));
+        PaiementDAOImp paiementDAOImp = new PaiementDAOImp();
+        try {
+            List<Paiement> paiements = paiementDAOImp.getList();
+            Paiement paiement = paiements.get(0);
+            PDFGenerator.recuGenerator(paiement);
+        } catch (DAOException e) {
+            e.printStackTrace();
+        } catch (PDFException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public static void testGetApprenant(int idApprenant){
+        try {
+            Apprenant apprenant = new ApprenantDAOImp().read(idApprenant);
+            System.out.println(apprenant);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+
+    public static void testGetNotifs(){
+        try {
+            List<Notification> notifs = new UserDAOImp().getNotifs("Mark Hall");
+            System.out.println(notifs);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+
+    }
+
+    public static void testCancelActions(){
+        try{
+            ActionManager.DeleteArchive();
+//            new ApprenantDAOImp().delete(43, "Bob");
+//            testCreateApprenant();
+            Actions actions = ActionManager.DeserializeActions();
+            System.out.println(actions.getListActions());
+//            actions.getListActions().get(1).cancelAction("Marshall");
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
     }
 
     public static void testGetAnnees(){
         try {
-            List
-                    <String> annees = new PaiementDAOImp().getAnnees();
+            List<String> annees = new PaiementDAOImp().getAnnees();
             System.out.println(annees);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -57,7 +112,7 @@ public class TestClass {
     public static void testDeleteApprenant(int id){
         try {
             ApprenantDAOImp apprenantDAOImp = new ApprenantDAOImp();
-            apprenantDAOImp.delete(id);
+            apprenantDAOImp.delete(id, "Violet Myers");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
@@ -80,14 +135,14 @@ public class TestClass {
             PaiementDAOImp paiementDAOImp = new PaiementDAOImp();
             Paiement paiement = new Paiement();
             paiement.setMontant(1000);
-            paiement.setApprenant(new ApprenantDAOImp().read(40));
+            paiement.setApprenant(new ApprenantDAOImp().read(1));
             paiement.setRubrique("scolarite");
             paiement.setDate(LocalDate.now());
-            paiement.setClasse(new ApprenantDAOImp().read(40).getClasse());
+            paiement.setClasse(new ApprenantDAOImp().read(1     ).getClasse());
             paiement.setCaissier("Violet Myers");
             paiement.setObservation("Paiement de scolarite");
 
-            System.out.println(paiementDAOImp.create(paiement));
+            System.out.println(paiementDAOImp.create(paiement, "Halley Hayes"));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
@@ -101,7 +156,7 @@ public class TestClass {
             System.out.println(note);
             note.setNote(0);
             System.out.println("-------------------");
-            new NoteDAOImp().update(note, 1);
+            new NoteDAOImp().update(note, 1, "Natasha Mccoy");
             //after update
             System.out.println(note);
         } catch (DAOException e) {
@@ -132,7 +187,7 @@ public class TestClass {
             apprenant.setEtatPaiement(0);
             apprenant.setClasse("3eme");
             ApprenantDAOImp apprenantDAOImp = new ApprenantDAOImp();
-            System.out.println(apprenantDAOImp.create(apprenant));
+            System.out.println(apprenantDAOImp.create(apprenant, "Sophie Dee"));
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());

@@ -1,7 +1,7 @@
 package com.gesschoolapp.db.DAOClassesImpl;
 
 import com.gesschoolapp.Exceptions.DAOException;
-import com.gesschoolapp.db.DAOInterfaces.SearchDAO;
+import com.gesschoolapp.db.DAOInterfaces.ClasseDAO;
 import com.gesschoolapp.db.DBManager;
 import com.gesschoolapp.models.classroom.Classe;
 import com.gesschoolapp.models.paiement.Echeance;
@@ -15,20 +15,20 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ClasseDAOImp implements SearchDAO<Classe> {
+public class ClasseDAOImp implements ClasseDAO {
     @Override
-    public Classe create(Classe obj) throws DAOException {
+    public Classe create(Classe obj, String user) throws DAOException {
         //Not used
         return null;
     }
 
     @Override
-    public void update(Classe obj) throws DAOException {
+    public void update(Classe obj, String user) throws DAOException {
         //Not used
     }
 
     @Override
-    public void delete(int id) throws DAOException {
+    public void delete(int id, String user) throws DAOException {
         //Not used
     }
 

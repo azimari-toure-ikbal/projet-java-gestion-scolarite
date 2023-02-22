@@ -1,19 +1,25 @@
 package com.gesschoolapp.db.DAOClassesImpl;
 
 import com.gesschoolapp.Exceptions.DAOException;
-import com.gesschoolapp.db.DAOInterfaces.DAO;
+import com.gesschoolapp.db.DAOInterfaces.NoteDAO;
 import com.gesschoolapp.db.DBManager;
+import com.gesschoolapp.models.actions.Action;
 import com.gesschoolapp.models.matieres.Note;
+import com.gesschoolapp.models.student.Apprenant;
+import com.gesschoolapp.serial.ActionManager;
+import com.gesschoolapp.view.util.ActionType;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-public class NoteDAOImp implements DAO<Note> {
+public class NoteDAOImp implements NoteDAO {
     @Override
-    public Note create(Note obj) throws DAOException {
+    public Note create(Note obj, String user) throws DAOException {
         try(Connection connexion = DBManager.getConnection()) {
             String query = "INSERT INTO notes (valeur, idApprenant, idModule) VALUES (?, ?, ?)";
             PreparedStatement stmt = connexion.prepareStatement(query);
@@ -36,7 +42,7 @@ public class NoteDAOImp implements DAO<Note> {
      * @throws DAOException
      */
     @Override
-    public void update(Note obj) throws DAOException {
+    public void update(Note obj, String user) throws DAOException {
         try(Connection connexion = DBManager.getConnection()) {
             String query = "UPDATE notes SET valeur = ?, idApprenant = ?, idModule = ? WHERE idNote = ?";
             PreparedStatement stmt = connexion.prepareStatement(query);
@@ -60,7 +66,9 @@ public class NoteDAOImp implements DAO<Note> {
      * @param semestre
      * @throws DAOException
      */
-    public void update (Note obj, int semestre) throws DAOException {
+
+    @Override
+    public void update (Note obj, int semestre, String user) throws DAOException {
         try(Connection connexion = DBManager.getConnection()) {
             String query = "UPDATE notes n, modules m, apprenants a SET n.valeur = ? WHERE n.idApprenant = a.idApprenant AND n.idModule = m.idModule AND m.semestre = ? AND a.matricule = ? AND m.intitule = ?";
             PreparedStatement stmt = connexion.prepareStatement(query);
@@ -69,13 +77,47 @@ public class NoteDAOImp implements DAO<Note> {
             stmt.setInt(3, obj.getApprenant().getMatricule());
             stmt.setString(4, obj.getModule());
             stmt.executeUpdate();
+
+            if(user != "admin"){
+                Action action = new Action();
+                action.setActor(user);
+                action.setAction(ActionType.UPDATE);
+                action.setObject(obj);
+                action.setDate(LocalDateTime.now());
+                ActionManager.add(action);
+            }
+
         } catch (Exception e) {
             throw new DAOException("In NoteDAOImp.update()\n" + e.getMessage());
         }
     }
 
     @Override
-    public void delete(int id) throws DAOException {
+    public List<Note> getNotesOfApprenant(Apprenant apprenant) throws DAOException {
+
+        List<Note> notes = new ArrayList<>();
+        try(Connection connexion = DBManager.getConnection()) {
+            String query = "SELECT n.idNote, n.valeur, m.intitule as module, n.idApprenant as apprenant " +
+                    "FROM notes n, modules m, apprenants a WHERE n.idModule = m.idModule AND n.idApprenant = a.idApprenant AND a.echeancier > 0 AND a.matricule = ?";
+            PreparedStatement stmt = connexion.prepareStatement(query);
+            stmt.setInt(1, apprenant.getMatricule());
+            ResultSet rs = stmt.executeQuery();
+            Note note = new Note();
+            while (rs.next()) {
+                note.setId(rs.getInt("idNote"));
+                note.setNote(rs.getInt("valeur"));
+                note.setApprenant(new ApprenantDAOImp().read(rs.getInt("apprenant")));
+                note.setModule(rs.getString("module"));
+                notes.add(note);
+            }
+            return notes;
+        } catch (Exception e) {
+            throw new DAOException("In NoteDAOImp.getNotesOfApprenant()\n" + e.getMessage());
+        }
+    }
+
+    @Override
+    public void delete(int id, String user) throws DAOException {
         try(Connection connexion = DBManager.getConnection()) {
             String query = "DELETE FROM notes WHERE idNote = ?";
             PreparedStatement stmt = connexion.prepareStatement(query);
@@ -90,7 +132,7 @@ public class NoteDAOImp implements DAO<Note> {
     @Override
     public Note read(int id) throws DAOException {
         try(Connection connexion = DBManager.getConnection()) {
-            String query = "SELECT n.valeur, m.intitule as intitule, n.idApprenant FROM notes n, modules m, apprenants a WHERE idNote = ? AND a.echeancier > 0";
+            String query = "SELECT n.valeur, m.intitule as intitule, n.idApprenant FROM notes n, modules m, apprenants a WHERE idNote = ? ";
             PreparedStatement stmt = connexion.prepareStatement(query);
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
@@ -131,6 +173,12 @@ public class NoteDAOImp implements DAO<Note> {
         }
     }
 
+    @Override
+    public List<Note> search(String stringToSearch) throws DAOException {
+        return null;
+    }
+
+    @Override
     public List<Note> getNotesOfModule(int idModule) throws DAOException {
         try(Connection connexion = DBManager.getConnection()) {
             String query = "SELECT n.idNote, n.valeur, m.intitule as module, n.idApprenant as apprenant " +

@@ -33,6 +33,7 @@ public class Paiement {
         this.setNameApprenant(nameApprenant);
         this.setCaissier(caissier);
         this.setClasse(classe);
+        this.setApprenant(apprenant);
     }
 
     public Paiement(int idPaiement, String numeroRecu, double montant, String rubrique, LocalDate date, String observation, Apprenant apprenant, String caissier, String classe) {

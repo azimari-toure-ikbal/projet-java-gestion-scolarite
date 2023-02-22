@@ -6,12 +6,10 @@ import java.util.List;
 
 public interface DAO<T> {
 
-//    create, read, getList, update, delete
-
-    public T create(T obj) throws DAOException;
-    public void update(T obj) throws DAOException;
-    public void delete(int id) throws DAOException;
+    public T create(T obj, String user) throws DAOException;
+    public void update(T obj, String user) throws DAOException;
+    public void delete(int id, String user) throws DAOException;
     public T read(int id) throws DAOException;
     public List<T> getList() throws DAOException;
-
+    public List<T> search(String stringToSearch) throws DAOException;
 }

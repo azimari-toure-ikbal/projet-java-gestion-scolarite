@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 19, 2023 at 06:20 PM
+-- Generation Time: Feb 21, 2023 at 05:05 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `apprenants` (
   `matricule` int(11) NOT NULL,
   PRIMARY KEY (`idApprenant`),
   UNIQUE KEY `matricule` (`matricule`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `apprenants` (
 DROP TABLE IF EXISTS `archives`;
 CREATE TABLE IF NOT EXISTS `archives` (
   `idAnnee` int(11) NOT NULL,
-  `fichier` varchar(40) NOT NULL,
+  `fichier` varchar(69) NOT NULL,
   `annee` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -68,7 +68,14 @@ CREATE TABLE IF NOT EXISTS `classeapprenant` (
   PRIMARY KEY (`idClasseAppenant`),
   KEY `classeapprenant_ibfk_1` (`idApprenant`),
   KEY `classeapprenant_ibfk_2` (`idClasse`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `classeapprenant`
+--
+
+INSERT INTO `classeapprenant` (`idClasseAppenant`, `idClasse`, `idApprenant`) VALUES
+(25, 15, 40);
 
 -- --------------------------------------------------------
 
@@ -93,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `classes` (
 
 INSERT INTO `classes` (`idClasse`, `intitule`, `reference`, `annee`, `formation`, `views`) VALUES
 (1, 'Crèche', 1, '2022-2023', 'Maternelle', '2023-02-15 19:45:07'),
-(2, 'Très Petite Section', 2, '2022-2023', 'Maternelle', '2023-02-18 21:02:54'),
+(2, 'Très Petite Section', 2, '2022-2023', 'Maternelle', '2023-02-19 20:30:54'),
 (3, 'Petite Section', 3, '2022/2023', 'Maternelle', '2023-02-15 19:45:07'),
 (4, 'Moyenne Section', 3, '2022-2023', 'Maternelle', '2023-02-18 21:02:48'),
 (5, 'Grande Section', 3, '2022-2023', 'Maternelle', '2023-02-15 19:45:07'),
@@ -106,10 +113,10 @@ INSERT INTO `classes` (`idClasse`, `intitule`, `reference`, `annee`, `formation`
 (12, '6eme', 7, '2022/2023', 'College', '2023-02-18 21:02:50'),
 (13, '5eme', 7, '2022/2023', 'College', '2023-02-15 19:45:07'),
 (14, '4eme', 8, '2022/2023', 'College', '2023-02-18 21:02:55'),
-(15, '3eme', 8, '2022/2023', 'College', '2023-02-18 21:09:56'),
+(15, '3eme', 8, '2022/2023', 'College', '2023-02-21 16:37:34'),
 (16, '1ere année', 9, '2022/2023', 'Froid/Climatisation', '2023-02-15 19:45:07'),
 (17, '2e année', 9, '2022/2023', 'Froid/Climatisation', '2023-02-15 19:45:07'),
-(18, '3e année', 9, '2022/2023', 'Froid/Climatisation', '2023-02-18 21:03:00');
+(18, '3e année', 9, '2022/2023', 'Froid/Climatisation', '2023-02-19 20:29:16');
 
 -- --------------------------------------------------------
 
@@ -467,7 +474,30 @@ CREATE TABLE IF NOT EXISTS `notes` (
   PRIMARY KEY (`idNote`),
   KEY `idModule` (`idModule`),
   KEY `idApprenant` (`idApprenant`)
-) ENGINE=InnoDB AUTO_INCREMENT=112 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `notifications`
+--
+
+DROP TABLE IF EXISTS `notifications`;
+CREATE TABLE IF NOT EXISTS `notifications` (
+  `idNotification` int(11) NOT NULL AUTO_INCREMENT,
+  `utilisateur` varchar(120) NOT NULL,
+  `admin` varchar(120) NOT NULL,
+  `date` datetime NOT NULL,
+  `message` text NOT NULL,
+  PRIMARY KEY (`idNotification`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `notifications`
+--
+
+INSERT INTO `notifications` (`idNotification`, `utilisateur`, `admin`, `date`, `message`) VALUES
+(2, 'Natasha Nice', 'Angela White', '2023-02-21 16:30:07', 'This is actually a test');
 
 -- --------------------------------------------------------
 
@@ -486,8 +516,9 @@ CREATE TABLE IF NOT EXISTS `paiements` (
   `caissier` varchar(40) NOT NULL,
   `classe` varchar(40) NOT NULL,
   `observation` text NOT NULL,
+  `apprenant` varchar(110) NOT NULL,
   PRIMARY KEY (`idPaiement`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 

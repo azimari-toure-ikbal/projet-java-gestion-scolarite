@@ -1,24 +1,28 @@
 package com.gesschoolapp.db.DAOClassesImpl;
 
 import com.gesschoolapp.Exceptions.DAOException;
-import com.gesschoolapp.db.DAOInterfaces.SearchDAO;
+import com.gesschoolapp.db.DAOInterfaces.PaiementDAO;
 import com.gesschoolapp.db.DBManager;
+import com.gesschoolapp.models.actions.Action;
 import com.gesschoolapp.models.paiement.Paiement;
+import com.gesschoolapp.serial.ActionManager;
+import com.gesschoolapp.view.util.ActionType;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class PaiementDAOImp implements SearchDAO<Paiement> {
+public class PaiementDAOImp implements PaiementDAO {
 
     @Override
-    public Paiement create(Paiement obj) throws DAOException {
+    public Paiement create(Paiement obj, String user) throws DAOException {
         String rubrique = obj.getRubrique();
         //Generate a method to insert a paiement in the database
         try (Connection connection = DBManager.getConnection()) {
@@ -29,7 +33,7 @@ public class PaiementDAOImp implements SearchDAO<Paiement> {
                 throw new DAOException("Cet apprenant a déjà payé toutes ses scolarités");
             }
 
-            String query = "INSERT INTO paiements (numeroRecu, date, montant, idApprenant, classe, rubrique, caissier, observation, apprenant ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String  query = "INSERT INTO paiements (numeroRecu, date, montant, idApprenant, classe, rubrique, caissier, observation, apprenant ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, "RCU" + (int) (Instant.now().getEpochSecond()/1000));
             statement.setString(2, obj.getDate().toString());
@@ -49,6 +53,12 @@ public class PaiementDAOImp implements SearchDAO<Paiement> {
                 new ApprenantDAOImp().incrementEtatPaiement(obj.getApprenant());
             }
 
+            Action action = new Action();
+            action.setAction(ActionType.ADD);
+            action.setDate(LocalDateTime.now());
+            action.setActor(user);
+            ActionManager.add(action);
+
             return getList().get(getList().size() - 1);
         } catch (Exception e) {
             throw new DAOException( "Error in PaiementDAO.create() : " + e.getMessage());
@@ -56,13 +66,28 @@ public class PaiementDAOImp implements SearchDAO<Paiement> {
     }
 
     @Override
-    public void update(Paiement obj) throws DAOException {
-
+    public void update(Paiement obj, String user) throws DAOException {
     }
 
     @Override
-    public void delete(int id) throws DAOException {
+    public void delete(int id, String user) throws DAOException {
+        try (Connection connection = DBManager.getConnection()) {
+            if(new PaiementDAOImp().read(id).getRubrique().equals("inscription") || new PaiementDAOImp().read(id).getRubrique().equals("scolarite")){
+                new ApprenantDAOImp().decrementEtatPaiement(new ApprenantDAOImp().read(new PaiementDAOImp().read(id).getApprenant().getIdApprenant()));
+            }
+            String query = "DELETE FROM paiements WHERE idPaiement = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, id);
+            statement.executeUpdate();
 
+            Action action = new Action();
+            action.setAction(ActionType.DELETE);
+            action.setDate(LocalDateTime.now());
+            action.setActor(user);
+            ActionManager.add(action);
+        } catch (Exception e) {
+            throw new DAOException(e.getMessage());
+        }
     }
 
     @Override
@@ -100,7 +125,7 @@ public class PaiementDAOImp implements SearchDAO<Paiement> {
                 nomApprenant = rs.getString("apprenant");
 
                 LocalDate datePaiement = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-
+                
                 paiements.add(new Paiement(id, numeroRecu, montant, rubrique, datePaiement, observation, caissier, classe, nomApprenant, new ApprenantDAOImp().read(idApprenant)));
             }
             return paiements;

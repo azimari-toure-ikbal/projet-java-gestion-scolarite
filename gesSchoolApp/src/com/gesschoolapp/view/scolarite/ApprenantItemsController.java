@@ -71,7 +71,7 @@ public class ApprenantItemsController implements Initializable {
             ApprenantDAOImp apprData = new ApprenantDAOImp();
 
             try {
-                apprData.delete(thisApprenant.getIdApprenant());
+                apprData.delete(thisApprenant.getIdApprenant(), "");
                 List<Apprenant> list = new ArrayList<>(superController.getSelectedClass().getApprenants());
                 list.removeIf(appr -> appr.getIdApprenant() == thisApprenant.getIdApprenant());
                 superController.getSelectedClass().setApprenants(list);
