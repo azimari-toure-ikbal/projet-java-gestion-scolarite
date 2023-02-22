@@ -47,6 +47,16 @@ public class Toolbox {
         return list;
     }
 
+    public static String passwordEncryption(String password){
+        // Encrypt the password
+
+        return password;
+    }
+
+    public static String passwordDecryption(String password){
+        return password;
+    }
+
     public static List<Paiement> paiementsJournalier(LocalDate date){
         PaiementDAOImp paiementDAOImp = new PaiementDAOImp();
         try {

@@ -8,6 +8,7 @@ import com.gesschoolapp.gescsv.reader.CSVReader;
 import com.gesschoolapp.gescsv.writter.CSVWritter;
 import com.gesschoolapp.models.classroom.Classe;
 import com.gesschoolapp.models.student.Apprenant;
+import com.gesschoolapp.models.users.Utilisateur;
 import com.gesschoolapp.utils.Toolbox;
 
 import java.io.*;
@@ -95,7 +96,7 @@ public class ApprenantsCSV implements CSVReader<Apprenant>, CSVWritter<Apprenant
         return apprenants;
     }
 
-    public List<Apprenant> csvToObject(List<String[]> data, Classe classe) throws CSVException, Mismatch {
+    public List<Apprenant> csvToObject(List<String[]> data, Classe classe, Utilisateur utilisateur) throws CSVException, Mismatch {
         // Verify if the list is not empty
         if (data.isEmpty()) {
             throw new CSVException("La liste est vide");
@@ -132,7 +133,7 @@ public class ApprenantsCSV implements CSVReader<Apprenant>, CSVWritter<Apprenant
             // Create the apprenant
             Apprenant newApprenant;
             try {
-                newApprenant =  new ApprenantDAOImp().create(apprenant,"");
+                newApprenant =  new ApprenantDAOImp().create(apprenant,utilisateur.getFullName());
             } catch (DAOException e) {
                 throw new CSVException("Une erreur est survenue lors de la création de l'apprenant : " + e.getMessage());
             }
