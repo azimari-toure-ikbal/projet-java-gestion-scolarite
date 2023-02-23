@@ -39,19 +39,17 @@ public class ModuleDAOImp implements ModuleDAO {
                 stmt.setString(2, obj.getIntitule());
                 stmt.setInt(3, new ClasseDAOImp().search(obj.getClasse()).get(0).getId());
                 stmt.setInt(4, obj.getSemestre());
-                stmt.executeQuery();
+                stmt.executeUpdate();
             }
 
             List<Apprenant> apprenants = new ClasseDAOImp().search(obj.getClasse()).get(0).getApprenants();
-
+;           int idModule = new ModuleDAOImp().search(obj.getIntitule()).get(0).getId();
             int test = new ModuleDAOImp().search(obj.getIntitule()).get(0).getId();
-            System.out.println("AGAGAGAGAGA" + new ModuleDAOImp().search(obj.getIntitule()).get(0));
-            System.out.println(test);
             for (Apprenant apprenant : apprenants) {
                 String query2 = "INSERT INTO notes (idApprenant, idModule, valeur) VALUES (?, ?, ?)";
                 PreparedStatement stmt2 = connection.prepareStatement(query2);
                 stmt2.setInt(1, apprenant.getIdApprenant());
-                stmt2.setInt(2, test);
+                stmt2.setInt(2, idModule);
                 stmt2.setDouble(3, 0);
                 stmt2.executeUpdate();
             }
@@ -64,8 +62,7 @@ public class ModuleDAOImp implements ModuleDAO {
                 action.setDate(LocalDateTime.now());
                 ActionManager.add(action);
             }
-            //Module module = new ModuleDAOImp().search(obj.getIntitule()).get(0);
-            return null;
+            return new ModuleDAOImp().read(idModule);
         }catch(Exception e){
             throw new DAOException("Error while creating module : " + e.getMessage());
         }
@@ -128,7 +125,7 @@ public class ModuleDAOImp implements ModuleDAO {
     @Override
     public Module read(int id) throws DAOException {
         try(Connection connexion = DBManager.getConnection()){
-            String query = "SELECT m.idClasse, m.intitule, c.intitule as class, m.semestre FROM modules m, classes c WHERE idModule = ? AND c.intitule = m.idClasse";
+            String query = "SELECT m.idClasse, m.intitule, c.intitule as class, m.semestre FROM modules m, classes c WHERE idModule = ?";
             PreparedStatement stmt = connexion.prepareStatement(query);
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();

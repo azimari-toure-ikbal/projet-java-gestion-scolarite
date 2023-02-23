@@ -133,7 +133,7 @@ public class ModuleItemController {
             return false;
         }
 
-        System.out.println(selectedModule);
+//        System.out.println(selectedModule);
 
         if (event.getSource() == intituleTF && event.getCode() == KeyCode.ENTER) {
 
