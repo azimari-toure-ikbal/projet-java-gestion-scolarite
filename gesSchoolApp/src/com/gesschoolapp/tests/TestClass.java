@@ -1,4 +1,5 @@
 package com.gesschoolapp.tests;
+import at.favre.lib.crypto.bcrypt.*;
 import com.gesschoolapp.Exceptions.DAOException;
 import com.gesschoolapp.Exceptions.PDFException;
 import com.gesschoolapp.db.DAOClassesImpl.*;
@@ -18,6 +19,7 @@ import com.gesschoolapp.models.classroom.Classe;
 import com.gesschoolapp.models.classroom.Classes;
 import com.gesschoolapp.models.matieres.Note;
 import com.gesschoolapp.models.student.Apprenant;
+import com.gesschoolapp.utils.Toolbox;
 
 import java.io.File;
 import java.sql.Connection;
@@ -73,7 +75,11 @@ public class TestClass {
 //        testCancelActions();
 //        testGetNotifs();
 //        System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYY-MM-dd HH:mm:ss")));
-        testGetUtilisateurs();
+//        testGetUtilisateurs();
+
+        String pwd = Toolbox.generateSecurePassword("motdepassetropsecure");
+        System.out.println(Toolbox.generateSecurePassword("motdepassetropsecure"));
+        System.out.println(Toolbox.verifyPassword("motdepassetropsecure", pwd));
     }
 
     public static void testGetUtilisateurs(){
