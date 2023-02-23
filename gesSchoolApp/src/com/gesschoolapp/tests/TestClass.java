@@ -7,6 +7,7 @@ import com.gesschoolapp.docmaker.PDFGenerator;
 import com.gesschoolapp.models.actions.Actions;
 import com.gesschoolapp.models.actions.Notification;
 import com.gesschoolapp.models.paiement.Paiement;
+import com.gesschoolapp.models.users.Utilisateur;
 import com.gesschoolapp.serial.ActionManager;
 import com.gesschoolapp.serial.ArchiveManager;
 import com.gesschoolapp.Exceptions.CSVException;
@@ -28,6 +29,23 @@ import java.util.*;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 
+//
+//        try(Connection connection = DBManager.getConnection()){
+//            String sql = "INSERT INTO candidat (prenom, nom, niveau_etude, examen_prepare, ecole_origine, adresse, code) VALUES (?,?,?,?,?,?,?)";
+//            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+//            preparedStatement.setString(1, candidat.getPrenom());
+//            preparedStatement.setString(2, candidat.getNom());
+//            preparedStatement.setString(3, candidat.getNiveauEtude());
+//            preparedStatement.setString(4, candidat.getExamenPrepare());
+//            preparedStatement.setString(5, candidat.getEcoleOrigine());
+//            preparedStatement.setString(6, candidat.getAdresse());
+//            preparedStatement.setInt(7, candidat.getCode());
+//            preparedStatement.executeUpdate();
+//        }catch (Exception e){
+//            System.err.println( "Error while creating the candidat : " +  e.getMessage());
+//        }
+//    }
+
 public class TestClass {
     public static void main(String[] args) {
 
@@ -45,7 +63,7 @@ public class TestClass {
 //        testCreateApprenant();
 //        System.out.println(ListRubriques.getRubriques());
 //        testReadClasse(15);
-        testGetPaiements();
+//        testGetPaiements();
 //        testGetApprenant(1);
 //        testPaiement();
 //        testCheckPaiement();
@@ -55,15 +73,15 @@ public class TestClass {
 //        testCancelActions();
 //        testGetNotifs();
 //        System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYY-MM-dd HH:mm:ss")));
-        PaiementDAOImp paiementDAOImp = new PaiementDAOImp();
+        testGetUtilisateurs();
+    }
+
+    public static void testGetUtilisateurs(){
         try {
-            List<Paiement> paiements = paiementDAOImp.getList();
-            Paiement paiement = paiements.get(0);
-            PDFGenerator.recuGenerator(paiement);
-        } catch (DAOException e) {
-            e.printStackTrace();
-        } catch (PDFException e) {
-            throw new RuntimeException(e);
+            List<Utilisateur> utilisateurs = new UserDAOImp().getList();
+            System.out.println(utilisateurs);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
 
