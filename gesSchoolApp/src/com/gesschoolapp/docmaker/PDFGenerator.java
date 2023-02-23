@@ -160,7 +160,7 @@ public class PDFGenerator {
         }
     }
 
-    public static void bulletinGenerator(Classe classe, List<Module> modules, String semestre) throws PDFException {
+    public static void bulletinGenerator(Classe classe, List<Module> modules, int semestre) throws PDFException {
         // Recuperer la liste des eleves
         List<Apprenant> apprenants = classe.getApprenants();
 
@@ -191,7 +191,7 @@ public class PDFGenerator {
             Document document = new Document();
 
             try {
-                PdfWriter.getInstance(document, new FileOutputStream("storage/bulletins/" + apprenant.getNom() + "_" + apprenant.getPrenom() + "_bulletin_" + semestre + ".pdf"));
+                PdfWriter.getInstance(document, new FileOutputStream("storage/bulletins/" + apprenant.getNom() + "_" + apprenant.getPrenom() + "_bulletin_semestre_" + semestre + ".pdf"));
                 document.open();
 
                 // Ajouter une photo de l'école

@@ -1092,7 +1092,7 @@
                                           <Insets />
                                        </opaqueInsets>
                                     </Button>
-                                    <Button fx:id="generateBulletins" disable="true" layoutX="532.0" layoutY="497.0" mnemonicParsing="false" onAction="#openStudentAddDialog" onMouseClicked="#handleNavigation" prefHeight="39.0" prefWidth="125.0" style="-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-background-color: linear-gradient(to right, #2c7aba, #5AB2D8);" styleClass="classic_btn" text="  Générer">
+                                    <Button fx:id="generateBulletins" layoutX="532.0" layoutY="497.0" mnemonicParsing="false" onAction="#handleBulletinGeneration" onMouseClicked="#handleNavigation" prefHeight="39.0" prefWidth="125.0" style="-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-background-color: linear-gradient(to right, #2c7aba, #5AB2D8);" styleClass="classic_btn" text="  Générer">
                                        <opaqueInsets>
                                           <Insets />
                                        </opaqueInsets>
