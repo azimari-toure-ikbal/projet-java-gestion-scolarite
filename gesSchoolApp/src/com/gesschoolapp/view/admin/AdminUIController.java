@@ -1,7 +1,9 @@
 package com.gesschoolapp.view.admin;
 
 import com.gesschoolapp.Exceptions.DAOException;
+import com.gesschoolapp.db.DAOClassesImpl.ClasseDAOImp;
 import com.gesschoolapp.db.DAOClassesImpl.UserDAOImp;
+import com.gesschoolapp.models.classroom.Classe;
 import com.gesschoolapp.models.student.Apprenant;
 import com.gesschoolapp.models.users.Admin;
 import com.gesschoolapp.models.users.Caissier;
@@ -102,6 +104,9 @@ public class AdminUIController implements Initializable {
     @FXML
     private VBox usersLayout;
 
+    @FXML
+    private VBox classesLayout;
+
 
 
     //  #### ROUTES :
@@ -135,7 +140,11 @@ public class AdminUIController implements Initializable {
     //  #### DAOS :
 
     UserDAOImp userData = new UserDAOImp();
+
+    ClasseDAOImp classData = new ClasseDAOImp();
     List<Utilisateur> usersList;
+
+    List<Classe> classesList;
 
     // ##### INIT :
 
@@ -162,13 +171,14 @@ public class AdminUIController implements Initializable {
 
         try {
             usersList = userData.getList();
-            System.out.println("L" + usersList);
+            classesList = classData.getList();
         } catch (DAOException e) {
             throw new RuntimeException(e);
         }
 
-
+        // --- Set lists :
         setListeDesUtilisateurs(usersList);
+        setListeDesClasses(classesList);
 
     }
 
@@ -362,6 +372,12 @@ public class AdminUIController implements Initializable {
         }
     }
 
+    @FXML
+    void handleStudentsFilter(ActionEvent event) {
+
+    }
+
+
     private String extractPreviousRouteLink() {
         StringBuilder sb = new StringBuilder();
         String currentRouteLink = getCurrentRoute().getRouteLink();
@@ -423,6 +439,41 @@ public class AdminUIController implements Initializable {
 
 
             usersLayout.getChildren().add(hbox);
+
+        }
+    }
+
+    public void setListeDesClasses(){
+        setListeDesClasses(classesList);
+    }
+    public void setListeDesClasses(List<Classe> classes) {
+
+        if (classes.size() != 0) {
+            classesLayout.getChildren().clear();
+        }
+
+//        if (getSelectedUserType() == btnCaissiers) {
+//            users = users.stream().filter(utilisateur -> utilisateur.getType().equals("caissier")).toList();
+//        } else if (getSelectedUserType() == btnSecretaires) {
+//            users = users.stream().filter(utilisateur -> utilisateur.getType().equals("secretaire")).toList();
+//        } else if (getSelectedUserType() == btnAdmins) {
+//            users = users.stream().filter(utilisateur -> utilisateur.getType().equals("administrateur")).toList();
+//        }
+
+        for (Classe classe : classes) {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("ClassItem.fxml"));
+            HBox hbox = null;
+            try {
+                hbox = fxmlLoader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            ClassItemController uic = fxmlLoader.getController();
+            uic.setSuperController(this);
+            uic.setData(classe);
+
+            classesLayout.getChildren().add(hbox);
 
         }
     }
@@ -511,6 +562,129 @@ public class AdminUIController implements Initializable {
                 e.printStackTrace();
             }
         }
+
+    public void openUserChartDialog(Utilisateur user) {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("UserChartDialog.fxml"));
+
+            AnchorPane page = (AnchorPane) loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("School UP Admin - Etat de paiement journalier");
+            // Set the application icon.
+
+            dialogStage.getIcons().add(new Image("com/gesschoolapp/resources/images/app_icon.png"));
+            dialogStage.initStyle(StageStyle.UNDECORATED);
+            dialogStage.setResizable(false);
+
+
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(mainApp.getPrimaryStage());
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the person into the controller.
+            UserChartDialogController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setSuperController(this);
+            controller.setScene(scene);
+            controller.setMain(mainApp);
+            controller.setData(user);
+            controller.setDraggable();
+
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
+    public void openUserEditDialog(Utilisateur user) {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("UserEditDialog.fxml"));
+
+            AnchorPane page = (AnchorPane) loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("School UP Admin - Modifier un utilisateur");
+            // Set the application icon.
+
+            dialogStage.getIcons().add(new Image("com/gesschoolapp/resources/images/app_icon.png"));
+            dialogStage.initStyle(StageStyle.UNDECORATED);
+            dialogStage.setResizable(false);
+
+
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(mainApp.getPrimaryStage());
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the person into the controller.
+            UserEditDialogController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setSuperController(this);
+            controller.setData(user);
+            controller.setScene(scene);
+            controller.setMain(mainApp);
+            controller.setDraggable();
+
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openGesModulesView(Classe classe) {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("ClassGesModuleView.fxml"));
+
+            AnchorPane page = (AnchorPane) loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("School UP Admin - Gérer les modules");
+            // Set the application icon.
+
+            dialogStage.getIcons().add(new Image("com/gesschoolapp/resources/images/app_icon.png"));
+            dialogStage.initStyle(StageStyle.UNDECORATED);
+            dialogStage.setResizable(false);
+
+
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(mainApp.getPrimaryStage());
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the person into the controller.
+            ClassGesModuleViewController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setSuperController(this);
+            controller.setData(classe);
+            controller.setScene(scene);
+            controller.setMain(mainApp);
+            controller.setDraggable();
+
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
 
 

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="570.0" prefWidth="936.0" style="-fx-background-color: white; -fx-border-width: 0.5px; -fx-border-color: #C8C8C8;" stylesheets="@../../style/admindashboard.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gesschoolapp.view.admin.UserChartDialogController">
+   <children>
+      <Pane layoutX="2.5" layoutY="2.5" prefHeight="120.0" prefWidth="762.0" style="-fx-background-color: linear-gradient(to right, #2c7aba, #5AB2D8);" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="RIGHT" layoutX="229.0" layoutY="36.0" prefHeight="48.0" prefWidth="508.0" text="Etat de paiement journalier" textFill="WHITE">
+               <font>
+                  <Font name="Corbel Bold" size="40.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets left="22.0" />
+               </opaqueInsets>
+            </Label>
+            <ImageView disable="true" fitHeight="41.0" fitWidth="57.0" layoutX="198.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../resources/images/pie_chart_white_icon.png" />
+               </image>
+            </ImageView>
+            <Label alignment="CENTER" contentDisplay="RIGHT" layoutX="11.0" layoutY="92.0" prefHeight="29.0" prefWidth="120.0" text="Marcus Sins" textFill="WHITE">
+               <font>
+                  <Font name="Corbel Bold" size="16.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets left="22.0" />
+               </opaqueInsets>
+            </Label>
+            <ImageView disable="true" fitHeight="29.0" fitWidth="22.0" layoutX="4.0" layoutY="94.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../resources/images/profile_icon_admin.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <TableView fx:id="feesTable" layoutX="14.0" layoutY="148.0" maxWidth="435.0" prefHeight="265.0" prefWidth="435.0" AnchorPane.leftAnchor="14.0">
+         <columns>
+            <TableColumn fx:id="idFee" minWidth="0.0" prefWidth="37.0" text="ID" />
+            <TableColumn fx:id="montantFee" minWidth="0.0" prefWidth="89.0" text="Montant" />
+            <TableColumn fx:id="rubrFee" minWidth="0.0" prefWidth="96.0" text="Rubrique" />
+            <TableColumn fx:id="recuFee" minWidth="0.0" prefWidth="88.0" text="N° reçu" />
+            <TableColumn fx:id="eleveFee" minWidth="0.0" prefWidth="122.0" text="Élève" />
+         </columns>
+      </TableView>
+      <AnchorPane layoutX="16.5" layoutY="413.0" prefHeight="62.0" prefWidth="435.0" style="-fx-background-color: linear-gradient(to right, #2c7aba,#2c7aba, #5AB2D8); -fx-border-width: 1px;" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="484.5">
+         <children>
+            <Label fx:id="feeTotal" contentDisplay="RIGHT" layoutX="23.0" layoutY="17.0" prefHeight="29.0" prefWidth="411.0" text="Total encaissé :" textFill="WHITE" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="17.0">
+               <font>
+                  <Font name="Gill Sans MT" size="20.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets left="22.0" />
+               </opaqueInsets>
+            </Label>
+            <Line endX="218.0" layoutX="184.0" startX="-156.0" stroke="WHITE" strokeWidth="0.5" AnchorPane.leftAnchor="22.5" AnchorPane.rightAnchor="22.5" />
+         </children>
+      </AnchorPane>
+      <PieChart fx:id="feesPie" layoutX="487.0" layoutY="144.0" prefHeight="335.0" prefWidth="435.0" />
+      <Button fx:id="btnAnnuler" alignment="CENTER" layoutX="802.0" layoutY="515.0" mnemonicParsing="false" onAction="#onClose" prefHeight="41.0" prefWidth="120.0" style="-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-background-color: #CC0001;" styleClass="classic_btn" text="Annuler" textAlignment="CENTER">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <effect>
+            <DropShadow offsetX="2.0" offsetY="2.0" spread="0.09">
+               <color>
+                  <Color red="0.7647058963775635" green="0.7647058963775635" blue="0.7647058963775635" />
+               </color>
+            </DropShadow>
+         </effect>
+      </Button>
+   </children>
+   <effect>
+      <DropShadow height="15.0" radius="7.0" spread="0.3" width="15.0">
+         <color>
+            <Color red="0.31578946113586426" green="0.31578946113586426" blue="0.31578946113586426" />
+         </color>
+      </DropShadow>
+   </effect>
+</AnchorPane>

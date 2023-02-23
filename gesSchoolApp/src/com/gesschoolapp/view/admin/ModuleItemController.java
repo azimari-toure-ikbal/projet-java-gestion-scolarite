@@ -1,0 +1,195 @@
+package com.gesschoolapp.view.admin;
+
+import com.gesschoolapp.Exceptions.DAOException;
+import com.gesschoolapp.db.DAOClassesImpl.ClasseDAOImp;
+import com.gesschoolapp.db.DAOClassesImpl.ModuleDAOImp;
+import com.gesschoolapp.db.DAOClassesImpl.NoteDAOImp;
+import com.gesschoolapp.db.DAOClassesImpl.UserDAOImp;
+import com.gesschoolapp.models.matieres.Module;
+import com.gesschoolapp.models.users.Utilisateur;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+public class ModuleItemController {
+
+    ClassGesModuleViewController superController;
+
+
+    @FXML
+    private Button btnDelete;
+
+    private Module selectedModule;
+
+    @FXML
+    private TextField intituleTF;
+
+    @FXML
+    private Label labelIntitule;
+
+    @FXML
+    private Label labelSemestre;
+
+    @FXML
+    private ChoiceBox<Integer> semestreSelect;
+
+    @FXML
+    private Label messageInfo;
+
+    private Integer[] semestres = {1,2};
+
+    ModuleDAOImp mDao = new ModuleDAOImp();
+
+
+    @FXML
+    void actionBtnClicked(ActionEvent event) {
+        if(event.getSource() == btnDelete){
+            //ask for confirmation
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Suppression");
+            alert.setHeaderText("Vous êtes sur le point de supprimer le module " + selectedModule.getIntitule() + " de la classe " + selectedModule.getClasse());
+            alert.setContentText("Voulez-vous continuer ?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                ModuleDAOImp mDao = new ModuleDAOImp();
+
+                try {
+                    mDao.delete(selectedModule.getId(),superController.superController.getCurrentUser().getFullName());
+                    List<Module> list = new ArrayList<>(superController.getSelectedClass().getModules());
+                    list.removeIf(module -> module.getId() == selectedModule.getId());
+                    superController.getSelectedClass().setModules(list);
+                    superController.setMainMessage("Utilisateur supprimé avec succès !",1);
+                } catch (DAOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+    }
+
+
+    public ClassGesModuleViewController getSuperController() {
+        return superController;
+    }
+
+    public void setSuperController(ClassGesModuleViewController superController) {
+        this.superController = superController;
+    }
+
+    public void setData(Module mod){
+            semestreSelect.getItems().addAll(semestres);
+        if(mod==null){
+            intituleTF.setVisible(true);
+            intituleTF.requestFocus();
+            semestreSelect.setVisible(true);
+            selectedModule = null;
+        }else{
+            labelIntitule.setText(mod.getIntitule());
+            intituleTF.setText(mod.getIntitule());
+            labelSemestre.setText(Integer.toString(mod.getSemestre()));
+            semestreSelect.setValue(mod.getSemestre());
+            selectedModule = mod;
+        }
+    }
+
+    @FXML
+    void openEdit(MouseEvent event) {
+        if(event.getSource() == labelIntitule){
+            intituleTF.setVisible(true);
+            intituleTF.requestFocus();
+        }else{
+            semestreSelect.setVisible(true);
+            semestreSelect.requestFocus();
+        }
+    }
+
+
+    @FXML
+    boolean closeEdit(KeyEvent event) {
+        System.out.println(event.getSource());
+            String intitule = intituleTF.getText();
+
+            System.out.println(intitule);
+
+            if(intitule.isEmpty() || intitule.length() >= 255){
+                superController.setMainMessage("L'intitulé ne peut pas être nul !",0);
+                return false;
+            }
+
+            if(semestreSelect.getValue() == null){
+                superController.setMainMessage("Veuillez choisir un semestre svp !",0);
+                return false;
+            }
+
+        System.out.println(selectedModule);
+
+        if(event.getSource() == intituleTF && event.getCode() == KeyCode.ENTER) {
+
+            // Teste aussi les special chars !
+
+            if(selectedModule == null){
+
+                    Module newModule = new Module();
+                    newModule.setSemestre(semestreSelect.getValue());
+                    newModule.setIntitule(intituleTF.getText());
+                    newModule.setClasse(superController.getSelectedClass().getIntitule());
+                try {
+                    mDao.create(newModule,superController.superController.getCurrentUser().getFullName());
+                } catch (DAOException e) {
+                    throw new RuntimeException(e);
+                }
+
+            }else{
+
+            selectedModule.setIntitule(intitule);
+            try {
+                mDao.update(selectedModule,superController.superController.getCurrentUser().getFullName());
+                labelIntitule.setText(intitule);
+                superController.setMainMessage("Intitulé du monde modifié avec succès",1);
+                intituleTF.setVisible(false);
+                semestreSelect.setVisible(false);
+                return true;
+            } catch (DAOException e) {
+                throw   new RuntimeException(e);
+            }
+            }
+        }else if(event.getSource() == semestreSelect && event.getCode() == KeyCode.ENTER){
+
+            if(selectedModule == null){
+
+                Module newModule = new Module();
+                newModule.setSemestre(semestreSelect.getValue());
+                newModule.setIntitule(intituleTF.getText());
+//                newModule.setClasse(superController.getSelectedClass().getIntitule());
+                try {
+                    mDao.create(newModule,superController.superController.getCurrentUser().getFullName());
+                } catch (DAOException e) {
+                    throw new RuntimeException(e);
+                }
+            }else{
+
+            selectedModule.setSemestre(semestreSelect.getValue());
+            labelSemestre.setText(semestreSelect.getValue().toString());
+            try {
+                mDao.update(selectedModule,superController.superController.getCurrentUser().getFullName());
+                superController.setMainMessage("Semestre de la note modifiée avec succès !",1);
+                intituleTF.setVisible(false);
+                semestreSelect.setVisible(false);
+                return true;
+                } catch (DAOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return false;
+    }
+
+
+}

@@ -4,6 +4,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -17,20 +19,20 @@
 
 <AnchorPane prefHeight="589.0" prefWidth="526.0" style="-fx-border-color: #C8C8C8; -fx-background-color: white; -fx-border-width: 0.5px;" stylesheets="@../../style/application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gesschoolapp.view.scolarite.ApprenantViewDialogController">
    <children>
-      <Pane fx:id="landscape" layoutX="14.0" prefHeight="163.0" prefWidth="526.0" style="-fx-background-color: linear-gradient(to right, #0f0c29, #302b63, #302b63);" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Pane fx:id="landscape" layoutX="14.0" prefHeight="163.0" prefWidth="526.0" style="-fx-background-color: linear-gradient(to right, #2c7aba, #5AB2D8);" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Circle fx:id="user_pp" fill="DODGERBLUE" layoutX="263.0" layoutY="120.0" radius="88.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="student_pic">
+            <Circle fx:id="student_pp" fill="DODGERBLUE" layoutX="263.0" layoutY="120.0" radius="88.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="student_pic">
                <effect>
-                  <DropShadow height="35.75" offsetY="3.0" radius="18.1875" spread="0.1" width="39.0">
+                  <DropShadow height="32.5" offsetY="3.0" radius="17.375" spread="0.1" width="39.0">
                      <color>
-                        <Color red="0.05999999865889549" green="0.05999999865889549" blue="0.05999999865889549" opacity="0.6717557311058044" />
+                        <Color red="0.30263158679008484" green="0.30263158679008484" blue="0.30263158679008484" />
                      </color>
                   </DropShadow>
                </effect>
             </Circle>
          </children>
       </Pane>
-      <Label fx:id="labelName" alignment="CENTER" contentDisplay="RIGHT" layoutX="91.0" layoutY="225.0" prefHeight="29.0" prefWidth="345.0" text="Lionel Andre Messi Cuccitini" textFill="#323a3f" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="23.0">
+      <Label fx:id="labelName" alignment="CENTER" contentDisplay="RIGHT" layoutX="91.0" layoutY="225.0" prefHeight="29.0" prefWidth="345.0" text="Mouhamed Lawal Dan Azoumi" textFill="#323a3f" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="23.0">
          <font>
             <Font name="Gill Sans MT" size="25.0" />
          </font>
@@ -38,25 +40,27 @@
             <Insets left="22.0" />
          </opaqueInsets>
       </Label>
-      <Label fx:id="labelType" alignment="CENTER" contentDisplay="CENTER" layoutX="23.0" layoutY="263.0" prefHeight="23.0" prefWidth="287.0" text="Administrateur" textAlignment="CENTER" textFill="#656565" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="23.0">
+      <Label fx:id="labelClass" alignment="CENTER" contentDisplay="CENTER" layoutX="23.0" layoutY="263.0" prefHeight="23.0" prefWidth="287.0" text="Étudiant en LPTI3 " textAlignment="CENTER" textFill="#656565" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="23.0">
          <font>
             <Font name="Gill Sans MT" size="15.0" />
          </font>
       </Label>
       <GridPane fx:id="infosGrid" layoutX="155.0" layoutY="348.0" maxHeight="163.0" maxWidth="252.0" minHeight="163.0" minWidth="250.0" prefHeight="163.0" prefWidth="252.0" AnchorPane.leftAnchor="155.0" AnchorPane.rightAnchor="119.0" AnchorPane.topAnchor="341.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="161.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="161.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="349.0" GridPane.rowIndex="1">
                <children>
-                  <Label prefHeight="26.0" prefWidth="55.0" text="Login :" textFill="#3c3a3a">
+                  <Label prefHeight="26.0" prefWidth="149.0" text="Numéro matricule :" textFill="#3c3a3a">
                      <font>
                         <Font name="Gill Sans MT Bold" size="15.0" />
                      </font>
@@ -64,7 +68,7 @@
                         <Insets right="2.0" />
                      </padding>
                   </Label>
-                  <Label fx:id="labelLogin" prefHeight="26.0" prefWidth="201.0" text="leomessi@mail.com" textFill="#3c3a3a">
+                  <Label fx:id="labelMatricule" prefHeight="26.0" prefWidth="78.0" text="103" textFill="#3c3a3a">
                      <font>
                         <Font name="Gill Sans MT" size="15.0" />
                      </font>
@@ -73,7 +77,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
                <children>
-                  <Label prefHeight="26.0" prefWidth="139.0" text="Statut du compte :" textFill="#3c3a3a">
+                  <Label prefHeight="26.0" prefWidth="91.0" text="Nationalité :" textFill="#3c3a3a">
                      <font>
                         <Font name="Gill Sans MT Bold" size="15.0" />
                      </font>
@@ -81,7 +85,24 @@
                         <Insets right="2.0" />
                      </padding>
                   </Label>
-                  <Label prefHeight="26.0" prefWidth="99.0" text="Actif" textFill="#3c3a3a">
+                  <Label fx:id="labelNationalite" prefHeight="26.0" prefWidth="99.0" text="Nigerienne" textFill="#3c3a3a">
+                     <font>
+                        <Font name="Gill Sans MT" size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" styleClass="caissier_item" GridPane.rowIndex="5">
+               <children>
+                  <Label prefHeight="26.0" prefWidth="175.0" text="Etat de paiement :" textFill="#3c3a3a">
+                     <font>
+                        <Font name="Gill Sans MT Bold" size="15.0" />
+                     </font>
+                     <padding>
+                        <Insets right="2.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="labelEtatPaiement" prefHeight="26.0" prefWidth="177.0" text="CONTENTIEUX" textFill="#3c3a3a">
                      <font>
                         <Font name="Gill Sans MT" size="15.0" />
                      </font>
@@ -90,7 +111,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="33.0" prefWidth="329.0" GridPane.rowIndex="3">
                <children>
-                  <Label prefHeight="26.0" prefWidth="175.0" text="Numéro de téléphone :" textFill="#3c3a3a">
+                  <Label prefHeight="26.0" prefWidth="62.0" text="Genre :" textFill="#3c3a3a">
                      <font>
                         <Font name="Gill Sans MT Bold" size="15.0" />
                      </font>
@@ -98,7 +119,24 @@
                         <Insets right="2.0" />
                      </padding>
                   </Label>
-                  <Label fx:id="labelTelephone" prefHeight="26.0" prefWidth="89.0" text="771555101" textFill="#3c3a3a">
+                  <Label fx:id="labelGenre" prefHeight="26.0" prefWidth="89.0" text="Masculin" textFill="#3c3a3a">
+                     <font>
+                        <Font name="Gill Sans MT" size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="4">
+               <children>
+                  <Label prefHeight="26.0" prefWidth="141.0" text="Date de naissance :" textFill="#3c3a3a">
+                     <font>
+                        <Font name="Gill Sans MT Bold" size="15.0" />
+                     </font>
+                     <padding>
+                        <Insets right="2.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="labelDNaiss" prefHeight="26.0" prefWidth="115.0" text="14 Juillet 2003" textFill="#3c3a3a">
                      <font>
                         <Font name="Gill Sans MT" size="15.0" />
                      </font>
@@ -108,6 +146,23 @@
          </children>
       </GridPane>
       <Line endX="144.0" layoutX="241.0" layoutY="316.0" startX="-100.0" strokeWidth="0.1" AnchorPane.leftAnchor="140.5" AnchorPane.rightAnchor="140.5" />
+      <Button fx:id="btnFees" layoutX="147.0" layoutY="533.0" mnemonicParsing="false" onAction="#openFeesDialogView" prefHeight="41.0" prefWidth="233.0" style="-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-background-color: linear-gradient(to right, #2c7aba, #5AB2D8);" styleClass="classic_btn" text="        Renseigner un paiement">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <effect>
+            <DropShadow blurType="ONE_PASS_BOX" height="15.0" offsetX="1.0" offsetY="2.0" radius="5.5" width="9.0">
+               <color>
+                  <Color red="0.8421052694320679" green="0.8421052694320679" blue="0.8421052694320679" />
+               </color>
+            </DropShadow>
+         </effect>
+      </Button>
+      <ImageView fx:id="iconCaissierItem" fitHeight="32.0" fitWidth="35.0" layoutX="155.0" layoutY="538.0">
+         <image>
+            <Image url="@../../resources/images/bill_icon.png" />
+         </image>
+      </ImageView>
       <Button fx:id="btnAnnuler" alignment="CENTER" layoutX="392.0" layoutY="532.0" mnemonicParsing="false" onAction="#onClose" prefHeight="43.0" prefWidth="120.0" style="-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-background-color: linear-gradient(to right, #D23342, #ED213A);" styleClass="classic_btn" text="Fermer">
          <opaqueInsets>
             <Insets />

@@ -2,15 +2,12 @@ package com.gesschoolapp.view.admin;
 
 import com.gesschoolapp.Exceptions.DAOException;
 import com.gesschoolapp.db.DAOClassesImpl.UserDAOImp;
-import com.gesschoolapp.models.student.Apprenant;
 import com.gesschoolapp.models.users.Admin;
 import com.gesschoolapp.models.users.Caissier;
 import com.gesschoolapp.models.users.Secretaire;
 import com.gesschoolapp.models.users.Utilisateur;
 import com.gesschoolapp.runtime.Main;
 import com.gesschoolapp.utils.Toolbox;
-import com.gesschoolapp.view.scolarite.ScolariteUIController;
-import com.gesschoolapp.view.util.Genre;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -27,15 +24,11 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.net.URL;
-import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.regex.Pattern;
 
-public class UserAddDialogController implements Initializable {
+public class UserEditDialogController implements Initializable {
 
 
     // Reference to the main com.gesschoolapp
@@ -95,6 +88,8 @@ public class UserAddDialogController implements Initializable {
 
     private UserDAOImp usersData = new UserDAOImp();
 
+    private Utilisateur selectedUser;
+
     @FXML
     boolean onFormSubmit(ActionEvent event) {
         String nom = labelNom.getText();
@@ -102,14 +97,6 @@ public class UserAddDialogController implements Initializable {
         String email = labelEmail.getText();
         String numero = labelNumero.getText();
         String habilitation = selectTypeUser.getValue();
-        String mdp = labelMdp.getText();
-
-        if(mdp.length() <= 4 || mdp.length() >= 127){
-            messageInfo.setVisible(true);
-            messageInfo.setText("Le mot de passe doit être compris entre 4 et 127 caractères");
-            messageInfo.setTextFill(Color.web("#e83636"));
-            return false;
-        }
 
         if(nom.length() >= 256 || prenom.length() >= 256){
             messageInfo.setVisible(true);
@@ -148,23 +135,32 @@ public class UserAddDialogController implements Initializable {
         user.setPrenom(prenom);
         user.setNumero(numero);
         user.setEmail(email);
-        user.setPassword(mdp);
+        user.setPassword(selectedUser.getPassword());
+        user.setId(selectedUser.getId());
 
 
         try {
 
             dialogStage.close();
-            Utilisateur newUser = usersData.create(user,superController.getCurrentUser().getFullName());
+            usersData.update(user,superController.getCurrentUser().getFullName());
             List<Utilisateur> list = new ArrayList<>(superController.getUsersList());
-            list.add(newUser);
+            list.set(list.indexOf(selectedUser),user);
             superController.setUsersList(list);
         } catch (DAOException e) {
             throw new RuntimeException(e);
         }
-
-//        System.out.println("Utilisateur ajouté avec succès !");
-        superController.setMainMessageInfo("Utilisateur ajouté avec succès !");
+        dialogStage.close();
+        superController.setMainMessageInfo("Utilisateur modifié avec succès !");
         return true;
+    }
+
+    public void setData(Utilisateur user){
+        labelNom.setText(user.getNom());
+        labelPrenom.setText(user.getPrenom());
+        labelEmail.setText(user.getEmail());
+        labelNumero.setText(user.getNumero().replaceAll("\\s+",""));
+        selectTypeUser.setValue(user.getType());
+        selectedUser = user;
     }
 
     @FXML
