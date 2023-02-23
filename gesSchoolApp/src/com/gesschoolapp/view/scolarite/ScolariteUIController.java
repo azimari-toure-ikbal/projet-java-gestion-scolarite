@@ -6,6 +6,8 @@ import com.gesschoolapp.Exceptions.Mismatch;
 import com.gesschoolapp.db.DAOClassesImpl.ClasseDAOImp;
 import com.gesschoolapp.db.DAOClassesImpl.NoteDAOImp;
 import com.gesschoolapp.db.DAOClassesImpl.PaiementDAOImp;
+import com.gesschoolapp.docmaker.PDFBulletin;
+import com.gesschoolapp.docmaker.PDFGenerator;
 import com.gesschoolapp.gescsv.ApprenantsCSV;
 import com.gesschoolapp.gescsv.NotesCSV;
 import com.gesschoolapp.models.classroom.Classe;
@@ -1657,6 +1659,11 @@ public class ScolariteUIController implements Initializable {
         caissierEtatDePaiementLabel.setText("Date de naissance");
         classPreview1Controller.hideEcheancier();
         classPreview2Controller.hideEcheancier();
+    }
+
+    @FXML
+    public void handleBulletinGeneration(ActionEvent e){
+        PDFGenerator.bulletinGenerator(getSelectedClass(),getSelectedClass().getModules(),getSelectedSemestreIndex());
     }
 
 }
