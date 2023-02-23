@@ -67,7 +67,7 @@ public class NotesItemController extends Application {
                 return false;
             }
 
-            int noteValue = Integer.parseInt(newNote.split("/")[0]);
+            float noteValue = Float.parseFloat(newNote.split("/")[0]);
 
             if(noteValue > 20 || noteValue < 0){
                 superController.setMainMessageInfo("La note doit être comprise entre 0 et 20 !",0);

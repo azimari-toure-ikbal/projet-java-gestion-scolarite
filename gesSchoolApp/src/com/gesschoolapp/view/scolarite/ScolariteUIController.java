@@ -1155,6 +1155,7 @@ public class ScolariteUIController implements Initializable {
                     this.setMainMessageInfo("Apprenants importés avec succès !");
                 } catch (CSVException | Mismatch e) {
                     setMainMessageInfo(e.getMessage(), 0);
+                    System.out.println(e.getMessage());
                 }
             }
         }
@@ -1668,8 +1669,9 @@ public class ScolariteUIController implements Initializable {
     public void handleBulletinGeneration(ActionEvent e){
         try {
             PDFGenerator.bulletinGenerator(getSelectedClass(),getSelectedClass().getModules(),getSelectedSemestreIndex());
+            setMainMessageInfo("Bulletins générés avec succès (VOIR STORAGE)",1);
         } catch (PDFException ex) {
-            throw new RuntimeException(ex);
+            setMainMessageInfo(ex.getMessage(),0);
         }
     }
 
