@@ -298,8 +298,8 @@ public class PDFGenerator {
         }
     }
 
-    private static int calcMoyenneEtudiant(List<Note> notes) {
-        int sum = 0;
+    private static float calcMoyenneEtudiant(List<Note> notes) {
+        float sum = 0;
         for (Note note : notes) {
             sum += note.getNote();
         }
@@ -311,8 +311,8 @@ public class PDFGenerator {
         }
     }
 
-    private static int calcMoyenneClasse(Classe classe, List<Note> notes) {
-        int sum = 0;
+    private static float calcMoyenneClasse(Classe classe, List<Note> notes) {
+        float sum = 0;
         for (Apprenant apprenant : classe.getApprenants()) {
             sum += calcMoyenneEtudiant(notes);
         }

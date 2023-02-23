@@ -17,6 +17,7 @@ import com.gesschoolapp.models.users.Caissier;
 import com.gesschoolapp.models.users.Secretaire;
 import com.gesschoolapp.models.users.Utilisateur;
 import com.gesschoolapp.runtime.Main;
+import com.gesschoolapp.utils.Toolbox;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -114,11 +115,11 @@ public class LoginUIController implements Initializable  {
 
 //        String login = txtUsername.getText();
 //        String login = "fatou.syla@mail.cum";
-//        String login = "marcus.sins@mail.com";
-        String login = "wissam.youssef@mail.com";
+        String login = "marcus.sins@mail.com";
+//        String login = "wissam.youssef@mail.com";
 //        String password = "fatou";
-//        String password = "marcus";
-        String password = "wissam";
+        String password = "marcus";
+//        String password = "wissam";
 //        String password = txtPassword.getText();
         if (login.isEmpty() || password.isEmpty()) {
             messageInfo.setText("Veuillez remplir tous les champs");
@@ -126,7 +127,7 @@ public class LoginUIController implements Initializable  {
             try {
                 Utilisateur user = userDAOImp.authenticate(login, password);
                 if (user != null) {
-                    if (user.getPassword().equals(password)) {
+                    if (Toolbox.verifyPassword(password, user.getPassword())) {
                         Node node = (Node) event.getSource();
                         Stage stg = (Stage) node.getScene().getWindow();
                         stg.close();
