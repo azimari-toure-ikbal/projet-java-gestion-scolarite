@@ -73,7 +73,10 @@ public class ApprenantItemsController implements Initializable {
             try {
                 apprData.delete(thisApprenant.getIdApprenant(), superController.getCurrentUser().getFullName());
                 List<Apprenant> list = new ArrayList<>(superController.getSelectedClass().getApprenants());
+                System.out.println(superController.getSelectedClass().getApprenants().get(0).getIdApprenant());
+                System.out.println(thisApprenant.getIdApprenant());
                 list.removeIf(appr -> appr.getIdApprenant() == thisApprenant.getIdApprenant());
+                System.out.println(list);
                 superController.getSelectedClass().setApprenants(list);
                 if(thisApprenant.getEtatPaiement() != 0){
                     for(Module module : superController.getSelectedClass().getModules()){

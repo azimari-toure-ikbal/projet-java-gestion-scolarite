@@ -1376,9 +1376,11 @@ public class ScolariteUIController implements Initializable {
 
     public void setListeDesApprenants(List<Apprenant> apprenants) throws DAOException, IOException {
 
-        if(apprenants.size() != 0){
-            studentsLayout.getChildren().clear();
-        }
+//        Je met en commentaire ce code car j'ai un bug sur le dernier apprenant qui saute pas
+//        jene sais plus pourquoi je l'avais mis donc oklm
+//        if(apprenants.size() != 0){
+            studentsLayout.getChildren().removeIf(node -> node instanceof HBox);
+//        }
 
 
 
