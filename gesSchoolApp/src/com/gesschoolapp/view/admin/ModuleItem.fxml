@@ -13,7 +13,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<HBox prefHeight="51.0" prefWidth="403.0" stylesheets="@../../style/application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gesschoolapp.view.admin.ModuleItemController">
+<HBox fx:id="modulePane" prefHeight="51.0" prefWidth="403.0" stylesheets="@../../style/application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gesschoolapp.view.admin.ModuleItemController">
    <children>
       <Pane prefHeight="51.0" prefWidth="60.0">
          <children>

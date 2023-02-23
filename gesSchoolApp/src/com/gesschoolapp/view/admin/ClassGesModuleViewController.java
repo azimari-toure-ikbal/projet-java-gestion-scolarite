@@ -106,6 +106,7 @@ public class ClassGesModuleViewController {
     public void setData(Classe classe){
             labelInfos.setText(classe.getIntitule() + " - " + classe.getAnnee());
             setListeDesModules(classe.getModules());
+            selectedClass = classe;
     }
 
     public void setMainMessage(String msg,int i){
@@ -117,7 +118,7 @@ public class ClassGesModuleViewController {
         }else if(i==1){
             messageInfo.setVisible(true);
             messageInfo.setText(msg);
-            messageInfo.setTextFill(Color.web("#E74C3C"));
+            messageInfo.setTextFill(Color.web("#007E34"));
             Toolbox.setTimeout(() -> messageInfo.setVisible(false),5000);
         }
     }
