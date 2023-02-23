@@ -36,6 +36,7 @@ public class ActionManager {
             actions.getListActions().clear();
             SerializeActions(actions);
         } catch (ArchiveManagerException e) {
+            e.printStackTrace();
             throw new ArchiveManagerException("Error while deleting actions : \n" + e.getClass().getName() + " : " + e.getMessage());
         }
     }
