@@ -23,7 +23,7 @@ public class Classe implements Serializable, Comparable<Classe>{
     private String formation;
     private List<Apprenant> apprenants;
     private List<Module> modules;
-    private LocalDateTime views ;
+    private LocalDateTime views;
     private List<Rubrique> rubriques;
     private List<Echeance> echeancier;
 
