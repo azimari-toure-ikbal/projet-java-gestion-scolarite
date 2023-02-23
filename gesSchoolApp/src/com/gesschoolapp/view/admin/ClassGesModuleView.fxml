@@ -144,7 +144,7 @@
             </VBox>
          </children>
       </HBox>
-      <Label fx:id="messageInfo" alignment="CENTER" layoutX="1.0" layoutY="560.0" prefHeight="43.0" prefWidth="385.0" text="Patientez..." textFill="#5cb85c">
+      <Label fx:id="messageInfo" alignment="CENTER" layoutX="1.0" layoutY="560.0" prefHeight="43.0" prefWidth="385.0" text="Patientez..." textFill="#5cb85c" visible="false">
          <font>
             <Font name="Corbel" size="17.0" />
          </font>

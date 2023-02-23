@@ -56,6 +56,11 @@ public class ModuleItemController {
     @FXML
     void actionBtnClicked(ActionEvent event) {
         if (event.getSource() == btnDelete) {
+
+            if(selectedModule == null){
+
+            }else{
+
             //ask for confirmation
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Suppression");
@@ -76,6 +81,7 @@ public class ModuleItemController {
                     throw new RuntimeException(e);
                 }
             }
+            }
         }
     }
 
@@ -90,10 +96,10 @@ public class ModuleItemController {
 
     public void setData(Module mod) {
         semestreSelect.getItems().addAll(semestres);
+        intituleTF.requestFocus();
         if (mod == null) {
             superController.scrollDown();
             intituleTF.setVisible(true);
-            intituleTF.requestFocus();
             semestreSelect.setVisible(true);
             selectedModule = null;
         } else {
@@ -114,6 +120,10 @@ public class ModuleItemController {
             semestreSelect.setVisible(true);
             semestreSelect.requestFocus();
         }
+    }
+
+    public void setIntituleFocus(){
+        intituleTF.requestFocus();
     }
 
 

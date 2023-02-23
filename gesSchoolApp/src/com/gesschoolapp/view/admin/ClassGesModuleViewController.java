@@ -166,6 +166,10 @@ public class ClassGesModuleViewController {
 
     @FXML
     void addRow(ActionEvent event) {
+        if(modulesLayout.getChildren().size() >= 40){
+            setMainMessage("Nombre maximal de modules atteint (40)",0);
+        }else{
+
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("ModuleItem.fxml"));
         HBox hbox = null;
@@ -177,10 +181,12 @@ public class ClassGesModuleViewController {
         ModuleItemController mic = fxmlLoader.getController();
         mic.setSuperController(this);
         mic.setData(null);
+        mic.setIntituleFocus();
 
         modulesLayout.getChildren().add(hbox);
 
         Platform.runLater(() -> scrollDown());
+        }
 
     }
 
