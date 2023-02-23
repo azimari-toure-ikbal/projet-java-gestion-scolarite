@@ -23,7 +23,7 @@ public class NoteDAOImp implements NoteDAO {
         try(Connection connexion = DBManager.getConnection()) {
             String query = "INSERT INTO notes (valeur, idApprenant, idModule) VALUES (?, ?, ?)";
             PreparedStatement stmt = connexion.prepareStatement(query);
-            stmt.setInt(1, obj.getNote());
+            stmt.setFloat(1, obj.getNote());
             stmt.setInt(2, obj.getApprenant().getIdApprenant());
             stmt.setInt(3, new ModuleDAOImp().search(obj.getModule()).get(0).getId());
             stmt.executeUpdate();
@@ -46,7 +46,7 @@ public class NoteDAOImp implements NoteDAO {
         try(Connection connexion = DBManager.getConnection()) {
             String query = "UPDATE notes SET valeur = ?, idApprenant = ?, idModule = ? WHERE idNote = ?";
             PreparedStatement stmt = connexion.prepareStatement(query);
-            stmt.setInt(1, obj.getNote());
+            stmt.setFloat(1, obj.getNote());
             stmt.setInt(2, obj.getApprenant().getIdApprenant());
             stmt.setInt(3, new ModuleDAOImp().search(obj.getModule()).get(0).getId());
             stmt.setInt(4, obj.getId());
@@ -72,7 +72,7 @@ public class NoteDAOImp implements NoteDAO {
         try(Connection connexion = DBManager.getConnection()) {
             String query = "UPDATE notes n, modules m, apprenants a SET n.valeur = ? WHERE n.idApprenant = a.idApprenant AND n.idModule = m.idModule AND m.semestre = ? AND a.matricule = ? AND m.intitule = ?";
             PreparedStatement stmt = connexion.prepareStatement(query);
-            stmt.setInt(1, obj.getNote());
+            stmt.setFloat(1, obj.getNote());
             stmt.setInt(2, semestre);
             stmt.setInt(3, obj.getApprenant().getMatricule());
             stmt.setString(4, obj.getModule());
@@ -145,7 +145,7 @@ public class NoteDAOImp implements NoteDAO {
                 return note;
             }
         } catch (Exception e) {
-            throw new DAOException("In NoteDAOImp.read()\n" + e.getMessage());
+            throw new DAOException("In NoteDAOImp.read()\n : " + e.getMessage());
         }
         return null;
     }
@@ -186,6 +186,7 @@ public class NoteDAOImp implements NoteDAO {
             PreparedStatement stmt = connexion.prepareStatement(query);
             stmt.setInt(1, idModule);
             ResultSet rs = stmt.executeQuery();
+            System.out.println(stmt);
             List<Note> notes = new ArrayList<>();
             while (rs.next()) {
                 Note note = new Note();

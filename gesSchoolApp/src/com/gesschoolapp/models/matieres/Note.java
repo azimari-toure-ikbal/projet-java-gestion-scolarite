@@ -8,7 +8,7 @@ public class Note implements Serializable {
     public static final long serialVersionUID = 426;
     //Note has id, note(int), apprenant(Apprenant), module(Module)
     private int id;
-    private int note;
+    private float note;
     private Apprenant apprenant;
     private String module;
 
@@ -33,11 +33,11 @@ public class Note implements Serializable {
         this.id = id;
     }
 
-    public int getNote() {
+    public float getNote() {
         return note;
     }
 
-    public void setNote(int note) {
+    public void setNote(float note) {
         this.note = note;
     }
 

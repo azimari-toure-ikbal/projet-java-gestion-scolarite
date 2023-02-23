@@ -9,6 +9,7 @@ import com.gesschoolapp.models.users.Admin;
 import com.gesschoolapp.models.users.Caissier;
 import com.gesschoolapp.models.users.Secretaire;
 import com.gesschoolapp.models.users.Utilisateur;
+import com.gesschoolapp.utils.Toolbox;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,10 +24,9 @@ public class UserDAOImp implements UserDAO, DAO<Utilisateur> {
     @Override
     public Utilisateur authenticate(String email, String password) throws DAOException {
         try(Connection connection = DBManager.getConnection()) {
-            String query = "SELECT * FROM utilisateurs WHERE email=? AND password=?";
+            String query = "SELECT * FROM utilisateurs WHERE email=?";
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, email);
-            ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
             if (rs.first()) {
                 //get nom, prenom, email, password, numero, id, type
@@ -37,6 +37,8 @@ public class UserDAOImp implements UserDAO, DAO<Utilisateur> {
                 String numero = rs.getString("numero");
                 int id = rs.getInt("idUtilisateur");
                 String type = rs.getString("type");
+
+                if(!Toolbox.verifyPassword(password, thePassword)) return null;
 
                 Utilisateur user = null;
                 switch (type) {
@@ -138,10 +140,11 @@ public class UserDAOImp implements UserDAO, DAO<Utilisateur> {
             Connection connection = DBManager.getConnection();
             String query = "INSERT INTO utilisateurs (nom, prenom, email, password, numero, type) VALUES (?,?,?,?,?,?)";
             PreparedStatement ps = connection.prepareStatement(query);
+            String hashedPassword = Toolbox.generateSecurePassword(obj.getPassword());
             ps.setString(1, obj.getNom());
             ps.setString(2, obj.getPrenom());
             ps.setString(3, obj.getEmail());
-            ps.setString(4, obj.getPassword());
+            ps.setString(4, hashedPassword);
             ps.setString(5, obj.getNumero());
             ps.setString(6, obj.getType());
             ps.executeUpdate();

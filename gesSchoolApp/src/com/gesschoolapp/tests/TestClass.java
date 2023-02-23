@@ -64,7 +64,7 @@ public class TestClass {
 //        testDeleteApprenant(37);
 //        testCreateApprenant();
 //        System.out.println(ListRubriques.getRubriques());
-//        testReadClasse(15);
+        testReadClasse(14);
 //        testGetPaiements();
 //        testGetApprenant(1);
 //        testPaiement();
@@ -77,9 +77,9 @@ public class TestClass {
 //        System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYY-MM-dd HH:mm:ss")));
 //        testGetUtilisateurs();
 
-        String pwd = Toolbox.generateSecurePassword("motdepassetropsecure");
-        System.out.println(Toolbox.generateSecurePassword("motdepassetropsecure"));
-        System.out.println(Toolbox.verifyPassword("motdepassetropsecure", pwd));
+//        String pwd = Toolbox.generateSecurePassword("motdepassetropsecure");
+//        System.out.println(Toolbox.generateSecurePassword("motdepassetropsecure"));
+//        System.out.println(Toolbox.verifyPassword("motdepassetropsecure", pwd));
     }
 
     public static void testGetUtilisateurs(){
