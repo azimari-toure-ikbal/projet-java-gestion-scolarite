@@ -48,14 +48,14 @@ public class ModuleItemController {
     @FXML
     private Label messageInfo;
 
-    private Integer[] semestres = {1,2};
+    private Integer[] semestres = {1, 2};
 
     ModuleDAOImp mDao = new ModuleDAOImp();
 
 
     @FXML
     void actionBtnClicked(ActionEvent event) {
-        if(event.getSource() == btnDelete){
+        if (event.getSource() == btnDelete) {
             //ask for confirmation
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Suppression");
@@ -66,13 +66,12 @@ public class ModuleItemController {
                 ModuleDAOImp mDao = new ModuleDAOImp();
 
                 try {
-                    mDao.delete(selectedModule.getId(),superController.superController.getCurrentUser().getFullName());
+                    mDao.delete(selectedModule.getId(), superController.superController.getCurrentUser().getFullName());
                     List<Module> list = new ArrayList<>(superController.getSelectedClass().getModules());
                     list.removeIf(module -> module.getId() == selectedModule.getId());
                     superController.getSelectedClass().setModules(list);
-                    modulePane.getChildren().removeAll();
-
-                    superController.setMainMessage("Module supprimé avec succès !",1);
+                    superController.removeDeletedFromVue(modulePane);
+                    superController.setMainMessage("Module supprimé avec succès !", 1);
                 } catch (DAOException e) {
                     throw new RuntimeException(e);
                 }
@@ -89,14 +88,14 @@ public class ModuleItemController {
         this.superController = superController;
     }
 
-    public void setData(Module mod){
-            semestreSelect.getItems().addAll(semestres);
-        if(mod==null){
+    public void setData(Module mod) {
+        semestreSelect.getItems().addAll(semestres);
+        if (mod == null) {
             intituleTF.setVisible(true);
             intituleTF.requestFocus();
             semestreSelect.setVisible(true);
             selectedModule = null;
-        }else{
+        } else {
             labelIntitule.setText(mod.getIntitule());
             intituleTF.setText(mod.getIntitule());
             labelSemestre.setText(Integer.toString(mod.getSemestre()));
@@ -107,10 +106,10 @@ public class ModuleItemController {
 
     @FXML
     void openEdit(MouseEvent event) {
-        if(event.getSource() == labelIntitule){
+        if (event.getSource() == labelIntitule) {
             intituleTF.setVisible(true);
             intituleTF.requestFocus();
-        }else{
+        } else {
             semestreSelect.setVisible(true);
             semestreSelect.requestFocus();
         }
@@ -120,82 +119,99 @@ public class ModuleItemController {
     @FXML
     boolean closeEdit(KeyEvent event) {
         System.out.println(event.getSource());
-            String intitule = intituleTF.getText();
+        String intitule = intituleTF.getText();
 
-            System.out.println(intitule);
+        System.out.println(intitule);
 
-            if(intitule.isEmpty() || intitule.length() >= 255){
-                superController.setMainMessage("L'intitulé ne peut pas être nul !",0);
-                return false;
-            }
+        if (intitule.isEmpty() || intitule.length() >= 255) {
+            superController.setMainMessage("L'intitulé ne peut pas être nul !", 0);
+            return false;
+        }
 
-            if(semestreSelect.getValue() == null){
-                superController.setMainMessage("Veuillez choisir un semestre svp !",0);
-                return false;
-            }
+        if (semestreSelect.getValue() == null) {
+            superController.setMainMessage("Veuillez choisir un semestre svp !", 0);
+            return false;
+        }
 
         System.out.println(selectedModule);
 
-        if(event.getSource() == intituleTF && event.getCode() == KeyCode.ENTER) {
+        if (event.getSource() == intituleTF && event.getCode() == KeyCode.ENTER) {
 
             // Teste aussi les special chars !
 
-            if(selectedModule == null){
-
-                    Module newModule = new Module();
-                    newModule.setSemestre(semestreSelect.getValue());
-                    newModule.setIntitule(intituleTF.getText());
-                    newModule.setClasse(superController.getSelectedClass().getIntitule());
-                try {
-                    mDao.create(newModule,superController.superController.getCurrentUser().getFullName());
-                } catch (DAOException e) {
-                    throw new RuntimeException(e);
-                }
-
-            }else{
-
-            selectedModule.setIntitule(intitule);
-            try {
-                mDao.update(selectedModule,superController.superController.getCurrentUser().getFullName());
-                labelIntitule.setText(intitule);
-                superController.setMainMessage("Intitulé du module modifié avec succès",1);
-                intituleTF.setVisible(false);
-                semestreSelect.setVisible(false);
-                return true;
-            } catch (DAOException e) {
-                throw   new RuntimeException(e);
-            }
-            }
-        }else if(event.getSource() == semestreSelect && event.getCode() == KeyCode.ENTER){
-
-            if(selectedModule == null){
+            if (selectedModule == null) {
 
                 Module newModule = new Module();
                 newModule.setSemestre(semestreSelect.getValue());
                 newModule.setIntitule(intituleTF.getText());
-//                newModule.setClasse(superController.getSelectedClass().getIntitule());
+                newModule.setClasse(superController.getSelectedClass().getIntitule());
                 try {
-                    mDao.create(newModule,superController.superController.getCurrentUser().getFullName());
+                    Module toAddModule = mDao.create(newModule, superController.superController.getCurrentUser().getFullName());
+                    selectedModule = toAddModule;
+                    setData(toAddModule);
+                    System.out.println(" créee");
+                    intituleTF.setVisible(false);
+                    semestreSelect.setVisible(false);
+                    labelIntitule.setText(intituleTF.getText());
+                    labelSemestre.setText(semestreSelect.getValue()+"");
+                    superController.setMainMessage("Module crée avec succès", 1);
                 } catch (DAOException e) {
                     throw new RuntimeException(e);
                 }
-            }else{
 
-            selectedModule.setSemestre(semestreSelect.getValue());
-            labelSemestre.setText(semestreSelect.getValue().toString());
-            try {
-                mDao.update(selectedModule,superController.superController.getCurrentUser().getFullName());
-                superController.setMainMessage("Semestre du module modifié avec succès !",1);
-                intituleTF.setVisible(false);
-                semestreSelect.setVisible(false);
-                return true;
+            } else {
+
+                selectedModule.setIntitule(intitule);
+                try {
+                    mDao.update(selectedModule, superController.superController.getCurrentUser().getFullName());
+                    labelIntitule.setText(intitule);
+                    superController.setMainMessage("Intitulé du module modifié avec succès", 1);
+
+                    return true;
                 } catch (DAOException e) {
                     throw new RuntimeException(e);
                 }
             }
+        } else if (event.getSource() == semestreSelect && event.getCode() == KeyCode.ENTER) {
+
+            if (selectedModule == null) {
+
+                Module newModule = new Module();
+                newModule.setSemestre(semestreSelect.getValue());
+                newModule.setSemestre(semestreSelect.getValue());
+                newModule.setIntitule(intituleTF.getText());
+                newModule.setClasse(superController.getSelectedClass().getIntitule());
+                try {
+                    Module toAddModule = mDao.create(newModule, superController.superController.getCurrentUser().getFullName());
+                    System.out.println(toAddModule);
+                    selectedModule = toAddModule;
+                    setData(toAddModule);
+                    System.out.println(" créee");
+                    intituleTF.setVisible(false);
+                    semestreSelect.setVisible(false);
+                    labelIntitule.setText(intituleTF.getText());
+                    labelSemestre.setText(semestreSelect.getValue()+"");
+                    superController.setMainMessage("Module crée avec succès", 1);
+                } catch (DAOException e) {
+                    throw new RuntimeException(e);
+                }
+
+            } else {
+
+                selectedModule.setSemestre(semestreSelect.getValue());
+                try {
+                    mDao.update(selectedModule, superController.superController.getCurrentUser().getFullName());
+                    labelSemestre.setText(semestreSelect.getValue()+"");
+                    superController.setMainMessage("Semestre du module modifié avec succès", 1);
+                    intituleTF.setVisible(false);
+                    semestreSelect.setVisible(false);
+                    return true;
+                } catch (DAOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            return false;
         }
-        return false;
+    return false;
     }
-
-
 }
