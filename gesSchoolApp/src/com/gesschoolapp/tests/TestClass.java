@@ -72,14 +72,14 @@ public class TestClass {
 //        testCreateApprenant();
 //        System.out.println(LocalDate.now());
 //        testGetAnnees();
-//        testCancelActions();
+        testCancelActions();
 //        testGetNotifs();
 //        System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYY-MM-dd HH:mm:ss")));
 //        testGetUtilisateurs();
 
-        String pwd = Toolbox.generateSecurePassword("wissam");
-        System.out.println(Toolbox.generateSecurePassword("wissam"));
-        System.out.println(Toolbox.verifyPassword("wissam", pwd));
+//        String pwd = Toolbox.generateSecurePassword("wissam");
+//        System.out.println(Toolbox.generateSecurePassword("wissam"));
+//        System.out.println(Toolbox.verifyPassword("wissam", pwd));
     }
 
     public static void testGetUtilisateurs(){
@@ -113,9 +113,9 @@ public class TestClass {
 
     public static void testCancelActions(){
         try{
-            ActionManager.DeleteArchive();
+//            ActionManager.DeleteArchive();
 //            new ApprenantDAOImp().delete(43, "Bob");
-//            testCreateApprenant();
+            testCreateApprenant();
             Actions actions = ActionManager.DeserializeActions();
             System.out.println(actions.getListActions());
 //            actions.getListActions().get(1).cancelAction("Marshall");
