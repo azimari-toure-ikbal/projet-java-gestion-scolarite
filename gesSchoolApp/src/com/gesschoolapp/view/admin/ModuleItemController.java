@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
@@ -28,6 +29,9 @@ public class ModuleItemController {
     private Button btnDelete;
 
     private Module selectedModule;
+
+    @FXML
+    private HBox modulePane;
 
     @FXML
     private TextField intituleTF;
@@ -66,7 +70,9 @@ public class ModuleItemController {
                     List<Module> list = new ArrayList<>(superController.getSelectedClass().getModules());
                     list.removeIf(module -> module.getId() == selectedModule.getId());
                     superController.getSelectedClass().setModules(list);
-                    superController.setMainMessage("Utilisateur supprimé avec succès !",1);
+                    modulePane.getChildren().removeAll();
+
+                    superController.setMainMessage("Module supprimé avec succès !",1);
                 } catch (DAOException e) {
                     throw new RuntimeException(e);
                 }
@@ -152,7 +158,7 @@ public class ModuleItemController {
             try {
                 mDao.update(selectedModule,superController.superController.getCurrentUser().getFullName());
                 labelIntitule.setText(intitule);
-                superController.setMainMessage("Intitulé du monde modifié avec succès",1);
+                superController.setMainMessage("Intitulé du module modifié avec succès",1);
                 intituleTF.setVisible(false);
                 semestreSelect.setVisible(false);
                 return true;
@@ -179,7 +185,7 @@ public class ModuleItemController {
             labelSemestre.setText(semestreSelect.getValue().toString());
             try {
                 mDao.update(selectedModule,superController.superController.getCurrentUser().getFullName());
-                superController.setMainMessage("Semestre de la note modifiée avec succès !",1);
+                superController.setMainMessage("Semestre du module modifié avec succès !",1);
                 intituleTF.setVisible(false);
                 semestreSelect.setVisible(false);
                 return true;

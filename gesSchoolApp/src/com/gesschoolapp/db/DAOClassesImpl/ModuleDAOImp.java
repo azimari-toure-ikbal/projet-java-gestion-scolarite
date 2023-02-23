@@ -10,6 +10,7 @@ import com.gesschoolapp.models.student.Apprenant;
 import com.gesschoolapp.serial.ActionManager;
 import com.gesschoolapp.view.util.ActionType;
 
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,7 +31,7 @@ public class ModuleDAOImp implements ModuleDAO {
                 stmt.setString(1, obj.getIntitule());
                 stmt.setInt(2, new ClasseDAOImp().search(obj.getClasse()).get(0).getId());
                 stmt.setInt(3, obj.getSemestre());
-                stmt.executeQuery();
+                stmt.executeUpdate();
             }else{
                 String query = "INSERT INTO modules (idModule, intitule, idClasse, semestre ) VALUES (?, ?, ?, ?)";
                 PreparedStatement stmt = connection.prepareStatement(query);
@@ -43,15 +44,17 @@ public class ModuleDAOImp implements ModuleDAO {
 
             List<Apprenant> apprenants = new ClasseDAOImp().search(obj.getClasse()).get(0).getApprenants();
 
+            int test = new ModuleDAOImp().search(obj.getIntitule()).get(0).getId();
+            System.out.println("AGAGAGAGAGA" + new ModuleDAOImp().search(obj.getIntitule()).get(0));
+            System.out.println(test);
             for (Apprenant apprenant : apprenants) {
-                String query2 = "INSERT INTO notes (idApprenant, idModule, valeur) VALUES (?, ?, ?, ?, ?)";
+                String query2 = "INSERT INTO notes (idApprenant, idModule, valeur) VALUES (?, ?, ?)";
                 PreparedStatement stmt2 = connection.prepareStatement(query2);
                 stmt2.setInt(1, apprenant.getIdApprenant());
-                stmt2.setInt(2, new ModuleDAOImp().search(obj.getIntitule()).get(0).getId());
+                stmt2.setInt(2, test);
                 stmt2.setDouble(3, 0);
-                stmt2.executeQuery();
+                stmt2.executeUpdate();
             }
-
 
             if(!Objects.equals(user, "admin")){
                 Action action = new Action();
@@ -61,7 +64,8 @@ public class ModuleDAOImp implements ModuleDAO {
                 action.setDate(LocalDateTime.now());
                 ActionManager.add(action);
             }
-            return new ModuleDAOImp().search(obj.getIntitule()).get(0);
+            //Module module = new ModuleDAOImp().search(obj.getIntitule()).get(0);
+            return null;
         }catch(Exception e){
             throw new DAOException("Error while creating module : " + e.getMessage());
         }
@@ -77,7 +81,7 @@ public class ModuleDAOImp implements ModuleDAO {
             stmt.setInt(2, new ClasseDAOImp().search(obj.getClasse()).get(0).getId());
             stmt.setInt(3, obj.getSemestre());
             stmt.setInt(4, obj.getId());
-            stmt.executeQuery();
+            stmt.executeUpdate();
 
             if(!Objects.equals(user, "admin")){
                 Action action = new Action();
@@ -100,12 +104,12 @@ public class ModuleDAOImp implements ModuleDAO {
             String query = "DELETE FROM modules WHERE idModule = ?";
             PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setInt(1, id);
-            stmt.executeQuery();
+            stmt.executeUpdate();
 
             String query2 = "DELETE FROM notes WHERE idModule = ?";
             PreparedStatement stmt2 = connection.prepareStatement(query2);
             stmt2.setInt(1, id);
-            stmt2.executeQuery();
+            stmt2.executeUpdate();
 
             if(!Objects.equals(user, "admin")){
                 Action action = new Action();
@@ -213,6 +217,7 @@ public class ModuleDAOImp implements ModuleDAO {
             PreparedStatement stmt = connexion.prepareStatement(query);
             stmt.setInt(1, idClasse);
             ResultSet rs = stmt.executeQuery();
+
             int idModule;
             while (rs.next()) {
                 Module module = new Module();
