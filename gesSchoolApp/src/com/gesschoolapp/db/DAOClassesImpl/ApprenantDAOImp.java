@@ -154,6 +154,7 @@ public class ApprenantDAOImp implements ApprenantDAO {
             statement3.setInt(1, id);
             statement3.executeUpdate();
         }catch (Exception e) {
+            e.printStackTrace();
             throw new DAOException("Error while deleting Apprenant" + e.getMessage());
         }
     }

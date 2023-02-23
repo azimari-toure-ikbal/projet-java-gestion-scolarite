@@ -189,7 +189,6 @@ public class NoteDAOImp implements NoteDAO {
             PreparedStatement stmt = connexion.prepareStatement(query);
             stmt.setInt(1, idModule);
             ResultSet rs = stmt.executeQuery();
-            System.out.println(stmt);
             List<Note> notes = new ArrayList<>();
             while (rs.next()) {
                 Note note = new Note();
