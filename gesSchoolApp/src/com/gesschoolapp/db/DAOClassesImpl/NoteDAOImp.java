@@ -132,7 +132,8 @@ public class NoteDAOImp implements NoteDAO {
     @Override
     public Note read(int id) throws DAOException {
         try(Connection connexion = DBManager.getConnection()) {
-            String query = "SELECT n.valeur, m.intitule as intitule, n.idApprenant FROM notes n, modules m, apprenants a WHERE idNote = ? ";
+            String query = "SELECT n.valeur, m.intitule as intitule, n.idApprenant FROM notes n, modules m, apprenants a" +
+                    " WHERE idNote = ? && n.idModule = m.idModule && n.idApprenant = a.idApprenant ";
             PreparedStatement stmt = connexion.prepareStatement(query);
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
@@ -154,7 +155,8 @@ public class NoteDAOImp implements NoteDAO {
     public List<Note> getList() throws DAOException {
         try(Connection connexion = DBManager.getConnection()) {
             String query = "SELECT n.idNote, n.valeur, m.intitule as module, n.idApprenant as apprenant " +
-                    "FROM notes n, modules m, apprenants a WHERE n.idModule = m.idModule AND a.echeancier > 0";
+                    "FROM notes n, modules m, apprenants a WHERE n.idModule = m.idModule AND a.echeancier > 0 " +
+                    "AND n.idApprenant = a.idApprenant";
             PreparedStatement stmt = connexion.prepareStatement(query);
             ResultSet rs = stmt.executeQuery();
             List<Note> notes = new ArrayList<>();
@@ -182,7 +184,8 @@ public class NoteDAOImp implements NoteDAO {
     public List<Note> getNotesOfModule(int idModule) throws DAOException {
         try(Connection connexion = DBManager.getConnection()) {
             String query = "SELECT n.idNote, n.valeur, m.intitule as module, n.idApprenant as apprenant " +
-                    "FROM notes n, modules m, apprenants a WHERE n.idModule = m.idModule AND m.idModule = ? AND a.echeancier > 0";
+                    "FROM notes n, modules m, apprenants a WHERE n.idModule = m.idModule AND m.idModule = ? " +
+                    "AND a.echeancier > 0 AND n.idApprenant = a.idApprenant ";
             PreparedStatement stmt = connexion.prepareStatement(query);
             stmt.setInt(1, idModule);
             ResultSet rs = stmt.executeQuery();

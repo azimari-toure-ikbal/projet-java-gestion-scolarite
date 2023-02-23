@@ -210,7 +210,8 @@ public class ModuleDAOImp implements ModuleDAO {
         List<Module> modules = new ArrayList<>();
 
         try(Connection connexion = DBManager.getConnection()){
-            String query = "SELECT m.idModule, m.intitule, c.intitule as classe, m.semestre FROM `modules` m, classes c WHERE m.idClasse = c.idClasse AND m.idClasse = ?";
+            String query = "SELECT m.idModule, m.intitule, c.intitule as classe, m.semestre FROM `modules` m, classes c" +
+                    " WHERE m.idClasse = c.idClasse AND m.idClasse = ?";
             PreparedStatement stmt = connexion.prepareStatement(query);
             stmt.setInt(1, idClasse);
             ResultSet rs = stmt.executeQuery();

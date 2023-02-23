@@ -8,12 +8,14 @@ import com.gesschoolapp.utils.Toolbox;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -33,6 +35,10 @@ public class ClassGesModuleViewController {
     private Stage dialogStage;
 
     private Classe selectedClass;
+
+    @FXML
+    private ScrollPane scroll; //this must match the fx:id of the ScrollPane element
+
 
     public Classe getSelectedClass() {
         return selectedClass;
@@ -107,6 +113,9 @@ public class ClassGesModuleViewController {
             labelInfos.setText(classe.getIntitule() + " - " + classe.getAnnee());
             setListeDesModules(classe.getModules());
             selectedClass = classe;
+
+        modulesLayout.heightProperty().addListener(observable -> scroll.setVvalue(1D));
+
     }
 
     public void setMainMessage(String msg,int i){
@@ -157,6 +166,10 @@ public class ClassGesModuleViewController {
 
     @FXML
     void addRow(ActionEvent event) {
+        if(modulesLayout.getChildren().size() >= 40){
+            setMainMessage("Nombre maximal de modules atteint (40)",0);
+        }else{
+
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("ModuleItem.fxml"));
         HBox hbox = null;
@@ -168,12 +181,23 @@ public class ClassGesModuleViewController {
         ModuleItemController mic = fxmlLoader.getController();
         mic.setSuperController(this);
         mic.setData(null);
+        mic.setIntituleFocus();
 
         modulesLayout.getChildren().add(hbox);
+
+        Platform.runLater(() -> scrollDown());
+        }
+
     }
+
+
 
     public void removeDeletedFromVue(HBox pane){
         modulesLayout.getChildren().remove(pane);
+    }
+
+    public void scrollDown(){
+        scroll.setVvalue(1.0);           //1.0 means 100% at the bottom
     }
 
 }

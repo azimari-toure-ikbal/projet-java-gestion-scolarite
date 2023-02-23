@@ -56,6 +56,11 @@ public class ModuleItemController {
     @FXML
     void actionBtnClicked(ActionEvent event) {
         if (event.getSource() == btnDelete) {
+
+            if(selectedModule == null){
+
+            }else{
+
             //ask for confirmation
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Suppression");
@@ -76,6 +81,7 @@ public class ModuleItemController {
                     throw new RuntimeException(e);
                 }
             }
+            }
         }
     }
 
@@ -90,9 +96,10 @@ public class ModuleItemController {
 
     public void setData(Module mod) {
         semestreSelect.getItems().addAll(semestres);
+        intituleTF.requestFocus();
         if (mod == null) {
+            superController.scrollDown();
             intituleTF.setVisible(true);
-            intituleTF.requestFocus();
             semestreSelect.setVisible(true);
             selectedModule = null;
         } else {
@@ -113,6 +120,10 @@ public class ModuleItemController {
             semestreSelect.setVisible(true);
             semestreSelect.requestFocus();
         }
+    }
+
+    public void setIntituleFocus(){
+        intituleTF.requestFocus();
     }
 
 
@@ -146,6 +157,7 @@ public class ModuleItemController {
                 newModule.setIntitule(intituleTF.getText());
                 newModule.setClasse(superController.getSelectedClass().getIntitule());
                 try {
+                    superController.setMainMessage("Patientez...", 1);
                     Module toAddModule = mDao.create(newModule, superController.superController.getCurrentUser().getFullName());
                     selectedModule = toAddModule;
                     setData(toAddModule);
@@ -153,7 +165,7 @@ public class ModuleItemController {
                     intituleTF.setVisible(false);
                     semestreSelect.setVisible(false);
                     labelIntitule.setText(intituleTF.getText());
-                    labelSemestre.setText(semestreSelect.getValue()+"");
+                    labelSemestre.setText(semestreSelect.getValue() + "");
                     superController.setMainMessage("Module crée avec succès", 1);
                 } catch (DAOException e) {
                     throw new RuntimeException(e);
@@ -163,8 +175,10 @@ public class ModuleItemController {
 
                 selectedModule.setIntitule(intitule);
                 try {
+                    superController.setMainMessage("Patientez...", 1);
                     mDao.update(selectedModule, superController.superController.getCurrentUser().getFullName());
                     labelIntitule.setText(intitule);
+                    intituleTF.setVisible(false);
                     superController.setMainMessage("Intitulé du module modifié avec succès", 1);
 
                     return true;
@@ -182,6 +196,7 @@ public class ModuleItemController {
                 newModule.setIntitule(intituleTF.getText());
                 newModule.setClasse(superController.getSelectedClass().getIntitule());
                 try {
+                    superController.setMainMessage("Patientez...", 1);
                     Module toAddModule = mDao.create(newModule, superController.superController.getCurrentUser().getFullName());
                     System.out.println(toAddModule);
                     selectedModule = toAddModule;
@@ -190,7 +205,7 @@ public class ModuleItemController {
                     intituleTF.setVisible(false);
                     semestreSelect.setVisible(false);
                     labelIntitule.setText(intituleTF.getText());
-                    labelSemestre.setText(semestreSelect.getValue()+"");
+                    labelSemestre.setText(semestreSelect.getValue() + "");
                     superController.setMainMessage("Module crée avec succès", 1);
                 } catch (DAOException e) {
                     throw new RuntimeException(e);
@@ -200,8 +215,9 @@ public class ModuleItemController {
 
                 selectedModule.setSemestre(semestreSelect.getValue());
                 try {
+                    superController.setMainMessage("Patientez...", 1);
                     mDao.update(selectedModule, superController.superController.getCurrentUser().getFullName());
-                    labelSemestre.setText(semestreSelect.getValue()+"");
+                    labelSemestre.setText(semestreSelect.getValue() + "");
                     superController.setMainMessage("Semestre du module modifié avec succès", 1);
                     intituleTF.setVisible(false);
                     semestreSelect.setVisible(false);
@@ -212,6 +228,6 @@ public class ModuleItemController {
             }
             return false;
         }
-    return false;
+        return false;
     }
 }
