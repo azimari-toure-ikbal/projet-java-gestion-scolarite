@@ -164,6 +164,14 @@ public class PDFGenerator {
         // Recuperer la liste des eleves
         List<Apprenant> apprenants = classe.getApprenants();
 
+        // Verifier si la liste des eleves est vide
+        if (apprenants.isEmpty()) {
+            throw new PDFException("La classe " + classe.getIntitule() + " ne contient aucun élève !");
+        }
+
+        // Supprimer les etudiants qui ont un etat de paiement == 0
+        apprenants.removeIf(apprenant -> apprenant.getEtatPaiement() == 0);
+
         // Recuperer la liste des notes
         List<Note> notes = new ArrayList<>();
         for (Module module : modules) {
