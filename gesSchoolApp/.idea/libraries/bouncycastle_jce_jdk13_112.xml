@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="bouncycastle-jce-jdk13-112">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/com/gesschoolapp/bouncycastle-jce-jdk13-112.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
