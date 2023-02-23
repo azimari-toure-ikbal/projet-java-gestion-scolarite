@@ -77,9 +77,9 @@ public class TestClass {
 //        System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYY-MM-dd HH:mm:ss")));
 //        testGetUtilisateurs();
 
-        String pwd = Toolbox.generateSecurePassword("marcus");
-        System.out.println(Toolbox.generateSecurePassword("marcus"));
-        System.out.println(Toolbox.verifyPassword("marcus", pwd));
+        String pwd = Toolbox.generateSecurePassword("wissam");
+        System.out.println(Toolbox.generateSecurePassword("wissam"));
+        System.out.println(Toolbox.verifyPassword("wissam", pwd));
     }
 
     public static void testGetUtilisateurs(){
