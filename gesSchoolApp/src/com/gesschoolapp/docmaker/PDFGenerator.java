@@ -163,6 +163,17 @@ public class PDFGenerator {
     public static void bulletinGenerator(Classe classe, List<Module> modules, int semestre) throws PDFException {
         // Recuperer la liste des eleves
         List<Apprenant> apprenants = classe.getApprenants();
+        for (Apprenant apprenant : apprenants) {
+            System.out.println(apprenant.getFullName());
+        }
+
+        // Supprimer les modules qui ne sont pas du bon semestre
+        modules.removeIf(module -> module.getSemestre() != semestre);
+
+        for (Module module : modules) {
+            System.out.println(module.getIntitule());
+            System.out.println(module.getSemestre());
+        }
 
         // Verifier si la liste des eleves est vide
         if (apprenants.isEmpty()) {
@@ -171,7 +182,9 @@ public class PDFGenerator {
 
         // Supprimer les etudiants qui ont un etat de paiement == 0
         apprenants.removeIf(apprenant -> apprenant.getEtatPaiement() == 0);
+//        System.out.println("apprenants remove:" + apprenants.removeIf(apprenant -> apprenant.getEtatPaiement() == 0));
 
+        System.out.println("new apprenants" + apprenants);
         // Recuperer la liste des notes
         List<Note> notes = new ArrayList<>();
         for (Module module : modules) {
@@ -183,8 +196,9 @@ public class PDFGenerator {
             // Recuperer les notes de l'eleve
             List<Note> apprenantNotes = new ArrayList<>();
             for (Note note : notes) {
-                if (note.getApprenant().equals(apprenant)) {
+                if (note.getApprenant().getMatricule() == apprenant.getMatricule()) {
                     apprenantNotes.add(note);
+                    System.out.println("note de l'apprenant dans le module " + note.getModule() + "est de " + note.getNote());
                 }
             }
 
@@ -211,7 +225,7 @@ public class PDFGenerator {
 
                 // Ajouter le titre "Bulletin de notes"
                 Paragraph title = new Paragraph();
-                title.add(new Phrase("\n\n\n\nBulletin de notes du Semestre 1", new Font(Font.FontFamily.TIMES_ROMAN, 24, Font.BOLD)));
+                title.add(new Phrase("\n\n\n\nBulletin de notes du Semestre " + semestre, new Font(Font.FontFamily.TIMES_ROMAN, 24, Font.BOLD)));
                 title.setAlignment(Element.ALIGN_CENTER);
                 document.add(title);
 
@@ -240,6 +254,8 @@ public class PDFGenerator {
                 // Ajouter le tableau au document
                 document.add(table);
 
+                System.out.println( "taille des notes" + apprenantNotes.size());
+
                 // Ajouter les moyennes de l'étudiant et de la classe
                 Paragraph averages = new Paragraph();
                 averages.add(new Phrase("\n\nMoyenne de l'étudiant: " + calcMoyenneEtudiant(apprenantNotes)));
@@ -250,7 +266,16 @@ public class PDFGenerator {
                 Paragraph separator = new Paragraph();
                 document.add(separator);
 
-                // Passage en classe supérieure
+                // Appreciation du semestre
+                Paragraph appreciation = new Paragraph();
+                if (calcMoyenneEtudiant(apprenantNotes) >= 10) {
+                    Chunk chunk = new Chunk("Appréciation: " +apprenant.getFullName() + " a réussi le semestre.", new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD, BaseColor.GREEN));
+                    appreciation.add(chunk);
+                } else {
+                    Chunk chunk = new Chunk("Appréciation: " +apprenant.getFullName() + " n'a pas réussi le semestre.", new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD, BaseColor.RED));
+                    appreciation.add(chunk);
+                }
+                document.add(appreciation);
 
                 document.close();
 
@@ -266,6 +291,7 @@ public class PDFGenerator {
             table.addCell(module.getIntitule());
             for (Note note : notes) {
                 if (note.getModule().equals(module.getIntitule())) {
+                    System.out.println("note = " + note.getNote());
                     table.addCell(String.valueOf(note.getNote()));
                 }
             }
@@ -277,7 +303,12 @@ public class PDFGenerator {
         for (Note note : notes) {
             sum += note.getNote();
         }
-        return sum / notes.size();
+        try {
+            return sum / notes.size();
+        } catch (ArithmeticException e) {
+            System.out.println("L'étudiant n'a pas de note");
+            return 0;
+        }
     }
 
     private static int calcMoyenneClasse(Classe classe, List<Note> notes) {
