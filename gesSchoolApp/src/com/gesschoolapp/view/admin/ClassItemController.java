@@ -59,7 +59,7 @@ public class ClassItemController {
 
     public void setData(Classe selectedClass){
         this.classe = selectedClass;
-        System.out.println(classe);
+//        System.out.println(classe);
         labelIntitule.setText(classe.getIntitule());
         labelFormation.setText(classe.getFormation());
         labelNbEleves.setText(classe.getApprenants().size()+"");

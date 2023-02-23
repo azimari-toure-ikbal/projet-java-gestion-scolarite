@@ -172,4 +172,8 @@ public class ClassGesModuleViewController {
         modulesLayout.getChildren().add(hbox);
     }
 
+    public void removeDeletedFromVue(HBox pane){
+        modulesLayout.getChildren().remove(pane);
+    }
+
 }
