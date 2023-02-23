@@ -5,6 +5,7 @@ import com.gesschoolapp.Exceptions.Mismatch;
 import com.gesschoolapp.db.DAOClassesImpl.PaiementDAOImp;
 import com.gesschoolapp.models.paiement.Paiement;
 import com.gesschoolapp.models.paiement.Rubrique;
+import com.mysql.cj.protocol.a.authentication.Sha256PasswordPlugin;
 
 import java.time.LocalDate;
 import java.time.format.TextStyle;
@@ -74,16 +75,10 @@ public class Toolbox {
         return list;
     }
 
-    public static String passwordEncryption(String password){
-        // Encrypt the password
-
+    public static String passwordHash(String password){
+        // password hash with SHA
         return password;
     }
-
-    public static String passwordDecryption(String password){
-        return password;
-    }
-
     public static List<Paiement> paiementsJournalier(LocalDate date){
         PaiementDAOImp paiementDAOImp = new PaiementDAOImp();
         try {
