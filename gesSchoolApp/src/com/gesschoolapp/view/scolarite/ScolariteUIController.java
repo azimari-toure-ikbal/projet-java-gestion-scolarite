@@ -3,6 +3,7 @@ package com.gesschoolapp.view.scolarite;
 import com.gesschoolapp.Exceptions.CSVException;
 import com.gesschoolapp.Exceptions.DAOException;
 import com.gesschoolapp.Exceptions.Mismatch;
+import com.gesschoolapp.Exceptions.PDFException;
 import com.gesschoolapp.db.DAOClassesImpl.ClasseDAOImp;
 import com.gesschoolapp.db.DAOClassesImpl.NoteDAOImp;
 import com.gesschoolapp.db.DAOClassesImpl.PaiementDAOImp;
@@ -1663,7 +1664,11 @@ public class ScolariteUIController implements Initializable {
 
     @FXML
     public void handleBulletinGeneration(ActionEvent e){
-        PDFGenerator.bulletinGenerator(getSelectedClass(),getSelectedClass().getModules(),getSelectedSemestreIndex());
+        try {
+            PDFGenerator.bulletinGenerator(getSelectedClass(),getSelectedClass().getModules(),getSelectedSemestreIndex());
+        } catch (PDFException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
 }
