@@ -7,6 +7,8 @@ import com.gesschoolapp.models.paiement.Paiement;
 import com.gesschoolapp.models.paiement.Rubrique;
 import com.mysql.cj.protocol.a.authentication.Sha256PasswordPlugin;
 
+import java.security.MessageDigest;
+import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
 import java.time.temporal.ChronoField;
@@ -18,6 +20,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Toolbox {
+
+    private static final String ALGORITHM = "SHA-256";
 
     public static void setTimeout(Runnable runnable, int delay) {
         new Thread(() -> {
@@ -75,10 +79,53 @@ public class Toolbox {
         return list;
     }
 
-    public static String passwordHash(String password){
-        // password hash with SHA
-        return password;
+    public static String generateSecurePassword(String password) {
+        byte[] salt = generateSalt();
+        byte[] passwordHash = hashPassword(password, salt);
+        return bytesToHex(passwordHash) + ":" + bytesToHex(salt);
     }
+
+    public static boolean verifyPassword(String password, String storedPasswordHash) {
+        String[] parts = storedPasswordHash.split(":");
+        byte[] passwordHash = hashPassword(password, hexToBytes(parts[1]));
+        return bytesToHex(passwordHash).equals(parts[0]);
+    }
+
+    private static byte[] generateSalt() {
+        SecureRandom random = new SecureRandom();
+        byte[] salt = new byte[16];
+        random.nextBytes(salt);
+        return salt;
+    }
+
+    private static byte[] hashPassword(String password, byte[] salt) {
+        try {
+            MessageDigest messageDigest = MessageDigest.getInstance(ALGORITHM);
+            messageDigest.reset();
+            messageDigest.update(salt);
+            byte[] passwordBytes = password.getBytes("UTF-8");
+            return messageDigest.digest(passwordBytes);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static String bytesToHex(byte[] bytes) {
+        StringBuilder result = new StringBuilder();
+        for (byte b : bytes) {
+            result.append(String.format("%02x", b));
+        }
+        return result.toString();
+    }
+
+    private static byte[] hexToBytes(String hex) {
+        byte[] bytes = new byte[hex.length() / 2];
+        for (int i = 0; i < bytes.length; i++) {
+            bytes[i] = (byte) Integer.parseInt(hex.substring(2 * i, 2 * i + 2), 16);
+        }
+        return bytes;
+    }
+
     public static List<Paiement> paiementsJournalier(LocalDate date){
         PaiementDAOImp paiementDAOImp = new PaiementDAOImp();
         try {
