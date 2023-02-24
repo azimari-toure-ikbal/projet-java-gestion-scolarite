@@ -17,7 +17,12 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import java.io.File;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
 import java.util.prefs.Preferences;
 
 public class Main extends Application {
@@ -33,6 +38,15 @@ public class Main extends Application {
             this.primaryStage = primaryStage;
             primaryStage.initStyle(StageStyle.UNDECORATED);
             Platform.setImplicitExit(false);
+//
+//            FXMLLoader loader = new FXMLLoader();
+//            loader.setLocation(Main.class.getResource("../view/webView/WebUI.fxml"));
+//            Parent dash = loader.load();
+//            Scene scene = new Scene(dash);
+//            primaryStage.setScene(scene);
+//            primaryStage.setTitle("SchoolUp - Login");
+//            primaryStage.show();
+
 
             initLayout();
 
@@ -40,7 +54,6 @@ public class Main extends Application {
             e.printStackTrace();
         }
     }
-
 
     /**
      * Initializes the root layout.

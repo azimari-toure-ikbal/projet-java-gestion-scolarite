@@ -1668,7 +1668,11 @@ public class ScolariteUIController implements Initializable {
     @FXML
     public void handleBulletinGeneration(ActionEvent e){
         try {
-            PDFGenerator.bulletinGenerator(getSelectedClass(),getSelectedClass().getModules(),getSelectedSemestreIndex());
+            Classe classeToPass = getSelectedClass();
+            List<Module> modulesToPass = new ArrayList<>();
+            modulesToPass.addAll(getSelectedClass().getModules());
+
+            PDFGenerator.bulletinGenerator(classeToPass,modulesToPass,getSelectedSemestreIndex());
             setMainMessageInfo("Bulletins générés avec succès (VOIR STORAGE)",1);
         } catch (PDFException ex) {
             setMainMessageInfo(ex.getMessage(),0);
