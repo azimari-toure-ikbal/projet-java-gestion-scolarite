@@ -409,8 +409,11 @@ public class ScolariteUIController implements Initializable {
 
         monthyFeeDP.setValue(mois[0]);
         feesSpanSelect.setValue(etatsDePaiement[0]);
-        feesJournalierItem.toFront();
         panelFeesState.toFront();
+        feesJournalierItem.toFront();
+        dailyFeeDP.setValue(LocalDate.now());
+        panelFeesState.toFront();
+        refreshFeesData(etatsDePaiement[0]);
 
         feesSpanSelect.getSelectionModel()
                 .selectedItemProperty()

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox prefHeight="78.0" prefWidth="895.0" style="-fx-background-color: white;" styleClass="btn_delete" stylesheets="@../../style/admindashboard.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gesschoolapp.view.admin.ActionItemController">
+   <children>
+      <AnchorPane prefHeight="78.0" prefWidth="51.0">
+         <children>
+            <Label fx:id="labelId1" alignment="CENTER" contentDisplay="CENTER" layoutY="28.0" prefHeight="23.0" prefWidth="56.0" text="192" textAlignment="CENTER" textFill="#141313">
+               <font>
+                  <Font name="Gill Sans MT" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="200.0" prefWidth="177.0">
+         <children>
+            <Label fx:id="labelType1" alignment="CENTER" contentDisplay="CENTER" layoutX="7.0" layoutY="25.0" prefHeight="28.0" prefWidth="125.0" style="-fx-background-color: #48A74C; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 5;" text="AJOUT" textAlignment="CENTER" textFill="#141313">
+               <font>
+                  <Font name="Corbel Bold" size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="78.0" prefWidth="215.0">
+         <children>
+            <Label fx:id="labelObjet1" alignment="CENTER" contentDisplay="CENTER" layoutX="13.0" layoutY="25.0" prefHeight="28.0" prefWidth="199.0" text="Mouhamed Lawal Dan Azoumi" textAlignment="CENTER" textFill="#141313">
+               <font>
+                  <Font name="Corbel Bold" size="15.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="iconTypeObject" fitHeight="16.0" fitWidth="18.0" layoutX="104.0" layoutY="17.0" styleClass="btn_delete">
+               <image>
+                  <Image url="@../../resources/images/mini_icon_user.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="78.0" prefWidth="215.0">
+         <children>
+            <Label fx:id="labelAuteur1" alignment="CENTER" contentDisplay="CENTER" layoutX="-1.0" layoutY="25.0" prefHeight="28.0" prefWidth="192.0" text="Ikbal Azimari Toure" textAlignment="CENTER" textFill="#141313">
+               <font>
+                  <Font name="Corbel Bold" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="78.0" prefWidth="126.0">
+         <children>
+            <Label fx:id="labelDate1" alignment="CENTER" contentDisplay="CENTER" layoutX="-1.0" layoutY="25.0" prefHeight="28.0" prefWidth="126.0" text="27/02/2003" textAlignment="CENTER" textFill="#141313">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="78.0" prefWidth="226.0">
+         <children>
+            <Button fx:id="btnCancel1" layoutX="21.0" layoutY="18.0" mnemonicParsing="false" onAction="#onCancelAction" style="-fx-padding: 10;" styleClass="btn_delete" text="Annuler l'action" textFill="#e74c3c">
+               <graphic>
+                  <ImageView fitHeight="23.0" fitWidth="23.0">
+                     <image>
+                        <Image url="@../../resources/images/delete_module_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="Corbel Bold" size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </AnchorPane>
+   </children>
+</HBox>
