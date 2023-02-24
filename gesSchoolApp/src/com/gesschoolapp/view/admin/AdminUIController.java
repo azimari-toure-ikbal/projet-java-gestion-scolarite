@@ -1,14 +1,17 @@
 package com.gesschoolapp.view.admin;
 
+import com.gesschoolapp.Exceptions.ArchiveManagerException;
 import com.gesschoolapp.Exceptions.DAOException;
 import com.gesschoolapp.db.DAOClassesImpl.ClasseDAOImp;
 import com.gesschoolapp.db.DAOClassesImpl.UserDAOImp;
+import com.gesschoolapp.models.actions.Action;
 import com.gesschoolapp.models.classroom.Classe;
 import com.gesschoolapp.models.student.Apprenant;
 import com.gesschoolapp.models.users.Admin;
 import com.gesschoolapp.models.users.Caissier;
 import com.gesschoolapp.models.users.Utilisateur;
 import com.gesschoolapp.runtime.Main;
+import com.gesschoolapp.serial.ActionManager;
 import com.gesschoolapp.utils.Toolbox;
 import com.gesschoolapp.view.scolarite.ApprenantItemsController;
 import com.gesschoolapp.view.scolarite.ApprenantViewDialogController;
@@ -20,6 +23,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -33,6 +37,7 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -107,7 +112,11 @@ public class AdminUIController implements Initializable {
     @FXML
     private VBox classesLayout;
 
+    @FXML
+    private VBox actionsLayout;
 
+    @FXML
+    private DatePicker labelLogsDate;
 
     //  #### ROUTES :
 
@@ -146,6 +155,8 @@ public class AdminUIController implements Initializable {
 
     List<Classe> classesList;
 
+    List<Action> actionsList;
+
     // ##### INIT :
 
 
@@ -172,6 +183,11 @@ public class AdminUIController implements Initializable {
         try {
             usersList = userData.getList();
             classesList = classData.getList();
+            try {
+                actionsList = ActionManager.DeserializeActions().getListActions();
+            } catch (ArchiveManagerException e) {
+                throw new RuntimeException(e);
+            }
         } catch (DAOException e) {
             throw new RuntimeException(e);
         }
@@ -179,11 +195,20 @@ public class AdminUIController implements Initializable {
         // --- Set lists :
         setListeDesUtilisateurs(usersList);
         setListeDesClasses(classesList);
+        labelLogsDate.setValue(LocalDate.now());
+        setListeDesActions(actionsList.stream().filter(action -> action.getDate().toLocalDate().equals(LocalDate.now())).toList());
 
     }
 
 
     // ##### GETTERS AND SETTERS :
+
+    @FXML
+    void getLogsDate(ActionEvent event) {
+        System.out.println("NEW LOG LIST !");
+        LocalDate newDate = labelLogsDate.getValue();
+        setListeDesActions(actionsList.stream().filter(action -> action.getDate().toLocalDate().equals(newDate)).toList());
+    }
 
     public List<Utilisateur> getUsersList() {
         return usersList;
@@ -475,6 +500,26 @@ public class AdminUIController implements Initializable {
 
             classesLayout.getChildren().add(hbox);
 
+        }
+    }
+
+    public void setListeDesActions(List<Action> actions){
+            actionsLayout.getChildren().clear();
+
+        for (Action action : actions) {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("ActionItem.fxml"));
+            HBox hbox = null;
+            try {
+                hbox = fxmlLoader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            ActionItemController aic = fxmlLoader.getController();
+            aic.setSuperController(this);
+            aic.setData(action);
+
+            actionsLayout.getChildren().add(hbox);
         }
     }
 

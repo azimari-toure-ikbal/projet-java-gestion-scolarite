@@ -1,10 +1,12 @@
 package com.gesschoolapp.tests;
 import at.favre.lib.crypto.bcrypt.*;
+import com.gesschoolapp.Exceptions.ArchiveManagerException;
 import com.gesschoolapp.Exceptions.DAOException;
 import com.gesschoolapp.Exceptions.PDFException;
 import com.gesschoolapp.db.DAOClassesImpl.*;
 import com.gesschoolapp.db.DAOInterfaces.ApprenantDAO;
 import com.gesschoolapp.docmaker.PDFGenerator;
+import com.gesschoolapp.models.actions.Action;
 import com.gesschoolapp.models.actions.Actions;
 import com.gesschoolapp.models.actions.Notification;
 import com.gesschoolapp.models.paiement.Paiement;
@@ -50,7 +52,6 @@ import javax.swing.JOptionPane;
 
 public class TestClass {
     public static void main(String[] args) {
-
 
 //        System.out.println("RCU" + (int) (Instant.now().getEpochSecond()/10000));
 //        testLastView();
@@ -118,6 +119,9 @@ public class TestClass {
             testCreateApprenant();
             Actions actions = ActionManager.DeserializeActions();
             System.out.println(actions.getListActions());
+            for (Action action : actions.getListActions()) {
+                System.out.println(action.getClass());
+            }
 //            actions.getListActions().get(1).cancelAction("Marshall");
         }catch (Exception e){
             JOptionPane.showMessageDialog(null, e.getMessage());

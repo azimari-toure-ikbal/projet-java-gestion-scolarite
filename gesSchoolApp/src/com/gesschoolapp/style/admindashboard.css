@@ -90,6 +90,10 @@
     -fx-opacity: 1;
 }
 
+btn_delete:focused{
+    -fx-border-color: red;
+}
+
 
 
 .table-view:focused .table-row-cell:filled:focused:selected {
