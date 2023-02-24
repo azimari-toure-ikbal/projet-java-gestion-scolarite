@@ -1,6 +1,8 @@
 package com.gesschoolapp.models.actions;
 
+import com.gesschoolapp.Exceptions.ArchiveManagerException;
 import com.gesschoolapp.db.DAOClassesImpl.ActionDAOImp;
+import com.gesschoolapp.serial.ActionManager;
 import com.gesschoolapp.view.util.ActionType;
 
 import java.io.Serializable;
@@ -14,8 +16,10 @@ public class Action implements Serializable {
     private String actor;
     private ActionType action;
     private LocalDateTime date;
+    private boolean canceled ;
 
     public Action() {
+        this.canceled = false;
     }
 
     /**
@@ -42,12 +46,20 @@ public class Action implements Serializable {
         this.setActor(actor);
         this.setAction(action);
         this.setDate(date);
+        this.canceled = false;
     }
 
     public LocalDateTime getDate() {
         return date;
     }
 
+    public boolean isCanceled() {
+        return canceled;
+    }
+
+    public void setCanceled(boolean canceled) {
+        this.canceled = canceled;
+    }
     public void setDate(LocalDateTime date) {
         this.date = date;
     }
@@ -83,9 +95,22 @@ public class Action implements Serializable {
     public void setAction(ActionType action) {
         this.action = action;
     }
+    public String getObjectType(){
+        return this.object.getClass().getSimpleName();
+    }
 
     public void cancelAction(String admin){
         new ActionDAOImp().cancelAction(this, admin);
+        this.canceled = true;
+        try {
+            Actions actions = ActionManager.DeserializeActions();
+            actions.getListActions().get(this.idAction).setCanceled(true);
+            ActionManager.SerializeActions(actions);
+        } catch (ArchiveManagerException e) {
+            e.printStackTrace();
+            System.out.println("Error while deserializing actions : \n" + e.getClass().getName() + " : " + e.getMessage());
+        }
+
     }
 
     @Override

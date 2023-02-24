@@ -17,6 +17,14 @@ public class Module implements Serializable {
 
     //constructors
     public Module() {
+        this.id = 0;
+    }
+
+    public Module(String intitule, String classe, int semestre) {
+        this.id = 0;
+        this.setIntitule(intitule);
+        this.setClasse(classe);
+        this.setSemestre(semestre);
     }
 
     public Module(int id, String intitule, List<Note> notes, String classe, int semestre) {
