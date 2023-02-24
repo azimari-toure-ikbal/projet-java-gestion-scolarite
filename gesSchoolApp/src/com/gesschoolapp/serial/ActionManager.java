@@ -26,6 +26,7 @@ public class ActionManager {
             return new Actions();
         }
         catch (Exception e) {
+            e.printStackTrace();
             throw new ArchiveManagerException("Error while deserializing actions : \n" + e.getClass().getName() + " : " + e.getMessage());
         }
     }

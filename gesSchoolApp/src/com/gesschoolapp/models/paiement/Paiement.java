@@ -2,9 +2,12 @@ package com.gesschoolapp.models.paiement;
 
 import com.gesschoolapp.models.student.Apprenant;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Paiement {
+public class Paiement implements Serializable {
+    public static final long serialVersionUID = 429;
+
     //paiement has idPaiement, numeroRecu, montant, rubrique, date, apprenant(String), caissier(String), classe(String), observation
     private int idPaiement;
     private String numeroRecu;
@@ -16,7 +19,6 @@ public class Paiement {
     private Apprenant apprenant;
     private String caissier;
     private String classe;
-
     private String nameApprenant;
 
     public Paiement() {
