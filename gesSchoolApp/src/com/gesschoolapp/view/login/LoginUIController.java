@@ -113,14 +113,14 @@ public class LoginUIController implements Initializable  {
     @FXML
     void handleLogin(ActionEvent event) {
 
-        String login = txtUsername.getText();
+//        String login = txtUsername.getText();
 //        String login = "fatou.syla@mail.cum";
-//        String login = "marcus.sins@mail.com";
+        String login = "marcus.sins@mail.com";
 //        String login = "wissam.youssef@mail.com";
-//        String password = "fatou";
-//        String password = "marcus";
+        String password = "marcus";
 //        String password = "wissam";
-        String password = txtPassword.getText();
+//        String password = "fatou";
+//        String password = txtPassword.getText();
         if (login.isEmpty() || password.isEmpty()) {
             messageInfo.setText("Veuillez remplir tous les champs");
         } else {
@@ -162,15 +162,7 @@ public class LoginUIController implements Initializable  {
 
     @FXML
     private void onMinimize(){
-        Timeline timeline = new Timeline();
-        KeyFrame key;
-        key = new KeyFrame(Duration.millis(50),
-                new KeyValue (main.getPrimaryStage().opacityProperty(), 0));
-        timeline.getKeyFrames().add(key);
-        timeline.setOnFinished((ae) -> main.getPrimaryStage().setIconified(true));
-        timeline.play();
-//        NOTE : Tu devrais avoir une animation spécifique à la réduction de page !
-
+        main.getPrimaryStage().setIconified(true);
     };
 
     @Override

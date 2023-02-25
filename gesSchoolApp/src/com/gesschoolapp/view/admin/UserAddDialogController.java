@@ -78,9 +78,6 @@ public class UserAddDialogController implements Initializable {
     private TextField labelNumero;
 
     @FXML
-    private TextField labelMdp;
-
-    @FXML
     private TextField labelPrenom;
 
     @FXML
@@ -102,14 +99,6 @@ public class UserAddDialogController implements Initializable {
         String email = labelEmail.getText();
         String numero = labelNumero.getText();
         String habilitation = selectTypeUser.getValue();
-        String mdp = labelMdp.getText();
-
-        if(mdp.length() <= 4 || mdp.length() >= 127){
-            messageInfo.setVisible(true);
-            messageInfo.setText("Le mot de passe doit être compris entre 4 et 127 caractères");
-            messageInfo.setTextFill(Color.web("#e83636"));
-            return false;
-        }
 
         if(nom.length() >= 256 || prenom.length() >= 256){
             messageInfo.setVisible(true);
@@ -148,8 +137,6 @@ public class UserAddDialogController implements Initializable {
         user.setPrenom(prenom);
         user.setNumero(numero);
         user.setEmail(email);
-        user.setPassword(mdp);
-
 
         try {
 

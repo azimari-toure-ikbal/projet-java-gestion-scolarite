@@ -103,7 +103,7 @@ public class UserChartDialogController implements Initializable {
         user = utilisateur;
 
         List<Paiement> dailyFeesList = Toolbox.paiementsJournalier(LocalDate.now());
-        setDailyFeesList(FXCollections.observableArrayList(dailyFeesList.stream().filter(paiement -> paiement.getCaissier().equals(utilisateur.getFullName())).toList()));
+        setDailyFeesList(FXCollections.observableArrayList(dailyFeesList.stream().filter(paiement -> paiement.getCaissier().equalsIgnoreCase(utilisateur.getFullName())).toList()));
 
     }
 
