@@ -1,0 +1,68 @@
+USE CASE SECRETAIRE
+--------------------
+[Secrétaire]
+[Secrétaire]-(Ajouter un apprenant)-[Secretaire2]
+(Ajouter un apprenant)>(Authentifier)
+[Secrétaire]-(Modifier un apprenant)
+(Modifier un apprenant)>(Authentifier)
+[Secrétaire]-(Supprimer un apprenant)
+(Supprimer un apprenant)>(Authentifier)
+[Secrétaire]-(Renseigner les notes)
+(Renseigner les notes)<(Générer les bulletins)
+(Renseigner les notes)>(Authentifier)
+[Secrétaire]-(Modifier les notes)
+(Modifier les notes)>(Authentifier)
+[Secrétaire]-(Consulter la liste des classes)
+(Consulter la liste des classes)>(Authentifier)
+(Consulter la liste des classes)<(Consulter la liste de la classe)
+[Secrétaire]-(Importer la liste des apprenants)
+(Importer la liste des apprenants)>(Authentifier)
+[Secrétaire]-(Exporter la liste des apprenants)
+(Exporter la liste des apprenants)>(Authentifier)
+[Secrétaire]-(Rechercher un apprenant)
+(Rechercher un apprenant)>(Authentifier)
+
+USE CASE CAISSIER
+------------------
+[Caissier]
+[Caissier]-(Ajouter un apprenant)-[Secretaire2]
+(Ajouter un apprenant)>(Authentifier)
+[Caissier]-(Modifier un apprenant)
+(Modifier un apprenant)>(Authentifier)
+[Caissier]-(Supprimer un apprenant)
+(Supprimer un apprenant)>(Authentifier)
+[Caissier]-(Renseigner les notes)
+(Renseigner les notes)<(Générer les bulletins)
+(Renseigner les notes)>(Authentifier)
+[Caissier]-(Modifier les notes)
+(Modifier les notes)>(Authentifier)
+[Caissier]-(Consulter la liste des classes)
+(Consulter la liste des classes)>(Authentifier)
+(Consulter la liste des classes)<(Consulter la liste de la classe)
+[Caissier]-(Importer la liste des apprenants)
+(Importer la liste des apprenants)>(Authentifier)
+[Caissier]-(Exporter la liste des apprenants)
+(Exporter la liste des apprenants)>(Authentifier)
+[Caissier]-(Rechercher un apprenant)
+(Rechercher un apprenant)>(Authentifier)
+[Caissier]-(Renseigner un paiement)
+(Renseigner un paiement)>(Authentifier)
+
+
+USE CASE ADMINISTRATEUR
+------------------------
+[Administrateur]
+[Administrateur]-(Créer les utilisateurs avec leurs habilitations)
+(Créer les utilisateurs avec leurs habilitations)>(Authentifier)
+[Administrateur]-(Définir les échéanciers de paiements)
+(Définir les échéanciers de paiements)>(Authentifier)
+[Administrateur]-(Définir les rubriques)
+(Définir les rubriques)>(Authentifier)
+[Administrateur]-(Consulter les états de paiement des caissiers)
+(Consulter les états de paiement des caissiers)>(Authentifier)
+[Administrateur]-(Etablir les certificats de scolarité)
+(Etablir les certificats de scolarité)>(Authentifier)
+[Administrateur]-(Annuler des opérations du caissier ou du secrétaire)
+(Annuler des opérations du caissier ou du secrétaire)>(Authentifier)
+[Administrateur]-(Gérer les réductions de scolarité)
+(Gérer les réductions de scolarité)>(Authentifier)
