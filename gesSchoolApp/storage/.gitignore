@@ -1,0 +1,7 @@
+# ignore all .png files in all folders
+*.png
+
+# ignore all .pdf files in all folders
+*.pdf
+
+*.ser

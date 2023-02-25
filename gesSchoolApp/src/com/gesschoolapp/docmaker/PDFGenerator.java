@@ -203,8 +203,8 @@ public class PDFGenerator {
             }
 
             Document document = new Document();
-            String path = "storage/bulletins/pdfs/" + apprenant.getNom() + "_" + apprenant.getPrenom() + "_bulletin_semestre_" + semestre + ".pdf";
-            String filename = "storage/bulletins/imgs/" + apprenant.getNom() + "_" + apprenant.getPrenom() + "_bulletin_semestre_" + semestre + ".png";
+            String path = "storage/bulletins/pdfs/" + apprenant.getNom().replace(" ", "_") + "_" + apprenant.getPrenom() + "_bulletin_semestre_" + semestre + ".pdf";
+            String filename = "storage/bulletins/imgs/" + apprenant.getNom().replace(" ", "_") + "_" + apprenant.getPrenom() + "_bulletin_semestre_" + semestre + ".png";
 
             try {
                 PdfWriter.getInstance(document, new FileOutputStream(path));
