@@ -20,6 +20,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="655.0" prefWidth="1170.0" stylesheets="@../../style/admindashboard.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gesschoolapp.view.admin.AdminUIController">
@@ -31,8 +32,7 @@
                   <Insets />
                </BorderPane.margin>
                <children>
-                  <BorderPane fx:id="dashView" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: red;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <BorderPane fx:id="profileView" layoutX="10.0" layoutY="71.0" prefHeight="507.0" prefWidth="954.0" style="-fx-background-color: #F3F3F3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <BorderPane fx:id="dashView" layoutX="10.0" layoutY="71.0" prefHeight="507.0" prefWidth="954.0" style="-fx-background-color: #F3F3F3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                   <BorderPane fx:id="usersView" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #F3F3F3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <center>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
@@ -70,7 +70,7 @@
                                                 <Font name="Corbel" size="15.0" />
                                              </font>
                                           </Label>
-                                          <Label fx:id="caissierEtatDePaiementLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="140.0" text="Mot de passe" textAlignment="CENTER" textFill="#656565">
+                                          <Label fx:id="caissierEtatDePaiementLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="140.0" text="Statut" textAlignment="CENTER" textFill="#656565">
                                              <font>
                                                 <Font name="Corbel" size="15.0" />
                                              </font>
@@ -203,24 +203,6 @@
                                     <Insets left="22.0" />
                                  </opaqueInsets>
                               </Label>
-                              <MenuButton fx:id="filterStudentsInput" alignment="CENTER" contentDisplay="BOTTOM" layoutX="832.0" layoutY="76.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="101.0" style="-fx-background-color: linear-gradient(to right, #2c7aba, #5AB2D8); -fx-background-radius: 10px;" text="Filtre" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
-                                 <items>
-                                    <MenuItem fx:id="getAll" mnemonicParsing="false" onAction="#handleStudentsFilter" style="-fx-pref-width: 95px;" text="Tous" />
-                                    <MenuItem fx:id="getPaye" mnemonicParsing="false" onAction="#handleStudentsFilter" text="Payé/Inscrit" />
-                                    <MenuItem fx:id="getImpaye" mnemonicParsing="false" onAction="#handleStudentsFilter" style="-fx-pref-width: 95px;" text="Impayé" />
-                                    <MenuItem fx:id="getNonInscrit" mnemonicParsing="false" onAction="#handleStudentsFilter" style="-fx-pref-width: 95px;" text="Non inscrit" />
-                                 </items>
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                                 <styleClass>
-                                    <String fx:value="filterItem" />
-                                    <String fx:value="caissier_item" />
-                                 </styleClass>
-                              </MenuButton>
                            </children>
                         </AnchorPane>
                      </center></BorderPane>
@@ -297,9 +279,10 @@
                               </Label>
                               <MenuButton fx:id="filterStudentsInput1" alignment="CENTER" contentDisplay="BOTTOM" layoutX="832.0" layoutY="76.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="101.0" style="-fx-background-color: linear-gradient(to right, #2c7aba, #5AB2D8); -fx-background-radius: 10px;" text="Filtre" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
                                  <items>
-                                    <MenuItem fx:id="getAll1" mnemonicParsing="false" onAction="#handleStudentsFilter" style="-fx-pref-width: 95px;" text="Ajout" />
-                                    <MenuItem fx:id="getPaye1" mnemonicParsing="false" onAction="#handleStudentsFilter" text="Modification" />
-                                    <MenuItem fx:id="getImpaye1" mnemonicParsing="false" onAction="#handleStudentsFilter" style="-fx-pref-width: 95px;" text="Suppression" />
+                                    <MenuItem fx:id="getAjout" mnemonicParsing="false" onAction="#handleActionsFilter" style="-fx-pref-width: 95px;" text="Ajout" />
+                                    <MenuItem fx:id="getModification" mnemonicParsing="false" onAction="#handleActionsFilter" text="Modification" />
+                                    <MenuItem fx:id="getSuppression" mnemonicParsing="false" onAction="#handleActionsFilter" style="-fx-pref-width: 95px;" text="Suppression" />
+                                    <MenuItem fx:id="getAll" mnemonicParsing="false" onAction="#handleActionsFilter" style="-fx-pref-width: 95px;" text="Tous" />
                                  </items>
                                  <font>
                                     <Font size="16.0" />
@@ -313,6 +296,102 @@
                                  </styleClass>
                               </MenuButton>
                               <DatePicker fx:id="labelLogsDate" editable="false" layoutX="245.0" layoutY="82.0" onAction="#getLogsDate" prefHeight="39.0" prefWidth="154.0" promptText="jj/mm/aa" style="-fx-background-color: white; -fx-border-insets: 1 1 1 1; -fx-border-width: 1px; -fx-border-color: #BABABA; -fx-border-radius: 2px;" />
+                           </children>
+                        </AnchorPane>
+                     </center></BorderPane>
+                  <BorderPane fx:id="profileView" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #F3F3F3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <center>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #EAEFF8;" BorderPane.alignment="CENTER">
+                           <children>
+                              <Label fx:id="classListName12" contentDisplay="RIGHT" layoutX="30.0" layoutY="38.0" prefHeight="29.0" prefWidth="183.0" text="Profil administrateur" textFill="#323a3f">
+                                 <font>
+                                    <Font name="Gill Sans MT" size="20.0" />
+                                 </font>
+                                 <opaqueInsets>
+                                    <Insets left="22.0" />
+                                 </opaqueInsets>
+                              </Label>
+                              <Line endX="589.0" layoutX="298.0" layoutY="55.0" startX="-85.0" strokeWidth="0.1" />
+                              <AnchorPane layoutX="30.0" layoutY="90.0" prefHeight="295.0" prefWidth="609.0" style="-fx-background-color: white; -fx-background-radius: 10px;">
+                                 <effect>
+                                    <DropShadow>
+                                       <color>
+                                          <Color opacity="0.5152671933174133" />
+                                       </color>
+                                    </DropShadow>
+                                 </effect>
+                                 <children>
+                                    <Circle fx:id="profile_pic_placeholder" fill="DODGERBLUE" layoutX="146.0" layoutY="116.0" onMouseClicked="#handleNavigation" radius="88.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="profile_pic" />
+                                    <Label fx:id="userFullName" alignment="CENTER" contentDisplay="RIGHT" layoutX="1.0" layoutY="221.0" prefHeight="29.0" prefWidth="289.0" text="Johnson Davison Doe" textFill="#323a3f">
+                                       <font>
+                                          <Font name="Gill Sans MT" size="20.0" />
+                                       </font>
+                                       <opaqueInsets>
+                                          <Insets left="22.0" />
+                                       </opaqueInsets>
+                                    </Label>
+                                    <Line endX="238.0" endY="194.0" layoutX="51.0" layoutY="81.0" startX="238.0" startY="-61.0" strokeWidth="0.1" />
+                                    <Label fx:id="classListName1211" contentDisplay="RIGHT" layoutX="322.0" layoutY="72.0" prefHeight="29.0" prefWidth="55.0" text="Email : " textFill="#323a3f">
+                                       <font>
+                                          <Font name="Gill Sans MT" size="17.0" />
+                                       </font>
+                                       <opaqueInsets>
+                                          <Insets left="22.0" />
+                                       </opaqueInsets>
+                                    </Label>
+                                    <Label fx:id="classListName12111" layoutX="322.0" layoutY="143.0" prefHeight="29.0" prefWidth="83.0" text="Numéro :" textFill="#323a3f">
+                                       <font>
+                                          <Font name="Gill Sans MT" size="17.0" />
+                                       </font>
+                                       <opaqueInsets>
+                                          <Insets left="22.0" />
+                                       </opaqueInsets>
+                                    </Label>
+                                    <Label fx:id="userMail" contentDisplay="RIGHT" layoutX="376.0" layoutY="72.0" prefHeight="29.0" prefWidth="233.0" text="johndoe@mail.com" textFill="#9ea0a1">
+                                       <font>
+                                          <Font name="Gill Sans MT" size="17.0" />
+                                       </font>
+                                       <opaqueInsets>
+                                          <Insets left="22.0" />
+                                       </opaqueInsets>
+                                    </Label>
+                                    <Label fx:id="userPhoneNumber" contentDisplay="RIGHT" layoutX="399.0" layoutY="143.0" prefHeight="29.0" prefWidth="209.0" text="772043509" textFill="#9ea0a1">
+                                       <font>
+                                          <Font name="Gill Sans MT" size="17.0" />
+                                       </font>
+                                       <opaqueInsets>
+                                          <Insets left="22.0" />
+                                       </opaqueInsets>
+                                    </Label>
+                                    <Button layoutX="459.0" layoutY="235.0" mnemonicParsing="false" onAction="#editProfileBtnClicked" prefHeight="31.0" prefWidth="129.0" styleClass="disconnect_btn" text="Modifier" />
+                                 </children>
+                              </AnchorPane>
+                              <Label fx:id="classListName121" contentDisplay="RIGHT" layoutX="30.0" layoutY="407.0" prefHeight="29.0" prefWidth="119.0" text="Notifications" textFill="#323a3f">
+                                 <font>
+                                    <Font name="Gill Sans MT" size="20.0" />
+                                 </font>
+                                 <opaqueInsets>
+                                    <Insets left="22.0" />
+                                 </opaqueInsets>
+                              </Label>
+                              <Line endX="589.0" layoutX="298.0" layoutY="427.0" startX="-149.0" startY="-2.5" strokeWidth="0.1" />
+                              <AnchorPane layoutX="17.0" layoutY="439.0" prefHeight="130.0" prefWidth="869.0">
+                                 <children>
+                                    <ImageView fitHeight="80.0" fitWidth="118.0" layoutX="245.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/images/empty_placeholder.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label contentDisplay="RIGHT" layoutX="352.0" layoutY="51.0" prefHeight="29.0" prefWidth="273.0" text="Vous n'avez aucune notification." textFill="#9ea0a1">
+                                       <font>
+                                          <Font name="Gill Sans MT" size="21.0" />
+                                       </font>
+                                       <opaqueInsets>
+                                          <Insets left="22.0" />
+                                       </opaqueInsets>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
                            </children>
                         </AnchorPane>
                      </center></BorderPane>
@@ -371,13 +450,23 @@
                         </Button>
                      </children>
                   </VBox>
+                  <Button layoutX="21.0" layoutY="519.0" mnemonicParsing="false" onAction="#handleDisconnect" prefHeight="31.0" prefWidth="182.0" styleClass="disconnect_btn" text="    Déconnexion" />
+                  <ImageView fitHeight="21.0" fitWidth="23.0" layoutX="41.0" layoutY="527.0">
+                     <image>
+                        <Image url="@../../resources/images/disconnect_icon.png" />
+                     </image>
+                  </ImageView>
                </children>
             </AnchorPane>
          </left>
          <top>
             <AnchorPane prefHeight="76.0" prefWidth="954.0" style="-fx-background-color: #2C7ABA;" BorderPane.alignment="CENTER">
                <children>
-                  <Circle fx:id="pp_placeholder" fill="DODGERBLUE" layoutX="974.0" layoutY="38.0" onMouseClicked="#handleNavigation" radius="19.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="profile_pic" />
+                  <Circle fx:id="pp_placeholder" fill="DODGERBLUE" layoutX="974.0" layoutY="38.0" onMouseClicked="#handleNavigation" radius="19.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="profile_pic">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Circle>
                   <Label layoutX="1009.0" layoutY="30.0" text="admin@mail.com" textFill="WHITE" AnchorPane.rightAnchor="59.0">
                      <font>
                         <Font name="Corbel Bold" size="14.0" />

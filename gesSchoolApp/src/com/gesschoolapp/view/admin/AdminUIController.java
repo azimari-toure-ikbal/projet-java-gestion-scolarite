@@ -5,6 +5,7 @@ import com.gesschoolapp.Exceptions.DAOException;
 import com.gesschoolapp.db.DAOClassesImpl.ClasseDAOImp;
 import com.gesschoolapp.db.DAOClassesImpl.UserDAOImp;
 import com.gesschoolapp.models.actions.Action;
+import com.gesschoolapp.models.actions.Actions;
 import com.gesschoolapp.models.classroom.Classe;
 import com.gesschoolapp.models.student.Apprenant;
 import com.gesschoolapp.models.users.Admin;
@@ -15,16 +16,16 @@ import com.gesschoolapp.serial.ActionManager;
 import com.gesschoolapp.utils.Toolbox;
 import com.gesschoolapp.view.scolarite.ApprenantItemsController;
 import com.gesschoolapp.view.scolarite.ApprenantViewDialogController;
+import com.gesschoolapp.view.util.ActionType;
 import com.gesschoolapp.view.util.Route;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -39,6 +40,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AdminUIController implements Initializable {
@@ -86,6 +88,22 @@ public class AdminUIController implements Initializable {
     private Circle pp_placeholder;
 
     @FXML
+    private Circle profile_pic_placeholder;
+
+
+    @FXML
+    private MenuItem getSuppression;
+
+    @FXML
+    private MenuItem getModification;
+
+    @FXML
+    private MenuItem getAjout;
+
+    @FXML
+    private MenuItem getAll;
+
+    @FXML
     private Label mainMessageInfo;
 
     @FXML
@@ -114,6 +132,16 @@ public class AdminUIController implements Initializable {
 
     @FXML
     private VBox actionsLayout;
+
+    @FXML
+    private Label userFullName;
+
+    @FXML
+    private Label userMail;
+
+    @FXML
+    private Label userPhoneNumber;
+
 
     @FXML
     private DatePicker labelLogsDate;
@@ -173,6 +201,7 @@ public class AdminUIController implements Initializable {
         // --- Init components :
         Image pp = new Image("com/gesschoolapp/resources/images/pp_placeholder.jpg");
         pp_placeholder.setFill(new ImagePattern(pp));
+
 
         // --- Init route :
         setCurrentRoute(users);
@@ -269,6 +298,12 @@ public class AdminUIController implements Initializable {
     }
 
     public void setCurrentUser(Admin currentUser) {
+        // --- Init user profile :
+        Image pp = new Image("com/gesschoolapp/resources/images/pp_placeholder.jpg");
+        profile_pic_placeholder.setFill(new ImagePattern(pp));
+        userFullName.setText(currentUser.getFullName());
+        userMail.setText(currentUser.getEmail());
+        userPhoneNumber.setText(currentUser.getNumero());
         this.currentUser = currentUser;
     }
 
@@ -351,6 +386,25 @@ public class AdminUIController implements Initializable {
 
     }
 
+    @FXML
+    public void handleActionsFilter(ActionEvent e) {
+        List<Action> newList = actionsList;
+        System.out.println();
+        if(e.getSource() == getAjout){
+            newList = newList.stream().filter(action -> action.getAction() == ActionType.ADD && action.getDate().toLocalDate().equals(labelLogsDate.getValue())).toList();
+            setListeDesActions(newList);
+        }else if(e.getSource() == getModification){
+            newList = newList.stream().filter(action -> action.getAction() == ActionType.UPDATE && action.getDate().toLocalDate().equals(labelLogsDate.getValue())).toList();
+            setListeDesActions(newList);
+        }else if(e.getSource() == getSuppression){
+            newList = newList.stream().filter(action -> action.getAction() == ActionType.DELETE && action.getDate().toLocalDate().equals(labelLogsDate.getValue())).toList();
+            setListeDesActions(newList);
+        }else{
+            newList = newList.stream().filter(action -> action.getDate().toLocalDate().equals(labelLogsDate.getValue())).toList();
+            setListeDesActions(newList);
+        }
+    }
+
 
 
     // ##### NAVIGATION & ROUTAGE :
@@ -423,6 +477,30 @@ public class AdminUIController implements Initializable {
         setSelectedUserType((Button) event.getSource());
         setListeDesUtilisateurs();
     }
+
+    @FXML
+    void handleDisconnect(ActionEvent event) {
+
+        //ask for confirmation
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Déconnexion");
+        alert.setHeaderText("Vous êtes sur le point de vous déconnecter");
+        alert.setContentText("Voulez-vous continuer ?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            // ... user chose OK
+            try {
+                Node node = (Node) event.getSource();
+                Stage stg = (Stage) node.getScene().getWindow();
+                stg.close();
+
+                mainApp.initLayout();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     // ##### VUE SETTERS,RESETTERS :
 
@@ -502,10 +580,18 @@ public class AdminUIController implements Initializable {
 
         }
     }
+    public void setListeDesActions() {
+        Actions action;
+        try {
+            action = ActionManager.DeserializeActions();
+        } catch (ArchiveManagerException e) {
+            throw new RuntimeException(e);
+        }
+        setListeDesActions(action.getListActions());
+    }
 
     public void setListeDesActions(List<Action> actions){
             actionsLayout.getChildren().clear();
-
         for (Action action : actions) {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("ActionItem.fxml"));
@@ -718,6 +804,53 @@ public class AdminUIController implements Initializable {
             controller.setDialogStage(dialogStage);
             controller.setSuperController(this);
             controller.setData(classe);
+            controller.setScene(scene);
+            controller.setMain(mainApp);
+            controller.setDraggable();
+
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void editProfileBtnClicked(ActionEvent event) {
+        this.openProfileEditDialog(currentUser);
+    }
+
+    @FXML
+    public void openProfileEditDialog(Utilisateur user) {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("ProfileEdit.fxml"));
+
+            AnchorPane page = (AnchorPane) loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("School UP Admin - Modifier mon profil");
+            // Set the application icon.
+
+            dialogStage.getIcons().add(new Image("com/gesschoolapp/resources/images/app_icon.png"));
+            dialogStage.initStyle(StageStyle.UNDECORATED);
+            dialogStage.setResizable(false);
+
+
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(mainApp.getPrimaryStage());
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the person into the controller.
+            ProfileEditController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setSuperController(this);
+            controller.setData(user);
             controller.setScene(scene);
             controller.setMain(mainApp);
             controller.setDraggable();

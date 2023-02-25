@@ -37,9 +37,9 @@
       </Pane>
       <Pane prefHeight="81.0" prefWidth="142.0">
          <children>
-            <Label fx:id="labelPassword" alignment="CENTER" layoutX="-1.0" layoutY="28.0" prefHeight="26.0" prefWidth="146.0" text="ilovenicki02testt" textFill="#3c3a3a">
+            <Label fx:id="labelType1" alignment="CENTER" contentDisplay="CENTER" layoutX="21.0" layoutY="27.0" prefHeight="28.0" prefWidth="125.0" style="-fx-background-color: #48A74C; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 5;" text="ACTIVÉ" textAlignment="CENTER" textFill="#141313">
                <font>
-                  <Font name="Gill Sans MT" size="15.0" />
+                  <Font name="Corbel Bold" size="14.0" />
                </font>
             </Label>
          </children>
