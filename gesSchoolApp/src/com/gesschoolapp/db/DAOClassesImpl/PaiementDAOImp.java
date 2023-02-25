@@ -35,7 +35,7 @@ public class PaiementDAOImp implements PaiementDAO {
 
             String  query = "INSERT INTO paiements (numeroRecu, date, montant, idApprenant, classe, rubrique, caissier, observation, apprenant ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, "RCU" + (int) (Instant.now().getEpochSecond()%1000));
+            statement.setString(1, "RCU" + (int) (Math.sqrt(Instant.now().getEpochSecond())));
             statement.setString(2, obj.getDate().toString());
             statement.setDouble(3, obj.getMontant());
             statement.setInt(4, obj.getApprenant().getIdApprenant());
@@ -53,16 +53,7 @@ public class PaiementDAOImp implements PaiementDAO {
                 new ApprenantDAOImp().incrementEtatPaiement(obj.getApprenant());
             }
 
-            Paiement paiement = getList().get(getList().size() - 1);
-
-            Action action = new Action();
-            action.setAction(ActionType.ADD);
-            action.setObject(paiement);
-            action.setDate(LocalDateTime.now());
-            action.setActor(user);
-            ActionManager.add(action);
-
-            return paiement ;
+            return getList().get(getList().size() - 1);
         } catch (Exception e) {
             throw new DAOException( "Error in PaiementDAO.create() : " + e.getMessage());
         }
@@ -182,7 +173,6 @@ public class PaiementDAOImp implements PaiementDAO {
         }
         return paiements;
     }
-
     public List<String> getAnnees() throws DAOException {
         try (Connection connection = DBManager.getConnection()) {
             String query = "SELECT DISTINCT YEAR(date) FROM paiements";

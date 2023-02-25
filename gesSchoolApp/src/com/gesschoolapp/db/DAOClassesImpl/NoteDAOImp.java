@@ -44,6 +44,7 @@ public class NoteDAOImp implements NoteDAO {
     @Override
     public void update(Note obj, String user) throws DAOException {
         try(Connection connexion = DBManager.getConnection()) {
+            System.out.println("Updating note..." + obj.getId());
             String query = "UPDATE notes SET valeur = ?, idApprenant = ?, idModule = ? WHERE idNote = ?";
             PreparedStatement stmt = connexion.prepareStatement(query);
             stmt.setFloat(1, obj.getNote());
@@ -55,37 +56,46 @@ public class NoteDAOImp implements NoteDAO {
             throw new DAOException("In NoteDAOImp.update()\n" + e.getMessage());
         }
     }
-
     /**
      * 
      * This method is desegned to solve to problem of id
-     * It may be a little bit slower than the other method but
+     * It may be a bit slower than the other method but
      * we can't have all we want in life smeh...
      *
      * @param obj
      * @param semestre
      * @throws DAOException
+     * 
      */
-
     @Override
     public void update (Note obj, int semestre, String user) throws DAOException {
         try(Connection connexion = DBManager.getConnection()) {
-            String query = "UPDATE notes n, modules m, apprenants a SET n.valeur = ? WHERE n.idApprenant = a.idApprenant AND n.idModule = m.idModule AND m.semestre = ? AND a.matricule = ? AND m.intitule = ?";
-            PreparedStatement stmt = connexion.prepareStatement(query);
-            stmt.setFloat(1, obj.getNote());
-            stmt.setInt(2, semestre);
-            stmt.setInt(3, obj.getApprenant().getMatricule());
-            stmt.setString(4, obj.getModule());
-            stmt.executeUpdate();
+            String preQuery =  "SELECT n.idNote FROM notes n, modules m, apprenants a WHERE n.idApprenant = a.idApprenant AND n.idModule = m.idModule AND m.semestre = ? AND a.matricule = ? AND m.intitule = ?";
+            PreparedStatement preparedStatementtmt = connexion.prepareStatement(preQuery);
+            preparedStatementtmt.setInt(1, semestre);
+            preparedStatementtmt.setInt(2, obj.getApprenant().getMatricule());
+            preparedStatementtmt.setString(3, obj.getModule());
+            ResultSet rs = preparedStatementtmt.executeQuery();
 
-            if(user != "admin"){
+            if(rs.next()) {
+                obj.setId(rs.getInt("idNote"));
+                update(obj, user);
+            }
+
+            if(!Objects.equals(user, "admin")){
                 Action action = new Action();
                 action.setActor(user);
                 action.setAction(ActionType.UPDATE);
-                action.setObject(obj);
+                action.setObject(new NoteDAOImp().read(obj.getId()));
                 action.setDate(LocalDateTime.now());
                 ActionManager.add(action);
             }
+
+            String query = "UPDATE notes SET valeur = ? WHERE idNote = ?";
+            PreparedStatement stmt = connexion.prepareStatement(query);
+            stmt.setFloat(1, obj.getNote());
+            stmt.setInt(2, obj.getId());
+            stmt.executeUpdate();
 
         } catch (Exception e) {
             throw new DAOException("In NoteDAOImp.update()\n" + e.getMessage());
@@ -189,6 +199,7 @@ public class NoteDAOImp implements NoteDAO {
             PreparedStatement stmt = connexion.prepareStatement(query);
             stmt.setInt(1, idModule);
             ResultSet rs = stmt.executeQuery();
+
             List<Note> notes = new ArrayList<>();
             while (rs.next()) {
                 Note note = new Note();
