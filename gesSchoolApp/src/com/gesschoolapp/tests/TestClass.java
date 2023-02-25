@@ -57,10 +57,11 @@ public class TestClass {
 //        testCreateApprenant();
 //        System.out.println(LocalDate.now());
 //        testGetAnnees();
-        testCancelActions();
+//        testCancelActions();
+//        System.out.println( + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() );
 //        testCreateModule();
 //        testGetNotifs();
-//        System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYY-MM-dd HH:mm:ss")));
+        System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYY-MM-dd à HH:mm")));
 //        testGetUtilisateurs();
 
 //        String pwd = Toolbox.generateSecurePassword("wissam");
