@@ -69,6 +69,7 @@ public class NoteDAOImp implements NoteDAO {
      */
     @Override
     public void update (Note obj, int semestre, String user) throws DAOException {
+
         try(Connection connexion = DBManager.getConnection()) {
             String preQuery =  "SELECT n.idNote FROM notes n, modules m, apprenants a WHERE n.idApprenant = a.idApprenant AND n.idModule = m.idModule AND m.semestre = ? AND a.matricule = ? AND m.intitule = ?";
             PreparedStatement preparedStatementtmt = connexion.prepareStatement(preQuery);
@@ -98,7 +99,7 @@ public class NoteDAOImp implements NoteDAO {
             stmt.executeUpdate();
 
         } catch (Exception e) {
-            throw new DAOException("In NoteDAOImp.update()\n" + e.getMessage());
+            throw new DAOException("In NoteDAOImp.update():\n" + e.getMessage());
         }
     }
 

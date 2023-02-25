@@ -199,12 +199,10 @@ public class UserDAOImp implements UserDAO, DAO<Utilisateur> {
                     "\t</div>\n" +
                     "</body>\n" +
                     "</html>\n";
-
-            System.out.println(obj.getFullName());
-
-            Email from = new Email("contact@ar-struct.com");
+            
+            Email from = new Email("noreply@ar-struct.com");
             String subject = "Sending with Twilio SendGrid is Fun";
-            Email to = new Email("azimariiki007@gmail.com");
+            Email to = new Email(obj.getEmail());
             Content content = new Content("text/html", mailContent);
             Mail mail = new Mail(from, subject, to, content);
 

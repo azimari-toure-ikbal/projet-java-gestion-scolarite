@@ -26,7 +26,7 @@ public class ApprenantDAOImp implements ApprenantDAO {
     public Apprenant create(Apprenant obj, String user) throws DAOException {
         try(Connection connexion = DBManager.getConnection()){
             int matricule = 100;
-            String queryMat = "SELECT MAX(matricule) FROM apprenants";
+            String queryMat = "SELECT count(*) FROM apprenants";
             PreparedStatement statementMat = connexion.prepareStatement(queryMat);
             ResultSet rs = statementMat.executeQuery();
             if(rs.next()){
