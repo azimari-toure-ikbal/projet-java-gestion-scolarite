@@ -59,9 +59,6 @@ public class UserItemController {
     private Label labelNum;
 
     @FXML
-    private Label labelPassword;
-
-    @FXML
     private Circle pp_placeholder;
 
     @FXML
@@ -100,7 +97,6 @@ public class UserItemController {
     public void setData(Utilisateur utilisateur){
         labelNom.setText(utilisateur.getPrenom() + " " + utilisateur.getNom());
         labelLogin.setText(utilisateur.getEmail());
-        labelPassword.setText(utilisateur.getPassword());
         labelNum.setText(utilisateur.getNumero());
         this.user = utilisateur;
         // --- Init components :

@@ -95,6 +95,32 @@ btn_delete:focused{
 }
 
 
+.disconnect_btn {
+    -fx-padding: 5 30 5 30;
+    -fx-border-color: #1D52A0;
+    -fx-pref-height: 39px;
+    -fx-border-radius: 5;
+    -fx-border-width: 0.3;
+    -fx-background-radius: 5;
+    -fx-background-color: #DC3545 ;
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 12pt;
+    -fx-text-fill: #fff;
+    -fx-background-insets: 0 0 0 0, 0, 1, 2;
+    -fx-cursor: hand;
+}
+
+.disconnect_btn:hover{
+    -fx-background-color: #ED1B23;
+}
+
+.disconnect_btn:focused{
+    -fx-border-width: 0, 0;
+    -fx-border-style: solid, segments(0, 0);
+    -fx-border-radius: 0, 0;
+    -fx-border-insets: 0;
+}
+
 
 .table-view:focused .table-row-cell:filled:focused:selected {
     -fx-background-color: -fx-focus-color;

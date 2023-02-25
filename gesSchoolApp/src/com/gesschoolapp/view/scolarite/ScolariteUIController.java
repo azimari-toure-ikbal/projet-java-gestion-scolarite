@@ -79,6 +79,18 @@ public class ScolariteUIController implements Initializable {
     private Label mainMessageInfo;
 
     @FXML
+    private Label labelTypeUser;
+
+    @FXML
+    private Label userFullName;
+
+    @FXML
+    private Label userMail;
+
+    @FXML
+    private Label userPhoneNumber;
+
+    @FXML
     private Button btnSemestre1;
 
     @FXML
@@ -216,6 +228,9 @@ public class ScolariteUIController implements Initializable {
 
     @FXML
     private Circle pp_placeholder;
+
+    @FXML
+    private Circle profile_pic_placeholder;
 
     @FXML
     private Circle pp_placeholder1;
@@ -378,6 +393,7 @@ public class ScolariteUIController implements Initializable {
         pp_placeholder.setFill(new ImagePattern(pp));
         pp_placeholder1.setFill(new ImagePattern(pp));
         pp_placeholder2.setFill(new ImagePattern(pp));
+        profile_pic_placeholder.setFill(new ImagePattern(pp));
 //        class_preview.setImage(new Image("resources/images/plc.png"));
 
 //        if (currentUser instanceof Secretaire) {
@@ -413,7 +429,9 @@ public class ScolariteUIController implements Initializable {
         feesJournalierItem.toFront();
         dailyFeeDP.setValue(LocalDate.now());
         panelFeesState.toFront();
-        refreshFeesData(etatsDePaiement[0]);
+        if(dailyFeesList.size() == 0){
+            panelEmpty.toFront();
+        }
 
         feesSpanSelect.getSelectionModel()
                 .selectedItemProperty()
@@ -784,11 +802,21 @@ public class ScolariteUIController implements Initializable {
             this.currentUser = (Secretaire) currentUser;
             setCaissierSession(false);
             setSecretaireView();
+
+            labelTypeUser.setText("Profil secrétaire");
+
         } else {
             this.currentUser = (Caissier) currentUser;
             setCaissierSession(true);
 
+            labelTypeUser.setText("Profil caissier");
         }
+
+        userFullName.setText(currentUser.getFullName());
+        userMail.setText(currentUser.getEmail());
+        userPhoneNumber.setText(currentUser.getNumero());
+
+
 
 //        On initialise la vue ici au lieu de l'initializer à cause d'un défaut de synchronisation
         try {
@@ -1137,22 +1165,6 @@ public class ScolariteUIController implements Initializable {
 
                     list.addAll(importedApprenants);
 
-                    for (Apprenant appr : importedApprenants) {
-                        Note newNote = new Note();
-                        newNote.setApprenant(appr);
-
-                        newNote.setNote(0);
-                        List<Module> modules = getSelectedClass().getModules();
-                        NoteDAOImp notesData = new NoteDAOImp();
-
-                        for (Module module : modules) {
-                            List<Note> notesList = new ArrayList<>(module.getNotes());
-                            newNote.setModule(module.getIntitule());
-                            //                newNote.setId();
-                            notesList.add(newNote);
-                            module.setNotes(notesList);
-                        }
-                    }
                     selectedClass.setApprenants(list);
 
                     this.setMainMessageInfo("Apprenants importés avec succès !");
