@@ -26,9 +26,12 @@ public class PDFGenerator {
     public static void cerficatScolariteGenerator(Apprenant apprenant) throws PDFException {
         // Initialisation du document PDF
         Document document = new Document();
+        String path = "storage/certificats/pdfs/" + apprenant.getNom() + "_" + apprenant.getPrenom() + "_" + LocalDate.now() + ".pdf";
+        String filename = "storage/certificats/imgs/" + apprenant.getNom() + "_" + apprenant.getPrenom() + "_" + LocalDate.now() + ".png";
+
         try {
             // Création du fichier PDF
-            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("storage/certificats/" + apprenant.getNom() + "_" + apprenant.getPrenom() + "_" + LocalDate.now() + ".pdf"));
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(path));
 
             // Ouverture du document
             document.open();
@@ -102,9 +105,12 @@ public class PDFGenerator {
     public static void recuGenerator(Paiement paiement) throws PDFException {
         // Initialisation du document PDF
         Document document = new Document();
+        String path = "storage/reçus/pdfs/" + paiement.getNumeroRecu() + "_ " + paiement.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")).replace("-", "_") + ".pdf";
+        String filename = "storage/reçus/imgs/" + paiement.getNumeroRecu() + "_ " + paiement.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")).replace("-", "_") + ".png";
+
         try {
             // Création du fichier PDF
-            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("storage/reçus/" + paiement.getNumeroRecu() + "_ " + paiement.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")).replace("-", "_") + ".pdf"));
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(path));
 
             // Ouverture du document
             document.open();
@@ -156,6 +162,9 @@ public class PDFGenerator {
 
             // Fermeture du document
             document.close();
+
+            Toolbox.pdfToImage(path, filename);
+            System.out.println("PDF généré avec succès !");
         } catch (Exception e) {
             throw new PDFException("Erreur lors de la génération du PDF : " + e.getMessage());
         }
@@ -204,9 +213,11 @@ public class PDFGenerator {
             }
 
             Document document = new Document();
+            String path = "storage/bulletins/pdfs/" + apprenant.getNom() + "_" + apprenant.getPrenom() + "_bulletin_semestre_" + semestre + ".pdf";
+            String filename = "storage/bulletins/imgs/" + apprenant.getNom() + "_" + apprenant.getPrenom() + "_bulletin_semestre_" + semestre + ".png";
 
             try {
-                PdfWriter.getInstance(document, new FileOutputStream("storage/bulletins/pdfs/" + apprenant.getNom() + "_" + apprenant.getPrenom() + "_bulletin_semestre_" + semestre + ".pdf"));
+                PdfWriter.getInstance(document, new FileOutputStream(path));
                 document.open();
 
                 // Ajouter une photo de l'école
@@ -259,8 +270,8 @@ public class PDFGenerator {
 
                 // Ajouter les moyennes de l'étudiant et de la classe
                 Paragraph averages = new Paragraph();
-                averages.add(new Phrase("\n\nMoyenne de l'étudiant: " + calcMoyenneEtudiant(apprenantNotes)));
-                averages.add(new Phrase("\nMoyenne de la classe: " + calcMoyenneClasse(classe, apprenantNotes)));
+                averages.add(new Phrase("\n\nMoyenne de l'étudiant: " + String.format("%.2f", calcMoyenneEtudiant(apprenantNotes))));
+                averages.add(new Phrase("\nMoyenne de la classe: " + String.format("%.2f", calcMoyenneClasse(classe, apprenantNotes))));
                 document.add(averages);
 
                 // Ajouter une ligne de séparation
@@ -280,8 +291,7 @@ public class PDFGenerator {
 
                 document.close();
 
-                Toolbox.pdfToImage();
-                System.out.println("Le bulletin de notes a été créé avec succès.");
+                Toolbox.pdfToImage(path, filename);
             } catch (DocumentException | IOException e) {
                 throw new PDFException("Erreur lors de la génération du PDF : " + e.getMessage());
             }

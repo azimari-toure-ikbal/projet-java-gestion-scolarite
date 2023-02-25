@@ -29,8 +29,6 @@ import java.util.regex.Pattern;
 
 public class Toolbox {
 
-    private static final String ALGORITHM = "SHA-256";
-
     public static void setTimeout(Runnable runnable, int delay) {
         new Thread(() -> {
             try {
@@ -80,7 +78,6 @@ public class Toolbox {
     public static List<Rubrique> getRubriques(){
         List<Rubrique> list = new ArrayList<>();
         list.add(new Rubrique(2, "scolarite", 0));
-        list.add(new Rubrique(3, "album", 0));
         list.add(new Rubrique(4, "tenue", 0));
         list.add(new Rubrique(7, "inscription", 0));
 
@@ -186,8 +183,7 @@ public class Toolbox {
             PDFRenderer pdfRenderer = new PDFRenderer(doc);
             for(int page = 0;page<doc.getNumberOfPages();++page){
                 BufferedImage bim = pdfRenderer.renderImageWithDPI(page,300, ImageType.RGB);
-                String fileName = filename + page + ".png";
-                ImageIOUtil.writeImage(bim,fileName,300);
+                ImageIOUtil.writeImage(bim, filename,300);
             }
             doc.close();
         } catch (IOException e) {
