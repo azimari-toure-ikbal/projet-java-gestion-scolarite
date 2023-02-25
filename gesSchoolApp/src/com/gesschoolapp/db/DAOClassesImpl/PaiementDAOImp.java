@@ -6,6 +6,7 @@ import com.gesschoolapp.db.DBManager;
 import com.gesschoolapp.models.actions.Action;
 import com.gesschoolapp.models.paiement.Paiement;
 import com.gesschoolapp.serial.ActionManager;
+import com.gesschoolapp.utils.Toolbox;
 import com.gesschoolapp.view.util.ActionType;
 
 import java.sql.Connection;
@@ -35,7 +36,7 @@ public class PaiementDAOImp implements PaiementDAO {
 
             String  query = "INSERT INTO paiements (numeroRecu, date, montant, idApprenant, classe, rubrique, caissier, observation, apprenant ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, "RCU" + (int) (Math.sqrt(Instant.now().getEpochSecond())));
+            statement.setString(1, Toolbox.generateRandomString(9));
             statement.setString(2, obj.getDate().toString());
             statement.setDouble(3, obj.getMontant());
             statement.setInt(4, obj.getApprenant().getIdApprenant());

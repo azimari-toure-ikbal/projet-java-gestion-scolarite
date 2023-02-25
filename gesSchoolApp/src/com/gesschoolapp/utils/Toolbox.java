@@ -20,10 +20,7 @@ import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
 import java.time.temporal.ChronoField;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -190,6 +187,16 @@ public class Toolbox {
             throw new RuntimeException(e);
         }
 
+    }
+    public static String generateRandomString(int length) {
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        StringBuilder sb = new StringBuilder(length);
+        Random random = new Random();
+        for (int i = 0; i < length; i++) {
+            int index = random.nextInt(chars.length());
+            sb.append(chars.charAt(index));
+        }
+        return "RCU" + sb;
     }
 }
 
