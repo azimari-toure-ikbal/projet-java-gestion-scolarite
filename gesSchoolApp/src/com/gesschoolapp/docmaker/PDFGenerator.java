@@ -26,8 +26,8 @@ public class PDFGenerator {
     public static void cerficatScolariteGenerator(Apprenant apprenant) throws PDFException {
         // Initialisation du document PDF
         Document document = new Document();
-        String path = "storage/certificats/pdfs/" + apprenant.getNom() + "_" + apprenant.getPrenom() + "_" + LocalDate.now() + ".pdf";
-        String filename = "storage/certificats/imgs/" + apprenant.getNom() + "_" + apprenant.getPrenom() + "_" + LocalDate.now() + ".png";
+        String path = "storage/certificats/pdfs/" + apprenant.getNom().replace(" ", "_") + "_" + apprenant.getPrenom() + "_" + LocalDate.now() + ".pdf";
+        String filename = "storage/certificats/imgs/" + apprenant.getNom().replace(" ", "_") + "_" + apprenant.getPrenom() + "_" + LocalDate.now() + ".png";
 
         try {
             // Création du fichier PDF
@@ -203,8 +203,8 @@ public class PDFGenerator {
             }
 
             Document document = new Document();
-            String path = "storage/bulletins/pdfs/" + apprenant.getNom() + "_" + apprenant.getPrenom() + "_bulletin_semestre_" + semestre + ".pdf";
-            String filename = "storage/bulletins/imgs/" + apprenant.getNom() + "_" + apprenant.getPrenom() + "_bulletin_semestre_" + semestre + ".png";
+            String path = "storage/bulletins/pdfs/" + apprenant.getNom().replace(" ", "_") + "_" + apprenant.getPrenom() + "_bulletin_semestre_" + semestre + ".pdf";
+            String filename = "storage/bulletins/imgs/" + apprenant.getNom().replace(" ", "_") + "_" + apprenant.getPrenom() + "_bulletin_semestre_" + semestre + ".png";
 
             try {
                 PdfWriter.getInstance(document, new FileOutputStream(path));
