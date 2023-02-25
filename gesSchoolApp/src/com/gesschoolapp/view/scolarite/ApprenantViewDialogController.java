@@ -162,6 +162,22 @@ public class ApprenantViewDialogController implements Initializable {
     }
 
     @FXML
+    void openBulletinDialogView(ActionEvent event) {
+        Timeline timeline = new Timeline();
+        KeyFrame key;
+        key = new KeyFrame(Duration.millis(50),
+                new KeyValue(dialogStage.opacityProperty(), 0));
+        timeline.getKeyFrames().add(key);
+        timeline.setOnFinished((ae) -> dialogStage.close());
+        timeline.play();
+
+        Platform.runLater(() ->{
+            superController.openBulletinViewDialog(apprenant);
+
+        });
+    }
+
+    @FXML
     void onClose(ActionEvent event) {
         try {
             Timeline timeline = new Timeline();

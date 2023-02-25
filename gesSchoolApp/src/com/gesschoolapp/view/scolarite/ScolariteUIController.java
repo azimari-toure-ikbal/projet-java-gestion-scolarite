@@ -1544,6 +1544,47 @@ public class ScolariteUIController implements Initializable {
         }
     }
 
+    public void openBulletinViewDialog(Apprenant appr) {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("BulletinDialogView.fxml"));
+
+            AnchorPane page = (AnchorPane) loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("School UP - Bulletin apprenant");
+            // Set the application icon.
+
+            dialogStage.getIcons().add(new Image("com/gesschoolapp/resources/images/app_icon.png"));
+            dialogStage.initStyle(StageStyle.UNDECORATED);
+            dialogStage.setResizable(false);
+
+
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(mainApp.getPrimaryStage());
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the person into the controller.
+            BulletinDialogViewController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setSuperController(this);
+            controller.setScene(scene);
+            controller.setMain(mainApp);
+            controller.setApprenant(appr);
+            controller.setDraggable();
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
     public void openStudentViewDialog(Apprenant appr) {
         try {

@@ -20,9 +20,9 @@ public class ActionDAOImp implements ActionDAO {
         System.out.println("Object in cancelAction : " + action.getObject());
         String message = "";
         if(action.getObject() instanceof Apprenant){
+            message = "L'action " + action.getAction() + " sur l'apprenant " + ((Apprenant)action.getObject()).getFullName() + " a été annulée par l'administrateur " + admin + " le " + LocalDateTime.now() + ".";
             switch (action.getAction()){
                 case ADD -> {
-                    message = "Votre ajout de l'apprenant " + ((Apprenant)action.getObject()).getFullName() + " a été annulée par l'administrateur " + admin + " le " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYY-MM-dd à HH:mm")) + ".";
                     cancelAddApprenant((Apprenant) action.getObject());
                     break;
                 }
@@ -39,7 +39,7 @@ public class ActionDAOImp implements ActionDAO {
         else if(action.getObject() instanceof Note){
             Note note = (Note) action.getObject();
             System.out.println("id Note : " + note.getId());
-            message = "Votre " + action.getAction() + " sur la note de " + ((Note)action.getObject()).getApprenant().getFullName() + " dans le module " + ((Note)action.getObject()).getModule() + " a été annulée par l'administrateur " + admin + " le " + LocalDateTime.now() + ".";
+            message = "L'action " + action.getAction() + " sur la note de " + ((Note)action.getObject()).getApprenant().getFullName() + " dans le module " + ((Note)action.getObject()).getModule() + " a été annulée par l'administrateur " + admin + " le " + LocalDateTime.now() + ".";
             if (Objects.requireNonNull(action.getAction()) == ActionType.UPDATE) {
                 cancelUpdateNote((Note) action.getObject());
             }
