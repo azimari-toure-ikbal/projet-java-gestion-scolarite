@@ -112,42 +112,48 @@ public class LoginUIController implements Initializable  {
 
     @FXML
     void handleLogin(ActionEvent event) {
-
-        String login = txtUsername.getText();
-//        String login = "fatou.syla@mail.cum";
-//        String login = "marcus.sins@mail.com";
-//        String login = "wissam.youssef@mail.com";
-//        String password = "fatou";
-//        String password = "marcus";
-//        String password = "wissam";
-        String password = txtPassword.getText();
-        if (login.isEmpty() || password.isEmpty()) {
-            messageInfo.setText("Veuillez remplir tous les champs");
-        } else {
-            try {
-                Utilisateur user = userDAOImp.authenticate(login, password);
-                if (user != null) {
-                    if (Toolbox.verifyPassword(password, user.getPassword())) {
-                        Node node = (Node) event.getSource();
-                        Stage stg = (Stage) node.getScene().getWindow();
-                        stg.close();
-                        if (user instanceof Secretaire) {
-                            main.displaySecretaireUI(stg, (Secretaire) user, main);
-                        } else if (user instanceof Caissier) {
-                            main.displayCaissierUI(stg, (Caissier) user, main);
-                        } else {
-                            main.displayAdminUI(stg, (Admin) user, main);
-                        }
-                    } else {
-                        messageInfo.setText("Mot de passe incorrect");
-                    }
-                } else {
-                    messageInfo.setText("Login et/ou mot de passe incorrect");
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        String videoUrl = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"; // Replace VIDEO_ID with the actual video ID
+        try {
+            Desktop.getDesktop().browse(new URI(videoUrl));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
+//        String login = txtUsername.getText();
+////        String login = "fatou.syla@mail.cum";
+////        String login = "marcus.sins@mail.com";
+////        String login = "wissam.youssef@mail.com";
+////        String password = "fatou";
+////        String password = "marcus";
+////        String password = "wissam";
+//        String password = txtPassword.getText();
+//        if (login.isEmpty() || password.isEmpty()) {
+//            messageInfo.setText("Veuillez remplir tous les champs");
+//        } else {
+//            try {
+//                Utilisateur user = userDAOImp.authenticate(login, password);
+//                if (user != null) {
+//                    if (Toolbox.verifyPassword(password, user.getPassword())) {
+//                        Node node = (Node) event.getSource();
+//                        Stage stg = (Stage) node.getScene().getWindow();
+//                        stg.close();
+//                        if (user instanceof Secretaire) {
+//                            main.displaySecretaireUI(stg, (Secretaire) user, main);
+//                        } else if (user instanceof Caissier) {
+//                            main.displayCaissierUI(stg, (Caissier) user, main);
+//                        } else {
+//                            main.displayAdminUI(stg, (Admin) user, main);
+//                        }
+//                    } else {
+//                        messageInfo.setText("Mot de passe incorrect");
+//                    }
+//                } else {
+//                    messageInfo.setText("Login et/ou mot de passe incorrect");
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 
     public void setDraggable() {
