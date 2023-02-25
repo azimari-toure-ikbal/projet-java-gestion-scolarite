@@ -26,8 +26,8 @@ public class PDFGenerator {
     public static void cerficatScolariteGenerator(Apprenant apprenant) throws PDFException {
         // Initialisation du document PDF
         Document document = new Document();
-        String path = "storage/certificats/pdfs/" + apprenant.getNom() + "_" + apprenant.getPrenom() + "_" + LocalDate.now() + ".pdf";
-        String filename = "storage/certificats/imgs/" + apprenant.getNom() + "_" + apprenant.getPrenom() + "_" + LocalDate.now() + ".png";
+        String path = "storage/certificats/pdfs/" + apprenant.getNom().replace(" ", "_") + "_" + apprenant.getPrenom() + "_" + LocalDate.now() + ".pdf";
+        String filename = "storage/certificats/imgs/" + apprenant.getNom().replace(" ", "_") + "_" + apprenant.getPrenom() + "_" + LocalDate.now() + ".png";
 
         try {
             // Création du fichier PDF

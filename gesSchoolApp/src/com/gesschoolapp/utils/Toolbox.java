@@ -5,6 +5,7 @@ import com.gesschoolapp.Exceptions.DAOException;
 import com.gesschoolapp.db.DAOClassesImpl.PaiementDAOImp;
 import com.gesschoolapp.models.paiement.Paiement;
 import com.gesschoolapp.models.paiement.Rubrique;
+import com.gesschoolapp.models.student.Apprenant;
 import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.ImageType;
@@ -197,6 +198,14 @@ public class Toolbox {
             sb.append(chars.charAt(index));
         }
         return "RCU" + sb;
+    }
+
+    public static String getBulletinImgPath(Apprenant apprenant, int semestre) {
+        return "storage/bulletins/imgs/" + apprenant.getNom().replace(" ", "_") + "_" + apprenant.getPrenom() + "_bulletin_semestre_" + semestre + ".png";
+    }
+
+    public static String getCertificatsImgPath(Apprenant apprenant) {
+        return "storage/certificats/imgs/" + apprenant.getNom().replace(" ", "_") + "_" + apprenant.getPrenom() + "_" + LocalDate.now() + ".png";
     }
 }
 
