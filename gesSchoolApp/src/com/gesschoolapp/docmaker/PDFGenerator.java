@@ -26,9 +26,12 @@ public class PDFGenerator {
     public static void cerficatScolariteGenerator(Apprenant apprenant) throws PDFException {
         // Initialisation du document PDF
         Document document = new Document();
+        String path = "storage/certificats/pdfs/" + apprenant.getNom() + "_" + apprenant.getPrenom() + "_" + LocalDate.now() + ".pdf";
+        String filename = "storage/certificats/imgs/" + apprenant.getNom() + "_" + apprenant.getPrenom() + "_" + LocalDate.now() + ".png";
+
         try {
             // Création du fichier PDF
-            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("storage/certificats/" + apprenant.getNom() + "_" + apprenant.getPrenom() + "_" + LocalDate.now() + ".pdf"));
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(path));
 
             // Ouverture du document
             document.open();
@@ -102,9 +105,12 @@ public class PDFGenerator {
     public static void recuGenerator(Paiement paiement) throws PDFException {
         // Initialisation du document PDF
         Document document = new Document();
+        String path = "storage/reçus/pdfs/" + paiement.getNumeroRecu() + "_ " + paiement.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")).replace("-", "_") + ".pdf";
+        String filename = "storage/reçus/imgs/" + paiement.getNumeroRecu() + "_ " + paiement.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")).replace("-", "_") + ".png";
+
         try {
             // Création du fichier PDF
-            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("storage/reçus/" + paiement.getNumeroRecu() + "_ " + paiement.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")).replace("-", "_") + ".pdf"));
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(path));
 
             // Ouverture du document
             document.open();
@@ -156,6 +162,9 @@ public class PDFGenerator {
 
             // Fermeture du document
             document.close();
+
+            Toolbox.pdfToImage(path, filename);
+            System.out.println("PDF généré avec succès !");
         } catch (Exception e) {
             throw new PDFException("Erreur lors de la génération du PDF : " + e.getMessage());
         }
@@ -164,17 +173,10 @@ public class PDFGenerator {
     public static void bulletinGenerator(Classe classe, List<Module> modules, int semestre) throws PDFException {
         // Recuperer la liste des eleves
         List<Apprenant> apprenants = classe.getApprenants();
-        for (Apprenant apprenant : apprenants) {
-            System.out.println(apprenant.getFullName());
-        }
 
         // Supprimer les modules qui ne sont pas du bon semestre
         modules.removeIf(module -> module.getSemestre() != semestre);
 
-        for (Module module : modules) {
-            System.out.println(module.getIntitule());
-            System.out.println(module.getSemestre());
-        }
 
         // Verifier si la liste des eleves est vide
         if (apprenants.isEmpty()) {
@@ -183,9 +185,7 @@ public class PDFGenerator {
 
         // Supprimer les etudiants qui ont un etat de paiement == 0
         apprenants.removeIf(apprenant -> apprenant.getEtatPaiement() == 0);
-//        System.out.println("apprenants remove:" + apprenants.removeIf(apprenant -> apprenant.getEtatPaiement() == 0));
 
-        System.out.println("new apprenants" + apprenants);
         // Recuperer la liste des notes
         List<Note> notes = new ArrayList<>();
         for (Module module : modules) {
@@ -199,14 +199,15 @@ public class PDFGenerator {
             for (Note note : notes) {
                 if (note.getApprenant().getMatricule() == apprenant.getMatricule()) {
                     apprenantNotes.add(note);
-                    System.out.println("note de l'apprenant dans le module " + note.getModule() + "est de " + note.getNote());
                 }
             }
 
             Document document = new Document();
+            String path = "storage/bulletins/pdfs/" + apprenant.getNom() + "_" + apprenant.getPrenom() + "_bulletin_semestre_" + semestre + ".pdf";
+            String filename = "storage/bulletins/imgs/" + apprenant.getNom() + "_" + apprenant.getPrenom() + "_bulletin_semestre_" + semestre + ".png";
 
             try {
-                PdfWriter.getInstance(document, new FileOutputStream("storage/bulletins/pdfs/" + apprenant.getNom() + "_" + apprenant.getPrenom() + "_bulletin_semestre_" + semestre + ".pdf"));
+                PdfWriter.getInstance(document, new FileOutputStream(path));
                 document.open();
 
                 // Ajouter une photo de l'école
@@ -255,12 +256,10 @@ public class PDFGenerator {
                 // Ajouter le tableau au document
                 document.add(table);
 
-                System.out.println( "taille des notes" + apprenantNotes.size());
-
                 // Ajouter les moyennes de l'étudiant et de la classe
                 Paragraph averages = new Paragraph();
-                averages.add(new Phrase("\n\nMoyenne de l'étudiant: " + calcMoyenneEtudiant(apprenantNotes)));
-                averages.add(new Phrase("\nMoyenne de la classe: " + calcMoyenneClasse(classe, apprenantNotes)));
+                averages.add(new Phrase("\n\nMoyenne de l'étudiant: " + String.format("%.2f", calcMoyenneEtudiant(apprenantNotes))));
+                averages.add(new Phrase("\nMoyenne de la classe: " + String.format("%.2f", calcMoyenneClasse(classe, apprenantNotes))));
                 document.add(averages);
 
                 // Ajouter une ligne de séparation
@@ -280,8 +279,7 @@ public class PDFGenerator {
 
                 document.close();
 
-                Toolbox.pdfToImage();
-                System.out.println("Le bulletin de notes a été créé avec succès.");
+                Toolbox.pdfToImage(path, filename);
             } catch (DocumentException | IOException e) {
                 throw new PDFException("Erreur lors de la génération du PDF : " + e.getMessage());
             }
@@ -293,7 +291,6 @@ public class PDFGenerator {
             table.addCell(module.getIntitule());
             for (Note note : notes) {
                 if (note.getModule().equals(module.getIntitule())) {
-                    System.out.println("note = " + note.getNote());
                     table.addCell(String.valueOf(note.getNote()));
                 }
             }
@@ -308,7 +305,6 @@ public class PDFGenerator {
         try {
             return sum / notes.size();
         } catch (ArithmeticException e) {
-            System.out.println("L'étudiant n'a pas de note");
             return 0;
         }
     }
