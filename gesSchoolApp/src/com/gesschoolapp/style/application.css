@@ -82,6 +82,7 @@
     -fx-text-fill: white;
     -fx-alignment: center-left;
     -fx-opacity: 1;
+    -fx-background-color: transparent;
 }
 
 .table-view:focused .table-row-cell:filled:focused:selected {

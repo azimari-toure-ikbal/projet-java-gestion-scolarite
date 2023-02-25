@@ -16,9 +16,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class ActionDAOImp implements ActionDAO {
-
     @Override
     public void cancelAction(Action action, String admin){
+        System.out.println("Object in cancelAction : " + action.getObject());
         String message = "";
         if(action.getObject() instanceof Apprenant){
             message = "L'action " + action.getAction() + " sur l'apprenant " + ((Apprenant)action.getObject()).getFullName() + " a été annulée par l'administrateur " + admin + " le " + LocalDateTime.now() + ".";

@@ -1,12 +1,15 @@
 package com.gesschoolapp.tests;
 import at.favre.lib.crypto.bcrypt.*;
+import com.gesschoolapp.Exceptions.ArchiveManagerException;
 import com.gesschoolapp.Exceptions.DAOException;
 import com.gesschoolapp.Exceptions.PDFException;
 import com.gesschoolapp.db.DAOClassesImpl.*;
 import com.gesschoolapp.db.DAOInterfaces.ApprenantDAO;
 import com.gesschoolapp.docmaker.PDFGenerator;
+import com.gesschoolapp.models.actions.Action;
 import com.gesschoolapp.models.actions.Actions;
 import com.gesschoolapp.models.actions.Notification;
+import com.gesschoolapp.models.matieres.Module;
 import com.gesschoolapp.models.paiement.Paiement;
 import com.gesschoolapp.models.users.Utilisateur;
 import com.gesschoolapp.serial.ActionManager;
@@ -31,26 +34,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 
-//
-//        try(Connection connection = DBManager.getConnection()){
-//            String sql = "INSERT INTO candidat (prenom, nom, niveau_etude, examen_prepare, ecole_origine, adresse, code) VALUES (?,?,?,?,?,?,?)";
-//            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-//            preparedStatement.setString(1, candidat.getPrenom());
-//            preparedStatement.setString(2, candidat.getNom());
-//            preparedStatement.setString(3, candidat.getNiveauEtude());
-//            preparedStatement.setString(4, candidat.getExamenPrepare());
-//            preparedStatement.setString(5, candidat.getEcoleOrigine());
-//            preparedStatement.setString(6, candidat.getAdresse());
-//            preparedStatement.setInt(7, candidat.getCode());
-//            preparedStatement.executeUpdate();
-//        }catch (Exception e){
-//            System.err.println( "Error while creating the candidat : " +  e.getMessage());
-//        }
-//    }
-
 public class TestClass {
     public static void main(String[] args) {
-
 
 //        System.out.println("RCU" + (int) (Instant.now().getEpochSecond()/10000));
 //        testLastView();
@@ -73,6 +58,7 @@ public class TestClass {
 //        System.out.println(LocalDate.now());
 //        testGetAnnees();
         testCancelActions();
+//        testCreateModule();
 //        testGetNotifs();
 //        System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYY-MM-dd HH:mm:ss")));
 //        testGetUtilisateurs();
@@ -80,6 +66,17 @@ public class TestClass {
 //        String pwd = Toolbox.generateSecurePassword("wissam");
 //        System.out.println(Toolbox.generateSecurePassword("wissam"));
 //        System.out.println(Toolbox.verifyPassword("wissam", pwd));
+    }
+
+
+    public static void testCreateModule(){
+        try {
+            Module module = new Module("TP Couple", "3eme", 2);
+
+            System.out.println(new ModuleDAOImp().create(module, "Seishiro"));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
     }
 
     public static void testGetUtilisateurs(){
@@ -113,11 +110,21 @@ public class TestClass {
 
     public static void testCancelActions(){
         try{
+            testUpdateNote(113);
 //            ActionManager.DeleteArchive();
 //            new ApprenantDAOImp().delete(43, "Bob");
-            testCreateApprenant();
+//            testCreateApprenant();
+//            testPaiement();
             Actions actions = ActionManager.DeserializeActions();
-            System.out.println(actions.getListActions());
+//            actions.getListActions().get(0).cancelAction("Marshall");
+            for(Action action : actions.getListActions()){
+                System.out.println(action.getObject().getClass().getSimpleName());
+            }
+//            System.out.println(actions.getListActions());
+
+            for (Action action : actions.getListActions()) {
+                System.out.println(action.getClass());
+            }
 //            actions.getListActions().get(1).cancelAction("Marshall");
         }catch (Exception e){
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -159,10 +166,10 @@ public class TestClass {
             PaiementDAOImp paiementDAOImp = new PaiementDAOImp();
             Paiement paiement = new Paiement();
             paiement.setMontant(1000);
-            paiement.setApprenant(new ApprenantDAOImp().read(1));
+            paiement.setApprenant(new ApprenantDAOImp().read(7));
             paiement.setRubrique("scolarite");
             paiement.setDate(LocalDate.now());
-            paiement.setClasse(new ApprenantDAOImp().read(1     ).getClasse());
+            paiement.setClasse(new ApprenantDAOImp().read(7).getClasse());
             paiement.setCaissier("Violet Myers");
             paiement.setObservation("Paiement de scolarite");
 
@@ -320,9 +327,9 @@ public class TestClass {
 
         // Test de la lecture du fichier
         try {
-             notes = noteCSV.readFile(file);
-             for (String note : notes)
-                 System.out.println(note);
+            notes = noteCSV.readFile(file);
+            for (String note : notes)
+                System.out.println(note);
         } catch (CSVException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }

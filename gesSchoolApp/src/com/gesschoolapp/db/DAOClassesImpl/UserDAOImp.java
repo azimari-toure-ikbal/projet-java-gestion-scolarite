@@ -70,8 +70,6 @@ public class UserDAOImp implements UserDAO, DAO<Utilisateur> {
     public List<Notification> getNotifs(String name) throws DAOException {
 
         try(Connection connection = DBManager.getConnection()) {
-           //get a list of notifications(String message, LocalDateTime date) from notifications table
-            //where utilisateur = name, and return it
             String query = "SELECT * FROM notifications WHERE utilisateur=?";
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, name);
@@ -112,10 +110,6 @@ public class UserDAOImp implements UserDAO, DAO<Utilisateur> {
                 String type = resultSet.getString("type");
                 String password = resultSet.getString("password");
 
-                System.out.println("idUtilisateur = " + idUtilisateur);
-                System.out.println("nom = " + nom);
-                System.out.println("prenom = " + prenom);
-                System.out.println("numero = " + numero);
                 switch (type) {
                     case "administrateur" -> users.add(new Admin(idUtilisateur, nom, prenom, numero, type, password));
                     case "secretaire" -> users.add(new Secretaire(idUtilisateur, nom, prenom, numero, type, password));

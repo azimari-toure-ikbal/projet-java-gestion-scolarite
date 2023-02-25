@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 21, 2023 at 05:05 PM
+-- Generation Time: Feb 24, 2023 at 11:56 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -39,7 +39,14 @@ CREATE TABLE IF NOT EXISTS `apprenants` (
   `matricule` int(11) NOT NULL,
   PRIMARY KEY (`idApprenant`),
   UNIQUE KEY `matricule` (`matricule`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `apprenants`
+--
+
+INSERT INTO `apprenants` (`idApprenant`, `prenom`, `nom`, `dtNaiss`, `nationalite`, `echeancier`, `sexe`, `matricule`) VALUES
+(7, 'Ikbal', 'AZIMARI TOURE', '2002-12-27', 'Togolaise', 2, 'M', 101);
 
 -- --------------------------------------------------------
 
@@ -57,6 +64,25 @@ CREATE TABLE IF NOT EXISTS `archives` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `candidat`
+--
+
+DROP TABLE IF EXISTS `candidat`;
+CREATE TABLE IF NOT EXISTS `candidat` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` int(11) NOT NULL,
+  `prenom` varchar(50) NOT NULL,
+  `nom` varchar(50) NOT NULL,
+  `niveau_etude` varchar(50) NOT NULL,
+  `examen_prepare` varchar(50) NOT NULL,
+  `ecole_origine` varchar(50) NOT NULL,
+  `adresse` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `classeapprenant`
 --
 
@@ -68,14 +94,21 @@ CREATE TABLE IF NOT EXISTS `classeapprenant` (
   PRIMARY KEY (`idClasseAppenant`),
   KEY `classeapprenant_ibfk_1` (`idApprenant`),
   KEY `classeapprenant_ibfk_2` (`idClasse`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `classeapprenant`
 --
 
 INSERT INTO `classeapprenant` (`idClasseAppenant`, `idClasse`, `idApprenant`) VALUES
-(25, 15, 40);
+(25, 15, 40),
+(26, 15, 1),
+(27, 14, 2),
+(28, 14, 3),
+(29, 14, 4),
+(30, 14, 5),
+(31, 14, 6),
+(32, 15, 7);
 
 -- --------------------------------------------------------
 
@@ -112,8 +145,8 @@ INSERT INTO `classes` (`idClasse`, `intitule`, `reference`, `annee`, `formation`
 (11, 'CM2', 6, '2022/2023', 'Elementaire', '2023-02-15 19:45:07'),
 (12, '6eme', 7, '2022/2023', 'College', '2023-02-18 21:02:50'),
 (13, '5eme', 7, '2022/2023', 'College', '2023-02-15 19:45:07'),
-(14, '4eme', 8, '2022/2023', 'College', '2023-02-18 21:02:55'),
-(15, '3eme', 8, '2022/2023', 'College', '2023-02-21 16:37:34'),
+(14, '4eme', 8, '2022/2023', 'College', '2023-02-23 19:57:17'),
+(15, '3eme', 8, '2022/2023', 'College', '2023-02-24 20:48:25'),
 (16, '1ere année', 9, '2022/2023', 'Froid/Climatisation', '2023-02-15 19:45:07'),
 (17, '2e année', 9, '2022/2023', 'Froid/Climatisation', '2023-02-15 19:45:07'),
 (18, '3e année', 9, '2022/2023', 'Froid/Climatisation', '2023-02-19 20:29:16');
@@ -325,7 +358,7 @@ CREATE TABLE IF NOT EXISTS `modules` (
   `semestre` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`idModule`),
   KEY `idClasse` (`idClasse`)
-) ENGINE=InnoDB AUTO_INCREMENT=151 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=170 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `modules`
@@ -457,7 +490,17 @@ INSERT INTO `modules` (`idModule`, `intitule`, `idClasse`, `semestre`) VALUES
 (147, 'Histo/Geo', 11, 2),
 (148, 'Savoir vivre', 11, 2),
 (149, 'Education artistique', 11, 2),
-(150, 'Anglais', 11, 2);
+(150, 'Anglais', 11, 2),
+(159, 'Philosophie', 14, 1),
+(160, 'Espagnol', 14, 2),
+(162, 'Musique', 14, 2),
+(163, 'Psychologie', 15, 2),
+(164, 'Musique', 15, 1),
+(165, 'Dessin', 15, 1),
+(166, 'Burautique', 14, 1),
+(167, 'Informatique', 15, 2),
+(168, 'TP Couple', 15, 2),
+(169, 'TP Couple', 15, 2);
 
 -- --------------------------------------------------------
 
@@ -468,13 +511,39 @@ INSERT INTO `modules` (`idModule`, `intitule`, `idClasse`, `semestre`) VALUES
 DROP TABLE IF EXISTS `notes`;
 CREATE TABLE IF NOT EXISTS `notes` (
   `idNote` int(11) NOT NULL AUTO_INCREMENT,
-  `valeur` int(11) NOT NULL,
+  `valeur` float NOT NULL,
   `idApprenant` int(11) NOT NULL,
   `idModule` int(11) NOT NULL,
   PRIMARY KEY (`idNote`),
   KEY `idModule` (`idModule`),
   KEY `idApprenant` (`idApprenant`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=147 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `notes`
+--
+
+INSERT INTO `notes` (`idNote`, `valeur`, `idApprenant`, `idModule`) VALUES
+(113, 0, 7, 11),
+(114, 0, 7, 12),
+(115, 0, 7, 13),
+(116, 0, 7, 14),
+(117, 0, 7, 15),
+(118, 0, 7, 16),
+(119, 0, 7, 17),
+(120, 0, 7, 32),
+(121, 0, 7, 33),
+(122, 0, 7, 34),
+(123, 0, 7, 35),
+(124, 0, 7, 36),
+(125, 0, 7, 37),
+(126, 0, 7, 38),
+(141, 0, 7, 163),
+(142, 0, 7, 162),
+(143, 0, 7, 165),
+(144, 0, 7, 167),
+(145, 0, 7, 168),
+(146, 0, 7, 168);
 
 -- --------------------------------------------------------
 
@@ -489,15 +558,17 @@ CREATE TABLE IF NOT EXISTS `notifications` (
   `admin` varchar(120) NOT NULL,
   `date` datetime NOT NULL,
   `message` text NOT NULL,
+  `seen` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`idNotification`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `notifications`
 --
 
-INSERT INTO `notifications` (`idNotification`, `utilisateur`, `admin`, `date`, `message`) VALUES
-(2, 'Natasha Nice', 'Angela White', '2023-02-21 16:30:07', 'This is actually a test');
+INSERT INTO `notifications` (`idNotification`, `utilisateur`, `admin`, `date`, `message`, `seen`) VALUES
+(2, 'Natasha Nice', 'Angela White', '2023-02-21 16:30:07', 'This is actually a test', 0),
+(3, 'Sophie Dee', 'Marshall', '2023-02-24 20:20:05', 'L\'action ADD sur l\'apprenant Jamie Bowen a été annulée par l\'administrateur Marshall le 2023-02-24T20:20:05.075698.', 0);
 
 -- --------------------------------------------------------
 
@@ -518,7 +589,21 @@ CREATE TABLE IF NOT EXISTS `paiements` (
   `observation` text NOT NULL,
   `apprenant` varchar(110) NOT NULL,
   PRIMARY KEY (`idPaiement`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `paiements`
+--
+
+INSERT INTO `paiements` (`idPaiement`, `numeroRecu`, `montant`, `rubrique`, `date`, `idApprenant`, `caissier`, `classe`, `observation`, `apprenant`) VALUES
+(1, 'RCU1677182', 88000, 'inscription', '2023-02-23 00:00:00', 7, 'Marcus Sins', '3eme', 'paiement d\'inscription', 'Ikbal AZIMARI TOURE'),
+(2, 'RCU1677182', 28000, 'scolarite november', '2023-02-23 00:00:00', 7, 'Marcus Sins', '3eme', '', 'Ikbal AZIMARI TOURE'),
+(3, 'RCU1677182', 30000, 'tenue', '2023-02-23 00:00:00', 7, 'Marcus Sins', '3eme', '', 'Ikbal AZIMARI TOURE'),
+(4, 'RCU1677182', 28000, 'scolarite december', '2023-02-23 00:00:00', 7, 'Marcus Sins', '3eme', '', 'Ikbal AZIMARI TOURE'),
+(5, 'RCU1677182', 28000, 'scolarite january', '2023-02-23 00:00:00', 7, 'Marcus Sins', '3eme', '', 'Ikbal AZIMARI TOURE'),
+(6, 'RCU1677279', 1000, 'scolarite february', '2023-02-24 00:00:00', 7, 'Violet Myers', '3eme', 'Paiement de scolarite', 'Ikbal AZIMARI TOURE'),
+(7, 'RCU726', 1000, 'scolarite february', '2023-02-24 00:00:00', 7, 'Violet Myers', '3eme', 'Paiement de scolarite', 'Ikbal AZIMARI TOURE'),
+(8, 'RCU47', 1000, 'scolarite november', '2023-02-24 00:00:00', 7, 'Violet Myers', '3eme', 'Paiement de scolarite', 'Ikbal AZIMARI TOURE');
 
 -- --------------------------------------------------------
 
@@ -571,19 +656,20 @@ CREATE TABLE IF NOT EXISTS `utilisateurs` (
   `numero` varchar(20) NOT NULL,
   `type` varchar(40) NOT NULL,
   PRIMARY KEY (`idUtilisateur`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `utilisateurs`
 --
 
 INSERT INTO `utilisateurs` (`idUtilisateur`, `password`, `nom`, `prenom`, `email`, `numero`, `type`) VALUES
-(1, 'fatou', 'Syla', 'Fatou', 'fatou.syla@mail.cum', '76 696 69 69', 'secretaire'),
-(2, 'marcus', 'Sins', 'Marcus', 'marcus.sins@mail.com', '76 789 24 23', 'caissier'),
-(3, 'wissam', 'Youssef', 'Wissam', 'wissam.youssef@mail.com', '76 138 52 88', 'administrateur'),
+(1, '512b41e4c50d5bf81260c0348f2b95c6356b0337dd20363627597fc55ce5cfa9:37105d758e128be84847a52aaaecdb1b', 'Syla', 'Fatou', 'fatou.syla@mail.cum', '76 696 69 69', 'secretaire'),
+(2, '5d268fe52f312d201fd1b9cd25e4682322b9e4dfa6bab5b4f26e8585589a8770:4546ec6fa470364096832fcbf20fc7be', 'Sins', 'Marcus', 'marcus.sins@mail.com', '76 789 24 23', 'caissier'),
+(3, '0daa9c161a86a038406703c08c6521b1dba5b232d9cff24b393c4e883b594f0d:2af138cf75363f68398a1fbacf1e3812', 'Youssef', 'Wissam', 'wissam.youssef@mail.com', '76 138 52 88', 'administrateur'),
 (4, 'admin', 'admin', 'admin', 'admin@mail.com', '77 111 11 11', 'administrateur'),
 (5, 'secretaire', 'Test', 'Secretaire', 'test@mail.com', '77 222 22 22', 'secretaire'),
-(6, 'caissier', 'Test', 'Caissier', 'test@mail.com', '77 333 33 33', 'caissier');
+(6, 'caissier', 'Test', 'Caissier', 'test@mail.com', '77 333 33 33', 'caissier'),
+(7, '21e9b99b9683d2751c3bcd9aeec0a9a117f1cbe2a9b040878f27afe89368c3c1:0a03936c9b9bbf2823b1124c009f0f3c', 'GREY', 'Owen', 'owen@gmail.com', '+771234567', 'caissier');
 
 --
 -- Constraints for dumped tables

@@ -44,7 +44,6 @@ public class ModuleDAOImp implements ModuleDAO {
 
             List<Apprenant> apprenants = new ClasseDAOImp().search(obj.getClasse()).get(0).getApprenants();
 ;           int idModule = new ModuleDAOImp().search(obj.getIntitule()).get(0).getId();
-            int test = new ModuleDAOImp().search(obj.getIntitule()).get(0).getId();
             for (Apprenant apprenant : apprenants) {
                 String query2 = "INSERT INTO notes (idApprenant, idModule, valeur) VALUES (?, ?, ?)";
                 PreparedStatement stmt2 = connection.prepareStatement(query2);
