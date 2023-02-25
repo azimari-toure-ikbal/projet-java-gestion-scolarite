@@ -7,7 +7,6 @@ import com.gesschoolapp.Exceptions.PDFException;
 import com.gesschoolapp.db.DAOClassesImpl.ClasseDAOImp;
 import com.gesschoolapp.db.DAOClassesImpl.NoteDAOImp;
 import com.gesschoolapp.db.DAOClassesImpl.PaiementDAOImp;
-import com.gesschoolapp.docmaker.PDFBulletin;
 import com.gesschoolapp.docmaker.PDFGenerator;
 import com.gesschoolapp.gescsv.ApprenantsCSV;
 import com.gesschoolapp.gescsv.NotesCSV;
