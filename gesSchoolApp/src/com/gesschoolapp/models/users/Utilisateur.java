@@ -1,5 +1,7 @@
 package com.gesschoolapp.models.users;
 
+import com.gesschoolapp.utils.Toolbox;
+
 public abstract class Utilisateur {
 
     protected int id; // sera généré automatiquement par la base de donnée
@@ -9,8 +11,6 @@ public abstract class Utilisateur {
     protected String password;
     protected String email;
     protected String  numero;
-    protected String fullName;
-
     public Utilisateur(){
 
     };
@@ -27,7 +27,6 @@ public abstract class Utilisateur {
         this.setEmail(email);
         this.setPassword(password);
         this.setNumero(numero);
-        this.setFullName(prenom + " " + nom);
     }
 
     public int getId() {
@@ -90,11 +89,7 @@ public abstract class Utilisateur {
     }
 
     public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+        return Toolbox.capitalizeName(this.prenom) + " " + this.nom.toUpperCase();
     }
 
     public String getType() {
@@ -117,7 +112,7 @@ public abstract class Utilisateur {
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", numero='" + numero + '\'' +
-                ", fullName='" + fullName + '\'' +
+                ", fullName='" + getFullName() + '\'' +
                 '}';
     }
 }

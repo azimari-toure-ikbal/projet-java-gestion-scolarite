@@ -7,3 +7,4 @@ gesSchoolApp/src/com/gesschoolapp/.DS_Store
 gesSchoolApp/src/com/gesschoolapp/resources/.DS_Store
 gesSchoolApp/storage/actions/actions.ser
 *.ser
+gesSchoolApp/.env

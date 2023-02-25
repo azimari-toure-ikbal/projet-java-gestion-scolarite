@@ -1,13 +1,13 @@
 package com.gesschoolapp.utils;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.gesschoolapp.Exceptions.DAOException;
-import com.gesschoolapp.Exceptions.Mismatch;
 import com.gesschoolapp.db.DAOClassesImpl.PaiementDAOImp;
 import com.gesschoolapp.models.paiement.Paiement;
 import com.gesschoolapp.models.paiement.Rubrique;
-import com.mysql.cj.protocol.a.authentication.Sha256PasswordPlugin;
 
-import java.security.MessageDigest;
+import java.io.FileInputStream;
+import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
@@ -79,52 +79,44 @@ public class Toolbox {
         return list;
     }
 
+    public static String getEnv() {
+        try {
+            // Open file
+            FileInputStream fos = new FileInputStream(".env");
+            // Read file
+            byte[] data = new byte[fos.available()];
+            fos.read(data);
+            fos.close();
+            // Convert to string
+            String test = new String(data, StandardCharsets.UTF_8);
+            return test.split("=")[1];
+        } catch (Exception e) {
+            System.out.println("Erreur getenv: " + e.getMessage());
+        }
+        return null;
+    }
+
+    public static String generateRandomPassword() {
+        // Generate random password with 12 characters
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
+        StringBuilder password = new StringBuilder();
+        SecureRandom random = new SecureRandom();
+        while (password.length() < 12) {
+            int index = (int) (random.nextFloat() * chars.length());
+            password.append(chars.charAt(index));
+        }
+
+        return password.toString();
+    }
     public static String generateSecurePassword(String password) {
-        byte[] salt = generateSalt();
-        byte[] passwordHash = hashPassword(password, salt);
-        return bytesToHex(passwordHash) + ":" + bytesToHex(salt);
+        return BCrypt.withDefaults().hashToString(12, password.toCharArray());
     }
 
     public static boolean verifyPassword(String password, String storedPasswordHash) {
-        String[] parts = storedPasswordHash.split(":");
-        byte[] passwordHash = hashPassword(password, hexToBytes(parts[1]));
-        return bytesToHex(passwordHash).equals(parts[0]);
+        BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), storedPasswordHash);
+        return result.verified;
     }
 
-    private static byte[] generateSalt() {
-        SecureRandom random = new SecureRandom();
-        byte[] salt = new byte[16];
-        random.nextBytes(salt);
-        return salt;
-    }
-
-    private static byte[] hashPassword(String password, byte[] salt) {
-        try {
-            MessageDigest messageDigest = MessageDigest.getInstance(ALGORITHM);
-            messageDigest.reset();
-            messageDigest.update(salt);
-            byte[] passwordBytes = password.getBytes("UTF-8");
-            return messageDigest.digest(passwordBytes);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private static String bytesToHex(byte[] bytes) {
-        StringBuilder result = new StringBuilder();
-        for (byte b : bytes) {
-            result.append(String.format("%02x", b));
-        }
-        return result.toString();
-    }
-
-    private static byte[] hexToBytes(String hex) {
-        byte[] bytes = new byte[hex.length() / 2];
-        for (int i = 0; i < bytes.length; i++) {
-            bytes[i] = (byte) Integer.parseInt(hex.substring(2 * i, 2 * i + 2), 16);
-        }
-        return bytes;
-    }
 
     public static List<Paiement> paiementsJournalier(LocalDate date){
         PaiementDAOImp paiementDAOImp = new PaiementDAOImp();

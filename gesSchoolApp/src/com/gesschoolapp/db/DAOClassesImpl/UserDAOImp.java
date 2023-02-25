@@ -10,7 +10,9 @@ import com.gesschoolapp.models.users.Caissier;
 import com.gesschoolapp.models.users.Secretaire;
 import com.gesschoolapp.models.users.Utilisateur;
 import com.gesschoolapp.utils.Toolbox;
+import com.sendgrid.*;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -134,6 +136,10 @@ public class UserDAOImp implements UserDAO, DAO<Utilisateur> {
             Connection connection = DBManager.getConnection();
             String query = "INSERT INTO utilisateurs (nom, prenom, email, password, numero, type) VALUES (?,?,?,?,?,?)";
             PreparedStatement ps = connection.prepareStatement(query);
+
+            // Set user password
+            obj.setPassword(Toolbox.generateRandomPassword());
+
             String hashedPassword = Toolbox.generateSecurePassword(obj.getPassword());
             ps.setString(1, obj.getNom());
             ps.setString(2, obj.getPrenom());
@@ -142,6 +148,76 @@ public class UserDAOImp implements UserDAO, DAO<Utilisateur> {
             ps.setString(5, obj.getNumero());
             ps.setString(6, obj.getType());
             ps.executeUpdate();
+
+            // Send mail with password here
+            String mailContent = "<!DOCTYPE html>\n" +
+                    "<html>\n" +
+                    "<head>\n" +
+                    "\t<title>Bienvenue chez notre service</title>\n" +
+                    "\t<meta charset=\"utf-8\">\n" +
+                    "\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n" +
+                    "\t<style>\n" +
+                    "\t\tbody {\n" +
+                    "\t\t\tfont-family: Arial, sans-serif;\n" +
+                    "\t\t\tcolor: #333333;\n" +
+                    "\t\t\tfont-size: 16px;\n" +
+                    "\t\t\tline-height: 1.5;\n" +
+                    "\t\t\tmargin: 0;\n" +
+                    "\t\t\tpadding: 0;\n" +
+                    "\t\t}\n" +
+                    "\t\th1 {\n" +
+                    "\t\t\tfont-size: 24px;\n" +
+                    "\t\t\tmargin-top: 0;\n" +
+                    "\t\t\tmargin-bottom: 30px;\n" +
+                    "\t\t\ttext-align: center;\n" +
+                    "\t\t}\n" +
+                    "\t\tp {\n" +
+                    "\t\t\tmargin-top: 0;\n" +
+                    "\t\t\tmargin-bottom: 30px;\n" +
+                    "\t\t\ttext-align: left;\n" +
+                    "\t\t}\n" +
+                    "\t\t.container {\n" +
+                    "\t\t\tmax-width: 600px;\n" +
+                    "\t\t\tmargin: 0 auto;\n" +
+                    "\t\t\tpadding: 20px;\n" +
+                    "\t\t}\n" +
+                    "\t</style>\n" +
+                    "</head>\n" +
+                    "<body>\n" +
+                    "\t<div class=\"container\">\n" +
+                    "\t\t<h1>Bienvenue chez notre service</h1>\n" +
+                    "\t\t<p>Bonjour " + obj.getFullName() + ",</p>\n" +
+                    "\t\t<p>Votre compte a été créé avec succès. Vous pouvez désormais vous connecter en utilisant les informations de connexion suivantes :</p>\n" +
+                    "\t\t<ul>\n" +
+                    "\t\t\t<li>Adresse e-mail :" + obj.getEmail() + "</li>\n" +
+                    "\t\t\t<li>Mot de passe : " + obj.getPassword() + "</li>\n" +
+                    "\t\t</ul>\n" +
+                    "\t\t<p>Nous vous recommandons de changer votre mot de passe après votre première connexion.</p>\n" +
+                    "\t\t<p>Si vous avez des questions ou des préoccupations, n'hésitez pas à nous contacter.</p>\n" +
+                    "\t\t<p>Cordialement,</p>\n" +
+                    "\t\t<p>L'équipe de notre service</p>\n" +
+                    "\t</div>\n" +
+                    "</body>\n" +
+                    "</html>\n";
+
+            System.out.println(obj.getFullName());
+
+            Email from = new Email("contact@ar-struct.com");
+            String subject = "Sending with Twilio SendGrid is Fun";
+            Email to = new Email("azimariiki007@gmail.com");
+            Content content = new Content("text/html", mailContent);
+            Mail mail = new Mail(from, subject, to, content);
+
+            SendGrid sg = new SendGrid(Toolbox.getEnv());
+            Request request = new Request();
+            request.setMethod(Method.POST);
+            request.setEndpoint("mail/send");
+            request.setBody(mail.build());
+            Response response = sg.api(request);
+            System.out.println(response.getStatusCode());
+            System.out.println(response.getBody());
+            System.out.println(response.getHeaders());
+
             return this.getList().get(this.getList().size() - 1);
         } catch (Exception e) {
             throw new DAOException(e.getMessage());
