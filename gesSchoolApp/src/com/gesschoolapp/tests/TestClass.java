@@ -61,12 +61,24 @@ public class TestClass {
 //        System.out.println( + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() );
 //        testCreateModule();
 //        testGetNotifs();
-        System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYY-MM-dd à HH:mm")));
+//        System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYY-MM-dd à HH:mm")));
 //        testGetUtilisateurs();
 
 //        String pwd = Toolbox.generateSecurePassword("wissam");
 //        System.out.println(Toolbox.generateSecurePassword("wissam"));
 //        System.out.println(Toolbox.verifyPassword("wissam", pwd));
+        ApprenantDAOImp apprenantDAOImp = new ApprenantDAOImp();
+        Apprenant apprenant = new Apprenant();
+        try {
+            apprenant = apprenantDAOImp.read(23);
+        } catch (DAOException e) {
+            e.printStackTrace();
+        }
+
+//        apprenant.setNom("Wissam");
+
+        System.out.println(apprenant);
+        String test = Toolbox.getBulletinImgPath(apprenant, 1);
     }
 
 
