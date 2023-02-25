@@ -1165,22 +1165,6 @@ public class ScolariteUIController implements Initializable {
 
                     list.addAll(importedApprenants);
 
-                    for (Apprenant appr : importedApprenants) {
-                        Note newNote = new Note();
-                        newNote.setApprenant(appr);
-
-                        newNote.setNote(0);
-                        List<Module> modules = getSelectedClass().getModules();
-                        NoteDAOImp notesData = new NoteDAOImp();
-
-                        for (Module module : modules) {
-                            List<Note> notesList = new ArrayList<>(module.getNotes());
-                            newNote.setModule(module.getIntitule());
-                            //                newNote.setId();
-                            notesList.add(newNote);
-                            module.setNotes(notesList);
-                        }
-                    }
                     selectedClass.setApprenants(list);
 
                     this.setMainMessageInfo("Apprenants importés avec succès !");
