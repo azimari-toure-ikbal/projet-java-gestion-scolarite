@@ -113,14 +113,14 @@ public class LoginUIController implements Initializable  {
     @FXML
     void handleLogin(ActionEvent event) {
 
-//        String login = txtUsername.getText();
+        String login = txtUsername.getText();
 //        String login = "fatou.syla@mail.cum";
-        String login = "marcus.sins@mail.com";
+//        String login = "marcus.sins@mail.com";
 //        String login = "wissam.youssef@mail.com";
 //        String password = "fatou";
-        String password = "marcus";
+//        String password = "marcus";
 //        String password = "wissam";
-//        String password = txtPassword.getText();
+        String password = txtPassword.getText();
         if (login.isEmpty() || password.isEmpty()) {
             messageInfo.setText("Veuillez remplir tous les champs");
         } else {

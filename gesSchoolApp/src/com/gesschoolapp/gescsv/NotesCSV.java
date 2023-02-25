@@ -108,7 +108,7 @@ public class NotesCSV implements CSVReader<Note> {
      * @throws CSVException
      * @throws Mismatch
      */
-    public List<Note> csvToObject(List<String[]> data, Module module, Classe classse, Utilisateur utilisateur) throws CSVException, Mismatch {
+    public List<Note> csvToObject(List<String[]> data, Module module, Classe classse, Utilisateur utilisateur, int semestre) throws CSVException, Mismatch {
         // Verify if the list is not empty
         if (data.isEmpty()) {
             throw new CSVException("La liste est vide");
@@ -181,11 +181,11 @@ public class NotesCSV implements CSVReader<Note> {
             }
             note.setNote(Float.parseFloat(line[1]));
 
-            // Verify that the semester is 1 or 2
-            if (Integer.parseInt(line[2]) != 1 && Integer.parseInt(line[2]) != 2) {
-                throw new Mismatch("Le semestre doit être 1 ou 2");
+
+            // Verify that we are adding in the right semester
+            if (Integer.parseInt(line[2]) != semestre) {
+                throw new Mismatch("Le semestre n'est pas le bon");
             }
-            int semestre = Integer.parseInt(line[2]);
 
             // Create the note
             try {

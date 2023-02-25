@@ -5,8 +5,16 @@ import com.gesschoolapp.Exceptions.DAOException;
 import com.gesschoolapp.db.DAOClassesImpl.PaiementDAOImp;
 import com.gesschoolapp.models.paiement.Paiement;
 import com.gesschoolapp.models.paiement.Rubrique;
+import org.apache.pdfbox.Loader;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.rendering.ImageType;
+import org.apache.pdfbox.rendering.PDFRenderer;
+import org.apache.pdfbox.tools.imageio.ImageIOUtil;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.time.LocalDate;
@@ -170,6 +178,22 @@ public class Toolbox {
             System.out.println(e.getMessage());
         }
         return null;
+    }
+
+    public static void pdfToImage(String path, String filename) {
+        try {
+            PDDocument doc = Loader.loadPDF(new File(path));
+            PDFRenderer pdfRenderer = new PDFRenderer(doc);
+            for(int page = 0;page<doc.getNumberOfPages();++page){
+                BufferedImage bim = pdfRenderer.renderImageWithDPI(page,300, ImageType.RGB);
+                String fileName = filename + page + ".png";
+                ImageIOUtil.writeImage(bim,fileName,300);
+            }
+            doc.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }
 

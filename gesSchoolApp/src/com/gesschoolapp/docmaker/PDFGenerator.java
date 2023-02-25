@@ -6,6 +6,7 @@ import com.gesschoolapp.models.matieres.Module;
 import com.gesschoolapp.models.matieres.Note;
 import com.gesschoolapp.models.paiement.Paiement;
 import com.gesschoolapp.models.student.Apprenant;
+import com.gesschoolapp.utils.Toolbox;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -205,7 +206,7 @@ public class PDFGenerator {
             Document document = new Document();
 
             try {
-                PdfWriter.getInstance(document, new FileOutputStream("storage/bulletins/" + apprenant.getNom() + "_" + apprenant.getPrenom() + "_bulletin_semestre_" + semestre + ".pdf"));
+                PdfWriter.getInstance(document, new FileOutputStream("storage/bulletins/pdfs/" + apprenant.getNom() + "_" + apprenant.getPrenom() + "_bulletin_semestre_" + semestre + ".pdf"));
                 document.open();
 
                 // Ajouter une photo de l'école
@@ -279,6 +280,7 @@ public class PDFGenerator {
 
                 document.close();
 
+                Toolbox.pdfToImage();
                 System.out.println("Le bulletin de notes a été créé avec succès.");
             } catch (DocumentException | IOException e) {
                 throw new PDFException("Erreur lors de la génération du PDF : " + e.getMessage());
