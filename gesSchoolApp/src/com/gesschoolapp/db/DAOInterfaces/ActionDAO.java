@@ -12,9 +12,5 @@ public interface ActionDAO{
     void cancelAddApprenant(Apprenant apprenant);
     void cancelDeleteApprenant(Apprenant apprenant);
     void cancelUpdateApprenant(Apprenant apprenant);
-    void cancelAddModule(Module module);
-    void cancelUpdateModule(Module module);
-    void cancelDeleteModule(Module module);
     void cancelUpdateNote(Note note);
-    void cancelAddPaiement(Paiement paiement);
 }

@@ -52,15 +52,6 @@ public class ModuleDAOImp implements ModuleDAO {
                 stmt2.setDouble(3, 0);
                 stmt2.executeUpdate();
             }
-
-            if(!Objects.equals(user, "admin")){
-                Action action = new Action();
-                action.setActor(user);
-                action.setAction(ActionType.ADD);
-                action.setObject(obj);
-                action.setDate(LocalDateTime.now());
-                ActionManager.add(action);
-            }
             return new ModuleDAOImp().read(idModule);
         }catch(Exception e){
             throw new DAOException("Error while creating module : " + e.getMessage());
@@ -78,15 +69,6 @@ public class ModuleDAOImp implements ModuleDAO {
             stmt.setInt(3, obj.getSemestre());
             stmt.setInt(4, obj.getId());
             stmt.executeUpdate();
-
-            if(!Objects.equals(user, "admin")){
-                Action action = new Action();
-                action.setActor(user);
-                action.setAction(ActionType.UPDATE);
-                action.setObject(obj);
-                action.setDate(LocalDateTime.now());
-                ActionManager.add(action);
-            }
 
         }catch(Exception e){
             throw new DAOException("Error while updating module : " + e.getMessage());
@@ -107,14 +89,6 @@ public class ModuleDAOImp implements ModuleDAO {
             stmt2.setInt(1, id);
             stmt2.executeUpdate();
 
-            if(!Objects.equals(user, "admin")){
-                Action action = new Action();
-                action.setActor(user);
-                action.setAction(ActionType.DELETE);
-                action.setObject(new ModuleDAOImp().read(id));
-                action.setDate(LocalDateTime.now());
-                ActionManager.add(action);
-            }
         }catch(Exception e){
             throw new DAOException("Error while deleting module : " + e.getMessage());
         }
