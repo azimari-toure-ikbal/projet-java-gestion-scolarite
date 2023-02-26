@@ -112,7 +112,6 @@ public class LoginUIController implements Initializable  {
 
     @FXML
     void handleLogin(ActionEvent event) {
-
 //        String login = txtUsername.getText();
 //        String login = "fatou.syla@mail.cum";
         String login = "marcus.sins@mail.com";

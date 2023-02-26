@@ -1,8 +1,6 @@
 package com.gesschoolapp.models.actions;
 
-import com.gesschoolapp.Exceptions.ArchiveManagerException;
 import com.gesschoolapp.db.DAOClassesImpl.ActionDAOImp;
-import com.gesschoolapp.serial.ActionManager;
 import com.gesschoolapp.view.util.ActionType;
 
 import java.io.Serializable;
@@ -103,14 +101,11 @@ public class Action implements Serializable {
         new ActionDAOImp().cancelAction(this, admin);
         this.canceled = true;
         try {
-            Actions actions = ActionManager.DeserializeActions();
-            actions.getListActions().get(this.idAction).setCanceled(true);
-            ActionManager.SerializeActions(actions);
-        } catch (ArchiveManagerException e) {
+            new ActionDAOImp().setActionCanceled(this);
+        } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error while deserializing actions : \n" + e.getClass().getName() + " : " + e.getMessage());
         }
-
     }
 
     @Override
