@@ -24,6 +24,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
@@ -75,17 +76,56 @@ public class BulletinDialogViewController {
     @FXML
     private Label fileNameLabel;
 
+    @FXML
+    private Label labelPage;
+
+
+    @FXML
+    private Button btnLeft;
+
+    @FXML
+    private Button btnRight;
+
+    private String[] paths;
+
+
+
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
     }
 
-    public void setApprenant(Apprenant appr,String bulletinPath) {
+    public void setApprenant(Apprenant appr,String[] bulletinsPath) {
 
         this.apprenant = appr;
-        File file = new File(bulletinPath);
+        this.paths = bulletinsPath;
+        File file = new File(bulletinsPath[0]);
         Image bt = new Image(file.toURI().toString());
         bulletinImg.setImage(bt);
-        fileNameLabel.setText(bulletinPath.split("/")[3]);
+        fileNameLabel.setText(bulletinsPath[0].split("/")[3]);
+
+        if(bulletinsPath[1] != null){
+            labelPage.setText("1/2");
+            btnLeft.setVisible(true);
+            btnRight.setVisible(true);
+        }
+
+
+    }
+
+    @FXML
+    void handlePagination(MouseEvent event) {
+            if(event.getSource() == btnLeft){
+                File file = new File(paths[0]);
+                Image bt = new Image(file.toURI().toString());
+                bulletinImg.setImage(bt);
+                labelPage.setText("1/2");
+            }else{
+                File file = new File(paths[1]);
+                Image bt = new Image(file.toURI().toString());
+                bulletinImg.setImage(bt);
+                labelPage.setText("2/2");
+
+            }
     }
 
 

@@ -79,7 +79,7 @@ public class PaiementDAOImp implements PaiementDAO {
             action.setAction(ActionType.DELETE);
             action.setDate(LocalDateTime.now());
             action.setActor(user);
-            ActionManager.add(action);
+//            ActionManager.add(action);
         } catch (Exception e) {
             throw new DAOException(e.getMessage());
         }

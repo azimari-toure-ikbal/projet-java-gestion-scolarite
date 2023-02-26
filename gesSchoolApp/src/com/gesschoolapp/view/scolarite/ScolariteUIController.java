@@ -1438,7 +1438,6 @@ public class ScolariteUIController implements Initializable {
 
         }
 
-
     }
 
     public void toggleNotificationCircle(boolean bool){
@@ -1667,10 +1666,10 @@ public class ScolariteUIController implements Initializable {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("BulletinDialogView.fxml"));
 
-                String bulletinPath;
+                String[] bulletinPath;
 
             try{
-                bulletinPath = Toolbox.getBulletinImgPath(appr,1);
+                bulletinPath = Toolbox.getBulletinImgPaths(appr);
             }catch(RuntimeException e){
                 setMainMessageInfo(e.getMessage(),0);
                 return false;

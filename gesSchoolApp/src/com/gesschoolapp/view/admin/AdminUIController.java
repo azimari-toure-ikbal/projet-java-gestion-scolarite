@@ -2,10 +2,10 @@ package com.gesschoolapp.view.admin;
 
 import com.gesschoolapp.Exceptions.ArchiveManagerException;
 import com.gesschoolapp.Exceptions.DAOException;
+import com.gesschoolapp.db.DAOClassesImpl.ActionDAOImp;
 import com.gesschoolapp.db.DAOClassesImpl.ClasseDAOImp;
 import com.gesschoolapp.db.DAOClassesImpl.UserDAOImp;
 import com.gesschoolapp.models.actions.Action;
-import com.gesschoolapp.models.actions.Actions;
 import com.gesschoolapp.models.classroom.Classe;
 import com.gesschoolapp.models.student.Apprenant;
 import com.gesschoolapp.models.users.Admin;
@@ -179,6 +179,8 @@ public class AdminUIController implements Initializable {
     UserDAOImp userData = new UserDAOImp();
 
     ClasseDAOImp classData = new ClasseDAOImp();
+
+    ActionDAOImp actionData = new ActionDAOImp();
     List<Utilisateur> usersList;
 
     List<Classe> classesList;
@@ -212,11 +214,8 @@ public class AdminUIController implements Initializable {
         try {
             usersList = userData.getList();
             classesList = classData.getList();
-            try {
-                actionsList = ActionManager.DeserializeActions().getListActions();
-            } catch (ArchiveManagerException e) {
-                throw new RuntimeException(e);
-            }
+            actionsList = actionData.getActions();
+
         } catch (DAOException e) {
             throw new RuntimeException(e);
         }
@@ -581,13 +580,7 @@ public class AdminUIController implements Initializable {
         }
     }
     public void setListeDesActions() {
-        Actions action;
-        try {
-            action = ActionManager.DeserializeActions();
-        } catch (ArchiveManagerException e) {
-            throw new RuntimeException(e);
-        }
-        setListeDesActions(action.getListActions());
+        setListeDesActions(actionData.getActions());
     }
 
     public void setListeDesActions(List<Action> actions){

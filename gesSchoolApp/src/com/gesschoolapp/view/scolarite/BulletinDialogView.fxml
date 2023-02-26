@@ -13,7 +13,6 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-
 <Pane prefHeight="723.0" prefWidth="676.0" style="-fx-border-width: 2; -fx-border-color: #323639;" stylesheets="@../../style/application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gesschoolapp.view.scolarite.BulletinDialogViewController">
    <children>
       <ImageView fx:id="bulletinImg" fitHeight="902.0" fitWidth="625.0" layoutX="23.0" layoutY="53.0" pickOnBounds="true" preserveRatio="true" style="-fx-border-width: 10px;">
@@ -41,7 +40,7 @@
                   <Font name="Gill Sans MT" size="12.0" />
                </font>
             </Label>
-            <Label layoutX="334.0" layoutY="15.0" text="1/1" textFill="#f2f2f2">
+            <Label fx:id="labelPage" layoutX="334.0" layoutY="16.0" text="1/1" textFill="#f2f2f2">
                <font>
                   <Font name="Gill Sans MT" size="12.0" />
                </font>
@@ -62,6 +61,24 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
+            <Button fx:id="btnRight" layoutX="309.0" layoutY="16.0" mnemonicParsing="false" onMouseClicked="#handlePagination" style="-fx-background-color: transparent;" styleClass="virgin_btn" visible="false" AnchorPane.leftAnchor="357.0" AnchorPane.topAnchor="15.0">
+               <graphic>
+                  <ImageView fitHeight="14.0" fitWidth="16.0" rotate="180.0">
+                     <image>
+                        <Image url="@../../resources/images/file_paginate_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="btnLeft" layoutX="312.0" layoutY="15.0" mnemonicParsing="false" onMouseClicked="#handlePagination" style="-fx-background-color: transparent;" styleClass="virgin_btn" visible="false" AnchorPane.rightAnchor="357.0" AnchorPane.topAnchor="15.0">
+               <graphic>
+                  <ImageView fitHeight="14.0" fitWidth="16.0">
+                     <image>
+                        <Image url="@../../resources/images/file_paginate_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
          </children>
       </AnchorPane>
       <Line endX="522.0" layoutX="131.0" layoutY="723.0" startX="-114.0" stroke="#323639" strokeWidth="4.3" />
