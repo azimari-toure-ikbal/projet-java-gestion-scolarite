@@ -11,6 +11,26 @@ public class ActionManager {
     private static final String FILENAME = "storage/actions/actions.ser";
 
 
+    public static byte[] SerializeObjectToByteArray(Object object) throws ArchiveManagerException {
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
+             ObjectOutputStream oos = new ObjectOutputStream(baos)) {
+            oos.writeObject(object);
+            return baos.toByteArray();
+        } catch (Exception e) {
+            throw new ArchiveManagerException("Error while serializing actions : \n" + e.getClass().getName() + " : " + e.getMessage());
+        }
+    }
+
+    public static Object DeserializeObjectFromByteArray(byte[] bytes) throws ArchiveManagerException {
+        try (ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+             ObjectInputStream ois = new ObjectInputStream(bais)) {
+            return ois.readObject();
+        } catch (Exception e) {
+            throw new ArchiveManagerException("Error while deserializing actions : \n" + e.getClass().getName() + " : " + e.getMessage());
+        }
+    }
+
+
     public static void SerializeActions(Actions actions) throws ArchiveManagerException {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILENAME))) {
             oos.writeObject(actions);

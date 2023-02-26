@@ -87,7 +87,7 @@ public class ApprenantDAOImp implements ApprenantDAO {
                 action.setActor(user);
                 action.setObject(addedApprenant);
                 action.setDate(LocalDateTime.now());
-                ActionManager.add(action);
+                new ActionDAOImp().create(action);
             }
             return addedApprenant;
         }catch (Exception e) {
@@ -99,6 +99,17 @@ public class ApprenantDAOImp implements ApprenantDAO {
     public void update(Apprenant obj, String user) throws DAOException {
 
         try(Connection connection = DBManager.getConnection() ){
+
+            if(!Objects.equals(user, "admin")){
+                Action action = new Action();
+                action.setAction(ActionType.UPDATE);
+                action.setActor(user);
+                action.setObject(read(obj.getIdApprenant()));
+                action.setDate(LocalDateTime.now());
+                new ActionDAOImp().create(action);
+            }
+
+
             String query = "UPDATE apprenants SET nom = ?, prenom = ?, sexe = ?, nationalite = ?, dtNaiss = ?, " +
                     "echeancier = ? WHERE idApprenant = ?";
             PreparedStatement statement = connection.prepareStatement(query);
@@ -110,16 +121,6 @@ public class ApprenantDAOImp implements ApprenantDAO {
             statement.setInt(6, obj.getEtatPaiement());
             statement.setInt(7, obj.getIdApprenant());
             statement.executeUpdate();
-
-            if(!Objects.equals(user, "admin")){
-                Action action = new Action();
-                action.setAction(ActionType.UPDATE);
-                action.setActor(user);
-                action.setObject(obj);
-                action.setDate(LocalDateTime.now());
-                ActionManager.add(action);
-            }
-
         }catch (Exception e) {
             throw new DAOException("Error while updating Apprenant" + e.getMessage());
         }
@@ -134,9 +135,9 @@ public class ApprenantDAOImp implements ApprenantDAO {
                 Action action = new Action();
                 action.setAction(ActionType.DELETE);
                 action.setActor(user);
-                action.setObject(this.read(id));
+                action.setObject(read(id));
                 action.setDate(LocalDateTime.now());
-                ActionManager.add(action);
+                new ActionDAOImp().create(action);
             }
 
             String query = "DELETE FROM apprenants WHERE idApprenant = ?";

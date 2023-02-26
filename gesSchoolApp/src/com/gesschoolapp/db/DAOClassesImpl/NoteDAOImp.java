@@ -80,16 +80,15 @@ public class NoteDAOImp implements NoteDAO {
 
             if(rs.next()) {
                 obj.setId(rs.getInt("idNote"));
-                update(obj, user);
             }
 
             if(!Objects.equals(user, "admin")){
                 Action action = new Action();
                 action.setActor(user);
                 action.setAction(ActionType.UPDATE);
-                action.setObject(new NoteDAOImp().read(obj.getId()));
+                action.setObject(read(obj.getId()));
                 action.setDate(LocalDateTime.now());
-                ActionManager.add(action);
+                new ActionDAOImp().create(action);
             }
 
             String query = "UPDATE notes SET valeur = ? WHERE idNote = ?";

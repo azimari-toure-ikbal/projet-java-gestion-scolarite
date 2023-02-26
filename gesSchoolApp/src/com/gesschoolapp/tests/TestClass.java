@@ -29,6 +29,7 @@ import java.sql.Connection;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -57,11 +58,15 @@ public class TestClass {
 //        testCreateApprenant();
 //        System.out.println(LocalDate.now());
 //        testGetAnnees();
-//        testCancelActions();
+
+//        System.out.println(Date.from(Instant.now()).toInstant()
+//                .atZone(ZoneId.systemDefault())
+//                .toLocalDateTime());
+        testCancelActions();
 //        System.out.println( + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() );
 //        testCreateModule();
 //        testGetNotifs();
-        System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYY-MM-dd à HH:mm")));
+//        System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYY-MM-dd à HH:mm")));
 //        testGetUtilisateurs();
 
 //        String pwd = Toolbox.generateSecurePassword("wissam");
@@ -115,22 +120,15 @@ public class TestClass {
 
     public static void testCancelActions(){
         try{
-            testUpdateNote(113);
+//            testUpdateNote(113);
 //            ActionManager.DeleteArchive();
 //            new ApprenantDAOImp().delete(43, "Bob");
 //            testCreateApprenant();
 //            testPaiement();
-            Actions actions = ActionManager.DeserializeActions();
-//            actions.getListActions().get(0).cancelAction("Marshall");
-            for(Action action : actions.getListActions()){
-                System.out.println(action.getObject().getClass().getSimpleName());
-            }
-//            System.out.println(actions.getListActions());
-
-            for (Action action : actions.getListActions()) {
-                System.out.println(action.getClass());
-            }
-//            actions.getListActions().get(1).cancelAction("Marshall");
+            List<Action> actions = new ActionDAOImp().getActions();
+//            actions.get(1).cancelAction("Marshall");
+//            System.out.println(actions);
+            actions.get(0).cancelAction("Marshall");
         }catch (Exception e){
             JOptionPane.showMessageDialog(null, e.getMessage());
         }

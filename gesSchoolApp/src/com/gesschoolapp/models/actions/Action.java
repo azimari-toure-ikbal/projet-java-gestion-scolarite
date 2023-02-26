@@ -7,6 +7,7 @@ import com.gesschoolapp.view.util.ActionType;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class Action implements Serializable {
     public static final long serialVersionUID = 427;
@@ -103,10 +104,8 @@ public class Action implements Serializable {
         new ActionDAOImp().cancelAction(this, admin);
         this.canceled = true;
         try {
-            Actions actions = ActionManager.DeserializeActions();
-            actions.getListActions().get(this.idAction).setCanceled(true);
-            ActionManager.SerializeActions(actions);
-        } catch (ArchiveManagerException e) {
+            new ActionDAOImp().setActionCanceled(this);
+        } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error while deserializing actions : \n" + e.getClass().getName() + " : " + e.getMessage());
         }
