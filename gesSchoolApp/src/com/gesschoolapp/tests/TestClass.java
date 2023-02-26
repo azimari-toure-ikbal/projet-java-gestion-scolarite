@@ -7,7 +7,6 @@ import com.gesschoolapp.db.DAOClassesImpl.*;
 import com.gesschoolapp.db.DAOInterfaces.ApprenantDAO;
 import com.gesschoolapp.docmaker.PDFGenerator;
 import com.gesschoolapp.models.actions.Action;
-import com.gesschoolapp.models.actions.Actions;
 import com.gesschoolapp.models.actions.Notification;
 import com.gesschoolapp.models.matieres.Module;
 import com.gesschoolapp.models.paiement.Paiement;
@@ -83,7 +82,10 @@ public class TestClass {
 //        apprenant.setNom("Wissam");
 
         System.out.println(apprenant);
-        String test = Toolbox.getBulletinImgPath(apprenant, 1);
+        String[] test = Toolbox.getBulletinImgPaths(apprenant);
+        for (String s : test) {
+            System.out.println(s);
+        }
     }
 
 

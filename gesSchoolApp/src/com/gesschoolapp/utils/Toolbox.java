@@ -200,12 +200,22 @@ public class Toolbox {
         return "RCU" + sb;
     }
 
-    public static String getBulletinImgPath(Apprenant apprenant, int semestre) throws RuntimeException {
-        File file = new File("storage/bulletins/imgs/" + apprenant.getNom().replace(" ", "_") + "_" + apprenant.getPrenom() + "_bulletin_semestre_" + semestre + ".png");
-        if (!file.exists()) {
-            throw new RuntimeException("Le fichier demandé n'existe pas.");
+    public static String[] getBulletinImgPaths(Apprenant apprenant) throws RuntimeException {
+        String[] filepaths = new String[2];
+
+        File bulletinSemestre1 = new File("storage/bulletins/imgs/" + apprenant.getNom().replace(" ", "_") + "_" + apprenant.getPrenom() + "_bulletin_semestre_1.png");
+        File bulletinSemestre2 = new File("storage/bulletins/imgs/" + apprenant.getNom().replace(" ", "_") + "_" + apprenant.getPrenom() + "_bulletin_semestre_2.png");
+
+        if (!bulletinSemestre1.exists() && !bulletinSemestre2.exists()) {
+            throw new RuntimeException(apprenant.getFullName() + " n'a aucun bulletin.");
         } else {
-            return "storage/bulletins/imgs/" + apprenant.getNom().replace(" ", "_") + "_" + apprenant.getPrenom() + "_bulletin_semestre_" + semestre + ".png";
+            if (bulletinSemestre1.exists()) {
+                filepaths[0] = "storage/bulletins/imgs/" + apprenant.getNom().replace(" ", "_") + "_" + apprenant.getPrenom() + "_bulletin_semestre_1.png";
+            }
+            if (bulletinSemestre2.exists()) {
+                filepaths[1] = "storage/bulletins/imgs/" + apprenant.getNom().replace(" ", "_") + "_" + apprenant.getPrenom() + "_bulletin_semestre_2.png";
+            }
+            return filepaths;
         }
     }
 
