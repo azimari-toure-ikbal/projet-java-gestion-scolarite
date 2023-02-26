@@ -1,13 +1,10 @@
 package com.gesschoolapp.models.actions;
 
-import com.gesschoolapp.Exceptions.ArchiveManagerException;
 import com.gesschoolapp.db.DAOClassesImpl.ActionDAOImp;
-import com.gesschoolapp.serial.ActionManager;
 import com.gesschoolapp.view.util.ActionType;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.List;
 
 public class Action implements Serializable {
     public static final long serialVersionUID = 427;
@@ -109,7 +106,6 @@ public class Action implements Serializable {
             e.printStackTrace();
             System.out.println("Error while deserializing actions : \n" + e.getClass().getName() + " : " + e.getMessage());
         }
-
     }
 
     @Override
