@@ -200,12 +200,22 @@ public class Toolbox {
         return "RCU" + sb;
     }
 
-    public static String getBulletinImgPath(Apprenant apprenant, int semestre) {
-        return "storage/bulletins/imgs/" + apprenant.getNom().replace(" ", "_") + "_" + apprenant.getPrenom() + "_bulletin_semestre_" + semestre + ".png";
+    public static String getBulletinImgPath(Apprenant apprenant, int semestre) throws RuntimeException {
+        File file = new File("storage/bulletins/imgs/" + apprenant.getNom().replace(" ", "_") + "_" + apprenant.getPrenom() + "_bulletin_semestre_" + semestre + ".png");
+        if (!file.exists()) {
+            throw new RuntimeException("Le fichier demandé n'existe pas.");
+        } else {
+            return "storage/bulletins/imgs/" + apprenant.getNom().replace(" ", "_") + "_" + apprenant.getPrenom() + "_bulletin_semestre_" + semestre + ".png";
+        }
     }
 
     public static String getCertificatsImgPath(Apprenant apprenant) {
-        return "storage/certificats/imgs/" + apprenant.getNom().replace(" ", "_") + "_" + apprenant.getPrenom() + "_" + LocalDate.now() + ".png";
+        File file = new File("storage/certificats/imgs/" + apprenant.getNom().replace(" ", "_") + "_" + apprenant.getPrenom() + "_" + LocalDate.now() + ".png");
+        if (!file.exists()) {
+            throw new RuntimeException("Le fichier demandé n'existe pas.");
+        } else {
+            return "storage/certificats/imgs/" + apprenant.getNom().replace(" ", "_") + "_" + apprenant.getPrenom() + "_" + LocalDate.now() + ".png";
+        }
     }
 }
 

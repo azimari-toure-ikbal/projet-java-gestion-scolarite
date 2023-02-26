@@ -233,7 +233,7 @@ public class PDFGenerator {
 
                 // Ajouter les informations de l'étudiant
                 Paragraph studentInfo = new Paragraph();
-                studentInfo.add(new Phrase("\n\nNom de l'étudiant: " + apprenant.getNom() + " " + apprenant.getPrenom()));
+                studentInfo.add(new Phrase("\n\nNom de l'étudiant: " + apprenant.getFullName()));
                 studentInfo.add(new Phrase("\nClasse: " + apprenant.getClasse()));
                 studentInfo.add(new Phrase("\nMatricule: " + apprenant.getMatricule()));
                 studentInfo.add(new Phrase("\nNationalité: " + apprenant.getNationalite()));
