@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<HBox fx:id="notifPane" prefHeight="78.0" prefWidth="855.0" style="-fx-background-color: white; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-border-color: #28BAFC;" stylesheets="@../../style/admindashboard.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gesschoolapp.view.scolarite.NotificationItemController">
+   <effect>
+      <DropShadow>
+         <color>
+            <Color red="0.1632000058889389" green="0.7209600210189819" blue="0.9599999785423279" opacity="0.31770989298820496" />
+         </color>
+      </DropShadow>
+   </effect>
+   <children>
+      <AnchorPane prefHeight="76.0" prefWidth="81.0" style="-fx-background-color: #E6F7FF; -fx-background-radius: 10px 0 0 10px; -fx-border-radius: 10px 0 0 10px; -fx-border-width: 0 1.3px 0 0; -fx-border-color: #28BAFC;">
+         <children>
+            <ImageView fitHeight="41.0" fitWidth="41.0" layoutX="19.0" layoutY="18.0">
+               <image>
+                  <Image url="@../../resources/images/info_notif_icon.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="76.0" prefWidth="751.0">
+         <children>
+            <Label fx:id="labelMessage" layoutX="14.0" layoutY="29.0" prefHeight="19.0" prefWidth="723.0" text="Votre ajout de l'apprenant Ikbal AZIMARI TOURE a été annulé par l'administrateur Wissam Youssef">
+               <font>
+                  <Font name="Gill Sans MT" size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelDateHeure" layoutX="633.0" layoutY="55.0" prefHeight="19.0" prefWidth="118.0" text="23 fev 2021 à 09h:15" textFill="#bababa">
+               <font>
+                  <Font name="Gill Sans MT" size="13.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <Button mnemonicParsing="false" onMouseClicked="#onClose" style="-fx-padding: 3px;" styleClass="virgin_btn">
+         <graphic>
+            <ImageView fitHeight="16.0" fitWidth="16.0">
+               <image>
+                  <Image url="@../../resources/images/close_notif_icon.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+         </graphic>
+         <HBox.margin>
+            <Insets right="2.0" top="2.0" />
+         </HBox.margin>
+      </Button>
+   </children>
+</HBox>

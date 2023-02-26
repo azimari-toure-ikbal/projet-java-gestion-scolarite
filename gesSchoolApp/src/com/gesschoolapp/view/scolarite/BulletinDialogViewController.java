@@ -12,6 +12,7 @@ import com.gesschoolapp.models.paiement.Paiement;
 import com.gesschoolapp.models.paiement.Rubrique;
 import com.gesschoolapp.models.student.Apprenant;
 import com.gesschoolapp.runtime.Main;
+import com.gesschoolapp.utils.Toolbox;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -71,16 +72,20 @@ public class BulletinDialogViewController {
     @FXML
     private ImageView bulletinImg;
 
+    @FXML
+    private Label fileNameLabel;
+
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
     }
 
-    public void setApprenant(Apprenant appr) {
+    public void setApprenant(Apprenant appr,String bulletinPath) {
 
         this.apprenant = appr;
-        File file = new File("storage/bulletins/imgs/hey_hey_bulletin_semestre_1.png");
+        File file = new File(bulletinPath);
         Image bt = new Image(file.toURI().toString());
         bulletinImg.setImage(bt);
+        fileNameLabel.setText(bulletinPath.split("/")[3]);
     }
 
 

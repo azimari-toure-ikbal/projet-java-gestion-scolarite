@@ -4,12 +4,11 @@ import com.gesschoolapp.Exceptions.CSVException;
 import com.gesschoolapp.Exceptions.DAOException;
 import com.gesschoolapp.Exceptions.Mismatch;
 import com.gesschoolapp.Exceptions.PDFException;
-import com.gesschoolapp.db.DAOClassesImpl.ClasseDAOImp;
-import com.gesschoolapp.db.DAOClassesImpl.NoteDAOImp;
-import com.gesschoolapp.db.DAOClassesImpl.PaiementDAOImp;
+import com.gesschoolapp.db.DAOClassesImpl.*;
 import com.gesschoolapp.docmaker.PDFGenerator;
 import com.gesschoolapp.gescsv.ApprenantsCSV;
 import com.gesschoolapp.gescsv.NotesCSV;
+import com.gesschoolapp.models.actions.Notification;
 import com.gesschoolapp.models.classroom.Classe;
 import com.gesschoolapp.models.matieres.Module;
 import com.gesschoolapp.models.matieres.Note;
@@ -136,7 +135,12 @@ public class ScolariteUIController implements Initializable {
 
     private ClasseDAOImp classesData = new ClasseDAOImp();
 
+    private ApprenantDAOImp apprenantsData = new ApprenantDAOImp();
+    private List<Apprenant> allApprenants;
     private PaiementDAOImp paiementsData = new PaiementDAOImp();
+
+    private UserDAOImp usersData = new UserDAOImp();
+
 
 
     // On récupère la liste ici même des classes pour éviter les répétitions de requête
@@ -229,6 +233,20 @@ public class ScolariteUIController implements Initializable {
     private Circle pp_placeholder;
 
     @FXML
+    private Circle notifCircle1;
+    @FXML
+    private Circle notifCircle2;
+    @FXML
+    private Circle notifCircle3;
+
+    @FXML
+    private Button notifBtn1;
+    @FXML
+    private Button notifBtn2;
+    @FXML
+    private Button notifBtn3;
+
+    @FXML
     private Circle profile_pic_placeholder;
 
     @FXML
@@ -301,6 +319,12 @@ public class ScolariteUIController implements Initializable {
     @FXML
     private HBox modulesLayout;
 
+
+    @FXML
+    private VBox notifsLayout;
+
+
+
     @FXML
     private VBox notesLayout;
 
@@ -308,6 +332,9 @@ public class ScolariteUIController implements Initializable {
 
     @FXML
     private VBox studentsLayout;
+
+    @FXML
+    private VBox studentsHomeLayout;
 
     @FXML
     private ImageView btnPrecedent;
@@ -367,6 +394,11 @@ public class ScolariteUIController implements Initializable {
         } catch (DAOException e) {
             throw new RuntimeException(e);
         }
+            try {
+                allApprenants = apprenantsData.getList();
+            } catch (DAOException e) {
+                throw new RuntimeException(e);
+            }
 
 
         // On donne une référence du super controlleur aux controlleurs filles :
@@ -692,6 +724,10 @@ public class ScolariteUIController implements Initializable {
 
 
     // getters et setters :
+
+    public VBox getNotifsLayout() {
+        return notifsLayout;
+    }
     public ObservableList<Paiement> getDailyFeesList() {
         return this.dailyFeesList;
     }
@@ -826,6 +862,10 @@ public class ScolariteUIController implements Initializable {
             setListeDesClasses(listeClasses);
             // Liste des modules d'une classe :
             setListeDesModules();
+            // Notifications :
+            // Notifications :
+            setListeDesNotifications(usersData.getNotifs(currentUser.getFullName()));
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -872,6 +912,8 @@ public class ScolariteUIController implements Initializable {
         this.selectedClass = selectedClass;
         try {
             classesData.setLastView(selectedClass);
+            setShortcutApprenant(allApprenants);
+
         } catch (DAOException e) {
             throw new RuntimeException(e);
         }
@@ -1053,7 +1095,7 @@ public class ScolariteUIController implements Initializable {
             setCurrentRoute(classes);
             setCurrentRouteLink("/" + getSelectedClass().getIntitule());
             searchClassInput.requestFocus();
-        } else if (e.getSource() == btnProfile || e.getSource() == pp_placeholder || e.getSource() == pp_placeholder1) {
+        } else if (e.getSource() == btnProfile || e.getSource() == pp_placeholder || e.getSource() == pp_placeholder1 || e.getSource() == notifBtn1 || e.getSource() == notifBtn2 || e.getSource() == notifBtn3) {
             setCurrentRoute(profile);
         } else if (e.getSource() == btnPrecedent) {
             setCurrentRouteLink(extractPreviousRouteLink());
@@ -1294,20 +1336,39 @@ public class ScolariteUIController implements Initializable {
 
     @FXML
     public void handleStudentSearch(KeyEvent e) {
-        String toSearch = "";
-        toSearch += searchStudentInput.getText();
+        if(e.getSource() == searchStudentInput){
 
-        List<Apprenant> found = new ArrayList<>();
-        try {
+            String toSearch = "";
+            toSearch += searchStudentInput.getText();
 
-            for (Apprenant appr : selectedClass.getApprenants()) {
-                if (appr.getNom().contains(toSearch) || appr.getPrenom().contains(toSearch) || Integer.toString(appr.getMatricule()).contains(toSearch)) {
-                    found.add(appr);
+            List<Apprenant> found = new ArrayList<>();
+            try {
+
+                for (Apprenant appr : selectedClass.getApprenants()) {
+                    if (appr.getNom().contains(toSearch) || appr.getPrenom().contains(toSearch) || Integer.toString(appr.getMatricule()).contains(toSearch)) {
+                        found.add(appr);
+                    }
                 }
+                setListeDesApprenants(found);
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
             }
-            setListeDesApprenants(found);
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
+        }else{
+            String toSearch = "";
+            toSearch += searchStudentHomeInput.getText();
+
+            List<Apprenant> found = new ArrayList<>();
+            try {
+
+                for (Apprenant appr : allApprenants) {
+                    if (appr.getNom().contains(toSearch) || appr.getPrenom().contains(toSearch) || Integer.toString(appr.getMatricule()).contains(toSearch)) {
+                        found.add(appr);
+                    }
+                }
+                setShortcutApprenant(found);
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
         }
     }
 
@@ -1356,6 +1417,34 @@ public class ScolariteUIController implements Initializable {
         }
 
 
+    }
+
+    private void setListeDesNotifications(List<Notification> notifs) throws DAOException, IOException {
+        notifsLayout.getChildren().clear();
+
+        for (Notification notif : notifs) {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("NotificationItem.fxml"));
+
+            Pane pane = fxmlLoader.load();
+            NotificationItemController nic = fxmlLoader.getController();
+            nic.setSuperController(this);
+
+            if(notif.isSeen() == false){
+                nic.setData(notif);
+                notifsLayout.getChildren().add(pane);
+                toggleNotificationCircle(true);
+            }
+
+        }
+
+
+    }
+
+    public void toggleNotificationCircle(boolean bool){
+        this.notifCircle1.setVisible(bool);
+        this.notifCircle2.setVisible(bool);
+        this.notifCircle3.setVisible(bool);
     }
 
     private void resetListeDesModules(Module toSelect) throws DAOException, IOException {
@@ -1419,6 +1508,34 @@ public class ScolariteUIController implements Initializable {
             studentsLayout.getChildren().add(hbox);
 
         }
+    }
+
+    public void setShortcutApprenant(List<Apprenant> apprenants) {
+
+//        Je met en commentaire ce code car j'ai un bug sur le dernier apprenant qui saute pas
+//        jene sais plus pourquoi je l'avais mis donc oklm
+//        if(apprenants.size() != 0){
+        studentsHomeLayout.getChildren().removeIf(node -> node instanceof HBox);
+//        }
+
+        if(apprenants.size() != 0){
+
+
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("ApprenantItem.fxml"));
+
+            HBox hbox = null;
+            try {
+                hbox = fxmlLoader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            ApprenantItemsController aic = fxmlLoader.getController();
+            aic.setSuperController(this);
+            aic.setData(apprenants.get(0));
+            studentsHomeLayout.getChildren().add(hbox);
+        }
+
     }
 
 
@@ -1544,13 +1661,23 @@ public class ScolariteUIController implements Initializable {
         }
     }
 
-    public void openBulletinViewDialog(Apprenant appr) {
+    public boolean openBulletinViewDialog(Apprenant appr) {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("BulletinDialogView.fxml"));
 
-            AnchorPane page = (AnchorPane) loader.load();
+                String bulletinPath;
+
+            try{
+                bulletinPath = Toolbox.getBulletinImgPath(appr,1);
+            }catch(RuntimeException e){
+                setMainMessageInfo(e.getMessage(),0);
+                return false;
+            }
+
+
+            Pane page = (Pane) loader.load();
 
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
@@ -1573,7 +1700,7 @@ public class ScolariteUIController implements Initializable {
             controller.setSuperController(this);
             controller.setScene(scene);
             controller.setMain(mainApp);
-            controller.setApprenant(appr);
+            controller.setApprenant(appr,bulletinPath);
             controller.setDraggable();
 
             // Show the dialog and wait until the user closes it
@@ -1582,6 +1709,8 @@ public class ScolariteUIController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return true;
     }
 
 

@@ -8,3 +8,5 @@ gesSchoolApp/src/com/gesschoolapp/resources/.DS_Store
 gesSchoolApp/storage/actions/actions.ser
 *.ser
 gesSchoolApp/.env
+*.pdf
+gesSchoolApp/storage/bulletins/AZIMARI TOURE_Ikbal_bulletin_semestre_2.pdf

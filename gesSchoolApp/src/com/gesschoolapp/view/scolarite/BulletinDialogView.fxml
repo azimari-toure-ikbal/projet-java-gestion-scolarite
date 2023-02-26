@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="700.0" prefWidth="600.0" style="-fx-background-color: white;" stylesheets="@../../style/application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gesschoolapp.view.scolarite.BulletinDialogViewController">
+
+<Pane prefHeight="723.0" prefWidth="676.0" style="-fx-border-width: 2; -fx-border-color: #323639;" stylesheets="@../../style/application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gesschoolapp.view.scolarite.BulletinDialogViewController">
    <children>
-      <ImageView fx:id="bulletinImg" fitHeight="957.0" fitWidth="678.0" layoutX="-9.0" layoutY="-11.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-246.0" AnchorPane.topAnchor="-11.0">
+      <ImageView fx:id="bulletinImg" fitHeight="902.0" fitWidth="625.0" layoutX="23.0" layoutY="53.0" pickOnBounds="true" preserveRatio="true" style="-fx-border-width: 10px;">
          <image>
             <Image url="@../../../../../storage/bulletins/imgs/hey_hey_bulletin_semestre_1.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnAjouter" layoutX="398.0" layoutY="637.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="120.0" style="-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-background-color: #007E34;" styleClass="classic_btn" text="    Imprimer">
+      <Button fx:id="btnAnnuler" alignment="CENTER" layoutX="275.0" layoutY="666.0" mnemonicParsing="false" onAction="#onClose" prefHeight="43.0" prefWidth="120.0" style="-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-background-color: linear-gradient(to right, #D23342, #ED213A);" styleClass="classic_btn" text="Fermer">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
@@ -27,17 +33,37 @@
             </DropShadow>
          </effect>
       </Button>
-      <Button fx:id="btnAnnuler" alignment="CENTER" layoutX="533.0" layoutY="635.0" mnemonicParsing="false" onAction="#onClose" prefHeight="43.0" prefWidth="120.0" style="-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-background-color: linear-gradient(to right, #D23342, #ED213A);" styleClass="classic_btn" text="Fermer">
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <effect>
-            <DropShadow offsetX="2.0" offsetY="2.0" spread="0.09">
-               <color>
-                  <Color red="0.7647058963775635" green="0.7647058963775635" blue="0.7647058963775635" />
-               </color>
-            </DropShadow>
-         </effect>
-      </Button>
+      <Line endX="511.0" layoutX="137.0" layoutY="637.0" startX="-114.0" stroke="#535353" strokeWidth="0.3" />
+      <AnchorPane layoutX="-7.0" layoutY="2.0" prefHeight="53.0" prefWidth="683.0" style="-fx-background-color: #323639; -fx-border-width: 0 0 10px 0; -fx-border-color: #484C4F;">
+         <children>
+            <Label fx:id="fileNameLabel" layoutX="17.0" layoutY="15.0" text="Ikbal_azimari_toure_bulletin_1.pdf" textFill="#f2f2f2">
+               <font>
+                  <Font name="Gill Sans MT" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="334.0" layoutY="15.0" text="1/1" textFill="#f2f2f2">
+               <font>
+                  <Font name="Gill Sans MT" size="12.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="14.0" fitWidth="16.0" layoutX="621.0" layoutY="16.0">
+               <image>
+                  <Image url="@../../resources/images/download_icon.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <ImageView layoutX="654.0" layoutY="14.0">
+               <image>
+                  <Image url="@../../resources/images/printer_icon.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <Line endX="522.0" layoutX="131.0" layoutY="723.0" startX="-114.0" stroke="#323639" strokeWidth="4.3" />
    </children>
-</AnchorPane>
+</Pane>
