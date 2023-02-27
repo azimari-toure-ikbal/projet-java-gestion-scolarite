@@ -101,7 +101,7 @@ public class BulletinDialogViewController {
         File file = new File(bulletinsPath[0]);
         Image bt = new Image(file.toURI().toString());
         bulletinImg.setImage(bt);
-        fileNameLabel.setText(bulletinsPath[0].split("/")[3]);
+        fileNameLabel.setText(bulletinsPath[0].split("/")[3].replace(".png",".pdf"));
 
         if(bulletinsPath[1] != null){
             labelPage.setText("1/2");
@@ -119,12 +119,13 @@ public class BulletinDialogViewController {
                 Image bt = new Image(file.toURI().toString());
                 bulletinImg.setImage(bt);
                 labelPage.setText("1/2");
+                fileNameLabel.setText(paths[0].split("/")[3].replace(".png",".pdf"));
             }else{
                 File file = new File(paths[1]);
                 Image bt = new Image(file.toURI().toString());
                 bulletinImg.setImage(bt);
                 labelPage.setText("2/2");
-
+                fileNameLabel.setText(paths[1].split("/")[3].replace(".png",".pdf"));
             }
     }
 

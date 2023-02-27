@@ -679,7 +679,7 @@
                         <Font name="Corbel Italic" size="14.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="448.0" layoutY="20.0" prefHeight="38.0" prefWidth="275.0" promptText="Recherchez quelque chose" style="-fx-background-radius: 10px;">
+                  <TextField fx:id="globalSearchInput" layoutX="448.0" layoutY="20.0" onKeyReleased="#handleGlobalSearch" prefHeight="38.0" prefWidth="275.0" promptText="Recherchez quelque chose" style="-fx-background-radius: 10px;">
                      <font>
                         <Font size="16.0" />
                      </font>

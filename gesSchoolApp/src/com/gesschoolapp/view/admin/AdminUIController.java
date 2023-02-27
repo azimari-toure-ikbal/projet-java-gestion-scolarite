@@ -15,6 +15,7 @@ import com.gesschoolapp.runtime.Main;
 import com.gesschoolapp.utils.Toolbox;
 import com.gesschoolapp.utils.ActionType;
 import com.gesschoolapp.utils.Route;
+import com.gesschoolapp.view.scolarite.BulletinDialogViewController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,6 +24,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.ImagePattern;
@@ -35,6 +37,7 @@ import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -113,6 +116,9 @@ public class AdminUIController implements Initializable {
 
     @FXML
     private BorderPane profileView;
+
+    @FXML
+    private TextField globalSearchInput;
 
     @FXML
     private BorderPane dashView;
@@ -260,6 +266,17 @@ public class AdminUIController implements Initializable {
 
     // ##### GETTERS AND SETTERS :
 
+    public String getSelectedUserTypeString(){
+        if (getSelectedUserType() == btnCaissiers) {
+            return "caissier";
+        } else if (getSelectedUserType() == btnSecretaires) {
+            return "secretaire";
+        } else if (getSelectedUserType() == btnAdmins) {
+            return "administrateur";
+        }
+    return null;
+    }
+
     @FXML
     void getLogsDate(ActionEvent event) {
         System.out.println("NEW LOG LIST !");
@@ -346,7 +363,7 @@ public class AdminUIController implements Initializable {
         menuStyleReset();
         currentRoute.getNavSelection().setStyle("-fx-border-width:0 0 0 3px; -fx-border-color: white; -fx-background-color: #a2d6eb3d;");
         this.currentRoute = currentRoute;
-
+        globalSearchInput.setText("");
     }
 
 
@@ -413,6 +430,63 @@ public class AdminUIController implements Initializable {
         if (status != 0)
             resetVue();
 
+    }
+
+    @FXML
+    public void handleGlobalSearch(KeyEvent e) {
+        if(currentRoute == dashboard){
+            String toSearch = "";
+            toSearch += globalSearchInput.getText();
+
+            List<Apprenant> found = new ArrayList<>();
+            try {
+
+                for (Apprenant appr : apprenantsList) {
+                    if (appr.getNom().contains(toSearch) || appr.getPrenom().contains(toSearch) || Integer.toString(appr.getMatricule()).contains(toSearch)) {
+                        found.add(appr);
+                    }
+                }
+                setListeDesApprenants(found);
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+
+        if(currentRoute == classes){
+            String toSearch = "";
+            toSearch += globalSearchInput.getText();
+
+            List<Classe> found = new ArrayList<>();
+            try {
+
+                for (Classe cls : classesList) {
+                    if (cls.getIntitule().contains(toSearch) || cls.getFormation().contains(toSearch)) {
+                        found.add(cls);
+                    }
+                }
+                setListeDesClasses(found);
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+
+        if(currentRoute == users){
+            String toSearch = "";
+            toSearch += globalSearchInput.getText();
+
+            List<Utilisateur> found = new ArrayList<>();
+            try {
+
+                for (Utilisateur user : usersList) {
+                    if (user.getFullName().contains(toSearch) && user.getType().equals(getSelectedUserTypeString())) {
+                        found.add(user);
+                    }
+                }
+                setListeDesUtilisateurs(found);
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        }
     }
 
     @FXML
@@ -558,7 +632,6 @@ public class AdminUIController implements Initializable {
         for (Utilisateur user : users) {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("UserItem.fxml"));
-            System.out.println("ça retourne : " + user.getType());
             HBox hbox = null;
             try {
                 hbox = fxmlLoader.load();
@@ -913,6 +986,58 @@ public class AdminUIController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean openCertificatViewDialog(Apprenant appr) {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("CertificatDialogView.fxml"));
+
+            String certifPath;
+
+            try{
+                certifPath = Toolbox.getCertificatsImgPath(appr);
+            }catch(RuntimeException e){
+                setMainMessageInfo(e.getMessage(),0);
+                return false;
+            }
+
+
+            Pane page = (Pane) loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("School UP - Certificat apprenant");
+            // Set the application icon.
+
+            dialogStage.getIcons().add(new Image("com/gesschoolapp/resources/images/app_icon.png"));
+            dialogStage.initStyle(StageStyle.UNDECORATED);
+            dialogStage.setResizable(false);
+
+
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(mainApp.getPrimaryStage());
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the person into the controller.
+            CertificatDialogViewController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setSuperController(this);
+            controller.setScene(scene);
+            controller.setMain(mainApp);
+            controller.setApprenant(appr,certifPath);
+            controller.setDraggable();
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return true;
     }
 }
 

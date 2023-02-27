@@ -1,9 +1,12 @@
 package com.gesschoolapp.view.admin;
 
 import com.gesschoolapp.Exceptions.DAOException;
+import com.gesschoolapp.Exceptions.PDFException;
 import com.gesschoolapp.db.DAOClassesImpl.UserDAOImp;
+import com.gesschoolapp.docmaker.PDFGenerator;
 import com.gesschoolapp.models.student.Apprenant;
 import com.gesschoolapp.models.users.Utilisateur;
+import com.gesschoolapp.utils.Toolbox;
 import de.jensd.fx.glyphs.testapps.App;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -41,6 +44,8 @@ public class ApprenantItemController {
 
     @FXML
     private Button btnCertificat;
+    @FXML
+    private Button btnVoirCertificat;
 
     @FXML
     private Button viewAllClasses1;
@@ -49,12 +54,6 @@ public class ApprenantItemController {
     void handleNavigation(MouseEvent event) {
 
     }
-
-    @FXML
-    void openCertificatDialog(ActionEvent event) {
-
-    }
-
 
     @FXML
     void actionBtnClicked(ActionEvent event) {
@@ -69,11 +68,27 @@ public class ApprenantItemController {
                 alert.setContentText("Voulez-vous continuer ?");
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK) {
-                    System.out.println("ouvre la vue du certificat");
+                    try {
+                        PDFGenerator.cerficatScolariteGenerator(thisApprenant);
+                        superController.setMainMessageInfo("Certificat généré avec succès !");
+                        btnVoirCertificat.toFront();
+                    } catch (PDFException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }else{
-                    System.out.println("ouvre la vue du certificat");
+                try {
+                    PDFGenerator.cerficatScolariteGenerator(thisApprenant);
+                    superController.setMainMessageInfo("Certificat généré avec succès !");
+                    btnVoirCertificat.toFront();
+                } catch (PDFException e) {
+                    throw new RuntimeException(e);
+                }
             }
+        }
+
+        if(event.getSource() == btnVoirCertificat){
+            superController.openCertificatViewDialog(thisApprenant);
         }
     }
 
@@ -84,6 +99,11 @@ public class ApprenantItemController {
         if(appr.getEtatPaiement() == 0){
             etatPayement.setText("Non inscrit");
             etatPayement.setStyle("-fx-background-color: #F0B606;");
+        }
+        try{
+            Toolbox.getCertificatsImgPath(appr);
+        }catch (RuntimeException e){
+            btnCertificat.toFront();
         }
 
         thisApprenant = appr;
