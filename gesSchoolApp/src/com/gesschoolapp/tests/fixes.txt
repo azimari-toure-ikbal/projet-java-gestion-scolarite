@@ -9,3 +9,4 @@
 9-Ancien bug de quand on importe une note d'un apprenant qui en avait deja une, la note s'affiche en double jusqu'a que je me reconnecte
 10-Ancien bug quand la fenetre de connexion est reduite, on ne peut pas la ramener
 11-Dans admin, le bouton pour réduire ne fait rien
+12-Premiere modification de la note, dans les logs de l'admin, la note modifiee est 0 et pas la nouvelle valeur du coup si je modifie deux fois la note, la valeur qui s'affiche est 0 et pas la valeur de la premiere modification
