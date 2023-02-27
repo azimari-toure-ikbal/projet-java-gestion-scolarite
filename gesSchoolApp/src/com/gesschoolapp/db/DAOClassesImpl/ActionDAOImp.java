@@ -16,16 +16,17 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 public class ActionDAOImp implements ActionDAO {
     @Override
     public void cancelAction(Action action, String admin){
-        String message = "";
+        String message = "Votre action " + action.getAction() + " sur  " + action.getObjectType() +
+                " a été annulée par l'administrateur " + admin + " le " + LocalDateTime.now().format(DateTimeFormatter.
+                ofPattern("YYYY-MM-dd à HH:mm")) + ".";
+
         if(action.getObject() instanceof Apprenant){
-            message = "L'action " + action.getAction() + " sur l'apprenant " + ((Apprenant)action.getObject()).getFullName() + " a été annulée par l'administrateur " + admin + " le " + LocalDateTime.now() + ".";
             switch (action.getAction()){
                 case ADD -> {
                     cancelAddApprenant((Apprenant) action.getObject());
@@ -42,14 +43,11 @@ public class ActionDAOImp implements ActionDAO {
             }
         }
         else if(action.getObject() instanceof Note){
-            Note note = (Note) action.getObject();
-            message = "L'action " + action.getAction() + " sur la note de " + ((Note)action.getObject()).getApprenant().getFullName() + " dans le module " + ((Note)action.getObject()).getModule() + " a été annulée par l'administrateur " + admin + " le " + LocalDateTime.now() + ".";
             if (Objects.requireNonNull(action.getAction()) == ActionType.UPDATE) {
                 cancelUpdateNote((Note) action.getObject());
             }
         }
-        if(!message.equals(""))
-            addNotification(action.getActor(), admin, message);
+        addNotification(action.getActor(), admin, message);
     }
 
     @Override
