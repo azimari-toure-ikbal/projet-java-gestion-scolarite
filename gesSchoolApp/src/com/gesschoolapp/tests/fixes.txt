@@ -3,10 +3,19 @@
 3-Quand je rajoute une note pour cherifa dans francais par exemple, la note s'affiche partout et quand je recharge la valeur de la note retourne a 0 alors qu'elle est update dans la base de données
 4-Quand il n'y a aucun apprenant il n'y a pas de message rien a voir ici
 5-Check les fonts pour mon pc
-6-La recherche ne fonctionne pas correctement
+6-La recherche ne fonctionne pas correctement il faudrait changer la recherche pour qu'elle ne prenne pas en compte la casse
 7-A la premiere connection en tant que caissier les etats de paiements qui sont vides ne montrent pas le placeholder
-8-Qu'est ce qu'il doit y avoir dans la partie Acces rapide ?
 9-Ancien bug de quand on importe une note d'un apprenant qui en avait deja une, la note s'affiche en double jusqu'a que je me reconnecte
 10-Ancien bug quand la fenetre de connexion est reduite, on ne peut pas la ramener
 11-Dans admin, le bouton pour réduire ne fait rien
 12-Premiere modification de la note, dans les logs de l'admin, la note modifiee est 0 et pas la nouvelle valeur du coup si je modifie deux fois la note, la valeur qui s'affiche est 0 et pas la valeur de la premiere modification
+13-Si apprenant paye tout alors on ne doit plus afficher le paiement de la scolarite
+14-Enlever le module en bas
+15-Quand on genere les bulletins et qu'on clique sur la vue des apprenants, on n'a que ceux pour qui le bulletin a ete genere
+16-Quand on importe une note depuis un csv, la vue de la note se duplique
+17-Exportation des apprenants toujour au meme endroit
+18-Quand on rajoute des modules, ils ne s'affichent plus tant qu'on ne se reconnecte pas
+19-Admin dooit pouvoir modifier son profil
+20-Quand on annule une modificatoin de note, la note disparait dans la vue
+21-Manque des placeholders pour les classes sans modules
+22-Dans les classes qui n'ont aucun eleves y en a des autres classes qui vont s'ajouter dans la vue des notes

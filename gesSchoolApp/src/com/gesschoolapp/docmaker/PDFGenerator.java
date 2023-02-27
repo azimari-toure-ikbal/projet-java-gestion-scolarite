@@ -24,6 +24,12 @@ import java.util.List;
 public class PDFGenerator {
 
     public static void cerficatScolariteGenerator(Apprenant apprenant) throws PDFException {
+
+        // Verifier que l'apprenant soit inscrit
+        if (apprenant.getEtatPaiement() == 0) {
+            throw new PDFException("L'apprenant " + apprenant.getFullName() + " n'est pas inscrit !");
+        }
+
         // Initialisation du document PDF
         Document document = new Document();
         String path = "storage/certificats/pdfs/" + apprenant.getNom().replace(" ", "_") + "_" + apprenant.getPrenom() + "_" + LocalDate.now() + ".pdf";

@@ -8,8 +8,6 @@ import com.gesschoolapp.models.student.Apprenant;
 import com.gesschoolapp.serial.ActionManager;
 import com.gesschoolapp.utils.ActionComparatorByState;
 import com.gesschoolapp.utils.ActionType;
-
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,8 +22,7 @@ public class ActionDAOImp implements ActionDAO {
     @Override
     public void cancelAction(Action action, String admin){
         String message = "Votre action " + action.getAction() + " sur  " + action.getObjectType() +
-                " a été annulée par l'administrateur " + admin + " le " + LocalDateTime.now().format(DateTimeFormatter.
-                ofPattern("YYYY-MM-dd à HH:mm")) + ".";
+                " a été annulée par l'administrateur " + admin + ".";
 
         if(action.getObject() instanceof Apprenant){
             switch (action.getAction()){
