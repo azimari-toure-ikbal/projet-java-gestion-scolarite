@@ -180,4 +180,20 @@ public class ActionDAOImp implements ActionDAO {
         }
     }
 
+    public Object getCurrentObject(Action action){
+        try{
+            if(action.getObject() instanceof Apprenant){
+                ApprenantDAOImp apprenantDAOImp = new ApprenantDAOImp();
+                return apprenantDAOImp.read(((Apprenant) action.getObject()).getIdApprenant());
+            }
+            else if(action.getObject() instanceof Note){
+                NoteDAOImp noteDAOImp = new NoteDAOImp();
+                return noteDAOImp.read(((Note) action.getObject()).getId());
+            }
+        }catch (Exception e){
+            System.out.println("Error in getActionObject() : " + e.getMessage());
+        }
+        return null;
+    }
+
 }

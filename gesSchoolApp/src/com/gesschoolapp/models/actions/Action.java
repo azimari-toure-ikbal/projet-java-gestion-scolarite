@@ -97,6 +97,10 @@ public class Action implements Serializable {
         return this.object.getClass().getSimpleName();
     }
 
+    public Object getCurrentObject(){
+        return new ActionDAOImp().getCurrentObject(this);
+    }
+
     public void cancelAction(String admin){
         new ActionDAOImp().cancelAction(this, admin);
         this.canceled = true;
