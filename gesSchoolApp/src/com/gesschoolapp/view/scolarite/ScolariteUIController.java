@@ -1410,11 +1410,16 @@ public class ScolariteUIController implements Initializable {
             if (modules.get(0) == module) {
                 setSelectedModule(module);
                 mic.setAsSelected();
+                setListeDesNotes(module.getNotes());
             }
+
+
 
             modulesLayout.getChildren().add(pane);
 
         }
+
+
 
 
     }
@@ -1544,9 +1549,8 @@ public class ScolariteUIController implements Initializable {
 
     public void setListeDesNotes(List<Note> notes) throws DAOException, IOException {
 
-        if(notes.size() != 0){
-            notesLayout.getChildren().clear();
-        }
+        notesLayout.getChildren().clear();
+
         for (Note note : notes) {
 
 
@@ -1855,7 +1859,7 @@ public class ScolariteUIController implements Initializable {
             //ask for confirmation
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Génération bulletin");
-            alert.setHeaderText("Il existe un ou plusieurs élèves non inscrits dans la classe.");
+            alert.setHeaderText("Il existe un ou plusieurs élèves non inscrits dans la classe, ils ne seront pas pris en compte.");
             alert.setContentText("Êtes vous sur de vouloir continuer ?");
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {

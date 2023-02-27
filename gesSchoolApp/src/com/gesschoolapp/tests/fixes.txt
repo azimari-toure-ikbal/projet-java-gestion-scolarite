@@ -1,8 +1,29 @@
+---
 1-Les états de paiements ne s'affichent pas dans la partie Admin
+    FIXED
+    C'était juste ignoreCase au lieu de equalsIgnoreCase
+----
+----
 2-J'ai rajoute un apprenant et puis j'ai supprimé le même apprenant, mais sa note reste affiche
+    FIXED
+    J'avais juste oublié de poser la condition
+----
+
+----
 3-Quand je rajoute une note pour cherifa dans francais par exemple, la note s'affiche partout et quand je recharge la valeur de la note retourne a 0 alors qu'elle est update dans la base de données
+    FIXED
+    Je sais même plus ça date
+----
+
+----
 4-Quand il n'y a aucun apprenant il n'y a pas de message rien a voir ici
+   FIXED
+   Je dois repenser la logique des placeholder parce que les tableaux n'ont pas la même taille
+----
 5-Check les fonts pour mon pc
+    J'ai essayé un truc reste à voir si ça marche
+----
+
 6-La recherche ne fonctionne pas correctement il faudrait changer la recherche pour qu'elle ne prenne pas en compte la casse
 7-A la premiere connection en tant que caissier les etats de paiements qui sont vides ne montrent pas le placeholder
 9-Ancien bug de quand on importe une note d'un apprenant qui en avait deja une, la note s'affiche en double jusqu'a que je me reconnecte
