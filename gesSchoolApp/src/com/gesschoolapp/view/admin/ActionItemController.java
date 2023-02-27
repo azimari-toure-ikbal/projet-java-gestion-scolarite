@@ -111,7 +111,7 @@ public class ActionItemController {
 
         }
 
-        Tooltip.install(iconTypeObject, tip);
+        Tooltip.install(iconTypeObject.getParent(), tip);
         if(act.getAction() == ActionType.ADD){
             labelType1.setText("AJOUT");
             labelType1.setStyle("-fx-background-color:  #48A74C;-fx-text-fill: white;-fx-background-radius: 10px;-fx-padding: 5;");

@@ -689,7 +689,7 @@
                         <Image url="@../../resources/images/loop_icon.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="minIcon1" disable="true" layoutX="1150.0" layoutY="5.0" onMouseClicked="#onMinimize" style="-fx-cursor: hand;">
+                  <ImageView fx:id="minIcon1" layoutX="1150.0" layoutY="5.0" onMouseClicked="#onMinimize" style="-fx-cursor: hand;">
                      <image>
                         <Image url="@../../resources/images/minimize_icon.png" />
                      </image>

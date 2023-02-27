@@ -436,13 +436,13 @@ public class AdminUIController implements Initializable {
     public void handleGlobalSearch(KeyEvent e) {
         if(currentRoute == dashboard){
             String toSearch = "";
-            toSearch += globalSearchInput.getText();
+            toSearch += globalSearchInput.getText().toLowerCase();
 
             List<Apprenant> found = new ArrayList<>();
             try {
 
                 for (Apprenant appr : apprenantsList) {
-                    if (appr.getNom().contains(toSearch) || appr.getPrenom().contains(toSearch) || Integer.toString(appr.getMatricule()).contains(toSearch)) {
+                    if (appr.getNom().toLowerCase().contains(toSearch) || appr.getPrenom().toLowerCase().contains(toSearch) || Integer.toString(appr.getMatricule()).toLowerCase().contains(toSearch)) {
                         found.add(appr);
                     }
                 }
@@ -454,13 +454,13 @@ public class AdminUIController implements Initializable {
 
         if(currentRoute == classes){
             String toSearch = "";
-            toSearch += globalSearchInput.getText();
+            toSearch += globalSearchInput.getText().toLowerCase();
 
             List<Classe> found = new ArrayList<>();
             try {
 
                 for (Classe cls : classesList) {
-                    if (cls.getIntitule().contains(toSearch) || cls.getFormation().contains(toSearch)) {
+                    if (cls.getIntitule().toLowerCase().contains(toSearch) || cls.getFormation().toLowerCase().contains(toSearch)) {
                         found.add(cls);
                     }
                 }
@@ -472,13 +472,13 @@ public class AdminUIController implements Initializable {
 
         if(currentRoute == users){
             String toSearch = "";
-            toSearch += globalSearchInput.getText();
+            toSearch += globalSearchInput.getText().toLowerCase();
 
             List<Utilisateur> found = new ArrayList<>();
             try {
 
                 for (Utilisateur user : usersList) {
-                    if (user.getFullName().contains(toSearch) && user.getType().equals(getSelectedUserTypeString())) {
+                    if (user.getFullName().toLowerCase().contains(toSearch) && user.getType().equalsIgnoreCase(getSelectedUserTypeString())) {
                         found.add(user);
                     }
                 }

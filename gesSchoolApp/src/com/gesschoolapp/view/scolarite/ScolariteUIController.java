@@ -22,6 +22,7 @@ import com.gesschoolapp.runtime.Main;
 import com.gesschoolapp.controllers.NotesItemController;
 import com.gesschoolapp.utils.Toolbox;
 import com.gesschoolapp.utils.Route;
+import com.mysql.cj.util.StringUtils;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -542,7 +543,7 @@ public class ScolariteUIController implements Initializable {
 
 
         for (Rubrique rubr : Toolbox.getRubriques()) {
-            double effectifPartiel = dailyFeesList.stream().filter(paiement -> paiement.getRubrique().split(" ")[0].equals(rubr.getIntitule())).toList().size();
+            double effectifPartiel = dailyFeesList.stream().filter(paiement -> paiement.getRubrique().split(" ")[0].equalsIgnoreCase(rubr.getIntitule())).toList().size();
             double effectifTotal = dailyFeesList.size();
             double pourcentage = (effectifPartiel / effectifTotal) * 100;
             pieData.add(new PieChart.Data(rubr.getIntitule(), pourcentage));
@@ -556,7 +557,7 @@ public class ScolariteUIController implements Initializable {
 
     public void addPieTooltips() {
         feesPie.getData().forEach(data -> {
-            List<Paiement> concernedFees = dailyFeesList.stream().filter(paiement -> paiement.getRubrique().split(" ")[0].equals(data.getName())).toList();
+            List<Paiement> concernedFees = dailyFeesList.stream().filter(paiement -> paiement.getRubrique().split(" ")[0].equalsIgnoreCase(data.getName())).toList();
             Double totalEncaisse = 0.0;
             for (Paiement p : concernedFees) {
                 totalEncaisse += p.getMontant();
@@ -604,7 +605,7 @@ public class ScolariteUIController implements Initializable {
 
 
             for (Rubrique rubr : Toolbox.getRubriques()) {
-                double effectifPartiel = dailyFeesList.stream().filter(paiement -> paiement.getRubrique().split(" ")[0].equals(rubr.getIntitule())).toList().size();
+                double effectifPartiel = dailyFeesList.stream().filter(paiement -> paiement.getRubrique().split(" ")[0].equalsIgnoreCase(rubr.getIntitule())).toList().size();
                 double effectifTotal = dailyFeesList.size();
                 double pourcentage = (effectifPartiel / effectifTotal) * 100;
                 pieData.add(new PieChart.Data(rubr.getIntitule(), pourcentage));
@@ -635,7 +636,7 @@ public class ScolariteUIController implements Initializable {
 
 
             for (Rubrique rubr : Toolbox.getRubriques()) {
-                double effectifPartiel = dailyFeesList.stream().filter(paiement -> paiement.getRubrique().split(" ")[0].equals(rubr.getIntitule().split(" ")[0])).toList().size();
+                double effectifPartiel = dailyFeesList.stream().filter(paiement -> paiement.getRubrique().split(" ")[0].equalsIgnoreCase(rubr.getIntitule().split(" ")[0])).toList().size();
                 double effectifTotal = dailyFeesList.size();
                 double pourcentage = (effectifPartiel / effectifTotal) * 100;
                 pieData.add(new PieChart.Data(rubr.getIntitule(), pourcentage));
@@ -665,7 +666,7 @@ public class ScolariteUIController implements Initializable {
 
 
             for (Rubrique rubr : Toolbox.getRubriques()) {
-                double effectifPartiel = dailyFeesList.stream().filter(paiement -> paiement.getRubrique().split(" ")[0].equals(rubr.getIntitule().split(" ")[0])).toList().size();
+                double effectifPartiel = dailyFeesList.stream().filter(paiement -> paiement.getRubrique().split(" ")[0].equalsIgnoreCase(rubr.getIntitule().split(" ")[0])).toList().size();
                 double effectifTotal = dailyFeesList.size();
                 double pourcentage = (effectifPartiel / effectifTotal) * 100;
                 pieData.add(new PieChart.Data(rubr.getIntitule(), pourcentage));
@@ -696,7 +697,7 @@ public class ScolariteUIController implements Initializable {
                 for(int i=0;i<moisFR.length;i++){
                     Double monthlyDue = 0.0;
                     for(Paiement paiement : dailyFeesList){
-                        if(paiement.getDate().getMonthValue() -1 == i && paiement.getRubrique().split(" ")[0].equals(rubr.getIntitule().split(" ")[0])){
+                        if(paiement.getDate().getMonthValue() -1 == i && paiement.getRubrique().split(" ")[0].equalsIgnoreCase(rubr.getIntitule().split(" ")[0])){
                             monthlyDue+= paiement.getMontant();
                             yearlyDue+= monthlyDue;
                         }
@@ -736,7 +737,7 @@ public class ScolariteUIController implements Initializable {
         this.dailyFeesList = dailyFeesList;
 
         for (Rubrique rubr : Toolbox.getRubriques()) {
-            int nbPaiement = dailyFeesList.stream().filter(paiement -> paiement.getRubrique().split(" ")[0].equals(rubr.getIntitule())).toList().size() / dailyFeesList.size() * 100;
+            int nbPaiement = dailyFeesList.stream().filter(paiement -> paiement.getRubrique().split(" ")[0].equalsIgnoreCase(rubr.getIntitule())).toList().size() / dailyFeesList.size() * 100;
             pieData.add(new PieChart.Data(rubr.getIntitule(), nbPaiement));
         }
 
@@ -1185,10 +1186,19 @@ public class ScolariteUIController implements Initializable {
                     List<String[]> fileData = nCSV.getData(fileContent);
                     List<Note> importedNotes = nCSV.csvToObject(fileData, selectedModule, selectedClass,this.currentUser, getSelectedSemestreIndex());
                     List<Note> list = new ArrayList<>(selectedModule.getNotes());
-                    list.addAll(importedNotes);
-                    selectedModule.setNotes(list);
 
-                    this.setMainMessageInfo("Notes importés avec succès !");
+                    for(Note oldNote : selectedModule.getNotes()){
+                        for(Note newNote : importedNotes){
+                            if(oldNote.getId() == newNote.getId()){
+                                list.set(list.indexOf(oldNote),newNote);
+                            }else{
+
+                            }
+                        }
+                        selectedModule.setNotes(list);
+                    }
+
+                    this.setMainMessageInfo("Note(s) importé(s) avec succès !");
                 } catch (CSVException | Mismatch e) {
                     setMainMessageInfo(e.getMessage(), 0);
                 }
@@ -1208,7 +1218,7 @@ public class ScolariteUIController implements Initializable {
 
                     selectedClass.setApprenants(list);
 
-                    this.setMainMessageInfo("Apprenants importés avec succès !");
+                    this.setMainMessageInfo("Apprenant(s) importé(s) avec succès !");
                 } catch (CSVException | Mismatch e) {
                     setMainMessageInfo(e.getMessage(), 0);
                     System.out.println(e.getMessage());
@@ -1339,13 +1349,13 @@ public class ScolariteUIController implements Initializable {
         if(e.getSource() == searchStudentInput){
 
             String toSearch = "";
-            toSearch += searchStudentInput.getText();
+            toSearch += searchStudentInput.getText().toLowerCase();
 
             List<Apprenant> found = new ArrayList<>();
             try {
 
                 for (Apprenant appr : selectedClass.getApprenants()) {
-                    if (appr.getNom().contains(toSearch) || appr.getPrenom().contains(toSearch) || Integer.toString(appr.getMatricule()).contains(toSearch)) {
+                    if (appr.getNom().toLowerCase().contains(toSearch) || appr.getPrenom().toLowerCase().contains(toSearch) || Integer.toString(appr.getMatricule()).toLowerCase().contains(toSearch)) {
                         found.add(appr);
                     }
                 }
@@ -1355,13 +1365,13 @@ public class ScolariteUIController implements Initializable {
             }
         }else{
             String toSearch = "";
-            toSearch += searchStudentHomeInput.getText();
+            toSearch += searchStudentHomeInput.getText().toLowerCase();
 
             List<Apprenant> found = new ArrayList<>();
             try {
 
                 for (Apprenant appr : allApprenants) {
-                    if (appr.getNom().contains(toSearch) || appr.getPrenom().contains(toSearch) || Integer.toString(appr.getMatricule()).contains(toSearch)) {
+                    if (appr.getNom().toLowerCase().contains(toSearch) || appr.getPrenom().toLowerCase().contains(toSearch) || Integer.toString(appr.getMatricule()).toLowerCase().contains(toSearch)) {
                         found.add(appr);
                     }
                 }

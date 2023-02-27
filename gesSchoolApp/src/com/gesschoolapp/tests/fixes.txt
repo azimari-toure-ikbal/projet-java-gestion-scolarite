@@ -21,18 +21,59 @@
    Je dois repenser la logique des placeholder parce que les tableaux n'ont pas la même taille
 ----
 5-Check les fonts pour mon pc
+    AWAIT
     J'ai essayé un truc reste à voir si ça marche
 ----
 
+----
 6-La recherche ne fonctionne pas correctement il faudrait changer la recherche pour qu'elle ne prenne pas en compte la casse
+    FIXED
+    J'ai mis ignoreCase partout
+----
 7-A la premiere connection en tant que caissier les etats de paiements qui sont vides ne montrent pas le placeholder
+    AWAIT
+    C'est encore le soucis des placeholder, ils sont vraiment relou.
+---
+
+----
 9-Ancien bug de quand on importe une note d'un apprenant qui en avait deja une, la note s'affiche en double jusqu'a que je me reconnecte
+    FIXED
+    J'ai posé une condition pour update la note plutôt que de Add
+----
+
+----
 10-Ancien bug quand la fenetre de connexion est reduite, on ne peut pas la ramener
+    FIXED
+    J'avais oublié de retirer l'animation
+---
 11-Dans admin, le bouton pour réduire ne fait rien
+    FIXED
+    J'avais juste disable le bouton lol
+---
+
+---
 12-Premiere modification de la note, dans les logs de l'admin, la note modifiee est 0 et pas la nouvelle valeur du coup si je modifie deux fois la note, la valeur qui s'affiche est 0 et pas la valeur de la premiere modification
+    AWAIT
+    Je comprend pas exactement le problème là
+---
+
+----
 13-Si apprenant paye tout alors on ne doit plus afficher le paiement de la scolarite
+    WTF
+    J'ai mis la condition mais il se passe un truc très chelou,
+    quand on fait le dernier paiement l'étudiant disparaît des listes, normalement il devrait aller en classe sup
+----
+
+----
 14-Enlever le module en bas
+    FIXED
+
+----
+
+----
 15-Quand on genere les bulletins et qu'on clique sur la vue des apprenants, on n'a que ceux pour qui le bulletin a ete genere
+
+
 16-Quand on importe une note depuis un csv, la vue de la note se duplique
 17-Exportation des apprenants toujour au meme endroit
 18-Quand on rajoute des modules, ils ne s'affichent plus tant qu'on ne se reconnecte pas
