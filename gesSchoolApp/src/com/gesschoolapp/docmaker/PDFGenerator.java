@@ -96,6 +96,8 @@ public class PDFGenerator {
 
             // Fermeture du document
             document.close();
+
+            Toolbox.pdfToImage(path, filename);
         } catch (DocumentException e) {
             throw new PDFException("Error : Unable to create PDF document !");
         } catch (IOException e) {
