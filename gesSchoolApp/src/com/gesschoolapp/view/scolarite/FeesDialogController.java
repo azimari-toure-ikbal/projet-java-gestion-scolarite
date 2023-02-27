@@ -172,12 +172,14 @@ public class FeesDialogController  implements Initializable {
         List<Module> modules = superController.getSelectedClass().getModules();
         NoteDAOImp notesData = new NoteDAOImp();
 
-        for(Module module : modules){
-            List<Note> notesList = new ArrayList<>(module.getNotes());
-            newNote.setModule(module.getIntitule());
-//            Note
-            notesList.add(newNote);
-            module.setNotes(notesList);
+        if(apprenant.getEtatPaiement() == 0){
+            for(Module module : modules){
+                List<Note> notesList = new ArrayList<>(module.getNotes());
+                newNote.setModule(module.getIntitule());
+    //            Note
+                notesList.add(newNote);
+                module.setNotes(notesList);
+            }
         }
 
         if(selectRubrique.getValue() != "tenue"){

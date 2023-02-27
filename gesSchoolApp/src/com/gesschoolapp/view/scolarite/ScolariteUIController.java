@@ -711,10 +711,10 @@ public class ScolariteUIController implements Initializable {
 
     public void resetVue() {
         try {
-            resetSelectedClass(selectedClass);
+//            resetSelectedClass(selectedClass);
             setListeDesApprenants(selectedClass.getApprenants());
             refreshFeesData(feesSpanSelect.getValue());
-
+            setListeDesNotes(selectedModule.getNotes());
         } catch (DAOException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
