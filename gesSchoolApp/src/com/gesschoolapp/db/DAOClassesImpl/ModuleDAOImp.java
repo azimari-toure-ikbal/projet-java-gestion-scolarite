@@ -16,6 +16,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -142,6 +143,7 @@ public class ModuleDAOImp implements ModuleDAO {
                 module.setSemestre(rs.getInt("semestre"));
                 modules.add(module);
             }
+            Collections.sort(modules);
             return modules;
 
         } catch (Exception e) {
@@ -171,6 +173,7 @@ public class ModuleDAOImp implements ModuleDAO {
                 module.setSemestre(rs.getInt("semestre"));
 
                 modules.add(module);
+                Collections.sort(modules);;
             }
             return modules;
 
@@ -201,8 +204,9 @@ public class ModuleDAOImp implements ModuleDAO {
                 module.setSemestre(rs.getInt("semestre"));
 
                 modules.add(module);
+                Collections.sort(modules);
             }
-            return modules;
+            return modules ;
 
         } catch (Exception e) {
             throw new DAOException("Error in ModuleDAOImp.getModulesOfClass() \n" + e.getMessage());

@@ -36,6 +36,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -584,7 +585,7 @@ public class AdminUIController implements Initializable {
     }
 
     public void setListeDesActions(List<Action> actions){
-            actionsLayout.getChildren().clear();
+        actionsLayout.getChildren().clear();
         for (Action action : actions) {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("ActionItem.fxml"));
