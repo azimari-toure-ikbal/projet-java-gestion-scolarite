@@ -6,7 +6,8 @@ import com.gesschoolapp.models.actions.Action;
 import com.gesschoolapp.models.matieres.Note;
 import com.gesschoolapp.models.student.Apprenant;
 import com.gesschoolapp.serial.ActionManager;
-import com.gesschoolapp.utils.ActionType;
+import com.gesschoolapp.utils.ActionComparatorByState;
+import com.gesschoolapp.view.util.ActionType;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,9 +22,11 @@ import java.util.Objects;
 public class ActionDAOImp implements ActionDAO {
     @Override
     public void cancelAction(Action action, String admin){
-        String message = "";
+        String message = "Votre action " + action.getAction() + " sur  " + action.getObjectType() +
+                " a été annulée par l'administrateur " + admin + " le " + LocalDateTime.now().format(DateTimeFormatter.
+                ofPattern("YYYY-MM-dd à HH:mm")) + ".";
+
         if(action.getObject() instanceof Apprenant){
-            message = "L'action " + action.getAction() + " sur l'apprenant " + ((Apprenant)action.getObject()).getFullName() + " a été annulée par l'administrateur " + admin + " le " + LocalDateTime.now() + ".";
             switch (action.getAction()){
                 case ADD -> {
                     cancelAddApprenant((Apprenant) action.getObject());
@@ -40,14 +43,11 @@ public class ActionDAOImp implements ActionDAO {
             }
         }
         else if(action.getObject() instanceof Note){
-            Note note = (Note) action.getObject();
-            message = "L'action " + action.getAction() + " sur la note de " + ((Note)action.getObject()).getApprenant().getFullName() + " dans le module " + ((Note)action.getObject()).getModule() + " a été annulée par l'administrateur " + admin + " le " + LocalDateTime.now() + ".";
             if (Objects.requireNonNull(action.getAction()) == ActionType.UPDATE) {
                 cancelUpdateNote((Note) action.getObject());
             }
         }
-        if(!message.equals(""))
-            addNotification(action.getActor(), admin, message);
+        addNotification(action.getActor(), admin, message);
     }
 
     @Override
@@ -161,6 +161,7 @@ public class ActionDAOImp implements ActionDAO {
                 action.setCanceled(rs.getBoolean("canceled"));
                 actions.add(action);
             }
+            actions.sort(new ActionComparatorByState());
             return actions;
         }catch (Exception e){
             e.printStackTrace();
