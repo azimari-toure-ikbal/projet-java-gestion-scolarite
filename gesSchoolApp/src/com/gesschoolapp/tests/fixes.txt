@@ -7,3 +7,5 @@
 7-A la premiere connection en tant que caissier les etats de paiements qui sont vides ne montrent pas le placeholder
 8-Qu'est ce qu'il doit y avoir dans la partie Acces rapide ?
 9-Ancien bug de quand on importe une note d'un apprenant qui en avait deja une, la note s'affiche en double jusqu'a que je me reconnecte
+10-Ancien bug quand la fenetre de connexion est reduite, on ne peut pas la ramener
+11-Dans admin, le bouton pour réduire ne fait rien
