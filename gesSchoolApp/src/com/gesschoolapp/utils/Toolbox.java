@@ -232,7 +232,7 @@ public class Toolbox {
     public static String getCertificatsImgPath(Apprenant apprenant) {
         File file = new File("storage/certificats/imgs/" + apprenant.getNom().replace(" ", "_") + "_" + apprenant.getPrenom() + "_" + LocalDate.now() + ".png");
         if (!file.exists()) {
-            throw new RuntimeException("Le fichier demandé n'existe pas.");
+            throw new RuntimeException("Il n'y a pas de certificat pour " + apprenant.getFullName() + ".");
         } else {
             return "storage/certificats/imgs/" + apprenant.getNom().replace(" ", "_") + "_" + apprenant.getPrenom() + "_" + LocalDate.now() + ".png";
         }

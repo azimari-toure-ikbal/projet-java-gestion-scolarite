@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Module implements Serializable {
+public class Module implements Serializable, Comparable<Module> {
     public static final long serialVersionUID = 424;
     //Module has id, intitule
     private int id;
@@ -85,5 +85,10 @@ public class Module implements Serializable {
                 ", classe='" + classe + '\'' +
                 ", semestre=" + semestre +
                 "}\n";
+    }
+
+    @Override
+    public int compareTo(Module o) {
+        return this.getIntitule().compareTo(o.getIntitule());
     }
 }

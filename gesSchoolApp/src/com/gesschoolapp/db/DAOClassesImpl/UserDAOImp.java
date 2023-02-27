@@ -57,6 +57,17 @@ public class UserDAOImp implements UserDAO, DAO<Utilisateur> {
         return null;
     }
 
+    public void setNotifSeen(int id) throws DAOException {
+        try(Connection connection = DBManager.getConnection()){
+            String query = "UPDATE notifications SET seen=1 WHERE idNotification=?";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        }catch (Exception e){
+            throw new DAOException( "Error in setNotifSeen() : " +  e.getMessage());
+        }
+    }
+
     public void setNotifsSeen(String name) throws DAOException {
         try(Connection connection = DBManager.getConnection()){
             String query = "UPDATE notifications SET seen=1 WHERE utilisateur=?";
