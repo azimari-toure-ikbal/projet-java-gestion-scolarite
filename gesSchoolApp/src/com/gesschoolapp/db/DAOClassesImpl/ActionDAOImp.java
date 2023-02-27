@@ -23,8 +23,7 @@ public class ActionDAOImp implements ActionDAO {
     @Override
     public void cancelAction(Action action, String admin){
         String message = "Votre action " + action.getAction() + " sur  " + action.getObjectType() +
-                " a été annulée par l'administrateur " + admin + " le " + LocalDateTime.now().format(DateTimeFormatter.
-                ofPattern("YYYY-MM-dd à HH:mm")) + ".";
+                " a été annulée par l'administrateur " + admin + ".";
 
         if(action.getObject() instanceof Apprenant){
             switch (action.getAction()){
