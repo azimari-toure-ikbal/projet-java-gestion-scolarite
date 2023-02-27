@@ -58,8 +58,12 @@ public class ModuleItemController {
     void actionBtnClicked(ActionEvent event) {
         if (event.getSource() == btnDelete) {
 
-            if(selectedModule == null){
+            if(modulePane.getParent().getChildrenUnmodifiable().size() == 1){
+                superController.setMainMessage("Une classe doit avoir au moins un module !", 0);
 
+            }else{
+
+            if(selectedModule == null){
             }else{
 
             //ask for confirmation
@@ -81,6 +85,7 @@ public class ModuleItemController {
                 } catch (DAOException e) {
                     throw new RuntimeException(e);
                 }
+            }
             }
             }
         }
@@ -161,8 +166,10 @@ public class ModuleItemController {
                     superController.setMainMessage("Patientez...", 1);
                     Module toAddModule = mDao.create(newModule, superController.superController.getCurrentUser().getFullName());
                     List<Module> mds = superController.getSelectedClass().getModules();
+                    System.out.println("avant add : " + mds);
                     mds.add(toAddModule);
-                    superController.getSelectedClass().setModules(mds);
+                    getSuperController().getSelectedClass().setModules(mds);
+                    System.out.println("apres add : " + getSuperController().getSelectedClass().getModules());
                     selectedModule = toAddModule;
                     setData(toAddModule);
                     System.out.println(" créee");
@@ -206,6 +213,13 @@ public class ModuleItemController {
                     selectedModule = toAddModule;
                     setData(toAddModule);
                     System.out.println(" créee");
+                    List<Module> mds = superController.getSelectedClass().getModules();
+                    System.out.println("avant add : " + mds);
+                    mds.add(toAddModule);
+                    getSuperController().getSelectedClass().setModules(mds);
+                    System.out.println("apres add : " + getSuperController().getSelectedClass().getModules());
+                    selectedModule = toAddModule;
+                    setData(toAddModule);
                     intituleTF.setVisible(false);
                     semestreSelect.setVisible(false);
                     labelIntitule.setText(intituleTF.getText());
