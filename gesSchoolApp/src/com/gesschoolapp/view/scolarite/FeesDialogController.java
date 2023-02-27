@@ -182,6 +182,10 @@ public class FeesDialogController  implements Initializable {
             }
         }
 
+        if(apprenant.getEtatPaiement() == 9){
+            selectRubrique.getItems().removeAll();
+        }
+
         if(selectRubrique.getValue() != "tenue"){
             apprenant.setEtatPaiement(apprenant.getEtatPaiement()+1);
         }
