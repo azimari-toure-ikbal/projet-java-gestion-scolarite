@@ -139,10 +139,12 @@ public class TestClass {
 //            new ApprenantDAOImp().delete(43, "Bob");
 //            testCreateApprenant();
 //            testPaiement();
-            List<Action> actions = new ActionDAOImp().getActions();
+//            List<Action> actions = new ActionDAOImp().getActions();
+            String test = new ActionDAOImp().read(13).getObjectType();
+            System.out.println(test);
 //            actions.get(1).cancelAction("Marshall");
 //            System.out.println(actions);
-            actions.get(0).cancelAction("Marshall");
+//            actions.get(0).cancelAction("Marshall");
         }catch (Exception e){
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
