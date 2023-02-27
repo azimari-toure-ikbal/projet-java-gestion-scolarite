@@ -160,6 +160,9 @@ public class ModuleItemController {
                 try {
                     superController.setMainMessage("Patientez...", 1);
                     Module toAddModule = mDao.create(newModule, superController.superController.getCurrentUser().getFullName());
+                    List<Module> mds = superController.getSelectedClass().getModules();
+                    mds.add(toAddModule);
+                    superController.getSelectedClass().setModules(mds);
                     selectedModule = toAddModule;
                     setData(toAddModule);
                     System.out.println(" créee");

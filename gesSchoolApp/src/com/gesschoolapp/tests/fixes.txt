@@ -98,10 +98,19 @@
     J'avais retourné le nom du fichier à la méthode de Iki au lieu de retourner le chemin complet
 ----
 
-
+----
 18-Quand on rajoute des modules, ils ne s'affichent plus tant qu'on ne se reconnecte pas
+    FIXED (ou pas parce que j'ai rien fait xD)
 
+    En tout cas le problème n'existe plus
+----
+
+----
 19-Admin dooit pouvoir modifier son profil
+    AWAIT
+
+    Flemme là je rajouterai les conditions demain ou après demain façon c'est pas hyper important
+----
 
 ----
 20-Quand on annule une modificatoin de note, la note disparait dans la vue
@@ -114,5 +123,12 @@
 21-Manque des placeholders pour les classes sans modules
     FIXED
 
-    Une classe ne peut pas
+    On doit toujours se mettre d'accord sur ce point mais selon moi une classe devrait avoir au moins
+    un module donc pas besoin de placeholder (façon j'ai un problème avec les placeholder va falloir qui je revoie ça)
+
+
 22-Dans les classes qui n'ont aucun eleves y en a des autres classes qui vont s'ajouter dans la vue des notes
+    FIXED
+
+    Enfaite ça ça n'arrive que parce que la classe n'a pas de modules, cas de figure qui ne devrait pas
+    arriver donc ignorez ce " bug " quand la base de données sera bien feed in le bug va fade out (haha tema le jeu de mot)
