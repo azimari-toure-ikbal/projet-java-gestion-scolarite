@@ -2,15 +2,12 @@ package com.gesschoolapp.view.admin;
 
 import com.gesschoolapp.Exceptions.DAOException;
 import com.gesschoolapp.db.DAOClassesImpl.UserDAOImp;
-import com.gesschoolapp.models.student.Apprenant;
 import com.gesschoolapp.models.users.Admin;
 import com.gesschoolapp.models.users.Caissier;
 import com.gesschoolapp.models.users.Secretaire;
 import com.gesschoolapp.models.users.Utilisateur;
 import com.gesschoolapp.runtime.Main;
 import com.gesschoolapp.utils.Toolbox;
-import com.gesschoolapp.view.scolarite.ScolariteUIController;
-import com.gesschoolapp.view.util.Genre;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -27,13 +24,9 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.net.URL;
-import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.regex.Pattern;
 
 public class UserAddDialogController implements Initializable {
 

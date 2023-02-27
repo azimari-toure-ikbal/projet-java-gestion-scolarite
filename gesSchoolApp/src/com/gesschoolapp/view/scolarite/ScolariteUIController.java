@@ -21,7 +21,7 @@ import com.gesschoolapp.models.users.Utilisateur;
 import com.gesschoolapp.runtime.Main;
 import com.gesschoolapp.controllers.NotesItemController;
 import com.gesschoolapp.utils.Toolbox;
-import com.gesschoolapp.view.util.Route;
+import com.gesschoolapp.utils.Route;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -1850,15 +1850,28 @@ public class ScolariteUIController implements Initializable {
 
     @FXML
     public void handleBulletinGeneration(ActionEvent e){
-        try {
-            Classe classeToPass = getSelectedClass();
-            List<Module> modulesToPass = new ArrayList<>();
-            modulesToPass.addAll(getSelectedClass().getModules());
 
-            PDFGenerator.bulletinGenerator(classeToPass,modulesToPass,getSelectedSemestreIndex());
-            setMainMessageInfo("Bulletins générés avec succès (VOIR STORAGE)",1);
-        } catch (PDFException ex) {
-            setMainMessageInfo(ex.getMessage(),0);
+        if(getSelectedClass().getApprenants().stream().filter(apprenant -> apprenant.getEtatPaiement() == 0).toList().size() != 0){
+            //ask for confirmation
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Génération bulletin");
+            alert.setHeaderText("Il existe un ou plusieurs élèves non inscrits dans la classe.");
+            alert.setContentText("Êtes vous sur de vouloir continuer ?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                // ... user chose OK
+                    try {
+                        Classe classeToPass = getSelectedClass();
+                        List<Module> modulesToPass = new ArrayList<>();
+                        modulesToPass.addAll(getSelectedClass().getModules());
+
+                        PDFGenerator.bulletinGenerator(classeToPass,modulesToPass,getSelectedSemestreIndex());
+                        setMainMessageInfo("Bulletins générés avec succès (VOIR ELEVES)",1);
+                    } catch (PDFException ex) {
+                        setMainMessageInfo(ex.getMessage(),0);
+                    }
+
+            }
         }
     }
 

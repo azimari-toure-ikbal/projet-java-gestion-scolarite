@@ -3,8 +3,8 @@ package com.gesschoolapp.controllers;
 import com.gesschoolapp.Exceptions.DAOException;
 import com.gesschoolapp.db.DAOClassesImpl.NoteDAOImp;
 import com.gesschoolapp.models.matieres.Note;
+import com.gesschoolapp.utils.Toolbox;
 import com.gesschoolapp.view.scolarite.ScolariteUIController;
-import com.gesschoolapp.view.util.Regex;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -62,7 +62,7 @@ public class NotesItemController extends Application {
         if(event.getCode() == KeyCode.ENTER){
             String newNote = editNoteTF.getText();
 
-            if(!Regex.checkNoteFormat(newNote)){
+            if(!Toolbox.checkNoteFormat(newNote)){
                 superController.setMainMessageInfo("Format incorrect !",0);
                 return false;
             }

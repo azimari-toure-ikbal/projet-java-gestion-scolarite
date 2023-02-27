@@ -1,4 +1,4 @@
-package com.gesschoolapp.view.util;
+package com.gesschoolapp.utils;
 
 import com.gesschoolapp.models.classroom.Classe;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;

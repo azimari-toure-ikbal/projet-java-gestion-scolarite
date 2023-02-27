@@ -1,7 +1,7 @@
 package com.gesschoolapp.models.actions;
 
 import com.gesschoolapp.db.DAOClassesImpl.ActionDAOImp;
-import com.gesschoolapp.view.util.ActionType;
+import com.gesschoolapp.utils.ActionType;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

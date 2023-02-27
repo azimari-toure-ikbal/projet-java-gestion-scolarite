@@ -5,14 +5,12 @@ import com.gesschoolapp.db.DAOInterfaces.PaiementDAO;
 import com.gesschoolapp.db.DBManager;
 import com.gesschoolapp.models.actions.Action;
 import com.gesschoolapp.models.paiement.Paiement;
-import com.gesschoolapp.serial.ActionManager;
 import com.gesschoolapp.utils.Toolbox;
-import com.gesschoolapp.view.util.ActionType;
+import com.gesschoolapp.utils.ActionType;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

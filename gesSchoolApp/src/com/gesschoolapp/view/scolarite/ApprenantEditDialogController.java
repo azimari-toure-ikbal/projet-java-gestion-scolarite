@@ -8,7 +8,7 @@ import com.gesschoolapp.models.matieres.Module;
 import com.gesschoolapp.models.matieres.Note;
 import com.gesschoolapp.models.student.Apprenant;
 import com.gesschoolapp.runtime.Main;
-import com.gesschoolapp.view.util.Genre;
+import com.gesschoolapp.utils.Genre;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;

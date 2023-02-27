@@ -1,35 +1,30 @@
 package com.gesschoolapp.view.admin;
 
-import com.gesschoolapp.Exceptions.ArchiveManagerException;
 import com.gesschoolapp.Exceptions.DAOException;
 import com.gesschoolapp.db.DAOClassesImpl.ActionDAOImp;
+import com.gesschoolapp.db.DAOClassesImpl.ApprenantDAOImp;
 import com.gesschoolapp.db.DAOClassesImpl.ClasseDAOImp;
 import com.gesschoolapp.db.DAOClassesImpl.UserDAOImp;
 import com.gesschoolapp.models.actions.Action;
 import com.gesschoolapp.models.classroom.Classe;
+import com.gesschoolapp.models.paiement.Paiement;
 import com.gesschoolapp.models.student.Apprenant;
 import com.gesschoolapp.models.users.Admin;
-import com.gesschoolapp.models.users.Caissier;
 import com.gesschoolapp.models.users.Utilisateur;
 import com.gesschoolapp.runtime.Main;
-import com.gesschoolapp.serial.ActionManager;
 import com.gesschoolapp.utils.Toolbox;
-import com.gesschoolapp.view.scolarite.ApprenantItemsController;
-import com.gesschoolapp.view.scolarite.ApprenantViewDialogController;
-import com.gesschoolapp.view.util.ActionType;
-import com.gesschoolapp.view.util.Route;
+import com.gesschoolapp.utils.ActionType;
+import com.gesschoolapp.utils.Route;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.Modality;
@@ -128,6 +123,9 @@ public class AdminUIController implements Initializable {
     private VBox usersLayout;
 
     @FXML
+    private VBox studentsHomeLayout;
+
+    @FXML
     private VBox classesLayout;
 
     @FXML
@@ -169,6 +167,18 @@ public class AdminUIController implements Initializable {
     private Button btnSecretaires;
 
     @FXML
+    private Label labelNbStudents;
+
+    @FXML
+    private Label labelWelcome;
+
+    @FXML
+    private Label labelNbUsers;
+
+    @FXML
+    private Label labelBilanJourn;
+
+    @FXML
     private Button btnCaissiers;
 
     @FXML
@@ -181,6 +191,10 @@ public class AdminUIController implements Initializable {
     ClasseDAOImp classData = new ClasseDAOImp();
 
     ActionDAOImp actionData = new ActionDAOImp();
+
+    ApprenantDAOImp apprenantsData = new ApprenantDAOImp();
+    List<Apprenant> apprenantsList;
+
     List<Utilisateur> usersList;
 
     List<Classe> classesList;
@@ -206,7 +220,7 @@ public class AdminUIController implements Initializable {
 
 
         // --- Init route :
-        setCurrentRoute(users);
+        setCurrentRoute(dashboard);
 
         // --- Init values :
         setSelectedUserType(btnSecretaires);
@@ -215,6 +229,7 @@ public class AdminUIController implements Initializable {
             usersList = userData.getList();
             classesList = classData.getList();
             actionsList = actionData.getActions();
+            apprenantsList = apprenantsData.getList();
 
         } catch (DAOException e) {
             throw new RuntimeException(e);
@@ -223,9 +238,22 @@ public class AdminUIController implements Initializable {
         // --- Set lists :
         setListeDesUtilisateurs(usersList);
         setListeDesClasses(classesList);
+        setListeDesApprenants();
         labelLogsDate.setValue(LocalDate.now());
         setListeDesActions(actionsList.stream().filter(action -> action.getDate().toLocalDate().equals(LocalDate.now())).toList());
 
+        // -- set Dashboard view cards :
+
+        labelNbStudents.setText(apprenantsList.size()+"");
+        List<Paiement> dailyFees = Toolbox.paiementsJournalier(LocalDate.now());
+
+        Double dailyReport = 0.0;
+        for(Paiement p : dailyFees){
+            dailyReport+= p.getMontant();
+        }
+        labelBilanJourn.setText(dailyReport+" FCFA");
+
+        labelNbUsers.setText(usersList.size()+"");
     }
 
 
@@ -303,6 +331,7 @@ public class AdminUIController implements Initializable {
         userFullName.setText(currentUser.getFullName());
         userMail.setText(currentUser.getEmail());
         userPhoneNumber.setText(currentUser.getNumero());
+        labelWelcome.setText("Bienvenue," + currentUser.getFullName() + " !");
         this.currentUser = currentUser;
     }
 
@@ -541,6 +570,34 @@ public class AdminUIController implements Initializable {
 
 
             usersLayout.getChildren().add(hbox);
+
+        }
+    }
+
+    public void setListeDesApprenants(){
+        setListeDesApprenants(apprenantsList);
+    }
+    public void setListeDesApprenants(List<Apprenant> apprs) {
+
+        if (apprs.size() != 0) {
+            studentsHomeLayout.getChildren().clear();
+        }
+
+        for (Apprenant appr : apprs) {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("ApprenantItem.fxml"));
+            HBox hbox = null;
+            try {
+                hbox = fxmlLoader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            ApprenantItemController aic = fxmlLoader.getController();
+            aic.setSuperController(this);
+            aic.setData(appr);
+
+
+            studentsHomeLayout.getChildren().add(hbox);
 
         }
     }

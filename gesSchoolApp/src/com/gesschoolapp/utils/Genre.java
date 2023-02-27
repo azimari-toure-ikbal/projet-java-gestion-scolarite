@@ -1,4 +1,4 @@
-package com.gesschoolapp.view.util;
+package com.gesschoolapp.utils;
 
 public enum Genre {
     MASCULIN,

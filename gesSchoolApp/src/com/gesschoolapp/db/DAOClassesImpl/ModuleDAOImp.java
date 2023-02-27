@@ -3,21 +3,15 @@ package com.gesschoolapp.db.DAOClassesImpl;
 import com.gesschoolapp.Exceptions.DAOException;
 import com.gesschoolapp.db.DAOInterfaces.ModuleDAO;
 import com.gesschoolapp.db.DBManager;
-import com.gesschoolapp.models.actions.Action;
 import com.gesschoolapp.models.matieres.Module;
 import com.gesschoolapp.models.matieres.Note;
 import com.gesschoolapp.models.student.Apprenant;
-import com.gesschoolapp.serial.ActionManager;
-import com.gesschoolapp.view.util.ActionType;
 
-import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class ModuleDAOImp implements ModuleDAO {
     @Override

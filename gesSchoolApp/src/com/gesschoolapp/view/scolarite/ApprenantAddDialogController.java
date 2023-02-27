@@ -2,13 +2,10 @@ package com.gesschoolapp.view.scolarite;
 
 import com.gesschoolapp.Exceptions.DAOException;
 import com.gesschoolapp.db.DAOClassesImpl.ApprenantDAOImp;
-import com.gesschoolapp.db.DAOClassesImpl.NoteDAOImp;
 import com.gesschoolapp.models.classroom.Classe;
-import com.gesschoolapp.models.matieres.Module;
-import com.gesschoolapp.models.matieres.Note;
 import com.gesschoolapp.models.student.Apprenant;
 import com.gesschoolapp.runtime.Main;
-import com.gesschoolapp.view.util.Genre;
+import com.gesschoolapp.utils.Genre;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;

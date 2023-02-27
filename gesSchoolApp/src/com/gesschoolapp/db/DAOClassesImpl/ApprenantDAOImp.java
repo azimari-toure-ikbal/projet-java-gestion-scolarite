@@ -7,8 +7,7 @@ import com.gesschoolapp.models.actions.Action;
 import com.gesschoolapp.models.classroom.Classe;
 import com.gesschoolapp.models.matieres.Module;
 import com.gesschoolapp.models.student.Apprenant;
-import com.gesschoolapp.serial.ActionManager;
-import com.gesschoolapp.view.util.ActionType;
+import com.gesschoolapp.utils.ActionType;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
