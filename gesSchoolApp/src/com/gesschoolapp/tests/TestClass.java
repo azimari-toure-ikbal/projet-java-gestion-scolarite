@@ -49,7 +49,7 @@ public class TestClass {
 //        testDeleteApprenant(37);
 //        testCreateApprenant();
 //        System.out.println(ListRubriques.getRubriques());
-//        testReadClasse(14);
+//        testReadClasse(15);
 //        testGetPaiements();
 //        testGetApprenant(1);
 //        testPaiement();
@@ -61,7 +61,7 @@ public class TestClass {
 //        System.out.println(Date.from(Instant.now()).toInstant()
 //                .atZone(ZoneId.systemDefault())
 //                .toLocalDateTime());
-//        testCancelActions();
+        testCancelActions();
 //        System.out.println( + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() );
 //        testCreateModule();
 //        testGetNotifs();
@@ -87,7 +87,7 @@ public class TestClass {
 //            System.out.println(s);
 //        }
 
-        System.out.println("Systeme d'exploitation: " + System.getProperty("os.name"));
+//        System.out.println("Systeme d'exploitation: " + System.getProperty("os.name"));
     }
 
 
@@ -142,7 +142,7 @@ public class TestClass {
 //            testCreateApprenant();
 //            testPaiement();
 //            List<Action> actions = new ActionDAOImp().getActions();
-            String test = new ActionDAOImp().read(13).getObjectType();
+            Object test = new ActionDAOImp().read(22).getCurrentObject();
             System.out.println(test);
 //            actions.get(1).cancelAction("Marshall");
 //            System.out.println(actions);
@@ -335,7 +335,9 @@ public class TestClass {
     public static void testReadClasse(int id){
         ClasseDAOImp classeDAOImp = new ClasseDAOImp();
         try {
-            System.out.println(classeDAOImp.read(id));
+            Classe classe = classeDAOImp.read(id);
+            System.out.println(classe);
+            System.out.println(classe.getCurrentEcheance());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
