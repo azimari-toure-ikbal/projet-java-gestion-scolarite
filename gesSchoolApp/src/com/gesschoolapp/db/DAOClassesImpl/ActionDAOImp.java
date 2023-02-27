@@ -7,7 +7,7 @@ import com.gesschoolapp.models.matieres.Note;
 import com.gesschoolapp.models.student.Apprenant;
 import com.gesschoolapp.serial.ActionManager;
 import com.gesschoolapp.utils.ActionComparatorByState;
-import com.gesschoolapp.view.util.ActionType;
+import com.gesschoolapp.utils.ActionType;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
