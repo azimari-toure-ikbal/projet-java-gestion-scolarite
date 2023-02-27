@@ -61,21 +61,7 @@ public class ApprenantItemController {
         if(event.getSource() == btnCertificat){
 
             if(thisApprenant.getEtatPaiement() == 0){
-                //ask for confirmation
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Génération du certificat de scolarité");
-                alert.setHeaderText("Vous êtes sous le point de générer le certificat de scolarité d'un élève non inscrit : " + thisApprenant.getFullName());
-                alert.setContentText("Voulez-vous continuer ?");
-                Optional<ButtonType> result = alert.showAndWait();
-                if (result.get() == ButtonType.OK) {
-                    try {
-                        PDFGenerator.cerficatScolariteGenerator(thisApprenant);
-                        superController.setMainMessageInfo("Certificat généré avec succès !");
-                        btnVoirCertificat.toFront();
-                    } catch (PDFException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
+                superController.setMainMessageInfo(thisApprenant.getFullName() + " n'est pas inscrit !");
             }else{
                 try {
                     PDFGenerator.cerficatScolariteGenerator(thisApprenant);

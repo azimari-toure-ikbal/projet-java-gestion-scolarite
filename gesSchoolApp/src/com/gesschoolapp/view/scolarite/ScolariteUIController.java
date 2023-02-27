@@ -1157,7 +1157,7 @@ public class ScolariteUIController implements Initializable {
             }
             ApprenantsCSV aCSV = new ApprenantsCSV();
             try {
-                aCSV.writeCSVFile(file.getName(), selectedClass.getApprenants());
+                aCSV.writeCSVFile(file.getPath(), selectedClass.getApprenants());
             } catch (CSVException e) {
                 throw new RuntimeException(e);
             }
