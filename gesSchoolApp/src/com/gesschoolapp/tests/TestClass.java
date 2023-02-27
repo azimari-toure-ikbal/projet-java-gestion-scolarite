@@ -61,7 +61,7 @@ public class TestClass {
 //        System.out.println(Date.from(Instant.now()).toInstant()
 //                .atZone(ZoneId.systemDefault())
 //                .toLocalDateTime());
-        testCancelActions();
+//        testCancelActions();
 //        System.out.println( + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() );
 //        testCreateModule();
 //        testGetNotifs();
@@ -71,21 +71,23 @@ public class TestClass {
 //        String pwd = Toolbox.generateSecurePassword("wissam");
 //        System.out.println(Toolbox.generateSecurePassword("wissam"));
 //        System.out.println(Toolbox.verifyPassword("wissam", pwd));
-        ApprenantDAOImp apprenantDAOImp = new ApprenantDAOImp();
-        Apprenant apprenant = new Apprenant();
-        try {
-            apprenant = apprenantDAOImp.read(23);
-        } catch (DAOException e) {
-            e.printStackTrace();
-        }
+//        ApprenantDAOImp apprenantDAOImp = new ApprenantDAOImp();
+//        Apprenant apprenant = new Apprenant();
+//        try {
+//            apprenant = apprenantDAOImp.read(23);
+//        } catch (DAOException e) {
+//            e.printStackTrace();
+//        }
 
 //        apprenant.setNom("Wissam");
 
-        System.out.println(apprenant);
-        String[] test = Toolbox.getBulletinImgPaths(apprenant);
-        for (String s : test) {
-            System.out.println(s);
-        }
+//        System.out.println(apprenant);
+//        String[] test = Toolbox.getBulletinImgPaths(apprenant);
+//        for (String s : test) {
+//            System.out.println(s);
+//        }
+
+        System.out.println("Systeme d'exploitation: " + System.getProperty("os.name"));
     }
 
 

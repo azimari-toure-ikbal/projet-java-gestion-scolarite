@@ -56,9 +56,6 @@ public class Main extends Application {
     }
 
     /**
-     * Initializes the root layout.
-     */
-    /**
      * Initializes the root layout and tries to load the last opened
      * person file.
      */
