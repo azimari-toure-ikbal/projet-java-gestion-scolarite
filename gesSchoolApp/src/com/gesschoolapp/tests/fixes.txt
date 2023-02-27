@@ -2,4 +2,7 @@
 2-J'ai rajoute un apprenant et puis j'ai supprimé le même apprenant, mais sa note reste affiche
 3-Quand je rajoute une note pour cherifa dans francais par exemple, la note s'affiche partout et quand je recharge la valeur de la note retourne a 0 alors qu'elle est update dans la base de données
 4-Quand il n'y a aucun apprenant il n'y a pas de message rien a voir ici
-5-
+5-Check les fonts pour mon pc
+6-La recherche ne fonctionne pas correctement
+7-A la premiere connection en tant que caissier les etats de paiements qui sont vides ne montrent pas le placeholder
+8-Qu'est ce qu'il doit y avoir dans la partie Acces rapide ?
