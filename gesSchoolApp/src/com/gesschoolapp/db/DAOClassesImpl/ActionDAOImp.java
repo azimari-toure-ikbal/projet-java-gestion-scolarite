@@ -6,6 +6,7 @@ import com.gesschoolapp.models.actions.Action;
 import com.gesschoolapp.models.matieres.Note;
 import com.gesschoolapp.models.student.Apprenant;
 import com.gesschoolapp.serial.ActionManager;
+import com.gesschoolapp.utils.ActionComparatorByState;
 import com.gesschoolapp.view.util.ActionType;
 
 import java.sql.Connection;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -161,6 +163,7 @@ public class ActionDAOImp implements ActionDAO {
                 action.setCanceled(rs.getBoolean("canceled"));
                 actions.add(action);
             }
+            actions.sort(new ActionComparatorByState());
             return actions;
         }catch (Exception e){
             e.printStackTrace();
