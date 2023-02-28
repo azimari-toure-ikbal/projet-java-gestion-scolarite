@@ -67,7 +67,7 @@ public class PDFGenerator {
             // Ajouter le contenu du certificat de scolarité
             Font contentFont = FontFactory.getFont(FontFactory.HELVETICA, 12);
             Paragraph content = new Paragraph();
-            content.add(new Phrase("Je soussigné Monsieur Al Abdourahamane AZOUMARI, Directeur de l'établissement, atteste que Mme, Mlle, M. : " + apprenant.getFullName() + " né(e) le " + apprenant.getDateNaissance().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + " est régulièrement inscrit(e) à ladite école en " + apprenant.getClasse() + ", année scolaire " + (LocalDate.now().getYear() - 1) + "-" + (LocalDate.now().getYear()) + ".", contentFont));
+            content.add(new Phrase("Je soussigné Monsieur Al Abdourahamane Abdoulaye AZOUMARI, Directeur de l'établissement, atteste que Mme, Mlle, M. : " + apprenant.getFullName() + " né(e) le " + apprenant.getDateNaissance().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + " est régulièrement inscrit(e) à ladite école en " + apprenant.getClasse() + ", année scolaire " + (LocalDate.now().getYear() - 1) + "-" + (LocalDate.now().getYear()) + ".", contentFont));
             content.add(new Phrase("\nEn foi de quoi, la présente attestation est délivrée pour servir et valoir ce que de droit."));
             content.setAlignment(Element.ALIGN_JUSTIFIED);
             content.setSpacingAfter(30f);
@@ -81,7 +81,7 @@ public class PDFGenerator {
             table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_RIGHT);
             table.addCell(new Paragraph("Fait à Dakar, le " + LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), contentFont));
             table.addCell(new Paragraph("Le Directeur,", contentFont));
-            table.addCell(new Paragraph("Al Abdourahamane AZOUMARI", contentFont));
+            table.addCell(new Paragraph("Al Abdourahamane Abdoulaye AZOUMARI", contentFont));
             table.setSpacingBefore(50f);
 
             document.add(table);
