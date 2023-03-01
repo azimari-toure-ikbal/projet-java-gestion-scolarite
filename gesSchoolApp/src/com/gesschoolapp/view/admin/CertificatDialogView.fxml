@@ -13,14 +13,14 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<Pane prefHeight="723.0" prefWidth="676.0" style="-fx-border-width: 2; -fx-border-color: #323639;" stylesheets="@../../style/application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gesschoolapp.view.admin.CertificatDialogViewController">
+<Pane prefHeight="617.0" prefWidth="676.0" style="-fx-border-width: 2; -fx-border-color: #323639;" stylesheets="@../../style/application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gesschoolapp.view.admin.CertificatDialogViewController">
    <children>
-      <ImageView fx:id="bulletinImg" fitHeight="902.0" fitWidth="625.0" layoutX="23.0" layoutY="53.0" pickOnBounds="true" preserveRatio="true" style="-fx-border-width: 10px;">
+      <ImageView fx:id="bulletinImg" fitHeight="902.0" fitWidth="625.0" layoutX="23.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true" style="-fx-border-width: 10px;">
          <image>
-            <Image url="@../../../../../storage/bulletins/imgs/hey_hey_bulletin_semestre_1.png" />
+            <Image url="@../../../../../storage/certificats/imgs/Tintin_Titintin_2023-03-01.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnAnnuler" alignment="CENTER" layoutX="275.0" layoutY="666.0" mnemonicParsing="false" onAction="#onClose" prefHeight="43.0" prefWidth="120.0" style="-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-background-color: linear-gradient(to right, #D23342, #ED213A);" styleClass="classic_btn" text="Fermer">
+      <Button fx:id="btnAnnuler" alignment="CENTER" layoutX="275.0" layoutY="563.0" mnemonicParsing="false" onAction="#onClose" prefHeight="43.0" prefWidth="120.0" style="-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-background-color: linear-gradient(to right, #D23342, #ED213A);" styleClass="classic_btn" text="Fermer">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
@@ -32,7 +32,7 @@
             </DropShadow>
          </effect>
       </Button>
-      <Line endX="511.0" layoutX="137.0" layoutY="637.0" startX="-114.0" stroke="#535353" strokeWidth="0.3" />
+      <Line endX="511.0" layoutX="137.0" layoutY="550.0" startX="-114.0" stroke="#535353" strokeWidth="0.3" />
       <AnchorPane layoutX="-7.0" layoutY="2.0" prefHeight="53.0" prefWidth="683.0" style="-fx-background-color: #323639; -fx-border-width: 0 0 10px 0; -fx-border-color: #484C4F;">
          <children>
             <Label fx:id="fileNameLabel" layoutX="17.0" layoutY="15.0" text="Ikbal_azimari_toure_bulletin_1.pdf" textFill="#f2f2f2">
@@ -63,6 +63,6 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <Line endX="522.0" layoutX="131.0" layoutY="723.0" startX="-114.0" stroke="#323639" strokeWidth="4.3" />
+      <Line endX="522.0" layoutX="131.0" layoutY="617.0" startX="-114.0" stroke="#323639" strokeWidth="4.3" />
    </children>
 </Pane>

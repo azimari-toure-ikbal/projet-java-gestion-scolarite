@@ -56,9 +56,8 @@
 
 ---
 12-Premiere modification de la note, dans les logs de l'admin, la note modifiee est 0 et pas la nouvelle valeur du coup si je modifie deux fois la note, la valeur qui s'affiche est 0 et pas la valeur de la premiere modification
-    AWAIT
+    FIXED
 
-    Je comprend pas exactement le problème là
 ---
 
 ----
@@ -133,5 +132,16 @@
     Enfaite ça ça n'arrive que parce que la classe n'a pas de modules, cas de figure qui ne devrait pas
     arriver donc ignorez ce " bug " quand la base de données sera bien feed in le bug va fade out (haha tema le jeu de mot)
 
+----
 23-Dans l'interface de l'admin, en generant un certificat de scolarite pour un etudiant non inscrit, le message d'erreur n'est pas rouge mais vert
+    FIXED
+
+
+----
+
+----
 24-Dans l'interface de l'admin, en cliquand sur les etats de paiements des caissiers il n'y a pas de placeholder si aucun paiements
+    AWAIT
+
+    Placeholder
+----
