@@ -186,6 +186,26 @@
                         <Font name="Corbel" size="17.0" />
                      </font>
                   </Label>
+                  <Label fx:id="messageInfo11" layoutX="53.0" layoutY="37.0" prefHeight="21.0" prefWidth="11.0" text="*" textFill="#e74c3c">
+                     <font>
+                        <Font name="Corbel" size="17.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="messageInfo111" layoutX="53.0" layoutY="82.0" prefHeight="21.0" prefWidth="11.0" text="*" textFill="#e74c3c">
+                     <font>
+                        <Font name="Corbel" size="17.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="messageInfo1111" layoutX="53.0" layoutY="124.0" prefHeight="21.0" prefWidth="11.0" text="*" textFill="#e74c3c">
+                     <font>
+                        <Font name="Corbel" size="17.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="messageInfo11111" layoutX="53.0" layoutY="166.0" prefHeight="21.0" prefWidth="11.0" text="*" textFill="#e74c3c">
+                     <font>
+                        <Font name="Corbel" size="17.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
          </items>
