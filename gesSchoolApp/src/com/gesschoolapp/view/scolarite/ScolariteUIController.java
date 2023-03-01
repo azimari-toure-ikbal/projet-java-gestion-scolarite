@@ -427,15 +427,6 @@ public class ScolariteUIController implements Initializable {
         pp_placeholder1.setFill(new ImagePattern(pp));
         pp_placeholder2.setFill(new ImagePattern(pp));
         profile_pic_placeholder.setFill(new ImagePattern(pp));
-//        class_preview.setImage(new Image("resources/images/plc.png"));
-
-//        if (currentUser instanceof Secretaire) {
-//            setCaissierSession(false);
-//            setSecretaireView();
-//        } else {
-//            setCaissierSession(true);
-//        }
-
 
         feesSpanSelect.getItems().addAll(etatsDePaiement);
         monthyFeeDP.getItems().addAll(mois);
@@ -538,9 +529,11 @@ public class ScolariteUIController implements Initializable {
         double totalEncaisse = 0;
         for (Paiement paiement : dailyFeesList) {
             totalEncaisse += paiement.getMontant();
-        }
-        ;
+        };
         feeTotal.setText("Total encaissé : " + totalEncaisse + "FCFA");
+        if(dailyFeesList.size() == 0){
+            panelEmpty.toFront();
+        }
 
 
         for (Rubrique rubr : Toolbox.getRubriques()) {
