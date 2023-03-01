@@ -132,3 +132,6 @@
 
     Enfaite ça ça n'arrive que parce que la classe n'a pas de modules, cas de figure qui ne devrait pas
     arriver donc ignorez ce " bug " quand la base de données sera bien feed in le bug va fade out (haha tema le jeu de mot)
+
+23-Dans l'interface de l'admin, en generant un certificat de scolarite pour un etudiant non inscrit, le message d'erreur n'est pas rouge mais vert
+24-Dans l'interface de l'admin, en cliquand sur les etats de paiements des caissiers il n'y a pas de placeholder si aucun paiements

@@ -31,85 +31,70 @@ public class PDFGenerator {
         }
 
         // Initialisation du document PDF
-        Document document = new Document();
+        Document document = new Document(PageSize.A4, 50, 50, 50, 50);
         String path = "storage/certificats/pdfs/" + apprenant.getNom().replace(" ", "_") + "_" + apprenant.getPrenom() + "_" + LocalDate.now() + ".pdf";
         String filename = "storage/certificats/imgs/" + apprenant.getNom().replace(" ", "_") + "_" + apprenant.getPrenom() + "_" + LocalDate.now() + ".png";
 
-        try {
-            // Création du fichier PDF
-            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(path));
 
-            // Ouverture du document
+        try {
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(path));
             document.open();
 
-            // Ajout du titre
-            Paragraph title = new Paragraph("CERTIFICAT DE SCOLARITE", new Font(Font.FontFamily.TIMES_ROMAN, 20, Font.BOLD, BaseColor.BLACK));
+            // Ajouter une photo de l'école
+            Image schoolImage = Image.getInstance("src/com/gesschoolapp/resources/images/schoolup_logo.png");
+            schoolImage.scaleToFit(100, 100);
+            schoolImage.setAbsolutePosition(450f, 700f);
+            document.add(schoolImage);
+
+            // Ajouter les informations de l'école
+            Paragraph schoolInfo = new Paragraph();
+            schoolInfo.add(new Phrase("SchoolUp", new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD)));
+            schoolInfo.add(new Phrase("\nAdresse: 123 Johnny Street"));
+            schoolInfo.add(new Phrase("\nDakar, Sénégal 11200"));
+            schoolInfo.add(new Phrase("\nTél: (221) 77-777-77-77"));
+            schoolInfo.setAlignment(Element.ALIGN_CENTER);
+            document.add(schoolInfo);
+
+            // Ajouter le titre encadré en haut de page
+            Font font = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18);
+            Paragraph title = new Paragraph("Certificat de scolarité", font);
             title.setAlignment(Element.ALIGN_CENTER);
-            title.setSpacingAfter(30f);
+            title.setSpacingBefore(50f);
+            title.setSpacingAfter(50f);
+
             document.add(title);
 
-            // Ajout du logo de l'établissement à gauche
-            Image logo = Image.getInstance("src/com/gesschoolapp/resources/images/schoolup_logo.png");
-            logo.scaleAbsolute(80, 80);
-            document.add(logo);
+            // Ajouter le contenu du certificat de scolarité
+            Font contentFont = FontFactory.getFont(FontFactory.HELVETICA, 12);
+            Paragraph content = new Paragraph();
+            content.add(new Phrase("Je soussigné Monsieur Al Abdourahamane Abdoulaye AZOUMARI, Directeur de l'établissement, atteste que Mme, Mlle, M. : " + apprenant.getFullName() + " né(e) le " + apprenant.getDateNaissance().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + " est régulièrement inscrit(e) à ladite école en " + apprenant.getClasse() + ", année scolaire " + (LocalDate.now().getYear() - 1) + "-" + (LocalDate.now().getYear()) + ".", contentFont));
+            content.add(new Phrase("\nEn foi de quoi, la présente attestation est délivrée pour servir et valoir ce que de droit."));
+            content.setAlignment(Element.ALIGN_JUSTIFIED);
+            content.setSpacingAfter(30f);
 
-            // Ajout de la date à droite
-            Paragraph date = new Paragraph("Date : " + new SimpleDateFormat("dd-MM-yyyy").format(new Date()), new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK));
-            date.setAlignment(Element.ALIGN_RIGHT);
-            date.setSpacingAfter(30f);
-            document.add(date);
+            document.add(content);
 
-            // Ajout du corps du document
-            Paragraph body = new Paragraph("Certifie que " + apprenant.getFullName() + " est bel et bien inscrit(e) dans notre établissement et qu'il/elle est actuellement en " + apprenant.getClasse() + ".", new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK));
-            body.setSpacingAfter(30f);
-            document.add(body);
+            // Ajouter la signature du directeur de l'établissement
+            PdfPTable table = new PdfPTable(1);
+            table.setWidthPercentage(100f);
+            table.getDefaultCell().setBorder(0);
+            table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_RIGHT);
+            table.addCell(new Paragraph("Fait à Dakar, le " + LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), contentFont));
+            table.addCell(new Paragraph("Le Directeur,", contentFont));
+            table.addCell(new Paragraph("Al Abdourahamane Abdoulaye AZOUMARI", contentFont));
+            table.setSpacingBefore(50f);
 
-            // Ajout du bas de page
-            Paragraph footer = new Paragraph("Fait à Dakar, le " + new SimpleDateFormat("dd-MM-yyyy").format(new Date()), new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK));
-            footer.setAlignment(Element.ALIGN_RIGHT);
-            footer.setSpacingAfter(30f);
-            document.add(footer);
+            document.add(table);
 
-            // Ajout de la signature
-            Image signature = Image.getInstance("src/com/gesschoolapp/resources/images/compta.png");
-            signature.scaleAbsolute(200, 100);
-            signature.setAlignment(Element.ALIGN_RIGHT);
-            document.add(signature);
-
-            // Ajout du nom du directeur
-            Paragraph director = new Paragraph("Dr. Moustapha DIOP", new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK));
-            director.setAlignment(Element.ALIGN_RIGHT);
-            director.setSpacingAfter(30f);
-            document.add(director);
-
-            // Ajout du poste du directeur
-            Paragraph directorPost = new Paragraph("Directeur Général", new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK));
-            directorPost.setAlignment(Element.ALIGN_RIGHT);
-            directorPost.setSpacingAfter(30f);
-            document.add(directorPost);
-
-            // Ajout du nom de l'établissement
-            Paragraph schoolName = new Paragraph("Ecole Supérieure de Gestion", new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK));
-            schoolName.setAlignment(Element.ALIGN_RIGHT);
-            schoolName.setSpacingAfter(30f);
-            document.add(schoolName);
-
-            // Ajout du logo de l'établissement à droite
-            Image schoolLogo = Image.getInstance("src/com/gesschoolapp/resources/images/schoolup_logo.png");
-            schoolLogo.scaleAbsolute(80, 80);
-            schoolLogo.setAlignment(Element.ALIGN_RIGHT);
-            document.add(schoolLogo);
-
-            // Fermeture du document
             document.close();
 
             Toolbox.pdfToImage(path, filename);
-        } catch (DocumentException e) {
-            throw new PDFException("Error : Unable to create PDF document !");
-        } catch (IOException e) {
-            throw new PDFException("Error : Unable to open PDF document !" + e.getMessage());
+
+        } catch (Exception e) {
+            throw new PDFException("Erreur lors de la génération du PDF : " + e.getMessage());
         }
     }
+
     public static void recuGenerator(Paiement paiement) throws PDFException {
         // Initialisation du document PDF
         Document document = new Document();
