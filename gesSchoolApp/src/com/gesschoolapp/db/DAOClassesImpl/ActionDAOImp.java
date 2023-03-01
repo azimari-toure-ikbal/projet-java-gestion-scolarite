@@ -196,4 +196,15 @@ public class ActionDAOImp implements ActionDAO {
         return null;
     }
 
+    public void delete(int idAction){
+        try(Connection connection = DBManager.getConnection()){
+            String query = "DELETE FROM actions WHERE idAction = ?";
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setInt(1, idAction);
+            stmt.executeUpdate();
+        }catch (Exception e){
+            System.out.println("Error in deleteAction() : " + e.getMessage());
+        }
+    }
+
 }

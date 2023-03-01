@@ -81,6 +81,15 @@ public class ApprenantDAOImp implements ApprenantDAO {
             Apprenant addedApprenant = this.searchByMatricule(matricule);
 
             if(!Objects.equals(user, "admin")){
+                List<Action> actions = new ActionDAOImp().getActions();
+                for (Action action : actions){
+                    if(action.getObject() instanceof Apprenant student){
+                        if(student.getIdApprenant() == addedApprenant.getIdApprenant() ||
+                                student.getMatricule() == addedApprenant.getMatricule()){
+                            new ActionDAOImp().delete(action.getIdAction());
+                        }
+                    }
+                }
                 Action action = new Action();
                 action.setAction(ActionType.ADD);
                 action.setActor(user);
@@ -100,6 +109,16 @@ public class ApprenantDAOImp implements ApprenantDAO {
         try(Connection connection = DBManager.getConnection() ){
 
             if(!Objects.equals(user, "admin")){
+                List<Action> actions = new ActionDAOImp().getActions();
+                for (Action action : actions){
+                    if(action.getObject() instanceof Apprenant student){
+                        if(student.getIdApprenant() == obj.getIdApprenant() ||
+                                student.getMatricule() == obj.getMatricule()){
+                            new ActionDAOImp().delete(action.getIdAction());
+                        }
+                    }
+                }
+
                 Action action = new Action();
                 action.setAction(ActionType.UPDATE);
                 action.setActor(user);
@@ -131,6 +150,18 @@ public class ApprenantDAOImp implements ApprenantDAO {
         try(Connection connexion = DBManager.getConnection()){
 
             if(!Objects.equals(user, "admin")){
+                List<Action> actions = new ActionDAOImp().getActions();
+                for (Action action
+                        : actions){
+                    if(action.getObject() instanceof Apprenant student){
+                        Apprenant apprenant = new ApprenantDAOImp().read(id);
+                        if(student.getIdApprenant() == apprenant.getIdApprenant() ||
+                                student.getMatricule() == apprenant.getMatricule()){
+                            new ActionDAOImp().delete(action.getIdAction());
+                        }
+                    }
+                }
+
                 Action action = new Action();
                 action.setAction(ActionType.DELETE);
                 action.setActor(user);

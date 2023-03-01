@@ -240,10 +240,13 @@ public class UserDAOImp implements UserDAO, DAO<Utilisateur> {
             Connection connection = DBManager.getConnection();
             String query = "UPDATE utilisateurs SET nom=?, prenom=?, email=?, password=?, numero=?, type=? WHERE idUtilisateur=?";
             PreparedStatement ps = connection.prepareStatement(query);
+
+            String hashedPassword = Toolbox.generateSecurePassword(obj.getPassword());
+
             ps.setString(1, obj.getNom());
             ps.setString(2, obj.getPrenom());
             ps.setString(3, obj.getEmail());
-            ps.setString(4, obj.getPassword());
+            ps.setString(4, hashedPassword);
             ps.setString(5, obj.getNumero());
             ps.setString(6, obj.getType());
             ps.setInt(7, obj.getId());
