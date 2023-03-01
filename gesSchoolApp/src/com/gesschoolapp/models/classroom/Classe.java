@@ -174,13 +174,11 @@ public class Classe implements Serializable, Comparable<Classe>{
     public boolean isCurrentEcheancePaid(Apprenant apprenant){
         if(apprenant.getEtatPaiement() == 0){
             return false;
-        }
-        LocalDate date = echeancier.get(apprenant.getEtatPaiement()).getDate();
-
-        if(date.isAfter(getCurrentEcheance().getDate()) || date.isEqual(getCurrentEcheance().getDate())){
+        } else if (apprenant.getEtatPaiement() == 9) {
             return true;
         }
-        return false;
+        LocalDate date = echeancier.get(apprenant.getEtatPaiement()).getDate();
+        return date.isAfter(getCurrentEcheance().getDate()) || date.isEqual(getCurrentEcheance().getDate());
     }
 
     public List<Apprenant> getGoodApprenants(){
@@ -198,13 +196,9 @@ public class Classe implements Serializable, Comparable<Classe>{
         return "\nClasse{" +
                 "id=" + id +
                 ", intitule='" + intitule + '\'' +
-                ", reference=" + reference +
                 ", annee='" + annee + '\'' +
                 ", formation='" + formation + '\'' +
                 ", apprenants=" + apprenants +
-                ", modules=" + modules +
-                ", views=" + views +
-                ", rubriques=" + rubriques +
                 ", echeancier=" + echeancier +
                 "}\n";
     }

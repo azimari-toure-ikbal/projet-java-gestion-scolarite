@@ -61,7 +61,7 @@ public class ApprenantItemController {
         if(event.getSource() == btnCertificat){
 
             if(thisApprenant.getEtatPaiement() == 0){
-                superController.setMainMessageInfo(thisApprenant.getFullName() + " n'est pas inscrit !");
+                superController.setMainMessageInfo(thisApprenant.getFullName() + " n'est pas inscrit !",0);
             }else{
                 try {
                     PDFGenerator.cerficatScolariteGenerator(thisApprenant);

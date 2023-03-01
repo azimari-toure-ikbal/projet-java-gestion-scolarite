@@ -83,6 +83,13 @@ public class NoteDAOImp implements NoteDAO {
             }
 
             if(!Objects.equals(user, "admin")){
+                List<Action> actions = new ActionDAOImp().getActions();
+                for (Action action : actions) {
+                    if(action.getObject() instanceof Note previousNote){
+                        if(previousNote.getId() == obj.getId())
+                            new ActionDAOImp().delete(action.getIdAction());
+                    }
+                }
                 Action action = new Action();
                 action.setActor(user);
                 action.setAction(ActionType.UPDATE);

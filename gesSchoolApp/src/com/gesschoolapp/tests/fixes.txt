@@ -10,7 +10,8 @@
 ----
 
 ----
-3-Quand je rajoute une note pour cherifa dans francais par exemple, la note s'affiche partout et quand je recharge la valeur de la note retourne a 0 alors qu'elle est update dans la base de données
+3-Quand je rajoute une note pour cherifa dans francais par exemple, la note s'affiche partout et quand je recharge la
+    valeur de la note retourne a 0 alors qu'elle est update dans la base de données
     FIXED
     Je sais même plus ça date
 ----
@@ -26,7 +27,8 @@
 ----
 
 ----
-6-La recherche ne fonctionne pas correctement il faudrait changer la recherche pour qu'elle ne prenne pas en compte la casse
+6-La recherche ne fonctionne pas correctement il faudrait changer la recherche pour qu'elle ne prenne pas en compte la
+    casse
     FIXED
     J'ai mis ignoreCase partout
 ----
@@ -37,7 +39,8 @@
 ---
 
 ----
-9-Ancien bug de quand on importe une note d'un apprenant qui en avait deja une, la note s'affiche en double jusqu'a que je me reconnecte
+9-Ancien bug de quand on importe une note d'un apprenant qui en avait deja une, la note s'affiche en double jusqu'a que
+    je me reconnecte
     FIXED
     J'ai posé une condition pour update la note plutôt que de Add
 ----
@@ -55,7 +58,8 @@
 ---
 
 ---
-12-Premiere modification de la note, dans les logs de l'admin, la note modifiee est 0 et pas la nouvelle valeur du coup si je modifie deux fois la note, la valeur qui s'affiche est 0 et pas la valeur de la premiere modification
+12-Premiere modification de la note, dans les logs de l'admin, la note modifiee est 0 et pas la nouvelle valeur du coup
+    si je modifie deux fois la note, la valeur qui s'affiche est 0 et pas la valeur de la premiere modification
     AWAIT
 
     Je comprend pas exactement le problème là
@@ -71,6 +75,10 @@
     UPDATE
 
     Enfaite c'est surement un soucis avec le back Lawal va voir ça
+
+    UPDATE 2
+    C'est réglé normalement. Il me semble que c'est ce dont on parlait ce matin
+    Les étudiants avec l'état de paiement à 9 s'affichent normalement dans la liste des étudiants
 ----
 
 ----
@@ -80,7 +88,8 @@
 ----
 
 ----
-15-Quand on genere les bulletins et qu'on clique sur la vue des apprenants, on n'a que ceux pour qui le bulletin a ete genere
+15-Quand on genere les bulletins et qu'on clique sur la vue des apprenants, on n'a que ceux pour qui le bulletin a ete
+    generé
     AWAIT
 
     J'ai vérifié mais il n'y a pas ce bug chez moi, il faudra revoir ça chez les autres
@@ -106,17 +115,18 @@
 ----
 
 ----
-19-Admin dooit pouvoir modifier son profil
+19-Admin doit pouvoir modifier son profil
     AWAIT
 
     Flemme là je rajouterai les conditions demain ou après demain façon c'est pas hyper important
 ----
 
 ----
-20-Quand on annule une modificatoin de note, la note disparait dans la vue
+20-Quand on annule une modification de note, la note disparait dans la vue
     AWAIT
 
     Je n'ai pas ce problème chez moi faudrait revoir ça
+    Très étrange, il faudrait que tu nous montres ça en live parce que chez nous ça marche correctement
 ----
 
 ----
@@ -134,4 +144,4 @@
     arriver donc ignorez ce " bug " quand la base de données sera bien feed in le bug va fade out (haha tema le jeu de mot)
 
 23-Dans l'interface de l'admin, en generant un certificat de scolarite pour un etudiant non inscrit, le message d'erreur n'est pas rouge mais vert
-24-Dans l'interface de l'admin, en cliquand sur les etats de paiements des caissiers il n'y a pas de placeholder si aucun paiements
+24-Dans l'interface de l'admin, en cliquant sur les etats de paiements des caissiers il n'y a pas de placeholder si aucun paiements
