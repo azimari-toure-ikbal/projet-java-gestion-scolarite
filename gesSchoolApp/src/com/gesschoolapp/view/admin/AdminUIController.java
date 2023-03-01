@@ -951,7 +951,7 @@ public class AdminUIController implements Initializable {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("ProfileEdit.fxml"));
+            loader.setLocation(getClass().getResource("PasswordEdit.fxml"));
 
             AnchorPane page = (AnchorPane) loader.load();
 

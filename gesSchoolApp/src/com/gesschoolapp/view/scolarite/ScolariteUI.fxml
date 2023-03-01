@@ -725,245 +725,6 @@
                         <fx:include fx:id="classPreview1" source="ClassPreviewItem.fxml" />
                      </right>
                   </BorderPane>
-                  <BorderPane fx:id="profileView" layoutX="24.0" layoutY="45.0" prefHeight="589.0" prefWidth="667.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <center>
-                        <AnchorPane style="-fx-background-color: #F3F3F3;" BorderPane.alignment="CENTER">
-                           <BorderPane.margin>
-                              <Insets />
-                           </BorderPane.margin>
-                           <children>
-                              <AnchorPane prefHeight="658.0" prefWidth="953.0" style="-fx-background-color: #EAEFF8;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <children>
-                                    <Label fx:id="labelTypeUser" contentDisplay="RIGHT" layoutX="30.0" layoutY="38.0" prefHeight="29.0" prefWidth="194.0" text="Profil secrétaire" textFill="#323a3f">
-                                       <font>
-                                          <Font name="Gill Sans MT" size="20.0" />
-                                       </font>
-                                       <opaqueInsets>
-                                          <Insets left="22.0" />
-                                       </opaqueInsets>
-                                    </Label>
-                                    <Line endX="589.0" layoutX="298.0" layoutY="55.0" startX="-126.0" strokeWidth="0.1" />
-                                    <AnchorPane layoutX="30.0" layoutY="90.0" prefHeight="295.0" prefWidth="609.0" style="-fx-background-color: white; -fx-background-radius: 10px;">
-                                       <effect>
-                                          <DropShadow>
-                                             <color>
-                                                <Color opacity="0.5152671933174133" />
-                                             </color>
-                                          </DropShadow>
-                                       </effect>
-                                       <children>
-                                          <Circle fx:id="profile_pic_placeholder" fill="DODGERBLUE" layoutX="146.0" layoutY="116.0" onMouseClicked="#handleNavigation" radius="88.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="profile_pic" />
-                                          <Label fx:id="userFullName" alignment="CENTER" contentDisplay="RIGHT" layoutX="1.0" layoutY="221.0" prefHeight="29.0" prefWidth="289.0" text="Johnson Davison Doe" textFill="#323a3f">
-                                             <font>
-                                                <Font name="Gill Sans MT" size="20.0" />
-                                             </font>
-                                             <opaqueInsets>
-                                                <Insets left="22.0" />
-                                             </opaqueInsets>
-                                          </Label>
-                                          <Line endX="238.0" endY="194.0" layoutX="51.0" layoutY="81.0" startX="238.0" startY="-61.0" strokeWidth="0.1" />
-                                          <Label fx:id="classListName1211" contentDisplay="RIGHT" layoutX="322.0" layoutY="72.0" prefHeight="29.0" prefWidth="105.0" text="Email : " textFill="#323a3f">
-                                             <font>
-                                                <Font name="Gill Sans MT" size="17.0" />
-                                             </font>
-                                             <opaqueInsets>
-                                                <Insets left="22.0" />
-                                             </opaqueInsets>
-                                          </Label>
-                                          <Label fx:id="classListName12111" layoutX="322.0" layoutY="143.0" prefHeight="29.0" prefWidth="103.0" text="Numéro :" textFill="#323a3f">
-                                             <font>
-                                                <Font name="Gill Sans MT" size="17.0" />
-                                             </font>
-                                             <opaqueInsets>
-                                                <Insets left="22.0" />
-                                             </opaqueInsets>
-                                          </Label>
-                                          <Label fx:id="userMail" contentDisplay="RIGHT" layoutX="376.0" layoutY="72.0" prefHeight="29.0" prefWidth="233.0" text="johndoe@mail.com" textFill="#9ea0a1">
-                                             <font>
-                                                <Font name="Gill Sans MT" size="17.0" />
-                                             </font>
-                                             <opaqueInsets>
-                                                <Insets left="22.0" />
-                                             </opaqueInsets>
-                                          </Label>
-                                          <Label fx:id="userPhoneNumber" contentDisplay="RIGHT" layoutX="399.0" layoutY="143.0" prefHeight="29.0" prefWidth="209.0" text="772043509" textFill="#9ea0a1">
-                                             <font>
-                                                <Font name="Gill Sans MT" size="17.0" />
-                                             </font>
-                                             <opaqueInsets>
-                                                <Insets left="22.0" />
-                                             </opaqueInsets>
-                                          </Label>
-                                          <Button layoutX="459.0" layoutY="235.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="129.0" styleClass="disconnect_btn" text="Modifier" />
-                                       </children>
-                                    </AnchorPane>
-                                    <Label fx:id="classListName121" contentDisplay="RIGHT" layoutX="30.0" layoutY="407.0" prefHeight="29.0" prefWidth="174.0" text="Notifications" textFill="#323a3f">
-                                       <font>
-                                          <Font name="Gill Sans MT" size="20.0" />
-                                       </font>
-                                       <opaqueInsets>
-                                          <Insets left="22.0" />
-                                       </opaqueInsets>
-                                    </Label>
-                                    <Line endX="589.0" layoutX="298.0" layoutY="427.0" startX="-149.0" startY="-2.5" strokeWidth="0.1" />
-                                    <HBox fx:id="homeStudentShortcut1" alignment="TOP_CENTER" layoutX="30.0" layoutY="436.0" prefHeight="208.0" prefWidth="865.0" style="-fx-background-color: transparent; -fx-background-radius: 10px;" AnchorPane.leftAnchor="27.0">
-                                       <children>
-                                          <VBox alignment="CENTER" prefHeight="179.0" prefWidth="905.0" style="-fx-background-color: transparent;">
-                                             <padding>
-                                                <Insets top="5.0" />
-                                             </padding>
-                                             <children>
-                                                <VBox>
-                                                   <children>
-                                                      <ScrollPane hbarPolicy="NEVER" prefHeight="272.0" prefWidth="645.0" style="-fx-background-color: transparent;" vbarPolicy="NEVER">
-                                                         <content>
-                                                            <VBox fx:id="notifsLayout" minHeight="271.0" prefHeight="269.0" prefWidth="855.0" spacing="8.0" style="-fx-background-color: #EAEFF8;">
-                                                               <children>
-                                                                  <HBox prefHeight="78.0" prefWidth="855.0" style="-fx-background-color: white; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-border-color: #28BAFC;">
-                                                                     <effect>
-                                                                        <DropShadow>
-                                                                           <color>
-                                                                              <Color red="0.1632000058889389" green="0.7209600210189819" blue="0.9599999785423279" opacity="0.31770989298820496" />
-                                                                           </color>
-                                                                        </DropShadow>
-                                                                     </effect>
-                                                                     <children>
-                                                                        <AnchorPane prefHeight="76.0" prefWidth="81.0" style="-fx-background-color: #E6F7FF; -fx-background-radius: 10px 0 0 10px; -fx-border-width: 0 1.3px 0 0; -fx-border-color: #28BAFC;">
-                                                                           <children>
-                                                                              <ImageView fitHeight="41.0" fitWidth="41.0" layoutX="20.0" layoutY="18.0">
-                                                                                 <image>
-                                                                                    <Image url="@../../../../../../../../AppData/Local/Temp/icons8_info_64px.png" />
-                                                                                 </image>
-                                                                              </ImageView>
-                                                                           </children>
-                                                                        </AnchorPane>
-                                                                        <AnchorPane prefHeight="76.0" prefWidth="751.0">
-                                                                           <children>
-                                                                              <Label layoutX="14.0" layoutY="29.0" prefHeight="19.0" prefWidth="723.0" text="Votre ajout de l'apprenant Ikbal AZIMARI TOURE a été annulé par l'administrateur Wissam Youssef">
-                                                                                 <font>
-                                                                                    <Font name="Gill Sans MT" size="16.0" />
-                                                                                 </font>
-                                                                              </Label>
-                                                                              <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="739.0" layoutY="5.0">
-                                                                                 <image>
-                                                                                    <Image url="@../../../../../../../../AppData/Local/Temp/icons8_Close_50px.png" />
-                                                                                 </image>
-                                                                              </ImageView>
-                                                                              <Label layoutX="644.0" layoutY="55.0" prefHeight="19.0" prefWidth="110.0" text="23 fev 2021 à 09h:15" textFill="#bababa">
-                                                                                 <font>
-                                                                                    <Font name="Gill Sans MT" size="13.0" />
-                                                                                 </font>
-                                                                              </Label>
-                                                                           </children>
-                                                                        </AnchorPane>
-                                                                     </children>
-                                                                     <padding>
-                                                                        <Insets top="1.0" />
-                                                                     </padding>
-                                                                  </HBox>
-                                                                  <HBox prefHeight="78.0" prefWidth="855.0" style="-fx-background-color: white; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-border-color: #28BAFC;">
-                                                                     <effect>
-                                                                        <DropShadow>
-                                                                           <color>
-                                                                              <Color red="0.1632000058889389" green="0.7209600210189819" blue="0.9599999785423279" opacity="0.31770989298820496" />
-                                                                           </color>
-                                                                        </DropShadow>
-                                                                     </effect>
-                                                                     <children>
-                                                                        <AnchorPane prefHeight="76.0" prefWidth="81.0" style="-fx-background-color: #E6F7FF; -fx-background-radius: 10px 0 0 10px; -fx-border-width: 0 1.3px 0 0; -fx-border-color: #28BAFC;">
-                                                                           <children>
-                                                                              <ImageView fitHeight="41.0" fitWidth="41.0" layoutX="20.0" layoutY="18.0">
-                                                                                 <image>
-                                                                                    <Image url="@../../../../../../../../AppData/Local/Temp/icons8_info_64px.png" />
-                                                                                 </image>
-                                                                              </ImageView>
-                                                                           </children>
-                                                                        </AnchorPane>
-                                                                        <AnchorPane prefHeight="76.0" prefWidth="751.0">
-                                                                           <children>
-                                                                              <Label layoutX="14.0" layoutY="29.0" prefHeight="19.0" prefWidth="723.0" text="Votre ajout de l'apprenant Ikbal AZIMARI TOURE a été annulé par l'administrateur Wissam Youssef">
-                                                                                 <font>
-                                                                                    <Font name="Gill Sans MT" size="16.0" />
-                                                                                 </font>
-                                                                              </Label>
-                                                                              <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="739.0" layoutY="5.0">
-                                                                                 <image>
-                                                                                    <Image url="@../../../../../../../../AppData/Local/Temp/icons8_Close_50px.png" />
-                                                                                 </image>
-                                                                              </ImageView>
-                                                                              <Label layoutX="644.0" layoutY="55.0" prefHeight="19.0" prefWidth="110.0" text="23 fev 2021 à 09h:15" textFill="#bababa">
-                                                                                 <font>
-                                                                                    <Font name="Gill Sans MT" size="13.0" />
-                                                                                 </font>
-                                                                              </Label>
-                                                                           </children>
-                                                                        </AnchorPane>
-                                                                     </children>
-                                                                  </HBox>
-                                                                  <HBox prefHeight="78.0" prefWidth="855.0" style="-fx-background-color: white; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-border-color: #28BAFC;">
-                                                                     <effect>
-                                                                        <DropShadow>
-                                                                           <color>
-                                                                              <Color red="0.1632000058889389" green="0.7209600210189819" blue="0.9599999785423279" opacity="0.31770989298820496" />
-                                                                           </color>
-                                                                        </DropShadow>
-                                                                     </effect>
-                                                                     <children>
-                                                                        <AnchorPane prefHeight="76.0" prefWidth="81.0" style="-fx-background-color: #E6F7FF; -fx-background-radius: 10px 0 0 10px; -fx-border-width: 0 1.3px 0 0; -fx-border-color: #28BAFC;">
-                                                                           <children>
-                                                                              <ImageView fitHeight="41.0" fitWidth="41.0" layoutX="20.0" layoutY="18.0">
-                                                                                 <image>
-                                                                                    <Image url="@../../../../../../../../AppData/Local/Temp/icons8_info_64px.png" />
-                                                                                 </image>
-                                                                              </ImageView>
-                                                                           </children>
-                                                                        </AnchorPane>
-                                                                        <AnchorPane prefHeight="76.0" prefWidth="751.0">
-                                                                           <children>
-                                                                              <Label layoutX="14.0" layoutY="29.0" prefHeight="19.0" prefWidth="723.0" text="Votre ajout de l'apprenant Ikbal AZIMARI TOURE a été annulé par l'administrateur Wissam Youssef">
-                                                                                 <font>
-                                                                                    <Font name="Gill Sans MT" size="16.0" />
-                                                                                 </font>
-                                                                              </Label>
-                                                                              <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="739.0" layoutY="5.0">
-                                                                                 <image>
-                                                                                    <Image url="@../../../../../../../../AppData/Local/Temp/icons8_Close_50px.png" />
-                                                                                 </image>
-                                                                              </ImageView>
-                                                                              <Label layoutX="644.0" layoutY="55.0" prefHeight="19.0" prefWidth="110.0" text="23 fev 2021 à 09h:15" textFill="#bababa">
-                                                                                 <font>
-                                                                                    <Font name="Gill Sans MT" size="13.0" />
-                                                                                 </font>
-                                                                              </Label>
-                                                                           </children>
-                                                                        </AnchorPane>
-                                                                     </children>
-                                                                  </HBox>
-                                                               </children>
-                                                            </VBox>
-                                                         </content>
-                                                         <padding>
-                                                            <Insets left="5.0" right="5.0" />
-                                                         </padding>
-                                                         <VBox.margin>
-                                                            <Insets top="5.0" />
-                                                         </VBox.margin>
-                                                      </ScrollPane>
-                                                   </children>
-                                                </VBox>
-                                             </children>
-                                             <HBox.margin>
-                                                <Insets top="5.0" />
-                                             </HBox.margin>
-                                          </VBox>
-                                       </children>
-                                    </HBox>
-                                 </children>
-                              </AnchorPane>
-                           </children>
-                        </AnchorPane>
-                     </center>
-                  </BorderPane>
                   <BorderPane fx:id="feesView" layoutX="24.0" layoutY="45.0" prefHeight="589.0" prefWidth="667.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <center>
                         <AnchorPane BorderPane.alignment="CENTER">
@@ -1365,6 +1126,246 @@
                      <right>
                         <fx:include fx:id="classPreview2" source="ClassPreviewItem.fxml" />
                      </right>
+                  </BorderPane>
+                  <BorderPane fx:id="profileView" layoutX="24.0" layoutY="45.0" prefHeight="589.0" prefWidth="667.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <center>
+                        <AnchorPane style="-fx-background-color: #F3F3F3;" BorderPane.alignment="CENTER">
+                           <BorderPane.margin>
+                              <Insets />
+                           </BorderPane.margin>
+                           <children>
+                              <AnchorPane prefHeight="658.0" prefWidth="953.0" style="-fx-background-color: #EAEFF8;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <Label fx:id="labelTypeUser" contentDisplay="RIGHT" layoutX="30.0" layoutY="38.0" prefHeight="29.0" prefWidth="194.0" text="Profil secrétaire" textFill="#323a3f">
+                                       <font>
+                                          <Font name="Gill Sans MT" size="20.0" />
+                                       </font>
+                                       <opaqueInsets>
+                                          <Insets left="22.0" />
+                                       </opaqueInsets>
+                                    </Label>
+                                    <Line endX="589.0" layoutX="298.0" layoutY="55.0" startX="-126.0" strokeWidth="0.1" />
+                                    <AnchorPane layoutX="30.0" layoutY="90.0" prefHeight="295.0" prefWidth="865.0" style="-fx-background-color: white; -fx-background-radius: 10px;">
+                                       <effect>
+                                          <DropShadow>
+                                             <color>
+                                                <Color opacity="0.5152671933174133" />
+                                             </color>
+                                          </DropShadow>
+                                       </effect>
+                                       <children>
+                                          <Button layoutX="319.0" layoutY="236.0" mnemonicParsing="false" onAction="#editPasswordBtnClicked" prefHeight="31.0" prefWidth="259.0" styleClass="disconnect_btn" text="Changer mon mot de passe" />
+                                          <Circle fx:id="profile_pic_placeholder" fill="DODGERBLUE" layoutX="146.0" layoutY="116.0" onMouseClicked="#handleNavigation" radius="88.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="profile_pic" />
+                                          <Label fx:id="userFullName" alignment="CENTER" contentDisplay="RIGHT" layoutX="1.0" layoutY="221.0" prefHeight="29.0" prefWidth="289.0" text="Johnson Davison Doe" textFill="#323a3f">
+                                             <font>
+                                                <Font name="Gill Sans MT" size="20.0" />
+                                             </font>
+                                             <opaqueInsets>
+                                                <Insets left="22.0" />
+                                             </opaqueInsets>
+                                          </Label>
+                                          <Line endX="238.0" endY="194.0" layoutX="51.0" layoutY="81.0" startX="238.0" startY="-61.0" strokeWidth="0.1" />
+                                          <Label fx:id="classListName1211" contentDisplay="RIGHT" layoutX="322.0" layoutY="72.0" prefHeight="29.0" prefWidth="105.0" text="Email : " textFill="#323a3f">
+                                             <font>
+                                                <Font name="Gill Sans MT" size="17.0" />
+                                             </font>
+                                             <opaqueInsets>
+                                                <Insets left="22.0" />
+                                             </opaqueInsets>
+                                          </Label>
+                                          <Label fx:id="classListName12111" layoutX="322.0" layoutY="143.0" prefHeight="29.0" prefWidth="103.0" text="Numéro :" textFill="#323a3f">
+                                             <font>
+                                                <Font name="Gill Sans MT" size="17.0" />
+                                             </font>
+                                             <opaqueInsets>
+                                                <Insets left="22.0" />
+                                             </opaqueInsets>
+                                          </Label>
+                                          <Label fx:id="userMail" contentDisplay="RIGHT" layoutX="376.0" layoutY="72.0" prefHeight="29.0" prefWidth="233.0" text="johndoe@mail.com" textFill="#9ea0a1">
+                                             <font>
+                                                <Font name="Gill Sans MT" size="17.0" />
+                                             </font>
+                                             <opaqueInsets>
+                                                <Insets left="22.0" />
+                                             </opaqueInsets>
+                                          </Label>
+                                          <Label fx:id="userPhoneNumber" contentDisplay="RIGHT" layoutX="399.0" layoutY="143.0" prefHeight="29.0" prefWidth="209.0" text="772043509" textFill="#9ea0a1">
+                                             <font>
+                                                <Font name="Gill Sans MT" size="17.0" />
+                                             </font>
+                                             <opaqueInsets>
+                                                <Insets left="22.0" />
+                                             </opaqueInsets>
+                                          </Label>
+                                          <Button disable="true" layoutX="594.0" layoutY="236.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="259.0" styleClass="disconnect_btn" text="Réclamer une modification" />
+                                       </children>
+                                    </AnchorPane>
+                                    <Label fx:id="classListName121" contentDisplay="RIGHT" layoutX="30.0" layoutY="407.0" prefHeight="29.0" prefWidth="174.0" text="Notifications" textFill="#323a3f">
+                                       <font>
+                                          <Font name="Gill Sans MT" size="20.0" />
+                                       </font>
+                                       <opaqueInsets>
+                                          <Insets left="22.0" />
+                                       </opaqueInsets>
+                                    </Label>
+                                    <Line endX="589.0" layoutX="298.0" layoutY="427.0" startX="-149.0" startY="-2.5" strokeWidth="0.1" />
+                                    <HBox fx:id="homeStudentShortcut1" alignment="TOP_CENTER" layoutX="30.0" layoutY="436.0" prefHeight="208.0" prefWidth="865.0" style="-fx-background-color: transparent; -fx-background-radius: 10px;" AnchorPane.leftAnchor="27.0">
+                                       <children>
+                                          <VBox alignment="CENTER" prefHeight="179.0" prefWidth="905.0" style="-fx-background-color: transparent;">
+                                             <padding>
+                                                <Insets top="5.0" />
+                                             </padding>
+                                             <children>
+                                                <VBox>
+                                                   <children>
+                                                      <ScrollPane hbarPolicy="NEVER" prefHeight="272.0" prefWidth="645.0" style="-fx-background-color: transparent;" vbarPolicy="NEVER">
+                                                         <content>
+                                                            <VBox fx:id="notifsLayout" minHeight="271.0" prefHeight="269.0" prefWidth="855.0" spacing="8.0" style="-fx-background-color: #EAEFF8;">
+                                                               <children>
+                                                                  <HBox prefHeight="78.0" prefWidth="855.0" style="-fx-background-color: white; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-border-color: #28BAFC;">
+                                                                     <effect>
+                                                                        <DropShadow>
+                                                                           <color>
+                                                                              <Color red="0.1632000058889389" green="0.7209600210189819" blue="0.9599999785423279" opacity="0.31770989298820496" />
+                                                                           </color>
+                                                                        </DropShadow>
+                                                                     </effect>
+                                                                     <children>
+                                                                        <AnchorPane prefHeight="76.0" prefWidth="81.0" style="-fx-background-color: #E6F7FF; -fx-background-radius: 10px 0 0 10px; -fx-border-width: 0 1.3px 0 0; -fx-border-color: #28BAFC;">
+                                                                           <children>
+                                                                              <ImageView fitHeight="41.0" fitWidth="41.0" layoutX="20.0" layoutY="18.0">
+                                                                                 <image>
+                                                                                    <Image url="@../../../../../../../../AppData/Local/Temp/icons8_info_64px.png" />
+                                                                                 </image>
+                                                                              </ImageView>
+                                                                           </children>
+                                                                        </AnchorPane>
+                                                                        <AnchorPane prefHeight="76.0" prefWidth="751.0">
+                                                                           <children>
+                                                                              <Label layoutX="14.0" layoutY="29.0" prefHeight="19.0" prefWidth="723.0" text="Votre ajout de l'apprenant Ikbal AZIMARI TOURE a été annulé par l'administrateur Wissam Youssef">
+                                                                                 <font>
+                                                                                    <Font name="Gill Sans MT" size="16.0" />
+                                                                                 </font>
+                                                                              </Label>
+                                                                              <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="739.0" layoutY="5.0">
+                                                                                 <image>
+                                                                                    <Image url="@../../../../../../../../AppData/Local/Temp/icons8_Close_50px.png" />
+                                                                                 </image>
+                                                                              </ImageView>
+                                                                              <Label layoutX="644.0" layoutY="55.0" prefHeight="19.0" prefWidth="110.0" text="23 fev 2021 à 09h:15" textFill="#bababa">
+                                                                                 <font>
+                                                                                    <Font name="Gill Sans MT" size="13.0" />
+                                                                                 </font>
+                                                                              </Label>
+                                                                           </children>
+                                                                        </AnchorPane>
+                                                                     </children>
+                                                                     <padding>
+                                                                        <Insets top="1.0" />
+                                                                     </padding>
+                                                                  </HBox>
+                                                                  <HBox prefHeight="78.0" prefWidth="855.0" style="-fx-background-color: white; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-border-color: #28BAFC;">
+                                                                     <effect>
+                                                                        <DropShadow>
+                                                                           <color>
+                                                                              <Color red="0.1632000058889389" green="0.7209600210189819" blue="0.9599999785423279" opacity="0.31770989298820496" />
+                                                                           </color>
+                                                                        </DropShadow>
+                                                                     </effect>
+                                                                     <children>
+                                                                        <AnchorPane prefHeight="76.0" prefWidth="81.0" style="-fx-background-color: #E6F7FF; -fx-background-radius: 10px 0 0 10px; -fx-border-width: 0 1.3px 0 0; -fx-border-color: #28BAFC;">
+                                                                           <children>
+                                                                              <ImageView fitHeight="41.0" fitWidth="41.0" layoutX="20.0" layoutY="18.0">
+                                                                                 <image>
+                                                                                    <Image url="@../../../../../../../../AppData/Local/Temp/icons8_info_64px.png" />
+                                                                                 </image>
+                                                                              </ImageView>
+                                                                           </children>
+                                                                        </AnchorPane>
+                                                                        <AnchorPane prefHeight="76.0" prefWidth="751.0">
+                                                                           <children>
+                                                                              <Label layoutX="14.0" layoutY="29.0" prefHeight="19.0" prefWidth="723.0" text="Votre ajout de l'apprenant Ikbal AZIMARI TOURE a été annulé par l'administrateur Wissam Youssef">
+                                                                                 <font>
+                                                                                    <Font name="Gill Sans MT" size="16.0" />
+                                                                                 </font>
+                                                                              </Label>
+                                                                              <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="739.0" layoutY="5.0">
+                                                                                 <image>
+                                                                                    <Image url="@../../../../../../../../AppData/Local/Temp/icons8_Close_50px.png" />
+                                                                                 </image>
+                                                                              </ImageView>
+                                                                              <Label layoutX="644.0" layoutY="55.0" prefHeight="19.0" prefWidth="110.0" text="23 fev 2021 à 09h:15" textFill="#bababa">
+                                                                                 <font>
+                                                                                    <Font name="Gill Sans MT" size="13.0" />
+                                                                                 </font>
+                                                                              </Label>
+                                                                           </children>
+                                                                        </AnchorPane>
+                                                                     </children>
+                                                                  </HBox>
+                                                                  <HBox prefHeight="78.0" prefWidth="855.0" style="-fx-background-color: white; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-border-color: #28BAFC;">
+                                                                     <effect>
+                                                                        <DropShadow>
+                                                                           <color>
+                                                                              <Color red="0.1632000058889389" green="0.7209600210189819" blue="0.9599999785423279" opacity="0.31770989298820496" />
+                                                                           </color>
+                                                                        </DropShadow>
+                                                                     </effect>
+                                                                     <children>
+                                                                        <AnchorPane prefHeight="76.0" prefWidth="81.0" style="-fx-background-color: #E6F7FF; -fx-background-radius: 10px 0 0 10px; -fx-border-width: 0 1.3px 0 0; -fx-border-color: #28BAFC;">
+                                                                           <children>
+                                                                              <ImageView fitHeight="41.0" fitWidth="41.0" layoutX="20.0" layoutY="18.0">
+                                                                                 <image>
+                                                                                    <Image url="@../../../../../../../../AppData/Local/Temp/icons8_info_64px.png" />
+                                                                                 </image>
+                                                                              </ImageView>
+                                                                           </children>
+                                                                        </AnchorPane>
+                                                                        <AnchorPane prefHeight="76.0" prefWidth="751.0">
+                                                                           <children>
+                                                                              <Label layoutX="14.0" layoutY="29.0" prefHeight="19.0" prefWidth="723.0" text="Votre ajout de l'apprenant Ikbal AZIMARI TOURE a été annulé par l'administrateur Wissam Youssef">
+                                                                                 <font>
+                                                                                    <Font name="Gill Sans MT" size="16.0" />
+                                                                                 </font>
+                                                                              </Label>
+                                                                              <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="739.0" layoutY="5.0">
+                                                                                 <image>
+                                                                                    <Image url="@../../../../../../../../AppData/Local/Temp/icons8_Close_50px.png" />
+                                                                                 </image>
+                                                                              </ImageView>
+                                                                              <Label layoutX="644.0" layoutY="55.0" prefHeight="19.0" prefWidth="110.0" text="23 fev 2021 à 09h:15" textFill="#bababa">
+                                                                                 <font>
+                                                                                    <Font name="Gill Sans MT" size="13.0" />
+                                                                                 </font>
+                                                                              </Label>
+                                                                           </children>
+                                                                        </AnchorPane>
+                                                                     </children>
+                                                                  </HBox>
+                                                               </children>
+                                                            </VBox>
+                                                         </content>
+                                                         <padding>
+                                                            <Insets left="5.0" right="5.0" />
+                                                         </padding>
+                                                         <VBox.margin>
+                                                            <Insets top="5.0" />
+                                                         </VBox.margin>
+                                                      </ScrollPane>
+                                                   </children>
+                                                </VBox>
+                                             </children>
+                                             <HBox.margin>
+                                                <Insets top="5.0" />
+                                             </HBox.margin>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                     </center>
                   </BorderPane>
                </children></AnchorPane>
          </center>

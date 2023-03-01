@@ -22,6 +22,7 @@ import com.gesschoolapp.runtime.Main;
 import com.gesschoolapp.controllers.NotesItemController;
 import com.gesschoolapp.utils.Toolbox;
 import com.gesschoolapp.utils.Route;
+import com.gesschoolapp.view.admin.ProfileEditController;
 import com.mysql.cj.util.StringUtils;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.animation.KeyFrame;
@@ -1889,4 +1890,50 @@ public class ScolariteUIController implements Initializable {
         }
     }
 
+    @FXML
+    void editPasswordBtnClicked(ActionEvent event) {
+        this.openPasswordEditDialog(currentUser);
+    }
+
+    @FXML
+    public void openPasswordEditDialog(Utilisateur user) {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("PasswordEdit.fxml"));
+
+            AnchorPane page = (AnchorPane) loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("School UP Admin - Modifier mon mot de passe");
+            // Set the application icon.
+
+            dialogStage.getIcons().add(new Image("com/gesschoolapp/resources/images/app_icon.png"));
+            dialogStage.initStyle(StageStyle.UNDECORATED);
+            dialogStage.setResizable(false);
+
+
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(mainApp.getPrimaryStage());
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the person into the controller.
+            PasswordEditController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setSuperController(this);
+            controller.setData(user);
+            controller.setScene(scene);
+            controller.setMain(mainApp);
+            controller.setDraggable();
+
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

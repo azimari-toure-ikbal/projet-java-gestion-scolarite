@@ -204,7 +204,8 @@
                               </Label>
                            </children>
                         </AnchorPane>
-                     </center></BorderPane>
+                     </center>
+                  </BorderPane>
                   <BorderPane fx:id="profileView" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #F3F3F3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <center>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #EAEFF8;" BorderPane.alignment="CENTER">
