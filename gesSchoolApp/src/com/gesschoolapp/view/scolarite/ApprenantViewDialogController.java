@@ -105,19 +105,25 @@ public class ApprenantViewDialogController implements Initializable {
         labelMatricule.setText(Integer.toString(appr.getMatricule()));
         labelNationalite.setText(appr.getNationalite());
 
-        if(appr.getEtatPaiement() == 0){
-            labelEtatPaiement.setText("Non inscrit");
-        }else if(appr.getEtatPaiement() == 1){
-            if(!superController.getSelectedClass().isCurrentEcheancePaid(appr)){
-                labelEtatPaiement.setText("Impayé");
-            }else{
-                labelEtatPaiement.setText("Inscrit");
-            }
+
+        if(appr.getEtatPaiement() == 9){
+            labelEtatPaiement.setText("Payé (" + superController.getSelectedClass().getEcheancier().get(appr.getEtatPaiement()).getDate() + ")");
         }else{
-            if(!superController.getSelectedClass().isCurrentEcheancePaid(appr)){
-                labelEtatPaiement.setText("Impayé");
+
+            if(appr.getEtatPaiement() == 0){
+                labelEtatPaiement.setText("Non inscrit");
+            }else if(appr.getEtatPaiement() == 1){
+                if(!superController.getSelectedClass().isCurrentEcheancePaid(appr)){
+                    labelEtatPaiement.setText("Impayé");
+                }else{
+                    labelEtatPaiement.setText("Inscrit");
+                }
             }else{
-                labelEtatPaiement.setText("Payé");
+                if(!superController.getSelectedClass().isCurrentEcheancePaid(appr)){
+                    labelEtatPaiement.setText("Impayé");
+                }else{
+                    labelEtatPaiement.setText("Payé (" + superController.getSelectedClass().getEcheancier().get(appr.getEtatPaiement()).getDate() + ")");
+                }
             }
         }
 
