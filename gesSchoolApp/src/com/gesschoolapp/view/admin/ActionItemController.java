@@ -78,6 +78,7 @@ public class ActionItemController {
 
     public void setData(Action act){
 
+        act.getCurrentObject()
         if(act.isCanceled()){
             panelCard.setDisable(true);
             canceledBar.setVisible(true);
