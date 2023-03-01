@@ -65,7 +65,7 @@ public class TestClass {
 //        System.out.println( + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() );
 //        testCreateModule();
 //        testGetNotifs();
-//        System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYY-MM-dd à HH:mm")));
+        System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYY-MM-dd à HH:mm")));
 //        testGetUtilisateurs();
 
 //        String pwd = Toolbox.generateSecurePassword("wissam");
