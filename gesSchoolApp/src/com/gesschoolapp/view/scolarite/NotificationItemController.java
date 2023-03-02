@@ -1,5 +1,6 @@
 package com.gesschoolapp.view.scolarite;
 
+import com.gesschoolapp.db.DAOClassesImpl.ActionDAOImp;
 import com.gesschoolapp.models.actions.Notification;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -7,6 +8,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class NotificationItemController {
 
@@ -27,10 +30,14 @@ public class NotificationItemController {
     @FXML
     void onClose(MouseEvent event) {
         thisNotif.setSeen(true);
+//        ActionDAOImp actDAO = new ActionDAOImp();
+//        actDAO.
         superController.getNotifsLayout().getChildren().remove(notifPane);
 
         if(superController.getNotifsLayout().getChildren().size() == 0){
             superController.toggleNotificationCircle(false);
+            List<Notification> emptyList = new ArrayList<>();
+            superController.setListeDesNotifications(emptyList);
         }
     }
 
