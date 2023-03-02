@@ -107,7 +107,7 @@ public class ApprenantViewDialogController implements Initializable {
 
 
         if(appr.getEtatPaiement() == 9){
-            labelEtatPaiement.setText("Payé (" + superController.getSelectedClass().getEcheancier().get(appr.getEtatPaiement()).getDate() + ")");
+            labelEtatPaiement.setText("Payé (" + superController.getSelectedClass().getEcheancier().get(appr.getEtatPaiement()-1).getDate() + ")");
         }else{
 
             if(appr.getEtatPaiement() == 0){
@@ -122,7 +122,7 @@ public class ApprenantViewDialogController implements Initializable {
                 if(!superController.getSelectedClass().isCurrentEcheancePaid(appr)){
                     labelEtatPaiement.setText("Impayé");
                 }else{
-                    labelEtatPaiement.setText("Payé (" + superController.getSelectedClass().getEcheancier().get(appr.getEtatPaiement()).getDate() + ")");
+                    labelEtatPaiement.setText("Payé (" + superController.getSelectedClass().getEcheancier().get(appr.getEtatPaiement()-1).getDate() + ")");
                 }
             }
         }

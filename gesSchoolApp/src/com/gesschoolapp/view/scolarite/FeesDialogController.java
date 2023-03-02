@@ -117,7 +117,7 @@ public class FeesDialogController  implements Initializable {
 
         this.apprenant = appr;
 
-        Echeance toPay = superController.getSelectedClass().getEcheancier().get(apprenant.getEtatPaiement());
+        Echeance toPay = superController.getSelectedClass().getEcheancier().get(apprenant.getEtatPaiement()-1);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern( "dd MMMM yyyy" ).withLocale( java.util.Locale.FRENCH );
         month = toPay.getDate().format(formatter).split(" ")[1];
 
@@ -134,7 +134,7 @@ public class FeesDialogController  implements Initializable {
         }
 
         if(apprenant.getEtatPaiement() >= 9){
-            selectRubrique.getItems().removeAll();
+            selectRubrique.getItems().removeIf(rubr -> rubr.equals("scolarite"));
             selectRubrique.setValue(selectRubrique.getItems().get(0));
         }
 
