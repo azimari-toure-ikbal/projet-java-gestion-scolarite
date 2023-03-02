@@ -325,15 +325,20 @@ public class ScolariteUIController implements Initializable {
     @FXML
     private VBox notifsLayout;
 
-
+    private HBox notifsLayoutPlaceholder;
 
     @FXML
     private VBox notesLayout;
+
+    private HBox notesLayoutPlaceholder;
 
     private Button selectedSemestre;
 
     @FXML
     private VBox studentsLayout;
+
+
+    private HBox studentsLayoutPlaceholder;
 
     @FXML
     private VBox studentsHomeLayout;
@@ -385,10 +390,17 @@ public class ScolariteUIController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        // ---- Init routes :
         home = new Route("Accueil", homeView, btnAccueil, accueilIcon);
         classes = new Route("Classes", classesView, btnClasses, classesIcon);
         profile = new Route("Mon profil", profileView, btnProfile, profileIcon);
         fees = new Route("Paiements", feesView, btnPaiements, feesIcon);
+
+        // ---- Init placeholders :
+        studentsLayoutPlaceholder = (HBox) studentsLayout.getChildren().get(0);
+        notesLayoutPlaceholder = (HBox) notesLayout.getChildren().get(0);
+        notifsLayoutPlaceholder = (HBox) notifsLayout.getChildren().get(0);
 
         listeClasses = null;
         try {
@@ -427,15 +439,6 @@ public class ScolariteUIController implements Initializable {
         pp_placeholder1.setFill(new ImagePattern(pp));
         pp_placeholder2.setFill(new ImagePattern(pp));
         profile_pic_placeholder.setFill(new ImagePattern(pp));
-//        class_preview.setImage(new Image("resources/images/plc.png"));
-
-//        if (currentUser instanceof Secretaire) {
-//            setCaissierSession(false);
-//            setSecretaireView();
-//        } else {
-//            setCaissierSession(true);
-//        }
-
 
         feesSpanSelect.getItems().addAll(etatsDePaiement);
         monthyFeeDP.getItems().addAll(mois);
@@ -538,9 +541,11 @@ public class ScolariteUIController implements Initializable {
         double totalEncaisse = 0;
         for (Paiement paiement : dailyFeesList) {
             totalEncaisse += paiement.getMontant();
-        }
-        ;
+        };
         feeTotal.setText("Total encaissé : " + totalEncaisse + "FCFA");
+        if(dailyFeesList.size() == 0){
+            panelEmpty.toFront();
+        }
 
 
         for (Rubrique rubr : Toolbox.getRubriques()) {
@@ -1385,6 +1390,8 @@ public class ScolariteUIController implements Initializable {
 
     private void setListeDesClasses(List<Classe> classes) throws DAOException, IOException {
         classesClassesLayout.getChildren().clear();
+
+
         for (Classe classe : classes) {
 
             FXMLLoader fxmlLoader = new FXMLLoader();
@@ -1435,14 +1442,23 @@ public class ScolariteUIController implements Initializable {
 
     }
 
-    private void setListeDesNotifications(List<Notification> notifs) throws DAOException, IOException {
+    public void setListeDesNotifications(List<Notification> notifs){
         notifsLayout.getChildren().clear();
+
+        if(notifs.size() == 0){
+            notifsLayout.getChildren().add(notifsLayoutPlaceholder);
+        }
 
         for (Notification notif : notifs) {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("NotificationItem.fxml"));
 
-            Pane pane = fxmlLoader.load();
+            Pane pane = null;
+            try {
+                pane = fxmlLoader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             NotificationItemController nic = fxmlLoader.getController();
             nic.setSuperController(this);
 
@@ -1500,6 +1516,10 @@ public class ScolariteUIController implements Initializable {
 //        if(apprenants.size() != 0){
             studentsLayout.getChildren().removeIf(node -> node instanceof HBox);
 //        }
+
+        if(apprenants.size() == 0){
+            studentsLayout.getChildren().add(studentsLayoutPlaceholder);
+        }
 
 
 
@@ -1562,8 +1582,11 @@ public class ScolariteUIController implements Initializable {
 
         notesLayout.getChildren().clear();
 
-        for (Note note : notes) {
+        if(notes.size() == 0){
+            notesLayout.getChildren().add(notesLayoutPlaceholder);
+        }
 
+        for (Note note : notes) {
 
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("NotesItem.fxml"));

@@ -61,11 +61,11 @@ public class TestClass {
 //        System.out.println(Date.from(Instant.now()).toInstant()
 //                .atZone(ZoneId.systemDefault())
 //                .toLocalDateTime());
-        testCancelActions();
+//        testCancelActions();
 //        System.out.println( + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() );
 //        testCreateModule();
-//        testGetNotifs();
-        System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYY-MM-dd à HH:mm")));
+        testGetNotifs();
+//        System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYY-MM-dd à HH:mm")));
 //        testGetUtilisateurs();
 
 //        String pwd = Toolbox.generateSecurePassword("wissam");
@@ -122,8 +122,9 @@ public class TestClass {
 
     public static void testGetNotifs(){
         try {
-            List<Notification> notifs = new UserDAOImp().getNotifs("Mark Hall");
-            System.out.println(notifs);
+            Notification notif = new UserDAOImp().readNotif(26);
+            notif.setSeen();
+            System.out.println(notif);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }

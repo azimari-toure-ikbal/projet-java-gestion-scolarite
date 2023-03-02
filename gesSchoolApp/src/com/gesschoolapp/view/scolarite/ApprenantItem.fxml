@@ -79,7 +79,7 @@
                   </DropShadow>
                </effect>
                <cursor>
-                  <Cursor fx:constant="DEFAULT" />
+                  <Cursor fx:constant="DISAPPEAR" />
                </cursor>
             </Button>
             </children>

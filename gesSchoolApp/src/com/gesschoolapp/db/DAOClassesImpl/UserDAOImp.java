@@ -89,18 +89,43 @@ public class UserDAOImp implements UserDAO, DAO<Utilisateur> {
             ResultSet rs = ps.executeQuery();
             List<Notification> notifs = new ArrayList<>();
             while (rs.next()) {
+                int id = rs.getInt("idNotification");
                 String message = rs.getString("message");
                 String stringDate = rs.getString("date");
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                boolean seen = rs.getBoolean("seen");
                 //convert String to LocalDate
                 LocalDateTime date = LocalDateTime.parse(stringDate, formatter);
 
-                notifs.add(new Notification(message, date));
+                notifs.add(new Notification(id, message, date, seen));
             }
             return notifs;
         } catch (Exception e) {
             throw new DAOException(e.getMessage());
         }
+    }
+
+    public Notification readNotif(int id) throws DAOException {
+        try(Connection connection = DBManager.getConnection()) {
+            String query = "SELECT * FROM notifications WHERE idNotification=?";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.first()) {
+                int idNotif = rs.getInt("idNotification");
+                String message = rs.getString("message");
+                String stringDate = rs.getString("date");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                boolean seen = rs.getBoolean("seen");
+                //convert String to LocalDate
+                LocalDateTime date = LocalDateTime.parse(stringDate, formatter);
+
+                return new Notification(id, message, date, seen);
+            }
+        } catch (Exception e) {
+            throw new DAOException(e.getMessage());
+        }
+        return null;
     }
 
     @Override

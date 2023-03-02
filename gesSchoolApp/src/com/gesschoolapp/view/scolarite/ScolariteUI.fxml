@@ -129,6 +129,408 @@
          <center>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #EAEFF8;" BorderPane.alignment="CENTER">
                <children>
+                  <BorderPane fx:id="feesView" layoutX="24.0" layoutY="45.0" prefHeight="589.0" prefWidth="667.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <center>
+                        <AnchorPane BorderPane.alignment="CENTER">
+                           <BorderPane.margin>
+                              <Insets />
+                           </BorderPane.margin>
+                           <children>
+                              <AnchorPane prefHeight="655.0" prefWidth="577.0" style="-fx-background-color: #EAEFF8;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <Label contentDisplay="RIGHT" layoutX="20.0" layoutY="19.0" prefHeight="29.0" prefWidth="342.0" text="Paiements" textFill="#323a3f" AnchorPane.leftAnchor="20.0">
+                                       <font>
+                                          <Font name="Gill Sans MT" size="25.0" />
+                                       </font>
+                                       <opaqueInsets>
+                                          <Insets left="22.0" />
+                                       </opaqueInsets>
+                                    </Label>
+                                    <Button fx:id="notifBtn3" layoutX="427.0" layoutY="25.0" mnemonicParsing="false" onMouseClicked="#handleNavigation" prefHeight="37.0" prefWidth="60.0" styleClass="notif_btn" textFill="#e6eff2" AnchorPane.topAnchor="25.0">
+                                       <graphic>
+                                          <ImageView disable="true" fitHeight="23.0" fitWidth="23.0">
+                                             <image>
+                                                <Image url="@../../resources/images/bell_reminder_icon.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                    <Circle fx:id="pp_placeholder2" fill="DODGERBLUE" layoutX="503.0" layoutY="46.0" onMouseClicked="#handleNavigation" radius="24.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="profile_pic" AnchorPane.topAnchor="22.0" />
+                                    <Circle fx:id="notifCircle3" fill="DODGERBLUE" layoutX="445.0" layoutY="39.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" AnchorPane.topAnchor="33.0" />
+                                    <Label fx:id="routeLink1" layoutX="42.0" layoutY="50.0" prefHeight="28.0" prefWidth="507.0" text="/accueil" textFill="#84898d" AnchorPane.leftAnchor="44.0" AnchorPane.topAnchor="50.0">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label contentDisplay="RIGHT" layoutX="20.0" layoutY="144.0" prefHeight="29.0" prefWidth="197.0" text="État de paiement " textFill="#323a3f" AnchorPane.topAnchor="134.0">
+                                       <font>
+                                          <Font name="Gill Sans MT" size="20.0" />
+                                       </font>
+                                       <opaqueInsets>
+                                          <Insets left="22.0" />
+                                       </opaqueInsets>
+                                    </Label>
+                                    <ImageView fx:id="btnPrecedent1" layoutX="29.0" layoutY="65.0" onMouseClicked="#handleNavigation" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="55.0">
+                                       <image>
+                                          <Image url="@../../resources/images/back_icon.png" />
+                                       </image>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </ImageView>
+                                    <ImageView disable="true" focusTraversable="true" layoutX="20.0" layoutY="55.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="55.0">
+                                       <image>
+                                          <Image url="@../../resources/images/disabled_back_icon.png" />
+                                       </image>
+                                       <cursor>
+                                          <Cursor fx:constant="TEXT" />
+                                       </cursor>
+                                    </ImageView>
+                                    <AnchorPane fx:id="panelAnn" layoutX="17.0" layoutY="207.0" prefHeight="430.0" prefWidth="908.0" style="-fx-background-color: white; -fx-border-radius: 20px; -fx-background-radius: 20px;" AnchorPane.bottomAnchor="23.0" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="217.0">
+                                       <effect>
+                                          <DropShadow blurType="ONE_PASS_BOX" height="25.0" radius="12.0" spread="0.08" width="25.0">
+                                             <color>
+                                                <Color red="0.8289473652839661" green="0.8174341917037964" blue="0.8174341917037964" />
+                                             </color>
+                                          </DropShadow>
+                                       </effect>
+                                       <children>
+                                          <BarChart fx:id="yearBarChart" prefHeight="418.0" prefWidth="905.0" title="Etat de paiement annuel">
+                                            <xAxis>
+                                              <CategoryAxis side="BOTTOM" />
+                                            </xAxis>
+                                            <yAxis>
+                                              <NumberAxis side="LEFT" />
+                                            </yAxis>
+                                          </BarChart>
+                                          <Label fx:id="labelYearlyDue" alignment="CENTER_RIGHT" layoutX="698.0" layoutY="391.0" prefHeight="17.0" prefWidth="529.0" text="Total annuel : 10000 FCFA" textFill="#57ad57" AnchorPane.rightAnchor="18.0">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="panelFeesState" prefHeight="430.0" prefWidth="908.0" style="-fx-background-color: white; -fx-border-radius: 20px; -fx-background-radius: 20px;" AnchorPane.bottomAnchor="23.0" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="217.0">
+                                       <effect>
+                                          <DropShadow blurType="ONE_PASS_BOX" height="25.0" radius="12.0" spread="0.08" width="25.0">
+                                             <color>
+                                                <Color red="0.8289473652839661" green="0.8174341917037964" blue="0.8174341917037964" />
+                                             </color>
+                                          </DropShadow>
+                                       </effect>
+                                       <children>
+                                          <TableView fx:id="feesTable" layoutX="36.0" layoutY="52.0" prefHeight="250.0" prefWidth="437.0">
+                                            <columns>
+                                                <TableColumn fx:id="idFee" minWidth="0.0" prefWidth="37.0" text="ID" />
+                                              <TableColumn fx:id="montantFee" minWidth="0.0" prefWidth="89.0" text="Montant" />
+                                                <TableColumn fx:id="rubrFee" minWidth="0.0" prefWidth="96.0" text="Rubrique" />
+                                                <TableColumn fx:id="recuFee" minWidth="0.0" prefWidth="88.0" text="N° reçu" />
+                                                <TableColumn fx:id="eleveFee" minWidth="0.0" prefWidth="122.0" text="Élève" />
+                                            </columns>
+                                          </TableView>
+                                          <PieChart fx:id="feesPie" layoutX="473.0" layoutY="5.0" prefHeight="368.0" prefWidth="435.0" />
+                                          <AnchorPane layoutX="36.0" layoutY="302.0" prefHeight="62.0" prefWidth="437.0" style="-fx-background-color: linear-gradient(to right, #2c7aba,#2c7aba, #5AB2D8);" AnchorPane.topAnchor="302.0">
+                                             <children>
+                                                <Label fx:id="feeTotal" contentDisplay="RIGHT" layoutX="28.0" layoutY="17.0" prefHeight="29.0" prefWidth="411.0" text="Total encaissé :" textFill="WHITE" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="17.0">
+                                                   <font>
+                                                      <Font name="Gill Sans MT" size="20.0" />
+                                                   </font>
+                                                   <opaqueInsets>
+                                                      <Insets left="22.0" />
+                                                   </opaqueInsets>
+                                                </Label>
+                                                <Line endX="218.0" layoutX="184.0" startX="-156.0" stroke="WHITE" strokeWidth="0.5" AnchorPane.leftAnchor="22.5" AnchorPane.rightAnchor="22.5" />
+                                             </children>
+                                          </AnchorPane>
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="panelEmpty" prefHeight="430.0" prefWidth="908.0" style="-fx-background-color: white; -fx-border-radius: 20px; -fx-background-radius: 20px;" AnchorPane.bottomAnchor="23.0" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="217.0">
+                                       <effect>
+                                          <DropShadow blurType="ONE_PASS_BOX" height="25.0" radius="12.0" spread="0.08" width="25.0">
+                                             <color>
+                                                <Color red="0.8289473652839661" green="0.8174341917037964" blue="0.8174341917037964" />
+                                             </color>
+                                          </DropShadow>
+                                       </effect>
+                                       <children>
+                                          <ImageView fitHeight="204.0" fitWidth="276.0" layoutX="318.0" layoutY="81.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../resources/images/empty_placeholder.png" />
+                                             </image>
+                                          </ImageView>
+                                          <Label contentDisplay="RIGHT" layoutX="251.0" layoutY="309.0" prefHeight="29.0" prefWidth="406.0" text="Oops ! Aucun résultat n'a été trouvé :/" textFill="#323a3f">
+                                             <font>
+                                                <Font name="Gill Sans MT" size="25.0" />
+                                             </font>
+                                             <opaqueInsets>
+                                                <Insets left="22.0" />
+                                             </opaqueInsets>
+                                          </Label>
+                                       </children>
+                                    </AnchorPane>
+                                    <ChoiceBox fx:id="feesSpanSelect" layoutX="171.0" layoutY="135.0" prefHeight="33.0" prefWidth="130.0" style="-fx-background-color: white; -fx-padding: 0 0 0 3px; -fx-border-width: 0.5px; -fx-border-color: BABABA; -fx-border-radius: 3px; -fx-background-radius: 3px;" AnchorPane.topAnchor="135.0">
+                                       <effect>
+                                          <InnerShadow blurType="GAUSSIAN" height="10.0" offsetY="1.0" radius="4.5" width="10.0">
+                                             <color>
+                                                <Color red="0.729411780834198" green="0.729411780834198" blue="0.729411780834198" />
+                                             </color>
+                                          </InnerShadow>
+                                       </effect>
+                                    </ChoiceBox>
+                                    <AnchorPane fx:id="feesJournalierItem" layoutX="299.0" layoutY="134.0" prefHeight="37.0" prefWidth="509.0" style="-fx-background-color: #EAEFF8;" AnchorPane.leftAnchor="299.0" AnchorPane.rightAnchor="146.0" AnchorPane.topAnchor="134.0">
+                                       <children>
+                                          <Label contentDisplay="RIGHT" layoutX="14.0" prefHeight="29.0" prefWidth="36.0" text="du" textFill="#323a3f">
+                                             <font>
+                                                <Font name="Gill Sans MT" size="20.0" />
+                                             </font>
+                                             <opaqueInsets>
+                                                <Insets left="22.0" />
+                                             </opaqueInsets>
+                                          </Label>
+                                          <DatePicker fx:id="dailyFeeDP" editable="false" layoutX="44.0" onAction="#getDailyFeeDate" prefHeight="34.0" prefWidth="130.0" />
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="feesHebdoItem" layoutX="329.0" layoutY="164.0" prefHeight="37.0" prefWidth="509.0" style="-fx-background-color: #EAEFF8;" AnchorPane.leftAnchor="299.0" AnchorPane.rightAnchor="116.0" AnchorPane.topAnchor="134.0">
+                                       <children>
+                                          <Label contentDisplay="RIGHT" layoutX="14.0" prefHeight="29.0" prefWidth="145.0" text="de la semaine du" textFill="#323a3f">
+                                             <font>
+                                                <Font name="Gill Sans MT" size="20.0" />
+                                             </font>
+                                             <opaqueInsets>
+                                                <Insets left="22.0" />
+                                             </opaqueInsets>
+                                          </Label>
+                                          <DatePicker fx:id="weekFeeDP" editable="false" layoutX="155.0" onAction="#getDailyFeeDate" prefHeight="34.0" prefWidth="130.0" />
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="feesMensuelItem" layoutX="309.0" layoutY="144.0" prefHeight="37.0" prefWidth="509.0" style="-fx-background-color: #EAEFF8;" AnchorPane.leftAnchor="299.0" AnchorPane.rightAnchor="146.0" AnchorPane.topAnchor="134.0">
+                                       <children>
+                                          <Label contentDisplay="RIGHT" layoutX="14.0" prefHeight="29.0" prefWidth="164.0" text="du mois de" textFill="#323a3f">
+                                             <font>
+                                                <Font name="Gill Sans MT" size="20.0" />
+                                             </font>
+                                             <opaqueInsets>
+                                                <Insets left="22.0" />
+                                             </opaqueInsets>
+                                          </Label>
+                                          <ChoiceBox fx:id="monthyFeeDP" layoutX="117.0" layoutY="1.0" prefHeight="33.0" prefWidth="130.0" style="-fx-background-color: white; -fx-padding: 0 0 0 3px; -fx-border-width: 0.5px; -fx-border-color: BABABA; -fx-border-radius: 3px; -fx-background-radius: 3px;">
+                                             <effect>
+                                                <InnerShadow blurType="GAUSSIAN" height="10.0" offsetY="1.0" radius="4.5" width="10.0">
+                                                   <color>
+                                                      <Color red="0.729411780834198" green="0.729411780834198" blue="0.729411780834198" />
+                                                   </color>
+                                                </InnerShadow>
+                                             </effect>
+                                          </ChoiceBox>
+                                          <ChoiceBox fx:id="yearFeeDP2" layoutX="359.0" layoutY="1.0" prefHeight="33.0" prefWidth="130.0" style="-fx-background-color: white; -fx-padding: 0 0 0 3px; -fx-border-width: 0.5px; -fx-border-color: BABABA; -fx-border-radius: 3px; -fx-background-radius: 3px;">
+                                             <effect>
+                                                <InnerShadow blurType="GAUSSIAN" height="10.0" offsetY="1.0" radius="4.5" width="10.0">
+                                                   <color>
+                                                      <Color red="0.729411780834198" green="0.729411780834198" blue="0.729411780834198" />
+                                                   </color>
+                                                </InnerShadow>
+                                             </effect>
+                                          </ChoiceBox>
+                                          <Label contentDisplay="RIGHT" layoutX="261.0" layoutY="2.0" prefHeight="29.0" prefWidth="87.0" text="de l'année" textFill="#323a3f">
+                                             <font>
+                                                <Font name="Gill Sans MT" size="20.0" />
+                                             </font>
+                                             <opaqueInsets>
+                                                <Insets left="22.0" />
+                                             </opaqueInsets>
+                                          </Label>
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="feesAnnuelItem" layoutX="319.0" layoutY="154.0" prefHeight="37.0" prefWidth="509.0" style="-fx-background-color: #EAEFF8;" AnchorPane.leftAnchor="299.0" AnchorPane.rightAnchor="146.0" AnchorPane.topAnchor="134.0">
+                                       <children>
+                                          <Label contentDisplay="RIGHT" layoutX="14.0" prefHeight="29.0" prefWidth="192.0" text="de l'année" textFill="#323a3f">
+                                             <font>
+                                                <Font name="Gill Sans MT" size="20.0" />
+                                             </font>
+                                             <opaqueInsets>
+                                                <Insets left="22.0" />
+                                             </opaqueInsets>
+                                          </Label>
+                                          <ChoiceBox fx:id="yearFeeDP" layoutX="111.0" layoutY="1.0" prefHeight="33.0" prefWidth="130.0" style="-fx-background-color: white; -fx-padding: 0 0 0 3px; -fx-border-width: 0.5px; -fx-border-color: BABABA; -fx-border-radius: 3px; -fx-background-radius: 3px;">
+                                             <effect>
+                                                <InnerShadow blurType="GAUSSIAN" height="10.0" offsetY="1.0" radius="4.5" width="10.0">
+                                                   <color>
+                                                      <Color red="0.729411780834198" green="0.729411780834198" blue="0.729411780834198" />
+                                                   </color>
+                                                </InnerShadow>
+                                             </effect>
+                                          </ChoiceBox>
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                     </center>
+                  </BorderPane>
+                  <BorderPane fx:id="homeView" layoutX="4.0" layoutY="25.0" prefHeight="589.0" prefWidth="667.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <center>
+                        <AnchorPane BorderPane.alignment="CENTER">
+                           <BorderPane.margin>
+                              <Insets />
+                           </BorderPane.margin>
+                           <children>
+                              <AnchorPane fx:id="" layoutY="5.0" prefHeight="655.0" prefWidth="732.0" style="-fx-background-color: #EAEFF8;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <Label contentDisplay="RIGHT" layoutX="20.0" layoutY="19.0" prefHeight="29.0" prefWidth="261.0" text="Accueil" textFill="#323a3f" AnchorPane.leftAnchor="20.0">
+                                       <font>
+                                          <Font name="Gill Sans MT" size="25.0" />
+                                       </font>
+                                       <opaqueInsets>
+                                          <Insets left="22.0" />
+                                       </opaqueInsets>
+                                    </Label>
+                                    <Button fx:id="notifBtn2" layoutX="561.0" layoutY="24.0" mnemonicParsing="false" onMouseClicked="#handleNavigation" prefHeight="37.0" prefWidth="60.0" styleClass="notif_btn" textFill="#e6eff2" AnchorPane.rightAnchor="78.0" AnchorPane.topAnchor="22.0">
+                                       <graphic>
+                                          <ImageView disable="true" fitHeight="23.0" fitWidth="23.0">
+                                             <image>
+                                                <Image url="@../../resources/images/bell_reminder_icon.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                    <Circle fx:id="pp_placeholder" fill="DODGERBLUE" layoutX="638.0" layoutY="43.0" onMouseClicked="#handleNavigation" radius="24.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="profile_pic" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="19.0" />
+                                    <Circle fx:id="notifCircle2" fill="DODGERBLUE" layoutX="579.0" layoutY="39.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" AnchorPane.rightAnchor="97.0" AnchorPane.topAnchor="30.0" />
+                                    <Label fx:id="welcomeText" layoutX="20.0" layoutY="50.0" prefHeight="28.0" prefWidth="519.0" text="Bonjour {user}, bienvenue !" textFill="#84898d">
+                                       <font>
+                                          <Font size="19.0" />
+                                       </font>
+                                       <graphic>
+                                          <ImageView fitHeight="27.0" fitWidth="22.0">
+                                             <image>
+                                                <Image url="@../../resources/images/hello_icon.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Label>
+                                    <Label contentDisplay="RIGHT" layoutX="23.0" layoutY="129.0" prefHeight="29.0" prefWidth="299.0" text="Accès rapide" textFill="#323a3f" AnchorPane.leftAnchor="23.0" AnchorPane.topAnchor="129.0">
+                                       <font>
+                                          <Font name="Gill Sans MT" size="20.0" />
+                                       </font>
+                                       <opaqueInsets>
+                                          <Insets left="22.0" />
+                                       </opaqueInsets>
+                                    </Label>
+                                    <TextField fx:id="searchStudentHomeInput" layoutX="452.0" layoutY="124.0" onKeyReleased="#handleStudentSearch" prefHeight="42.0" prefWidth="231.0" promptText="Rechercher un élève" style="-fx-background-radius: 10px; -fx-border-radius: 10px;" styleClass="search_student" AnchorPane.rightAnchor="20.0">
+                                       <opaqueInsets>
+                                          <Insets left="12.0" right="12.0" />
+                                       </opaqueInsets>
+                                       <padding>
+                                          <Insets left="40.0" />
+                                       </padding>
+                                    </TextField>
+                                    <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="445.0" layoutY="135.0" AnchorPane.leftAnchor="445.0" AnchorPane.rightAnchor="217.0">
+                                       <image>
+                                          <Image url="@../../resources/images/loop_icon.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label contentDisplay="RIGHT" layoutX="23.0" layoutY="299.0" prefHeight="29.0" prefWidth="332.0" text="Classes récentes" textFill="#323a3f" AnchorPane.leftAnchor="23.0" AnchorPane.topAnchor="299.0">
+                                       <font>
+                                          <Font name="Gill Sans MT" size="20.0" />
+                                       </font>
+                                       <opaqueInsets>
+                                          <Insets left="22.0" />
+                                       </opaqueInsets>
+                                    </Label>
+                                    <Button fx:id="viewAllClasses" layoutX="431.0" layoutY="292.0" mnemonicParsing="false" onMouseClicked="#handleNavigation" prefHeight="42.0" prefWidth="136.0" style="-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-background-color: linear-gradient(to right, #2c7aba, #5AB2D8);" styleClass="classic_btn" text="   Voir tout" AnchorPane.rightAnchor="20.0">
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                    </Button>
+                                    <HBox layoutX="23.0" layoutY="359.0" prefHeight="309.0" prefWidth="636.0" style="-fx-background-color: #EAEFF8;" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="18.0">
+                                       <children>
+                                          <VBox>
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                             <children>
+                                                <HBox alignment="CENTER_LEFT" prefHeight="55.0" prefWidth="200.0">
+                                                   <children>
+                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="75.0" textAlignment="CENTER" textFill="#656565">
+                                                         <font>
+                                                            <Font name="Corbel" size="20.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="106.0" text="Intitulé" textAlignment="CENTER" textFill="#656565">
+                                                         <font>
+                                                            <Font name="Corbel" size="20.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="225.0" text="Formation" textAlignment="CENTER" textFill="#656565">
+                                                         <font>
+                                                            <Font name="Corbel" size="20.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="195.0" text="Année scolaire" textAlignment="CENTER" textFill="#656565">
+                                                         <font>
+                                                            <Font name="Corbel" size="20.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                   <VBox.margin>
+                                                      <Insets left="5.0" right="5.0" />
+                                                   </VBox.margin>
+                                                </HBox>
+                                                <ScrollPane hbarPolicy="NEVER" prefHeight="272.0" prefWidth="645.0" style="-fx-background-color: transparent;" vbarPolicy="NEVER">
+                                                   <content>
+                                                      <VBox fx:id="classesHomeLayout" minHeight="269.0" prefWidth="635.0" spacing="7.0" style="-fx-background-color: #EAEFF8;" />
+                                                   </content>
+                                                   <padding>
+                                                      <Insets left="5.0" right="5.0" />
+                                                   </padding>
+                                                </ScrollPane>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                    <ImageView layoutX="538.0" layoutY="302.0" AnchorPane.leftAnchor="538.0">
+                                       <image>
+                                          <Image url="@../../resources/images/eye_icon.png" />
+                                       </image>
+                                    </ImageView>
+                                    <HBox fx:id="homeStudentShortcut" alignment="TOP_CENTER" layoutX="20.0" layoutY="186.0" prefHeight="88.0" prefWidth="643.0" style="-fx-background-color: white; -fx-background-radius: 10px;" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="23.0">
+                                       <children>
+                                          <VBox alignment="CENTER" prefHeight="165.0" prefWidth="656.0" style="-fx-background-color: transparent;">
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                             <children>
+                                                <VBox fx:id="studentsHomeLayout" alignment="CENTER_LEFT" minHeight="83.0" prefHeight="220.0" prefWidth="656.0" spacing="7.0" style="-fx-background-color: transparent;">
+                                                   <cursor>
+                                                      <Cursor fx:constant="DEFAULT" />
+                                                   </cursor>
+                                                   <padding>
+                                                      <Insets left="13.0" right="13.0" />
+                                                   </padding>
+                                                </VBox>
+                                             </children>
+                                             <padding>
+                                                <Insets top="5.0" />
+                                             </padding>
+                                          </VBox>
+                                       </children>
+                                       <effect>
+                                          <DropShadow>
+                                             <color>
+                                                <Color red="0.6800000071525574" green="0.6664000153541565" blue="0.6664000153541565" opacity="0.8320610523223877" />
+                                             </color>
+                                          </DropShadow>
+                                       </effect>
+                                    </HBox>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                     </center>
+                     <right>
+                        <fx:include fx:id="classPreview2" source="ClassPreviewItem.fxml" />
+                     </right>
+                  </BorderPane>
                   <BorderPane fx:id="classesView" layoutX="14.0" layoutY="35.0" prefHeight="589.0" prefWidth="667.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <center>
                         <AnchorPane BorderPane.alignment="CENTER">
@@ -725,408 +1127,6 @@
                         <fx:include fx:id="classPreview1" source="ClassPreviewItem.fxml" />
                      </right>
                   </BorderPane>
-                  <BorderPane fx:id="feesView" layoutX="24.0" layoutY="45.0" prefHeight="589.0" prefWidth="667.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <center>
-                        <AnchorPane BorderPane.alignment="CENTER">
-                           <BorderPane.margin>
-                              <Insets />
-                           </BorderPane.margin>
-                           <children>
-                              <AnchorPane prefHeight="655.0" prefWidth="577.0" style="-fx-background-color: #EAEFF8;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <children>
-                                    <Label contentDisplay="RIGHT" layoutX="20.0" layoutY="19.0" prefHeight="29.0" prefWidth="342.0" text="Paiements" textFill="#323a3f" AnchorPane.leftAnchor="20.0">
-                                       <font>
-                                          <Font name="Gill Sans MT" size="25.0" />
-                                       </font>
-                                       <opaqueInsets>
-                                          <Insets left="22.0" />
-                                       </opaqueInsets>
-                                    </Label>
-                                    <Button fx:id="notifBtn3" layoutX="427.0" layoutY="25.0" mnemonicParsing="false" onMouseClicked="#handleNavigation" prefHeight="37.0" prefWidth="60.0" styleClass="notif_btn" textFill="#e6eff2" AnchorPane.topAnchor="25.0">
-                                       <graphic>
-                                          <ImageView disable="true" fitHeight="23.0" fitWidth="23.0">
-                                             <image>
-                                                <Image url="@../../resources/images/bell_reminder_icon.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                    </Button>
-                                    <Circle fx:id="pp_placeholder2" fill="DODGERBLUE" layoutX="503.0" layoutY="46.0" onMouseClicked="#handleNavigation" radius="24.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="profile_pic" AnchorPane.topAnchor="22.0" />
-                                    <Circle fx:id="notifCircle3" fill="DODGERBLUE" layoutX="445.0" layoutY="39.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" AnchorPane.topAnchor="33.0" />
-                                    <Label fx:id="routeLink1" layoutX="42.0" layoutY="50.0" prefHeight="28.0" prefWidth="507.0" text="/accueil" textFill="#84898d" AnchorPane.leftAnchor="44.0" AnchorPane.topAnchor="50.0">
-                                       <font>
-                                          <Font size="15.0" />
-                                       </font>
-                                    </Label>
-                                    <Label contentDisplay="RIGHT" layoutX="20.0" layoutY="144.0" prefHeight="29.0" prefWidth="197.0" text="État de paiement " textFill="#323a3f" AnchorPane.topAnchor="134.0">
-                                       <font>
-                                          <Font name="Gill Sans MT" size="20.0" />
-                                       </font>
-                                       <opaqueInsets>
-                                          <Insets left="22.0" />
-                                       </opaqueInsets>
-                                    </Label>
-                                    <ImageView fx:id="btnPrecedent1" layoutX="29.0" layoutY="65.0" onMouseClicked="#handleNavigation" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="55.0">
-                                       <image>
-                                          <Image url="@../../resources/images/back_icon.png" />
-                                       </image>
-                                       <cursor>
-                                          <Cursor fx:constant="HAND" />
-                                       </cursor>
-                                    </ImageView>
-                                    <ImageView disable="true" focusTraversable="true" layoutX="20.0" layoutY="55.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="55.0">
-                                       <image>
-                                          <Image url="@../../resources/images/disabled_back_icon.png" />
-                                       </image>
-                                       <cursor>
-                                          <Cursor fx:constant="TEXT" />
-                                       </cursor>
-                                    </ImageView>
-                                    <AnchorPane fx:id="panelAnn" layoutX="17.0" layoutY="207.0" prefHeight="430.0" prefWidth="908.0" style="-fx-background-color: white; -fx-border-radius: 20px; -fx-background-radius: 20px;" AnchorPane.bottomAnchor="23.0" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="217.0">
-                                       <effect>
-                                          <DropShadow blurType="ONE_PASS_BOX" height="25.0" radius="12.0" spread="0.08" width="25.0">
-                                             <color>
-                                                <Color red="0.8289473652839661" green="0.8174341917037964" blue="0.8174341917037964" />
-                                             </color>
-                                          </DropShadow>
-                                       </effect>
-                                       <children>
-                                          <BarChart fx:id="yearBarChart" prefHeight="418.0" prefWidth="905.0" title="Etat de paiement annuel">
-                                            <xAxis>
-                                              <CategoryAxis side="BOTTOM" />
-                                            </xAxis>
-                                            <yAxis>
-                                              <NumberAxis side="LEFT" />
-                                            </yAxis>
-                                          </BarChart>
-                                          <Label fx:id="labelYearlyDue" alignment="CENTER_RIGHT" layoutX="698.0" layoutY="391.0" prefHeight="17.0" prefWidth="529.0" text="Total annuel : 10000 FCFA" textFill="#57ad57" AnchorPane.rightAnchor="18.0">
-                                             <font>
-                                                <Font name="System Bold" size="12.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane fx:id="panelFeesState" prefHeight="430.0" prefWidth="908.0" style="-fx-background-color: white; -fx-border-radius: 20px; -fx-background-radius: 20px;" AnchorPane.bottomAnchor="23.0" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="217.0">
-                                       <effect>
-                                          <DropShadow blurType="ONE_PASS_BOX" height="25.0" radius="12.0" spread="0.08" width="25.0">
-                                             <color>
-                                                <Color red="0.8289473652839661" green="0.8174341917037964" blue="0.8174341917037964" />
-                                             </color>
-                                          </DropShadow>
-                                       </effect>
-                                       <children>
-                                          <TableView fx:id="feesTable" layoutX="36.0" layoutY="52.0" prefHeight="250.0" prefWidth="437.0">
-                                            <columns>
-                                                <TableColumn fx:id="idFee" minWidth="0.0" prefWidth="37.0" text="ID" />
-                                              <TableColumn fx:id="montantFee" minWidth="0.0" prefWidth="89.0" text="Montant" />
-                                                <TableColumn fx:id="rubrFee" minWidth="0.0" prefWidth="96.0" text="Rubrique" />
-                                                <TableColumn fx:id="recuFee" minWidth="0.0" prefWidth="88.0" text="N° reçu" />
-                                                <TableColumn fx:id="eleveFee" minWidth="0.0" prefWidth="122.0" text="Élève" />
-                                            </columns>
-                                          </TableView>
-                                          <PieChart fx:id="feesPie" layoutX="473.0" layoutY="5.0" prefHeight="368.0" prefWidth="435.0" />
-                                          <AnchorPane layoutX="36.0" layoutY="302.0" prefHeight="62.0" prefWidth="437.0" style="-fx-background-color: linear-gradient(to right, #2c7aba,#2c7aba, #5AB2D8);" AnchorPane.topAnchor="302.0">
-                                             <children>
-                                                <Label fx:id="feeTotal" contentDisplay="RIGHT" layoutX="28.0" layoutY="17.0" prefHeight="29.0" prefWidth="411.0" text="Total encaissé :" textFill="WHITE" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="17.0">
-                                                   <font>
-                                                      <Font name="Gill Sans MT" size="20.0" />
-                                                   </font>
-                                                   <opaqueInsets>
-                                                      <Insets left="22.0" />
-                                                   </opaqueInsets>
-                                                </Label>
-                                                <Line endX="218.0" layoutX="184.0" startX="-156.0" stroke="WHITE" strokeWidth="0.5" AnchorPane.leftAnchor="22.5" AnchorPane.rightAnchor="22.5" />
-                                             </children>
-                                          </AnchorPane>
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane fx:id="panelEmpty" prefHeight="430.0" prefWidth="908.0" style="-fx-background-color: white; -fx-border-radius: 20px; -fx-background-radius: 20px;" AnchorPane.bottomAnchor="23.0" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="217.0">
-                                       <effect>
-                                          <DropShadow blurType="ONE_PASS_BOX" height="25.0" radius="12.0" spread="0.08" width="25.0">
-                                             <color>
-                                                <Color red="0.8289473652839661" green="0.8174341917037964" blue="0.8174341917037964" />
-                                             </color>
-                                          </DropShadow>
-                                       </effect>
-                                       <children>
-                                          <ImageView fitHeight="204.0" fitWidth="276.0" layoutX="318.0" layoutY="81.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../../resources/images/empty_placeholder.png" />
-                                             </image>
-                                          </ImageView>
-                                          <Label contentDisplay="RIGHT" layoutX="251.0" layoutY="309.0" prefHeight="29.0" prefWidth="406.0" text="Oops ! Aucun résultat n'a été trouvé :/" textFill="#323a3f">
-                                             <font>
-                                                <Font name="Gill Sans MT" size="25.0" />
-                                             </font>
-                                             <opaqueInsets>
-                                                <Insets left="22.0" />
-                                             </opaqueInsets>
-                                          </Label>
-                                       </children>
-                                    </AnchorPane>
-                                    <ChoiceBox fx:id="feesSpanSelect" layoutX="171.0" layoutY="135.0" prefHeight="33.0" prefWidth="130.0" style="-fx-background-color: white; -fx-padding: 0 0 0 3px; -fx-border-width: 0.5px; -fx-border-color: BABABA; -fx-border-radius: 3px; -fx-background-radius: 3px;" AnchorPane.topAnchor="135.0">
-                                       <effect>
-                                          <InnerShadow blurType="GAUSSIAN" height="10.0" offsetY="1.0" radius="4.5" width="10.0">
-                                             <color>
-                                                <Color red="0.729411780834198" green="0.729411780834198" blue="0.729411780834198" />
-                                             </color>
-                                          </InnerShadow>
-                                       </effect>
-                                    </ChoiceBox>
-                                    <AnchorPane fx:id="feesJournalierItem" layoutX="299.0" layoutY="134.0" prefHeight="37.0" prefWidth="509.0" style="-fx-background-color: #EAEFF8;" AnchorPane.leftAnchor="299.0" AnchorPane.rightAnchor="146.0" AnchorPane.topAnchor="134.0">
-                                       <children>
-                                          <Label contentDisplay="RIGHT" layoutX="14.0" prefHeight="29.0" prefWidth="36.0" text="du" textFill="#323a3f">
-                                             <font>
-                                                <Font name="Gill Sans MT" size="20.0" />
-                                             </font>
-                                             <opaqueInsets>
-                                                <Insets left="22.0" />
-                                             </opaqueInsets>
-                                          </Label>
-                                          <DatePicker fx:id="dailyFeeDP" editable="false" layoutX="44.0" onAction="#getDailyFeeDate" prefHeight="34.0" prefWidth="130.0" />
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane fx:id="feesHebdoItem" layoutX="329.0" layoutY="164.0" prefHeight="37.0" prefWidth="509.0" style="-fx-background-color: #EAEFF8;" AnchorPane.leftAnchor="299.0" AnchorPane.rightAnchor="116.0" AnchorPane.topAnchor="134.0">
-                                       <children>
-                                          <Label contentDisplay="RIGHT" layoutX="14.0" prefHeight="29.0" prefWidth="145.0" text="de la semaine du" textFill="#323a3f">
-                                             <font>
-                                                <Font name="Gill Sans MT" size="20.0" />
-                                             </font>
-                                             <opaqueInsets>
-                                                <Insets left="22.0" />
-                                             </opaqueInsets>
-                                          </Label>
-                                          <DatePicker fx:id="weekFeeDP" editable="false" layoutX="155.0" onAction="#getDailyFeeDate" prefHeight="34.0" prefWidth="130.0" />
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane fx:id="feesMensuelItem" layoutX="309.0" layoutY="144.0" prefHeight="37.0" prefWidth="509.0" style="-fx-background-color: #EAEFF8;" AnchorPane.leftAnchor="299.0" AnchorPane.rightAnchor="146.0" AnchorPane.topAnchor="134.0">
-                                       <children>
-                                          <Label contentDisplay="RIGHT" layoutX="14.0" prefHeight="29.0" prefWidth="164.0" text="du mois de" textFill="#323a3f">
-                                             <font>
-                                                <Font name="Gill Sans MT" size="20.0" />
-                                             </font>
-                                             <opaqueInsets>
-                                                <Insets left="22.0" />
-                                             </opaqueInsets>
-                                          </Label>
-                                          <ChoiceBox fx:id="monthyFeeDP" layoutX="117.0" layoutY="1.0" prefHeight="33.0" prefWidth="130.0" style="-fx-background-color: white; -fx-padding: 0 0 0 3px; -fx-border-width: 0.5px; -fx-border-color: BABABA; -fx-border-radius: 3px; -fx-background-radius: 3px;">
-                                             <effect>
-                                                <InnerShadow blurType="GAUSSIAN" height="10.0" offsetY="1.0" radius="4.5" width="10.0">
-                                                   <color>
-                                                      <Color red="0.729411780834198" green="0.729411780834198" blue="0.729411780834198" />
-                                                   </color>
-                                                </InnerShadow>
-                                             </effect>
-                                          </ChoiceBox>
-                                          <ChoiceBox fx:id="yearFeeDP2" layoutX="359.0" layoutY="1.0" prefHeight="33.0" prefWidth="130.0" style="-fx-background-color: white; -fx-padding: 0 0 0 3px; -fx-border-width: 0.5px; -fx-border-color: BABABA; -fx-border-radius: 3px; -fx-background-radius: 3px;">
-                                             <effect>
-                                                <InnerShadow blurType="GAUSSIAN" height="10.0" offsetY="1.0" radius="4.5" width="10.0">
-                                                   <color>
-                                                      <Color red="0.729411780834198" green="0.729411780834198" blue="0.729411780834198" />
-                                                   </color>
-                                                </InnerShadow>
-                                             </effect>
-                                          </ChoiceBox>
-                                          <Label contentDisplay="RIGHT" layoutX="261.0" layoutY="2.0" prefHeight="29.0" prefWidth="87.0" text="de l'année" textFill="#323a3f">
-                                             <font>
-                                                <Font name="Gill Sans MT" size="20.0" />
-                                             </font>
-                                             <opaqueInsets>
-                                                <Insets left="22.0" />
-                                             </opaqueInsets>
-                                          </Label>
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane fx:id="feesAnnuelItem" layoutX="319.0" layoutY="154.0" prefHeight="37.0" prefWidth="509.0" style="-fx-background-color: #EAEFF8;" AnchorPane.leftAnchor="299.0" AnchorPane.rightAnchor="146.0" AnchorPane.topAnchor="134.0">
-                                       <children>
-                                          <Label contentDisplay="RIGHT" layoutX="14.0" prefHeight="29.0" prefWidth="192.0" text="de l'année" textFill="#323a3f">
-                                             <font>
-                                                <Font name="Gill Sans MT" size="20.0" />
-                                             </font>
-                                             <opaqueInsets>
-                                                <Insets left="22.0" />
-                                             </opaqueInsets>
-                                          </Label>
-                                          <ChoiceBox fx:id="yearFeeDP" layoutX="111.0" layoutY="1.0" prefHeight="33.0" prefWidth="130.0" style="-fx-background-color: white; -fx-padding: 0 0 0 3px; -fx-border-width: 0.5px; -fx-border-color: BABABA; -fx-border-radius: 3px; -fx-background-radius: 3px;">
-                                             <effect>
-                                                <InnerShadow blurType="GAUSSIAN" height="10.0" offsetY="1.0" radius="4.5" width="10.0">
-                                                   <color>
-                                                      <Color red="0.729411780834198" green="0.729411780834198" blue="0.729411780834198" />
-                                                   </color>
-                                                </InnerShadow>
-                                             </effect>
-                                          </ChoiceBox>
-                                       </children>
-                                    </AnchorPane>
-                                 </children>
-                              </AnchorPane>
-                           </children>
-                        </AnchorPane>
-                     </center>
-                  </BorderPane>
-                  <BorderPane fx:id="homeView" layoutX="4.0" layoutY="25.0" prefHeight="589.0" prefWidth="667.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <center>
-                        <AnchorPane BorderPane.alignment="CENTER">
-                           <BorderPane.margin>
-                              <Insets />
-                           </BorderPane.margin>
-                           <children>
-                              <AnchorPane fx:id="" layoutY="5.0" prefHeight="655.0" prefWidth="732.0" style="-fx-background-color: #EAEFF8;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <children>
-                                    <Label contentDisplay="RIGHT" layoutX="20.0" layoutY="19.0" prefHeight="29.0" prefWidth="261.0" text="Accueil" textFill="#323a3f" AnchorPane.leftAnchor="20.0">
-                                       <font>
-                                          <Font name="Gill Sans MT" size="25.0" />
-                                       </font>
-                                       <opaqueInsets>
-                                          <Insets left="22.0" />
-                                       </opaqueInsets>
-                                    </Label>
-                                    <Button fx:id="notifBtn2" layoutX="561.0" layoutY="24.0" mnemonicParsing="false" onMouseClicked="#handleNavigation" prefHeight="37.0" prefWidth="60.0" styleClass="notif_btn" textFill="#e6eff2" AnchorPane.rightAnchor="78.0" AnchorPane.topAnchor="22.0">
-                                       <graphic>
-                                          <ImageView disable="true" fitHeight="23.0" fitWidth="23.0">
-                                             <image>
-                                                <Image url="@../../resources/images/bell_reminder_icon.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                    </Button>
-                                    <Circle fx:id="pp_placeholder" fill="DODGERBLUE" layoutX="638.0" layoutY="43.0" onMouseClicked="#handleNavigation" radius="24.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="profile_pic" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="19.0" />
-                                    <Circle fx:id="notifCircle2" fill="DODGERBLUE" layoutX="579.0" layoutY="39.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" AnchorPane.rightAnchor="97.0" AnchorPane.topAnchor="30.0" />
-                                    <Label fx:id="welcomeText" layoutX="20.0" layoutY="50.0" prefHeight="28.0" prefWidth="519.0" text="Bonjour {user}, bienvenue !" textFill="#84898d">
-                                       <font>
-                                          <Font size="19.0" />
-                                       </font>
-                                       <graphic>
-                                          <ImageView fitHeight="27.0" fitWidth="22.0">
-                                             <image>
-                                                <Image url="@../../resources/images/hello_icon.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                    </Label>
-                                    <Label contentDisplay="RIGHT" layoutX="23.0" layoutY="129.0" prefHeight="29.0" prefWidth="299.0" text="Accès rapide" textFill="#323a3f" AnchorPane.leftAnchor="23.0" AnchorPane.topAnchor="129.0">
-                                       <font>
-                                          <Font name="Gill Sans MT" size="20.0" />
-                                       </font>
-                                       <opaqueInsets>
-                                          <Insets left="22.0" />
-                                       </opaqueInsets>
-                                    </Label>
-                                    <TextField fx:id="searchStudentHomeInput" layoutX="452.0" layoutY="124.0" onKeyReleased="#handleStudentSearch" prefHeight="42.0" prefWidth="231.0" promptText="Rechercher un élève" style="-fx-background-radius: 10px; -fx-border-radius: 10px;" styleClass="search_student" AnchorPane.rightAnchor="20.0">
-                                       <opaqueInsets>
-                                          <Insets left="12.0" right="12.0" />
-                                       </opaqueInsets>
-                                       <padding>
-                                          <Insets left="40.0" />
-                                       </padding>
-                                    </TextField>
-                                    <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="445.0" layoutY="135.0" AnchorPane.leftAnchor="445.0" AnchorPane.rightAnchor="217.0">
-                                       <image>
-                                          <Image url="@../../resources/images/loop_icon.png" />
-                                       </image>
-                                    </ImageView>
-                                    <Label contentDisplay="RIGHT" layoutX="23.0" layoutY="299.0" prefHeight="29.0" prefWidth="332.0" text="Classes récentes" textFill="#323a3f" AnchorPane.leftAnchor="23.0" AnchorPane.topAnchor="299.0">
-                                       <font>
-                                          <Font name="Gill Sans MT" size="20.0" />
-                                       </font>
-                                       <opaqueInsets>
-                                          <Insets left="22.0" />
-                                       </opaqueInsets>
-                                    </Label>
-                                    <Button fx:id="viewAllClasses" layoutX="431.0" layoutY="292.0" mnemonicParsing="false" onMouseClicked="#handleNavigation" prefHeight="42.0" prefWidth="136.0" style="-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-background-color: linear-gradient(to right, #2c7aba, #5AB2D8);" styleClass="classic_btn" text="   Voir tout" AnchorPane.rightAnchor="20.0">
-                                       <opaqueInsets>
-                                          <Insets />
-                                       </opaqueInsets>
-                                    </Button>
-                                    <HBox layoutX="23.0" layoutY="359.0" prefHeight="309.0" prefWidth="636.0" style="-fx-background-color: #EAEFF8;" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="18.0">
-                                       <children>
-                                          <VBox>
-                                             <HBox.margin>
-                                                <Insets />
-                                             </HBox.margin>
-                                             <children>
-                                                <HBox alignment="CENTER_LEFT" prefHeight="55.0" prefWidth="200.0">
-                                                   <children>
-                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="75.0" textAlignment="CENTER" textFill="#656565">
-                                                         <font>
-                                                            <Font name="Corbel" size="20.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="106.0" text="Intitulé" textAlignment="CENTER" textFill="#656565">
-                                                         <font>
-                                                            <Font name="Corbel" size="20.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="225.0" text="Formation" textAlignment="CENTER" textFill="#656565">
-                                                         <font>
-                                                            <Font name="Corbel" size="20.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="195.0" text="Année scolaire" textAlignment="CENTER" textFill="#656565">
-                                                         <font>
-                                                            <Font name="Corbel" size="20.0" />
-                                                         </font>
-                                                      </Label>
-                                                   </children>
-                                                   <VBox.margin>
-                                                      <Insets left="5.0" right="5.0" />
-                                                   </VBox.margin>
-                                                </HBox>
-                                                <ScrollPane hbarPolicy="NEVER" prefHeight="272.0" prefWidth="645.0" style="-fx-background-color: transparent;" vbarPolicy="NEVER">
-                                                   <content>
-                                                      <VBox fx:id="classesHomeLayout" minHeight="269.0" prefWidth="635.0" spacing="7.0" style="-fx-background-color: #EAEFF8;" />
-                                                   </content>
-                                                   <padding>
-                                                      <Insets left="5.0" right="5.0" />
-                                                   </padding>
-                                                </ScrollPane>
-                                             </children>
-                                          </VBox>
-                                       </children>
-                                    </HBox>
-                                    <ImageView layoutX="538.0" layoutY="302.0" AnchorPane.leftAnchor="538.0">
-                                       <image>
-                                          <Image url="@../../resources/images/eye_icon.png" />
-                                       </image>
-                                    </ImageView>
-                                    <HBox fx:id="homeStudentShortcut" alignment="TOP_CENTER" layoutX="20.0" layoutY="186.0" prefHeight="88.0" prefWidth="643.0" style="-fx-background-color: white; -fx-background-radius: 10px;" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="23.0">
-                                       <children>
-                                          <VBox alignment="CENTER" prefHeight="165.0" prefWidth="656.0" style="-fx-background-color: transparent;">
-                                             <HBox.margin>
-                                                <Insets />
-                                             </HBox.margin>
-                                             <children>
-                                                <VBox fx:id="studentsHomeLayout" alignment="CENTER_LEFT" minHeight="83.0" prefHeight="220.0" prefWidth="656.0" spacing="7.0" style="-fx-background-color: transparent;">
-                                                   <cursor>
-                                                      <Cursor fx:constant="DEFAULT" />
-                                                   </cursor>
-                                                   <padding>
-                                                      <Insets left="13.0" right="13.0" />
-                                                   </padding>
-                                                </VBox>
-                                             </children>
-                                             <padding>
-                                                <Insets top="5.0" />
-                                             </padding>
-                                          </VBox>
-                                       </children>
-                                       <effect>
-                                          <DropShadow>
-                                             <color>
-                                                <Color red="0.6800000071525574" green="0.6664000153541565" blue="0.6664000153541565" opacity="0.8320610523223877" />
-                                             </color>
-                                          </DropShadow>
-                                       </effect>
-                                    </HBox>
-                                 </children>
-                              </AnchorPane>
-                           </children>
-                        </AnchorPane>
-                     </center>
-                     <right>
-                        <fx:include fx:id="classPreview2" source="ClassPreviewItem.fxml" />
-                     </right>
-                  </BorderPane>
                   <BorderPane fx:id="profileView" layoutX="24.0" layoutY="45.0" prefHeight="589.0" prefWidth="667.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <center>
                         <AnchorPane style="-fx-background-color: #F3F3F3;" BorderPane.alignment="CENTER">
@@ -1222,121 +1222,22 @@
                                                          <content>
                                                             <VBox fx:id="notifsLayout" minHeight="271.0" prefHeight="269.0" prefWidth="855.0" spacing="8.0" style="-fx-background-color: #EAEFF8;">
                                                                <children>
-                                                                  <HBox prefHeight="78.0" prefWidth="855.0" style="-fx-background-color: white; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-border-color: #28BAFC;">
-                                                                     <effect>
-                                                                        <DropShadow>
-                                                                           <color>
-                                                                              <Color red="0.1632000058889389" green="0.7209600210189819" blue="0.9599999785423279" opacity="0.31770989298820496" />
-                                                                           </color>
-                                                                        </DropShadow>
-                                                                     </effect>
+                                                                  <HBox>
                                                                      <children>
-                                                                        <AnchorPane prefHeight="76.0" prefWidth="81.0" style="-fx-background-color: #E6F7FF; -fx-background-radius: 10px 0 0 10px; -fx-border-width: 0 1.3px 0 0; -fx-border-color: #28BAFC;">
+                                                                        <AnchorPane prefHeight="199.0" prefWidth="855.0">
                                                                            <children>
-                                                                              <ImageView fitHeight="41.0" fitWidth="41.0" layoutX="20.0" layoutY="18.0">
+                                                                              <ImageView fitHeight="80.0" fitWidth="118.0" layoutX="232.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
                                                                                  <image>
-                                                                                    <Image url="@../../../../../../../../AppData/Local/Temp/icons8_info_64px.png" />
+                                                                                    <Image url="@../../resources/images/empty_placeholder.png" />
                                                                                  </image>
                                                                               </ImageView>
-                                                                           </children>
-                                                                        </AnchorPane>
-                                                                        <AnchorPane prefHeight="76.0" prefWidth="751.0">
-                                                                           <children>
-                                                                              <Label layoutX="14.0" layoutY="29.0" prefHeight="19.0" prefWidth="723.0" text="Votre ajout de l'apprenant Ikbal AZIMARI TOURE a été annulé par l'administrateur Wissam Youssef">
+                                                                              <Label contentDisplay="RIGHT" layoutX="351.0" layoutY="76.0" prefHeight="29.0" prefWidth="273.0" text="Vous n'avez aucune notification." textFill="#9ea0a1">
                                                                                  <font>
-                                                                                    <Font name="Gill Sans MT" size="16.0" />
+                                                                                    <Font name="Gill Sans MT" size="21.0" />
                                                                                  </font>
-                                                                              </Label>
-                                                                              <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="739.0" layoutY="5.0">
-                                                                                 <image>
-                                                                                    <Image url="@../../../../../../../../AppData/Local/Temp/icons8_Close_50px.png" />
-                                                                                 </image>
-                                                                              </ImageView>
-                                                                              <Label layoutX="644.0" layoutY="55.0" prefHeight="19.0" prefWidth="110.0" text="23 fev 2021 à 09h:15" textFill="#bababa">
-                                                                                 <font>
-                                                                                    <Font name="Gill Sans MT" size="13.0" />
-                                                                                 </font>
-                                                                              </Label>
-                                                                           </children>
-                                                                        </AnchorPane>
-                                                                     </children>
-                                                                     <padding>
-                                                                        <Insets top="1.0" />
-                                                                     </padding>
-                                                                  </HBox>
-                                                                  <HBox prefHeight="78.0" prefWidth="855.0" style="-fx-background-color: white; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-border-color: #28BAFC;">
-                                                                     <effect>
-                                                                        <DropShadow>
-                                                                           <color>
-                                                                              <Color red="0.1632000058889389" green="0.7209600210189819" blue="0.9599999785423279" opacity="0.31770989298820496" />
-                                                                           </color>
-                                                                        </DropShadow>
-                                                                     </effect>
-                                                                     <children>
-                                                                        <AnchorPane prefHeight="76.0" prefWidth="81.0" style="-fx-background-color: #E6F7FF; -fx-background-radius: 10px 0 0 10px; -fx-border-width: 0 1.3px 0 0; -fx-border-color: #28BAFC;">
-                                                                           <children>
-                                                                              <ImageView fitHeight="41.0" fitWidth="41.0" layoutX="20.0" layoutY="18.0">
-                                                                                 <image>
-                                                                                    <Image url="@../../../../../../../../AppData/Local/Temp/icons8_info_64px.png" />
-                                                                                 </image>
-                                                                              </ImageView>
-                                                                           </children>
-                                                                        </AnchorPane>
-                                                                        <AnchorPane prefHeight="76.0" prefWidth="751.0">
-                                                                           <children>
-                                                                              <Label layoutX="14.0" layoutY="29.0" prefHeight="19.0" prefWidth="723.0" text="Votre ajout de l'apprenant Ikbal AZIMARI TOURE a été annulé par l'administrateur Wissam Youssef">
-                                                                                 <font>
-                                                                                    <Font name="Gill Sans MT" size="16.0" />
-                                                                                 </font>
-                                                                              </Label>
-                                                                              <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="739.0" layoutY="5.0">
-                                                                                 <image>
-                                                                                    <Image url="@../../../../../../../../AppData/Local/Temp/icons8_Close_50px.png" />
-                                                                                 </image>
-                                                                              </ImageView>
-                                                                              <Label layoutX="644.0" layoutY="55.0" prefHeight="19.0" prefWidth="110.0" text="23 fev 2021 à 09h:15" textFill="#bababa">
-                                                                                 <font>
-                                                                                    <Font name="Gill Sans MT" size="13.0" />
-                                                                                 </font>
-                                                                              </Label>
-                                                                           </children>
-                                                                        </AnchorPane>
-                                                                     </children>
-                                                                  </HBox>
-                                                                  <HBox prefHeight="78.0" prefWidth="855.0" style="-fx-background-color: white; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-border-color: #28BAFC;">
-                                                                     <effect>
-                                                                        <DropShadow>
-                                                                           <color>
-                                                                              <Color red="0.1632000058889389" green="0.7209600210189819" blue="0.9599999785423279" opacity="0.31770989298820496" />
-                                                                           </color>
-                                                                        </DropShadow>
-                                                                     </effect>
-                                                                     <children>
-                                                                        <AnchorPane prefHeight="76.0" prefWidth="81.0" style="-fx-background-color: #E6F7FF; -fx-background-radius: 10px 0 0 10px; -fx-border-width: 0 1.3px 0 0; -fx-border-color: #28BAFC;">
-                                                                           <children>
-                                                                              <ImageView fitHeight="41.0" fitWidth="41.0" layoutX="20.0" layoutY="18.0">
-                                                                                 <image>
-                                                                                    <Image url="@../../../../../../../../AppData/Local/Temp/icons8_info_64px.png" />
-                                                                                 </image>
-                                                                              </ImageView>
-                                                                           </children>
-                                                                        </AnchorPane>
-                                                                        <AnchorPane prefHeight="76.0" prefWidth="751.0">
-                                                                           <children>
-                                                                              <Label layoutX="14.0" layoutY="29.0" prefHeight="19.0" prefWidth="723.0" text="Votre ajout de l'apprenant Ikbal AZIMARI TOURE a été annulé par l'administrateur Wissam Youssef">
-                                                                                 <font>
-                                                                                    <Font name="Gill Sans MT" size="16.0" />
-                                                                                 </font>
-                                                                              </Label>
-                                                                              <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="739.0" layoutY="5.0">
-                                                                                 <image>
-                                                                                    <Image url="@../../../../../../../../AppData/Local/Temp/icons8_Close_50px.png" />
-                                                                                 </image>
-                                                                              </ImageView>
-                                                                              <Label layoutX="644.0" layoutY="55.0" prefHeight="19.0" prefWidth="110.0" text="23 fev 2021 à 09h:15" textFill="#bababa">
-                                                                                 <font>
-                                                                                    <Font name="Gill Sans MT" size="13.0" />
-                                                                                 </font>
+                                                                                 <opaqueInsets>
+                                                                                    <Insets left="22.0" />
+                                                                                 </opaqueInsets>
                                                                               </Label>
                                                                            </children>
                                                                         </AnchorPane>
