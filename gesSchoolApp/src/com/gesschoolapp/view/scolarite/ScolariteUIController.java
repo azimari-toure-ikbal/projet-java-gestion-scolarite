@@ -343,6 +343,8 @@ public class ScolariteUIController implements Initializable {
     @FXML
     private VBox studentsHomeLayout;
 
+    private HBox studentsHomeLayoutPlaceholder;
+
     @FXML
     private ImageView btnPrecedent;
 
@@ -401,6 +403,7 @@ public class ScolariteUIController implements Initializable {
         studentsLayoutPlaceholder = (HBox) studentsLayout.getChildren().get(0);
         notesLayoutPlaceholder = (HBox) notesLayout.getChildren().get(0);
         notifsLayoutPlaceholder = (HBox) notifsLayout.getChildren().get(0);
+        studentsHomeLayoutPlaceholder = (HBox) studentsHomeLayout.getChildren().get(0);
 
         listeClasses = null;
         try {
@@ -1361,7 +1364,7 @@ public class ScolariteUIController implements Initializable {
             try {
 
                 for (Apprenant appr : selectedClass.getApprenants()) {
-                    if (appr.getNom().toLowerCase().contains(toSearch) || appr.getPrenom().toLowerCase().contains(toSearch) || Integer.toString(appr.getMatricule()).toLowerCase().contains(toSearch)) {
+                    if (appr.getFullName().toLowerCase().contains(toSearch) || appr.getNom().toLowerCase().contains(toSearch) || appr.getPrenom().toLowerCase().contains(toSearch) || Integer.toString(appr.getMatricule()).toLowerCase().contains(toSearch)) {
                         found.add(appr);
                     }
                 }
@@ -1377,7 +1380,7 @@ public class ScolariteUIController implements Initializable {
             try {
 
                 for (Apprenant appr : allApprenants) {
-                    if (appr.getNom().toLowerCase().contains(toSearch) || appr.getPrenom().toLowerCase().contains(toSearch) || Integer.toString(appr.getMatricule()).toLowerCase().contains(toSearch)) {
+                    if (appr.getFullName().toLowerCase().contains(toSearch) || appr.getNom().toLowerCase().contains(toSearch) || appr.getPrenom().toLowerCase().contains(toSearch) || Integer.toString(appr.getMatricule()).toLowerCase().contains(toSearch)) {
                         found.add(appr);
                     }
                 }
@@ -1445,7 +1448,7 @@ public class ScolariteUIController implements Initializable {
     public void setListeDesNotifications(List<Notification> notifs){
         notifsLayout.getChildren().clear();
 
-        if(notifs.size() == 0){
+        if(notifs.stream().filter(notification -> notification.isSeen() == false).toList().size() == 0){
             notifsLayout.getChildren().add(notifsLayoutPlaceholder);
         }
 
@@ -1547,11 +1550,12 @@ public class ScolariteUIController implements Initializable {
 
     public void setShortcutApprenant(List<Apprenant> apprenants) {
 
-//        Je met en commentaire ce code car j'ai un bug sur le dernier apprenant qui saute pas
-//        jene sais plus pourquoi je l'avais mis donc oklm
-//        if(apprenants.size() != 0){
+
         studentsHomeLayout.getChildren().removeIf(node -> node instanceof HBox);
-//        }
+
+        if(apprenants.size() == 0){
+            studentsHomeLayout.getChildren().add(studentsHomeLayoutPlaceholder);
+        }
 
         if(apprenants.size() != 0){
 

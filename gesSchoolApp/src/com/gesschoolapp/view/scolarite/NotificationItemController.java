@@ -29,7 +29,7 @@ public class NotificationItemController {
 
     @FXML
     void onClose(MouseEvent event) {
-        thisNotif.setSeen(true);
+        thisNotif.setSeen();
 //        ActionDAOImp actDAO = new ActionDAOImp();
 //        actDAO.
         superController.getNotifsLayout().getChildren().remove(notifPane);

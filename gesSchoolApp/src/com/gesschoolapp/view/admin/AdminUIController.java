@@ -129,14 +129,24 @@ public class AdminUIController implements Initializable {
     @FXML
     private VBox usersLayout;
 
+
+    private HBox usersLayoutPlaceholder;
+
     @FXML
     private VBox studentsHomeLayout;
+
+    private HBox studentsHomeLayoutPlaceholder;
 
     @FXML
     private VBox classesLayout;
 
+    private HBox classesLayoutPlaceholder;
+
     @FXML
     private VBox actionsLayout;
+
+
+    private HBox actionsLayoutPlaceholder;
 
     @FXML
     private Label userFullName;
@@ -224,6 +234,13 @@ public class AdminUIController implements Initializable {
         // --- Init components :
         Image pp = new Image("com/gesschoolapp/resources/images/pp_placeholder.jpg");
         pp_placeholder.setFill(new ImagePattern(pp));
+
+        // --- init placeholders :
+
+        studentsHomeLayoutPlaceholder = (HBox) studentsHomeLayout.getChildren().get(0);
+        classesLayoutPlaceholder = (HBox) classesLayout.getChildren().get(0);
+        actionsLayoutPlaceholder = (HBox) actionsLayout.getChildren().get(0);
+        usersLayoutPlaceholder = (HBox) usersLayout.getChildren().get(0);
 
 
         // --- Init route :
@@ -616,9 +633,10 @@ public class AdminUIController implements Initializable {
         setListeDesUtilisateurs(usersList);
     }
     public void setListeDesUtilisateurs(List<Utilisateur> users) {
+        usersLayout.getChildren().clear();
 
-        if (users.size() != 0) {
-            usersLayout.getChildren().clear();
+        if (users.size() == 0) {
+            usersLayout.getChildren().add(usersLayoutPlaceholder);
         }
 
         if (getSelectedUserType() == btnCaissiers) {
@@ -681,9 +699,12 @@ public class AdminUIController implements Initializable {
     }
     public void setListeDesClasses(List<Classe> classes) {
 
-        if (classes.size() != 0) {
-            classesLayout.getChildren().clear();
+        classesLayout.getChildren().clear();
+
+        if (classes.size() == 0) {
+            classesLayout.getChildren().add(classesLayoutPlaceholder);
         }
+
 
 //        if (getSelectedUserType() == btnCaissiers) {
 //            users = users.stream().filter(utilisateur -> utilisateur.getType().equals("caissier")).toList();
@@ -716,6 +737,11 @@ public class AdminUIController implements Initializable {
 
     public void setListeDesActions(List<Action> actions){
         actionsLayout.getChildren().clear();
+
+        if(actions.size() == 0){
+            actionsLayout.getChildren().add(actionsLayoutPlaceholder);
+        }
+
         for (Action action : actions) {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("ActionItem.fxml"));

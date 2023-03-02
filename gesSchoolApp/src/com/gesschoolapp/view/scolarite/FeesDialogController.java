@@ -112,32 +112,65 @@ public class FeesDialogController  implements Initializable {
         labelAnneeScolaire.setText(superController.getSelectedClass().getAnnee());
         labelDPaiement.setValue(LocalDate.now());
 
-
-
-
         this.apprenant = appr;
 
-        Echeance toPay = superController.getSelectedClass().getEcheancier().get(apprenant.getEtatPaiement());
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern( "dd MMMM yyyy" ).withLocale( java.util.Locale.FRENCH );
-        month = toPay.getDate().format(formatter).split(" ")[1];
 
-        labelScolarite.setText("Du mois \"" + month + "\"");
+        rubriqueList = new ArrayList<>(superController.getSelectedClass().getRubriques()).toArray(new Rubrique[superController.getSelectedClass().getRubriques().size()]);
 
-        if(apprenant.getEtatPaiement() == 0){
-            selectRubrique.getItems().removeIf(rubr -> !rubr.equals("inscription"));
-            selectRubrique.setValue(selectRubrique.getItems().get(0));
+        selectRubrique.setValue(rubriqueList[0].getIntitule());
+        labelMontant.setText(rubriqueList[0].getMontant() + " FCFA");
+
+        for(Rubrique rubr : rubriqueList){
+            selectRubrique.getItems().add(rubr.getIntitule());
+            if(this.apprenant.getEtatPaiement()==9)
+                selectRubrique.getItems().remove("scolarite");
+                selectRubrique.getItems().remove("inscription");
+                labelScolarite.setText("Cet élève a déjà payé toute la scolarité");
+                selectRubrique.setValue("tenue");
+                labelMontant.setText(rubriqueList[0].getMontant() + " FCFA");
         }
 
-        if(apprenant.getEtatPaiement() >= 1){
-            selectRubrique.getItems().remove("inscription");
-            selectRubrique.setValue(selectRubrique.getItems().get(0));
-        }
 
-        if(apprenant.getEtatPaiement() >= 9){
-            selectRubrique.getItems().removeAll();
-            selectRubrique.setValue(selectRubrique.getItems().get(0));
-        }
+        selectRubrique.getSelectionModel()
+                .selectedItemProperty()
+                .addListener( (ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+                    Rubrique item = Arrays.stream(rubriqueList).filter(rubr -> rubr.getIntitule() == newValue).toList().get(0);
+                    labelMontant.setText(item.getMontant() + " FCFA");
+                    if(newValue == "inscription"){
+                        labelScolarite.setVisible(true);
+                        labelScolarite.setText("Scolarité du mois \"" + month + "\", droit d'inscription et autres... ");
+                    }else if(newValue == "scolarite"){
+                        labelScolarite.setVisible(true);
+                        labelScolarite.setText("Du mois \"" + month + "\"");
+                    }else{
+                        labelScolarite.setVisible(false);
+                    }
+                } );
 
+
+        if(apprenant.getEtatPaiement() != 9) {
+
+            Echeance toPay = superController.getSelectedClass().getEcheancier().get(apprenant.getEtatPaiement());
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy").withLocale(java.util.Locale.FRENCH);
+            month = toPay.getDate().format(formatter).split(" ")[1];
+
+            labelScolarite.setText("Du mois \"" + month + "\"");
+
+            if (apprenant.getEtatPaiement() == 0) {
+                selectRubrique.getItems().removeIf(rubr -> !rubr.equals("inscription"));
+                selectRubrique.setValue(selectRubrique.getItems().get(0));
+            }
+
+            if (apprenant.getEtatPaiement() >= 1) {
+                selectRubrique.getItems().remove("inscription");
+                selectRubrique.setValue(selectRubrique.getItems().get(0));
+            }
+        }else{
+            selectRubrique.getItems().remove("scolarite");
+//            selectRubrique.setDisable(true);
+//            labelScolarite.setText("Cet étudiant a déjà payé toute la scolarité");
+//            btnSubmit.setDisable(true);
+        }
 
     }
 
@@ -182,14 +215,15 @@ public class FeesDialogController  implements Initializable {
             }
         }
 
-        if(apprenant.getEtatPaiement() == 9){
-            selectRubrique.getItems().removeAll();
-        }
-
         if(selectRubrique.getValue() != "tenue"){
             apprenant.setEtatPaiement(apprenant.getEtatPaiement()+1);
         }
+        List<Apprenant> appr = new ArrayList<>();
+        appr.add(apprenant);
+        superController.setShortcutApprenant(appr);
         superController.setMainMessageInfo("Paiement renseigné avec succès ! (VOIR RECU)");
+
+
 
     }
 
@@ -233,30 +267,8 @@ public class FeesDialogController  implements Initializable {
 
     public void setSuperController(ScolariteUIController superController) {
         this.superController = superController;
-        rubriqueList = new ArrayList<>(superController.getSelectedClass().getRubriques()).toArray(new Rubrique[superController.getSelectedClass().getRubriques().size()]);
 
-        for(Rubrique rubr : rubriqueList){
-            selectRubrique.getItems().add(rubr.getIntitule());
-        }
 //        messageInfo.setVisible(false);
-        selectRubrique.setValue(rubriqueList[0].getIntitule());
-        labelMontant.setText(rubriqueList[0].getMontant() + " FCFA");
-
-        selectRubrique.getSelectionModel()
-                .selectedItemProperty()
-                .addListener( (ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-                    Rubrique item = Arrays.stream(rubriqueList).filter(rubr -> rubr.getIntitule() == newValue).toList().get(0);
-                    labelMontant.setText(item.getMontant() + " FCFA");
-                    if(newValue == "inscription"){
-                        labelScolarite.setVisible(true);
-                        labelScolarite.setText("Scolarité du mois \"" + month + "\", droit d'inscription et autres... ");
-                    }else if(newValue == "scolarite"){
-                        labelScolarite.setVisible(true);
-                        labelScolarite.setText("Du mois \"" + month + "\"");
-                    }else{
-                        labelScolarite.setVisible(false);
-                    }
-                } );
 
     }
 

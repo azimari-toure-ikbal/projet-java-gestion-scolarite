@@ -32,180 +32,6 @@
                   <Insets />
                </BorderPane.margin>
                <children>
-                  <BorderPane fx:id="usersView" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #F3F3F3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <center>
-                        <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                           <children>
-                              <ButtonBar cache="true" layoutX="14.0" layoutY="14.0" prefHeight="55.0" prefWidth="303.0" style="-fx-background-color: white; -fx-background-radius: 10px; -fx-padding: 0 10px;" AnchorPane.leftAnchor="14.0">
-                                 <buttons>
-                                    <Button fx:id="btnSecretaires" mnemonicParsing="false" onAction="#handleSelectedUserType" prefHeight="55.0" prefWidth="116.0" styleClass="selectUser_menu" text="Secrétaires" />
-                                    <Button fx:id="btnCaissiers" mnemonicParsing="false" onAction="#handleSelectedUserType" prefHeight="63.0" prefWidth="100.0" styleClass="selectUser_menu" text="Caissiers" />
-                                    <Button fx:id="btnAdmins" mnemonicParsing="false" onAction="#handleSelectedUserType" prefHeight="63.0" prefWidth="100.0" styleClass="selectUser_menu" text="Admins" />
-                                 </buttons>
-                                 <effect>
-                                    <DropShadow>
-                                       <color>
-                                          <Color opacity="0.22519083321094513" />
-                                       </color>
-                                    </DropShadow>
-                                 </effect>
-                              </ButtonBar>
-                              <VBox alignment="CENTER" layoutX="19.0" layoutY="129.0" prefHeight="441.0" prefWidth="926.0" style="-fx-background-color: white; -fx-background-radius: 10px;" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="129.0">
-                                 <children>
-                                    <HBox alignment="CENTER_LEFT" prefHeight="65.0" prefWidth="906.0" style="-fx-border-width: 0 0 0.1px 0; -fx-border-color: black;">
-                                       <children>
-                                          <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="69.0" text="Photo" textAlignment="CENTER" textFill="#656565">
-                                             <font>
-                                                <Font name="Corbel" size="15.0" />
-                                             </font>
-                                          </Label>
-                                          <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="184.0" text="Nom &amp; prénom" textAlignment="CENTER" textFill="#656565">
-                                             <font>
-                                                <Font name="Corbel" size="15.0" />
-                                             </font>
-                                          </Label>
-                                          <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="149.0" text="Login" textAlignment="CENTER" textFill="#656565">
-                                             <font>
-                                                <Font name="Corbel" size="15.0" />
-                                             </font>
-                                          </Label>
-                                          <Label fx:id="caissierEtatDePaiementLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="140.0" text="Statut" textAlignment="CENTER" textFill="#656565">
-                                             <font>
-                                                <Font name="Corbel" size="15.0" />
-                                             </font>
-                                          </Label>
-                                          <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="152.0" text="Numéro tel" textAlignment="CENTER" textFill="#656565">
-                                             <font>
-                                                <Font name="Corbel" size="15.0" />
-                                             </font>
-                                          </Label>
-                                          <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="182.0" text="Actions" textAlignment="CENTER" textFill="#656565">
-                                             <font>
-                                                <Font name="Corbel" size="15.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets left="10.0" right="10.0" />
-                                       </VBox.margin>
-                                       <padding>
-                                          <Insets left="10.0" right="10.0" />
-                                       </padding>
-                                    </HBox>
-                                    <ScrollPane hbarPolicy="NEVER" prefHeight="396.0" prefWidth="926.0" style="-fx-background-color: transparent;" vbarPolicy="NEVER">
-                                       <content>
-                                          <VBox fx:id="usersLayout" minHeight="386.0" prefWidth="921.0" spacing="7.0" style="-fx-background-color: white;">
-                                             <cursor>
-                                                <Cursor fx:constant="DEFAULT" />
-                                             </cursor>
-                                             <padding>
-                                                <Insets left="13.0" right="13.0" />
-                                             </padding>
-                                          </VBox>
-                                       </content>
-                                       <padding>
-                                          <Insets left="5.0" right="5.0" />
-                                       </padding>
-                                    </ScrollPane>
-                                 </children>
-                              </VBox>
-                              <Label fx:id="classListName" contentDisplay="RIGHT" layoutX="15.0" layoutY="84.0" prefHeight="29.0" prefWidth="103.0" text="Utilisateurs" textFill="#323a3f">
-                                 <font>
-                                    <Font name="Gill Sans MT" size="20.0" />
-                                 </font>
-                                 <opaqueInsets>
-                                    <Insets left="22.0" />
-                                 </opaqueInsets>
-                              </Label>
-                              <Button layoutX="829.0" layoutY="78.0" mnemonicParsing="false" onAction="#openUserAddDialog" onMouseClicked="#handleNavigation" prefHeight="41.0" prefWidth="104.0" style="-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-background-color: linear-gradient(to right, #2c7aba, #5AB2D8);" styleClass="classic_btn" text="      Ajouter">
-                                 <opaqueInsets>
-                                    <Insets />
-                                 </opaqueInsets>
-                              </Button>
-                              <ImageView disable="true" fitHeight="23.0" fitWidth="23.0" layoutX="840.0" layoutY="87.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../resources/images/student_icon.png" />
-                                 </image>
-                              </ImageView>
-                           </children>
-                        </AnchorPane>
-                     </center>
-                  </BorderPane>
-                  <BorderPane fx:id="classesView" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #F3F3F3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <center>
-                        <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                           <children>
-                              <VBox alignment="CENTER" prefHeight="441.0" prefWidth="926.0" style="-fx-background-color: white; -fx-background-radius: 10px;" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="129.0">
-                                 <children>
-                                    <HBox alignment="CENTER_LEFT" prefHeight="65.0" prefWidth="906.0" style="-fx-border-width: 0 0 0.1px 0; -fx-border-color: black;">
-                                       <children>
-                                          <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="69.0" text="Photo" textAlignment="CENTER" textFill="#656565">
-                                             <font>
-                                                <Font name="Corbel" size="15.0" />
-                                             </font>
-                                          </Label>
-                                          <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="184.0" text="Intitulé" textAlignment="CENTER" textFill="#656565">
-                                             <font>
-                                                <Font name="Corbel" size="15.0" />
-                                             </font>
-                                          </Label>
-                                          <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="185.0" text="Formation" textAlignment="CENTER" textFill="#656565">
-                                             <font>
-                                                <Font name="Corbel" size="15.0" />
-                                             </font>
-                                          </Label>
-                                          <Label fx:id="caissierEtatDePaiementLabel1" alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="96.0" text="Nb élèves" textAlignment="CENTER" textFill="#656565">
-                                             <font>
-                                                <Font name="Corbel" size="15.0" />
-                                             </font>
-                                          </Label>
-                                          <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="108.0" text="Nb modules" textAlignment="CENTER" textFill="#656565">
-                                             <font>
-                                                <Font name="Corbel" size="15.0" />
-                                             </font>
-                                          </Label>
-                                          <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="235.0" text="Actions" textAlignment="CENTER" textFill="#656565">
-                                             <font>
-                                                <Font name="Corbel" size="15.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets left="10.0" right="10.0" />
-                                       </VBox.margin>
-                                       <padding>
-                                          <Insets left="10.0" right="10.0" />
-                                       </padding>
-                                    </HBox>
-                                    <ScrollPane hbarPolicy="NEVER" prefHeight="396.0" prefWidth="926.0" style="-fx-background-color: transparent;" vbarPolicy="NEVER">
-                                       <content>
-                                          <VBox fx:id="classesLayout" minHeight="386.0" prefWidth="921.0" spacing="7.0" style="-fx-background-color: white;">
-                                             <cursor>
-                                                <Cursor fx:constant="DEFAULT" />
-                                             </cursor>
-                                             <padding>
-                                                <Insets left="13.0" right="13.0" />
-                                             </padding>
-                                          </VBox>
-                                       </content>
-                                       <padding>
-                                          <Insets left="5.0" right="5.0" />
-                                       </padding>
-                                    </ScrollPane>
-                                 </children>
-                              </VBox>
-                              <Label fx:id="classListName1" contentDisplay="RIGHT" layoutX="14.0" layoutY="87.0" prefHeight="29.0" prefWidth="241.0" text="Liste des classes - 2022/2023" textFill="#323a3f">
-                                 <font>
-                                    <Font name="Gill Sans MT" size="20.0" />
-                                 </font>
-                                 <opaqueInsets>
-                                    <Insets left="22.0" />
-                                 </opaqueInsets>
-                              </Label>
-                           </children>
-                        </AnchorPane>
-                     </center>
-                  </BorderPane>
                   <BorderPane fx:id="logsView" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #F3F3F3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <center>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
@@ -261,6 +87,29 @@
                                              <padding>
                                                 <Insets left="13.0" right="13.0" />
                                              </padding>
+                                             <children>
+                                                <HBox>
+                                                   <children>
+                                                      <AnchorPane prefHeight="397.0" prefWidth="895.0">
+                                                         <children>
+                                                            <ImageView fitHeight="220.0" fitWidth="288.0" layoutX="281.0" layoutY="52.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../../resources/images/empty_placeholder.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                            <Label contentDisplay="RIGHT" layoutX="221.0" layoutY="292.0" prefHeight="29.0" prefWidth="453.0" text="Oops, aucun log n'a été trouvé pour cette date :/" textFill="#323a3f">
+                                                               <font>
+                                                                  <Font name="Gill Sans MT" size="21.0" />
+                                                               </font>
+                                                               <opaqueInsets>
+                                                                  <Insets left="22.0" />
+                                                               </opaqueInsets>
+                                                            </Label>
+                                                         </children>
+                                                      </AnchorPane>
+                                                   </children>
+                                                </HBox>
+                                             </children>
                                           </VBox>
                                        </content>
                                        <padding>
@@ -465,6 +314,29 @@
                                                    <padding>
                                                       <Insets left="13.0" right="13.0" />
                                                    </padding>
+                                                   <children>
+                                                      <HBox>
+                                                         <children>
+                                                            <AnchorPane prefHeight="199.0" prefWidth="855.0">
+                                                               <children>
+                                                                  <ImageView fitHeight="80.0" fitWidth="118.0" layoutX="212.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true">
+                                                                     <image>
+                                                                        <Image url="@../../resources/images/empty_placeholder.png" />
+                                                                     </image>
+                                                                  </ImageView>
+                                                                  <Label contentDisplay="RIGHT" layoutX="331.0" layoutY="86.0" prefHeight="29.0" prefWidth="347.0" text="Oops, aucun étudiant n'a été trouvé :/" textFill="#323a3f">
+                                                                     <font>
+                                                                        <Font name="Gill Sans MT" size="21.0" />
+                                                                     </font>
+                                                                     <opaqueInsets>
+                                                                        <Insets left="22.0" />
+                                                                     </opaqueInsets>
+                                                                  </Label>
+                                                               </children>
+                                                            </AnchorPane>
+                                                         </children>
+                                                      </HBox>
+                                                   </children>
                                                 </VBox>
                                              </content>
                                              <padding>
@@ -486,6 +358,226 @@
                            </children>
                         </AnchorPane>
                      </center></BorderPane>
+                  <BorderPane fx:id="classesView" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #F3F3F3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <center>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <VBox alignment="CENTER" prefHeight="441.0" prefWidth="926.0" style="-fx-background-color: white; -fx-background-radius: 10px;" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="129.0">
+                                 <children>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="65.0" prefWidth="906.0" style="-fx-border-width: 0 0 0.1px 0; -fx-border-color: black;">
+                                       <children>
+                                          <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="69.0" text="Photo" textAlignment="CENTER" textFill="#656565">
+                                             <font>
+                                                <Font name="Corbel" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="184.0" text="Intitulé" textAlignment="CENTER" textFill="#656565">
+                                             <font>
+                                                <Font name="Corbel" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="185.0" text="Formation" textAlignment="CENTER" textFill="#656565">
+                                             <font>
+                                                <Font name="Corbel" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="caissierEtatDePaiementLabel1" alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="96.0" text="Nb élèves" textAlignment="CENTER" textFill="#656565">
+                                             <font>
+                                                <Font name="Corbel" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="108.0" text="Nb modules" textAlignment="CENTER" textFill="#656565">
+                                             <font>
+                                                <Font name="Corbel" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="235.0" text="Actions" textAlignment="CENTER" textFill="#656565">
+                                             <font>
+                                                <Font name="Corbel" size="15.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets left="10.0" right="10.0" />
+                                       </VBox.margin>
+                                       <padding>
+                                          <Insets left="10.0" right="10.0" />
+                                       </padding>
+                                    </HBox>
+                                    <ScrollPane hbarPolicy="NEVER" prefHeight="396.0" prefWidth="926.0" style="-fx-background-color: transparent;" vbarPolicy="NEVER">
+                                       <content>
+                                          <VBox fx:id="classesLayout" minHeight="386.0" prefWidth="921.0" spacing="7.0" style="-fx-background-color: white;">
+                                             <cursor>
+                                                <Cursor fx:constant="DEFAULT" />
+                                             </cursor>
+                                             <padding>
+                                                <Insets left="13.0" right="13.0" />
+                                             </padding>
+                                             <children>
+                                                <HBox>
+                                                   <children>
+                                                      <AnchorPane prefHeight="397.0" prefWidth="895.0">
+                                                         <children>
+                                                            <ImageView fitHeight="220.0" fitWidth="288.0" layoutX="303.0" layoutY="64.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../../resources/images/empty_placeholder.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                            <Label contentDisplay="RIGHT" layoutX="280.0" layoutY="304.0" prefHeight="29.0" prefWidth="335.0" text="Oops, aucune classe n'a été trouvée :/" textFill="#323a3f">
+                                                               <font>
+                                                                  <Font name="Gill Sans MT" size="21.0" />
+                                                               </font>
+                                                               <opaqueInsets>
+                                                                  <Insets left="22.0" />
+                                                               </opaqueInsets>
+                                                            </Label>
+                                                         </children>
+                                                      </AnchorPane>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </content>
+                                       <padding>
+                                          <Insets left="5.0" right="5.0" />
+                                       </padding>
+                                    </ScrollPane>
+                                 </children>
+                              </VBox>
+                              <Label fx:id="classListName1" contentDisplay="RIGHT" layoutX="14.0" layoutY="87.0" prefHeight="29.0" prefWidth="241.0" text="Liste des classes - 2022/2023" textFill="#323a3f">
+                                 <font>
+                                    <Font name="Gill Sans MT" size="20.0" />
+                                 </font>
+                                 <opaqueInsets>
+                                    <Insets left="22.0" />
+                                 </opaqueInsets>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                     </center>
+                  </BorderPane>
+                  <BorderPane fx:id="usersView" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #F3F3F3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <center>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <ButtonBar cache="true" layoutX="14.0" layoutY="14.0" prefHeight="55.0" prefWidth="303.0" style="-fx-background-color: white; -fx-background-radius: 10px; -fx-padding: 0 10px;" AnchorPane.leftAnchor="14.0">
+                                 <buttons>
+                                    <Button fx:id="btnSecretaires" mnemonicParsing="false" onAction="#handleSelectedUserType" prefHeight="55.0" prefWidth="116.0" styleClass="selectUser_menu" text="Secrétaires" />
+                                    <Button fx:id="btnCaissiers" mnemonicParsing="false" onAction="#handleSelectedUserType" prefHeight="63.0" prefWidth="100.0" styleClass="selectUser_menu" text="Caissiers" />
+                                    <Button fx:id="btnAdmins" mnemonicParsing="false" onAction="#handleSelectedUserType" prefHeight="63.0" prefWidth="100.0" styleClass="selectUser_menu" text="Admins" />
+                                 </buttons>
+                                 <effect>
+                                    <DropShadow>
+                                       <color>
+                                          <Color opacity="0.22519083321094513" />
+                                       </color>
+                                    </DropShadow>
+                                 </effect>
+                              </ButtonBar>
+                              <VBox alignment="CENTER" layoutX="19.0" layoutY="129.0" prefHeight="441.0" prefWidth="926.0" style="-fx-background-color: white; -fx-background-radius: 10px;" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="129.0">
+                                 <children>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="65.0" prefWidth="906.0" style="-fx-border-width: 0 0 0.1px 0; -fx-border-color: black;">
+                                       <children>
+                                          <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="69.0" text="Photo" textAlignment="CENTER" textFill="#656565">
+                                             <font>
+                                                <Font name="Corbel" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="184.0" text="Nom &amp; prénom" textAlignment="CENTER" textFill="#656565">
+                                             <font>
+                                                <Font name="Corbel" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="149.0" text="Login" textAlignment="CENTER" textFill="#656565">
+                                             <font>
+                                                <Font name="Corbel" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="caissierEtatDePaiementLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="140.0" text="Statut" textAlignment="CENTER" textFill="#656565">
+                                             <font>
+                                                <Font name="Corbel" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="152.0" text="Numéro tel" textAlignment="CENTER" textFill="#656565">
+                                             <font>
+                                                <Font name="Corbel" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="182.0" text="Actions" textAlignment="CENTER" textFill="#656565">
+                                             <font>
+                                                <Font name="Corbel" size="15.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets left="10.0" right="10.0" />
+                                       </VBox.margin>
+                                       <padding>
+                                          <Insets left="10.0" right="10.0" />
+                                       </padding>
+                                    </HBox>
+                                    <ScrollPane hbarPolicy="NEVER" prefHeight="396.0" prefWidth="926.0" style="-fx-background-color: transparent;" vbarPolicy="NEVER">
+                                       <content>
+                                          <VBox fx:id="usersLayout" minHeight="386.0" prefWidth="921.0" spacing="7.0" style="-fx-background-color: white;">
+                                             <cursor>
+                                                <Cursor fx:constant="DEFAULT" />
+                                             </cursor>
+                                             <padding>
+                                                <Insets left="13.0" right="13.0" />
+                                             </padding>
+                                             <children>
+                                                <HBox>
+                                                   <children>
+                                                      <AnchorPane prefHeight="397.0" prefWidth="895.0">
+                                                         <children>
+                                                            <ImageView fitHeight="220.0" fitWidth="288.0" layoutX="281.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../../resources/images/empty_placeholder.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                            <Label contentDisplay="RIGHT" layoutX="253.0" layoutY="291.0" prefHeight="29.0" prefWidth="344.0" text="Oops, aucun utilisateur n'a été trouvé :/" textFill="#323a3f">
+                                                               <font>
+                                                                  <Font name="Gill Sans MT" size="21.0" />
+                                                               </font>
+                                                               <opaqueInsets>
+                                                                  <Insets left="22.0" />
+                                                               </opaqueInsets>
+                                                            </Label>
+                                                         </children>
+                                                      </AnchorPane>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </content>
+                                       <padding>
+                                          <Insets left="5.0" right="5.0" />
+                                       </padding>
+                                    </ScrollPane>
+                                 </children>
+                              </VBox>
+                              <Label fx:id="classListName" contentDisplay="RIGHT" layoutX="15.0" layoutY="84.0" prefHeight="29.0" prefWidth="103.0" text="Utilisateurs" textFill="#323a3f">
+                                 <font>
+                                    <Font name="Gill Sans MT" size="20.0" />
+                                 </font>
+                                 <opaqueInsets>
+                                    <Insets left="22.0" />
+                                 </opaqueInsets>
+                              </Label>
+                              <Button layoutX="829.0" layoutY="78.0" mnemonicParsing="false" onAction="#openUserAddDialog" onMouseClicked="#handleNavigation" prefHeight="41.0" prefWidth="104.0" style="-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-background-color: linear-gradient(to right, #2c7aba, #5AB2D8);" styleClass="classic_btn" text="      Ajouter">
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </Button>
+                              <ImageView disable="true" fitHeight="23.0" fitWidth="23.0" layoutX="840.0" layoutY="87.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/student_icon.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </AnchorPane>
+                     </center>
+                  </BorderPane>
                   <BorderPane fx:id="profileView" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #F3F3F3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <center>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #EAEFF8;" BorderPane.alignment="CENTER">
@@ -690,9 +782,14 @@
                         <Image url="@../../resources/images/loop_icon.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="minIcon1" layoutX="1150.0" layoutY="5.0" onMouseClicked="#onMinimize" style="-fx-cursor: hand;">
+                  <ImageView fx:id="minIcon1" layoutX="1150.0" layoutY="5.0" onMouseClicked="#onMinimize" style="-fx-cursor: hand;" AnchorPane.rightAnchor="25.0">
                      <image>
                         <Image url="@../../resources/images/minimize_icon.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="btn_close1" disable="true" fitHeight="16.0" fitWidth="16.0" onMouseClicked="#handleExit" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;" styleClass="-fx-cursor" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                     <image>
+                        <Image url="@../../resources/images/resize_icon.png" />
                      </image>
                   </ImageView>
                </children>
