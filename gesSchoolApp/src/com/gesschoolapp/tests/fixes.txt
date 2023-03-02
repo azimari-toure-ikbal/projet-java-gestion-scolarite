@@ -34,8 +34,7 @@
 ----
 
 7-A la premiere connection en tant que caissier les etats de paiements qui sont vides ne montrent pas le placeholder
-    AWAIT
-    C'est encore le soucis des placeholder, ils sont vraiment relou.
+    FIXED
 ---
 
 ----
@@ -157,11 +156,13 @@
 24-Dans l'interface de l'admin, en cliquand sur les etats de paiements des caissiers il n'y a pas de placeholder si aucun paiements
     AWAIT
 
-    Placeholder
+    Reste à mettre les placeholder côté admin
 ----
 
 
 
 -------------------------------- REMAINING --------------------------------
 
--
+- Mettre les placeholders côté admin
+- Retirer tes sysout et réagencer légèrement le code de main controller.
+- Fixer le comportement chelou de l'update des modules là ptdr.
