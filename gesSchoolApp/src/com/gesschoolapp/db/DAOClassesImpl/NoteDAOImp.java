@@ -1,14 +1,13 @@
 package com.gesschoolapp.db.DAOClassesImpl;
 
 import com.gesschoolapp.Exceptions.DAOException;
-import com.gesschoolapp.db.DAOInterfaces.NoteDAO;
+import com.gesschoolapp.db.DAOInterfaces.extensions.NoteDAO;
 import com.gesschoolapp.db.DBManager;
 import com.gesschoolapp.models.actions.Action;
 import com.gesschoolapp.models.matieres.Note;
 import com.gesschoolapp.models.student.Apprenant;
 import com.gesschoolapp.utils.ActionType;
 
-import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -33,14 +32,6 @@ public class NoteDAOImp implements NoteDAO {
         }
     }
 
-    /**
-     * 
-     * You can also use the surronding method to update a note
-     * To use the surronding method, you have to pass the 'semestre' of the module
-     * 
-     * @param obj 
-     * @throws DAOException
-     */
     @Override
     public void update(Note obj, String user) throws DAOException {
         try(Connection connexion = DBManager.getConnection()) {
@@ -56,17 +47,7 @@ public class NoteDAOImp implements NoteDAO {
             throw new DAOException("In NoteDAOImp.update()\n" + e.getMessage());
         }
     }
-    /**
-     * 
-     * This method is desegned to solve to problem of id
-     * It may be a bit slower than the other method but
-     * we can't have all we want in life smeh...
-     *
-     * @param obj
-     * @param semestre
-     * @throws DAOException
-     * 
-     */
+
     @Override
     public void update (Note obj, int semestre, String user) throws DAOException {
 

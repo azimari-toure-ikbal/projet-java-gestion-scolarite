@@ -1,5 +1,8 @@
 package com.gesschoolapp.models.users;
 
+import com.gesschoolapp.models.users.concrete.Admin;
+import com.gesschoolapp.models.users.concrete.Caissier;
+import com.gesschoolapp.models.users.concrete.Secretaire;
 import com.gesschoolapp.utils.Toolbox;
 
 public abstract class Utilisateur {

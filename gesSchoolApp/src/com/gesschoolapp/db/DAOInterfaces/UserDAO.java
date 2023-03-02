@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface UserDAO{
     public Utilisateur   authenticate(String email, String password) throws DAOException;
+    void setNotifSeen(int id) throws DAOException;
     public List<Notification> getNotifs(String name) throws DAOException;
 
 }

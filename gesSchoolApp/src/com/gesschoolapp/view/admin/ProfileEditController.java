@@ -2,7 +2,7 @@ package com.gesschoolapp.view.admin;
 
 import com.gesschoolapp.Exceptions.DAOException;
 import com.gesschoolapp.db.DAOClassesImpl.UserDAOImp;
-import com.gesschoolapp.models.users.Admin;
+import com.gesschoolapp.models.users.concrete.Admin;
 import com.gesschoolapp.models.users.Utilisateur;
 import com.gesschoolapp.runtime.Main;
 import com.gesschoolapp.utils.Toolbox;
@@ -13,18 +13,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
-import javax.tools.Tool;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 public class ProfileEditController {
 

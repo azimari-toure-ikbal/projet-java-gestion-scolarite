@@ -20,6 +20,7 @@ import java.util.Objects;
 
 
 public class ActionDAOImp implements ActionDAO {
+
     @Override
     public void cancelAction(Action action, String admin){
         String message = "Votre action " + action.getAction() + " sur  " + action.getObjectType() +
@@ -40,6 +41,7 @@ public class ActionDAOImp implements ActionDAO {
         addNotification(action.getActor(), admin, message);
     }
 
+
     @Override
     public void addNotification(String utilisateur, String admin, String message ){
         try(Connection connection = DBManager.getConnection()){
@@ -55,6 +57,7 @@ public class ActionDAOImp implements ActionDAO {
         }
     }
 
+
     @Override
     public void cancelAddApprenant(Apprenant apprenant){
         ApprenantDAOImp apprenantDAOImp = new ApprenantDAOImp();
@@ -64,6 +67,7 @@ public class ActionDAOImp implements ActionDAO {
             System.out.println("Error in cancelAddApprenant() : " + e.getMessage());
         }
     }
+
 
     @Override
     public void cancelDeleteApprenant(Apprenant apprenant){
@@ -75,6 +79,7 @@ public class ActionDAOImp implements ActionDAO {
         }
     }
 
+
     @Override
     public void cancelUpdateApprenant(Apprenant apprenant){
         ApprenantDAOImp apprenantDAOImp = new ApprenantDAOImp();
@@ -85,6 +90,7 @@ public class ActionDAOImp implements ActionDAO {
         }
     }
 
+
     @Override
     public void cancelUpdateNote(Note note){
         NoteDAOImp noteDAOImp = new NoteDAOImp();
@@ -94,6 +100,7 @@ public class ActionDAOImp implements ActionDAO {
             System.out.println("Error in cancelUpdateNote() : " + e.getMessage());
         }
     }
+
 
     @Override
     public Action read(int idAction){
@@ -119,6 +126,7 @@ public class ActionDAOImp implements ActionDAO {
         return null;
     }
 
+
     @Override
     public void create(Action action){
         try(Connection connection = DBManager.getConnection()){
@@ -134,6 +142,7 @@ public class ActionDAOImp implements ActionDAO {
             System.out.println("Error in createAction() : " + e.getMessage());
         }
     }
+
 
     @Override
     public List<Action> getActions(){
@@ -163,6 +172,7 @@ public class ActionDAOImp implements ActionDAO {
         return null;
     }
 
+
     @Override
     public void setActionCanceled(Action action){
         try(Connection connection = DBManager.getConnection()){
@@ -175,6 +185,7 @@ public class ActionDAOImp implements ActionDAO {
             System.out.println("Error in setActionCanceled() : " + e.getMessage());
         }
     }
+
 
     @Override
     public Object getCurrentObject(Action action){
@@ -193,6 +204,7 @@ public class ActionDAOImp implements ActionDAO {
         return null;
     }
 
+
     @Override
     public void delete(int idAction){
         try(Connection connection = DBManager.getConnection()){
@@ -204,5 +216,4 @@ public class ActionDAOImp implements ActionDAO {
             System.out.println("Error in deleteAction() : " + e.getMessage());
         }
     }
-
 }

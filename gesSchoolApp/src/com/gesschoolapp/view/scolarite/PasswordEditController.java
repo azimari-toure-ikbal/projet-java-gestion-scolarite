@@ -2,11 +2,10 @@ package com.gesschoolapp.view.scolarite;
 
 import com.gesschoolapp.Exceptions.DAOException;
 import com.gesschoolapp.db.DAOClassesImpl.UserDAOImp;
-import com.gesschoolapp.models.users.Admin;
+import com.gesschoolapp.models.users.concrete.Admin;
 import com.gesschoolapp.models.users.Utilisateur;
 import com.gesschoolapp.runtime.Main;
 import com.gesschoolapp.utils.Toolbox;
-import com.gesschoolapp.view.admin.AdminUIController;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;

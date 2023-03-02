@@ -1,7 +1,7 @@
 package com.gesschoolapp.db.DAOClassesImpl;
 
 import com.gesschoolapp.Exceptions.DAOException;
-import com.gesschoolapp.db.DAOInterfaces.ClasseDAO;
+import com.gesschoolapp.db.DAOInterfaces.extensions.ClasseDAO;
 import com.gesschoolapp.db.DBManager;
 import com.gesschoolapp.models.classroom.Classe;
 import com.gesschoolapp.models.paiement.Echeance;
@@ -133,6 +133,7 @@ public class ClasseDAOImp implements ClasseDAO {
         return classes;
     }
 
+    @Override
     public void setLastView(Classe classe) throws DAOException{
 
         try (Connection connection = DBManager.getConnection()) {
@@ -149,6 +150,7 @@ public class ClasseDAOImp implements ClasseDAO {
         }
     }
 
+    @Override
     public Classe setRubriques(Classe classe) throws DAOException {
         try (Connection connection = DBManager.getConnection()) {
             String query = "SELECT * FROM rubriques WHERE reference = ?";
@@ -176,6 +178,7 @@ public class ClasseDAOImp implements ClasseDAO {
         return classe;
     }
 
+    @Override
     public List<Echeance> getEcheancier(int idClasse) throws DAOException {
         List<Echeance> echeancier = new ArrayList<>();
         try (Connection connection = DBManager.getConnection()) {

@@ -2,9 +2,9 @@ package com.gesschoolapp.view.admin;
 
 import com.gesschoolapp.Exceptions.DAOException;
 import com.gesschoolapp.db.DAOClassesImpl.UserDAOImp;
-import com.gesschoolapp.models.users.Admin;
-import com.gesschoolapp.models.users.Caissier;
-import com.gesschoolapp.models.users.Secretaire;
+import com.gesschoolapp.models.users.concrete.Admin;
+import com.gesschoolapp.models.users.concrete.Caissier;
+import com.gesschoolapp.models.users.concrete.Secretaire;
 import com.gesschoolapp.models.users.Utilisateur;
 import com.gesschoolapp.runtime.Main;
 import com.gesschoolapp.utils.Toolbox;

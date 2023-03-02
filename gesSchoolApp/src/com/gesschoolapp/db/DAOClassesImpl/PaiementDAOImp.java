@@ -1,18 +1,15 @@
 package com.gesschoolapp.db.DAOClassesImpl;
 
 import com.gesschoolapp.Exceptions.DAOException;
-import com.gesschoolapp.db.DAOInterfaces.PaiementDAO;
+import com.gesschoolapp.db.DAOInterfaces.extensions.PaiementDAO;
 import com.gesschoolapp.db.DBManager;
-import com.gesschoolapp.models.actions.Action;
 import com.gesschoolapp.models.paiement.Paiement;
 import com.gesschoolapp.utils.Toolbox;
-import com.gesschoolapp.utils.ActionType;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,25 +60,7 @@ public class PaiementDAOImp implements PaiementDAO {
     }
 
     @Override
-    public void delete(int id, String user) throws DAOException {
-        try (Connection connection = DBManager.getConnection()) {
-            if(new PaiementDAOImp().read(id).getRubrique().equals("inscription") || new PaiementDAOImp().read(id).getRubrique().equals("scolarite")){
-                new ApprenantDAOImp().decrementEtatPaiement(new ApprenantDAOImp().read(new PaiementDAOImp().read(id).getApprenant().getIdApprenant()));
-            }
-            String query = "DELETE FROM paiements WHERE idPaiement = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, id);
-            statement.executeUpdate();
-
-            Action action = new Action();
-            action.setAction(ActionType.DELETE);
-            action.setDate(LocalDateTime.now());
-            action.setActor(user);
-//            ActionManager.add(action);
-        } catch (Exception e) {
-            throw new DAOException(e.getMessage());
-        }
-    }
+    public void delete(int id, String user) throws DAOException {}
 
     @Override
     public Paiement read(int id) throws DAOException {
@@ -172,6 +151,8 @@ public class PaiementDAOImp implements PaiementDAO {
         }
         return paiements;
     }
+
+    @Override
     public List<String> getAnnees() throws DAOException {
         try (Connection connection = DBManager.getConnection()) {
             String query = "SELECT DISTINCT YEAR(date) FROM paiements";

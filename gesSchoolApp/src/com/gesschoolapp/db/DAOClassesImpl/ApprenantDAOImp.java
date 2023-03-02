@@ -1,7 +1,7 @@
 package com.gesschoolapp.db.DAOClassesImpl;
 
 import com.gesschoolapp.Exceptions.DAOException;
-import com.gesschoolapp.db.DAOInterfaces.ApprenantDAO;
+import com.gesschoolapp.db.DAOInterfaces.extensions.ApprenantDAO;
 import com.gesschoolapp.db.DBManager;
 import com.gesschoolapp.models.actions.Action;
 import com.gesschoolapp.models.classroom.Classe;
@@ -293,6 +293,7 @@ public class ApprenantDAOImp implements ApprenantDAO {
     }
 
     //search Apprenant by matricule
+    @Override
     public Apprenant searchByMatricule(int matricule) throws DAOException {
         String format = "yyyy-MM-dd";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
@@ -322,6 +323,8 @@ public class ApprenantDAOImp implements ApprenantDAO {
         return null;
     }
 
+
+    @Override
     public Apprenant searchForCreate(int matricule) throws DAOException {
         String format = "yyyy-MM-dd";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
@@ -351,6 +354,7 @@ public class ApprenantDAOImp implements ApprenantDAO {
         return null;
     }
 
+    @Override
     public List<Apprenant> getApprenantsOfClass(int idClasse) throws DAOException {
         List<Apprenant> apprenants = new ArrayList<>();
         String format = "yyyy-MM-dd";
@@ -383,6 +387,8 @@ public class ApprenantDAOImp implements ApprenantDAO {
         return apprenants;
     }
 
+
+    @Override
     public void incrementEtatPaiement(Apprenant apprenant) throws DAOException {
         try(Connection connection = DBManager.getConnection()){
             String query = "UPDATE apprenants SET echeancier = ? WHERE idApprenant = ? OR matricule = ? ";
@@ -394,19 +400,5 @@ public class ApprenantDAOImp implements ApprenantDAO {
         }catch(Exception e){
             throw new DAOException("Error in increment Etat Paiement" + e.getMessage());
         }
-    }
-
-    public void decrementEtatPaiement(Apprenant apprenant) throws DAOException {
-        try(Connection connection = DBManager.getConnection()){
-            String query = "UPDATE apprenants SET echeancier = ? WHERE idApprenant = ? OR matricule = ? ";
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, apprenant.getEtatPaiement() - 1);
-            statement.setInt(2, apprenant.getIdApprenant());
-            statement.setInt(3, apprenant.getMatricule());
-            statement.executeUpdate();
-        }catch(Exception e){
-            throw new DAOException("Error in decrement Etat Paiement" + e.getMessage());
-        }
-
     }
 }

@@ -1,7 +1,7 @@
 package com.gesschoolapp.db.DAOClassesImpl;
 
 import com.gesschoolapp.Exceptions.DAOException;
-import com.gesschoolapp.db.DAOInterfaces.ModuleDAO;
+import com.gesschoolapp.db.DAOInterfaces.extensions.ModuleDAO;
 import com.gesschoolapp.db.DBManager;
 import com.gesschoolapp.models.matieres.Module;
 import com.gesschoolapp.models.matieres.Note;
@@ -38,7 +38,7 @@ public class ModuleDAOImp implements ModuleDAO {
             }
 
             List<Apprenant> apprenants = new ClasseDAOImp().search(obj.getClasse()).get(0).getApprenants();
-;           int idModule = new ModuleDAOImp().search(obj.getIntitule()).get(0).getId();
+            int idModule = new ModuleDAOImp().search(obj.getIntitule()).get(0).getId();
             for (Apprenant apprenant : apprenants) {
                 String query2 = "INSERT INTO notes (idApprenant, idModule, valeur) VALUES (?, ?, ?)";
                 PreparedStatement stmt2 = connection.prepareStatement(query2);
@@ -167,7 +167,7 @@ public class ModuleDAOImp implements ModuleDAO {
                 module.setSemestre(rs.getInt("semestre"));
 
                 modules.add(module);
-                Collections.sort(modules);;
+                Collections.sort(modules);
             }
             return modules;
 
@@ -176,6 +176,7 @@ public class ModuleDAOImp implements ModuleDAO {
         }
     }
 
+    @Override
     public List<Module> getModulesOfClass(int idClasse) throws DAOException {
         List<Module> modules = new ArrayList<>();
 
