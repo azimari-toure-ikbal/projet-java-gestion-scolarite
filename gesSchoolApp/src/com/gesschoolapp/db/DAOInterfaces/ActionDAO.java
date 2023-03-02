@@ -20,8 +20,6 @@ public interface ActionDAO{
     void setActionCanceled(Action action);
     Object getCurrentObject(Action action);
     void delete(int idAction);
-    Action read(int idAction)
-
-
+    Action read(int idAction);
 
 }
