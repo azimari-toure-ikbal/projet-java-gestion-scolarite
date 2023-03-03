@@ -1,6 +1,7 @@
-package com.gesschoolapp.db.DAOInterfaces;
+package com.gesschoolapp.db.DAOInterfaces.extensions;
 
 import com.gesschoolapp.Exceptions.DAOException;
+import com.gesschoolapp.db.DAOInterfaces.DAO;
 import com.gesschoolapp.models.matieres.Module;
 
 import java.util.List;

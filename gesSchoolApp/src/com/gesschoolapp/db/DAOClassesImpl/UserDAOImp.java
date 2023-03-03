@@ -5,18 +5,16 @@ import com.gesschoolapp.db.DAOInterfaces.DAO;
 import com.gesschoolapp.db.DAOInterfaces.UserDAO;
 import com.gesschoolapp.db.DBManager;
 import com.gesschoolapp.models.actions.Notification;
-import com.gesschoolapp.models.users.Admin;
-import com.gesschoolapp.models.users.Caissier;
-import com.gesschoolapp.models.users.Secretaire;
+import com.gesschoolapp.models.users.concrete.Admin;
+import com.gesschoolapp.models.users.concrete.Caissier;
+import com.gesschoolapp.models.users.concrete.Secretaire;
 import com.gesschoolapp.models.users.Utilisateur;
 import com.gesschoolapp.utils.Toolbox;
 import com.sendgrid.*;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -57,6 +55,7 @@ public class UserDAOImp implements UserDAO, DAO<Utilisateur> {
         return null;
     }
 
+    @Override
     public void setNotifSeen(int id) throws DAOException {
         try(Connection connection = DBManager.getConnection()){
             String query = "UPDATE notifications SET seen=1 WHERE idNotification=?";
@@ -65,17 +64,6 @@ public class UserDAOImp implements UserDAO, DAO<Utilisateur> {
             ps.executeUpdate();
         }catch (Exception e){
             throw new DAOException( "Error in setNotifSeen() : " +  e.getMessage());
-        }
-    }
-
-    public void setNotifsSeen(String name) throws DAOException {
-        try(Connection connection = DBManager.getConnection()){
-            String query = "UPDATE notifications SET seen=1 WHERE utilisateur=?";
-            PreparedStatement ps = connection.prepareStatement(query);
-            ps.setString(1, name);
-            ps.executeUpdate();
-        }catch (Exception e){
-            throw new DAOException( "Error in setNotifsSeen() : " +  e.getMessage());
         }
     }
 
@@ -112,7 +100,6 @@ public class UserDAOImp implements UserDAO, DAO<Utilisateur> {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.first()) {
-                int idNotif = rs.getInt("idNotification");
                 String message = rs.getString("message");
                 String stringDate = rs.getString("date");
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -350,9 +337,7 @@ public class UserDAOImp implements UserDAO, DAO<Utilisateur> {
                     case "administrateur" -> users.add(new Admin(idUtilisateur, nom, prenom, email, password, numero));
                     case "secretaire" -> users.add(new Secretaire(idUtilisateur, nom, prenom, email, password, numero));
                     case "caissier" -> users.add(new Caissier(idUtilisateur, nom, prenom, email, password, numero));
-                    default -> {
-                        users.add(null);
-                    }
+                    default -> users.add(null);
                 }
             }
             return users;

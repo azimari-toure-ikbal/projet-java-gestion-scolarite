@@ -1,8 +1,8 @@
 package com.gesschoolapp.runtime;
 
-import com.gesschoolapp.models.users.Admin;
-import com.gesschoolapp.models.users.Caissier;
-import com.gesschoolapp.models.users.Secretaire;
+import com.gesschoolapp.models.users.concrete.Admin;
+import com.gesschoolapp.models.users.concrete.Caissier;
+import com.gesschoolapp.models.users.concrete.Secretaire;
 import com.gesschoolapp.view.admin.AdminUIController;
 import com.gesschoolapp.view.login.LoginUIController;
 import com.gesschoolapp.view.scolarite.ScolariteUIController;
@@ -18,11 +18,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
 import java.util.prefs.Preferences;
 
 public class Main extends Application {

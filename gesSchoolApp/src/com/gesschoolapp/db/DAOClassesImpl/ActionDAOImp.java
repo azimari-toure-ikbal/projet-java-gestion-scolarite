@@ -18,7 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+
 public class ActionDAOImp implements ActionDAO {
+
     @Override
     public void cancelAction(Action action, String admin){
         String message = "Votre action " + action.getAction() + " sur  " + action.getObjectType() +
@@ -26,18 +28,9 @@ public class ActionDAOImp implements ActionDAO {
 
         if(action.getObject() instanceof Apprenant){
             switch (action.getAction()){
-                case ADD -> {
-                    cancelAddApprenant((Apprenant) action.getObject());
-                    break;
-                }
-                case DELETE -> {
-                    cancelDeleteApprenant((Apprenant) action.getObject());
-                    break;
-                }
-                case UPDATE -> {
-                    cancelUpdateApprenant((Apprenant) action.getObject());
-                    break;
-                }
+                case ADD -> cancelAddApprenant((Apprenant) action.getObject());
+                case DELETE -> cancelDeleteApprenant((Apprenant) action.getObject());
+                case UPDATE -> cancelUpdateApprenant((Apprenant) action.getObject());
             }
         }
         else if(action.getObject() instanceof Note){
@@ -48,6 +41,7 @@ public class ActionDAOImp implements ActionDAO {
         addNotification(action.getActor(), admin, message);
     }
 
+
     @Override
     public void addNotification(String utilisateur, String admin, String message ){
         try(Connection connection = DBManager.getConnection()){
@@ -55,13 +49,14 @@ public class ActionDAOImp implements ActionDAO {
             PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setString(1, utilisateur);
             stmt.setString(2, admin);
-            stmt.setString(3, String.valueOf(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))));
+            stmt.setString(3, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
             stmt.setString(4, message);
             stmt.executeUpdate();
         }catch (Exception e){
             System.out.println("Error in addNotification() : " + e.getMessage());
         }
     }
+
 
     @Override
     public void cancelAddApprenant(Apprenant apprenant){
@@ -73,6 +68,7 @@ public class ActionDAOImp implements ActionDAO {
         }
     }
 
+
     @Override
     public void cancelDeleteApprenant(Apprenant apprenant){
         ApprenantDAOImp apprenantDAOImp = new ApprenantDAOImp();
@@ -82,6 +78,7 @@ public class ActionDAOImp implements ActionDAO {
             System.out.println("Error in cancelDeleteApprenant() : " + e.getMessage());
         }
     }
+
 
     @Override
     public void cancelUpdateApprenant(Apprenant apprenant){
@@ -93,6 +90,7 @@ public class ActionDAOImp implements ActionDAO {
         }
     }
 
+
     @Override
     public void cancelUpdateNote(Note note){
         NoteDAOImp noteDAOImp = new NoteDAOImp();
@@ -103,6 +101,8 @@ public class ActionDAOImp implements ActionDAO {
         }
     }
 
+
+    @Override
     public Action read(int idAction){
         try(Connection connection = DBManager.getConnection()){
             String query = "SELECT * FROM actions WHERE idAction = ?";
@@ -126,6 +126,8 @@ public class ActionDAOImp implements ActionDAO {
         return null;
     }
 
+
+    @Override
     public void create(Action action){
         try(Connection connection = DBManager.getConnection()){
             String query = "INSERT INTO actions (object, actor, date, canceled, typeAction) VALUES ( ?, ?, ?, ?, ?)";
@@ -141,6 +143,8 @@ public class ActionDAOImp implements ActionDAO {
         }
     }
 
+
+    @Override
     public List<Action> getActions(){
         try(Connection connection = DBManager.getConnection()){
             String query = "SELECT * FROM actions";
@@ -168,6 +172,8 @@ public class ActionDAOImp implements ActionDAO {
         return null;
     }
 
+
+    @Override
     public void setActionCanceled(Action action){
         try(Connection connection = DBManager.getConnection()){
             String query = "UPDATE actions SET canceled = ? WHERE idAction = ?";
@@ -180,6 +186,8 @@ public class ActionDAOImp implements ActionDAO {
         }
     }
 
+
+    @Override
     public Object getCurrentObject(Action action){
         try{
             if(action.getObject() instanceof Apprenant){
@@ -196,6 +204,8 @@ public class ActionDAOImp implements ActionDAO {
         return null;
     }
 
+
+    @Override
     public void delete(int idAction){
         try(Connection connection = DBManager.getConnection()){
             String query = "DELETE FROM actions WHERE idAction = ?";
@@ -206,5 +216,4 @@ public class ActionDAOImp implements ActionDAO {
             System.out.println("Error in deleteAction() : " + e.getMessage());
         }
     }
-
 }
