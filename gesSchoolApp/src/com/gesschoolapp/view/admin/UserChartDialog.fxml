@@ -32,7 +32,7 @@
                   <Image url="@../../resources/images/pie_chart_white_icon.png" />
                </image>
             </ImageView>
-            <Label alignment="CENTER" contentDisplay="RIGHT" layoutX="11.0" layoutY="92.0" prefHeight="29.0" prefWidth="120.0" text="Marcus Sins" textFill="WHITE">
+            <Label fx:id="labelUsername" contentDisplay="RIGHT" layoutX="28.0" layoutY="92.0" prefHeight="29.0" prefWidth="246.0" text="Marcus Sins" textFill="WHITE">
                <font>
                   <Font name="Corbel Bold" size="16.0" />
                </font>
