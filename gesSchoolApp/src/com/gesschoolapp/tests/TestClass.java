@@ -14,6 +14,7 @@ import com.gesschoolapp.models.classroom.Classe;
 import com.gesschoolapp.models.classroom.Classes;
 import com.gesschoolapp.models.matieres.Note;
 import com.gesschoolapp.models.student.Apprenant;
+import com.gesschoolapp.utils.Toolbox;
 
 import java.io.File;
 import java.sql.Connection;
@@ -52,7 +53,7 @@ public class TestClass {
 //        testCancelActions();
 //        System.out.println( + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() );
 //        testCreateModule();
-        testGetNotifs();
+//        testGetNotifs();
 //        System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYY-MM-dd à HH:mm")));
 //        testGetUtilisateurs();
 
@@ -76,6 +77,7 @@ public class TestClass {
 //        }
 
 //        System.out.println("Systeme d'exploitation: " + System.getProperty("os.name"));
+        System.out.println(Toolbox.verifyPassword("NCo0)dh7Ac7j", "$2a$12$u1yzk0HiNayeUPQzzEuh9uXbgUYfpKeVTwwLXS1gyuQ9Te1sgyY9K"));
     }
 
 

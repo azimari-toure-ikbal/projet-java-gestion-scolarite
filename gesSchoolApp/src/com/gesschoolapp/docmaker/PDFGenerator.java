@@ -275,6 +275,7 @@ public class PDFGenerator {
                 document.close();
 
                 Toolbox.pdfToImage(path, filename);
+                System.out.println("Bulletin généré avec succès");
             } catch (DocumentException | IOException e) {
                 throw new PDFException("Erreur lors de la génération du PDF : " + e.getMessage());
             }
