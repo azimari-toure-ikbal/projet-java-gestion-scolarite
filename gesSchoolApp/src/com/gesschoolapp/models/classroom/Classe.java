@@ -2,7 +2,6 @@ package com.gesschoolapp.models.classroom;
 
 import com.gesschoolapp.models.matieres.Module;
 import com.gesschoolapp.models.paiement.Echeance;
-import com.gesschoolapp.models.paiement.Echeancier;
 import com.gesschoolapp.models.paiement.Rubrique;
 import com.gesschoolapp.models.student.Apprenant;
 

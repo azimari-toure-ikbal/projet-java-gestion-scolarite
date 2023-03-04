@@ -23,16 +23,9 @@ public class ApprenantDAOImp implements ApprenantDAO {
 
     @Override
     public Apprenant create(Apprenant obj, String user) throws DAOException {
-        try(Connection connexion = DBManager.getConnection()){
-            int matricule = 100;
-            String queryMat = "SELECT count(*) FROM apprenants";
-            PreparedStatement statementMat = connexion.prepareStatement(queryMat);
-            ResultSet rs = statementMat.executeQuery();
-            if(rs.next()){
-                matricule += rs.getInt(1) + 1;
-            }
-            //Generate a method to insert a Apprenant in the database
+        try(Connection connexion = DBManager.getConnection()){//Generate a method to insert a Apprenant in the database
 
+            int matricule = getNextMatricule();
             if(obj.getIdApprenant() != 0){
                 String query = "INSERT INTO apprenants (idApprenant, nom, prenom, sexe, nationalite, dtNaiss, echeancier"
                         + ", matricule) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -100,6 +93,25 @@ public class ApprenantDAOImp implements ApprenantDAO {
             return addedApprenant;
         }catch (Exception e) {
             throw new DAOException("Error while creating Apprenant" + e.getMessage());
+        }
+    }
+
+    public int getNextMatricule() throws DAOException{
+        //Select matricule from utils, increment it in the db and return it
+        try(Connection connexion = DBManager.getConnection()){
+            int matricule = 100;
+            String queryMat = "SELECT matricule FROM utils";
+            PreparedStatement statementMat = connexion.prepareStatement(queryMat);
+            ResultSet rs = statementMat.executeQuery();
+            if(rs.next()){
+                matricule = rs.getInt(1);
+            }
+            String query = "UPDATE utils SET matricule = matricule + 1";
+            PreparedStatement statement = connexion.prepareStatement(query);
+            statement.executeUpdate();
+            return matricule + 1;
+        }catch (Exception e){
+            throw new DAOException("Error while getting next matricule" + e.getMessage());
         }
     }
 
