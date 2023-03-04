@@ -208,7 +208,7 @@ public class UserDAOImp implements UserDAO, DAO<Utilisateur> {
                     "</head>\n" +
                     "<body>\n" +
                     "\t<div class=\"container\">\n" +
-                    "\t\t<h1>Bienvenue chez notre service</h1>\n" +
+                    "\t\t<h1>Bienvenue dans l'équipe</h1>\n" +
                     "\t\t<p>Bonjour " + obj.getFullName() + ",</p>\n" +
                     "\t\t<p>Votre compte a été créé avec succès. Vous pouvez désormais vous connecter en utilisant les informations de connexion suivantes :</p>\n" +
                     "\t\t<ul>\n" +
@@ -235,9 +235,9 @@ public class UserDAOImp implements UserDAO, DAO<Utilisateur> {
             request.setEndpoint("mail/send");
             request.setBody(mail.build());
             Response response = sg.api(request);
-            System.out.println(response.getStatusCode());
-            System.out.println(response.getBody());
-            System.out.println(response.getHeaders());
+//            System.out.println(response.getStatusCode());
+//            System.out.println(response.getBody());
+//            System.out.println(response.getHeaders());
 
             return this.getList().get(this.getList().size() - 1);
         } catch (Exception e) {
