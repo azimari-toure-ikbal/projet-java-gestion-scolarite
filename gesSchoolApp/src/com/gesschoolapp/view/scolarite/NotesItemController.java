@@ -1,4 +1,4 @@
-package com.gesschoolapp.controllers;
+package com.gesschoolapp.view.scolarite;
 
 import com.gesschoolapp.Exceptions.DAOException;
 import com.gesschoolapp.db.DAOClassesImpl.NoteDAOImp;
