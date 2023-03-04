@@ -104,6 +104,9 @@ public class AdminUIController implements Initializable {
     private Label mainMessageInfo;
 
     @FXML
+    private Label labelUserMail;
+
+    @FXML
     private Button btnUtilisateurs;
 
     @FXML
@@ -364,7 +367,8 @@ public class AdminUIController implements Initializable {
         userFullName.setText(currentUser.getFullName());
         userMail.setText(currentUser.getEmail());
         userPhoneNumber.setText(currentUser.getNumero());
-        labelWelcome.setText("Bienvenue," + currentUser.getFullName() + " !");
+        labelWelcome.setText("Bienvenue, " + currentUser.getFullName() + " !");
+        labelUserMail.setText(currentUser.getEmail());
         this.currentUser = currentUser;
     }
 
@@ -439,7 +443,7 @@ public class AdminUIController implements Initializable {
             mainMessageInfo.setVisible(false);
         } else {
             mainMessageInfo.setVisible(true);
-            Toolbox.setTimeout(() -> mainMessageInfo.setVisible(false), 10000);
+            Toolbox.setTimeout(() -> mainMessageInfo.setVisible(false), 3000);
         }
 
         if (status != 0)
@@ -643,6 +647,10 @@ public class AdminUIController implements Initializable {
             users = users.stream().filter(utilisateur -> utilisateur.getType().equals("secretaire")).toList();
         } else if (getSelectedUserType() == btnAdmins) {
             users = users.stream().filter(utilisateur -> utilisateur.getType().equals("administrateur")).toList();
+        }
+
+        if (users.size() == 0) {
+            usersLayout.getChildren().add(usersLayoutPlaceholder);
         }
 
         for (Utilisateur user : users) {
@@ -975,7 +983,7 @@ public class AdminUIController implements Initializable {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("PasswordEdit.fxml"));
+            loader.setLocation(getClass().getResource("ProfileEdit.fxml"));
 
             AnchorPane page = (AnchorPane) loader.load();
 

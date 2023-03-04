@@ -151,8 +151,8 @@ public class PasswordEditController {
         }
 
         dialogStage.close();
-        superController.setMainMessageInfo("Votre profil a été modifié avec succès");
-        superController.setCurrentUser((Admin) user);
+        superController.setMainMessageInfo("Votre mot de passe a été modifié avec succès");
+        superController.setCurrentUser(user);
         return true;
     }
 

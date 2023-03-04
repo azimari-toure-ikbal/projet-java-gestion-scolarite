@@ -46,9 +46,6 @@ public class Rubrique {
 
     @Override
     public String toString() {
-        return "Rubrique{" +
-                "intitule='" + intitule + '\'' +
-                ", montant='" + montant + '\'' +
-                '}';
+        return intitule;
     }
 }

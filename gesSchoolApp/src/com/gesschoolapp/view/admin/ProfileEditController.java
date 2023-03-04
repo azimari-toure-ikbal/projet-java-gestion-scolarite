@@ -193,6 +193,7 @@ public class ProfileEditController {
         dialogStage.close();
         superController.setMainMessageInfo("Votre profil a été modifié avec succès");
         superController.setCurrentUser((Admin) user);
+        superController.setListeDesUtilisateurs();
         return true;
     }
 

@@ -91,7 +91,7 @@ public class ApprenantAddDialogController extends Application implements Initial
     @FXML
     private ChoiceBox<Genre> selectGenre;
 
-    private Genre[] genres = {Genre.MASCULIN,Genre.FEMININ,Genre.AUTRES};
+    private Genre[] genres = {Genre.MASCULIN,Genre.FEMININ};
 
     private Stage dialogStage;
 

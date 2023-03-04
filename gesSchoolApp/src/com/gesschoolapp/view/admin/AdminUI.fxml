@@ -741,12 +741,12 @@
          <top>
             <AnchorPane prefHeight="76.0" prefWidth="954.0" style="-fx-background-color: #2C7ABA;" BorderPane.alignment="CENTER">
                <children>
-                  <Circle fx:id="pp_placeholder" fill="DODGERBLUE" layoutX="974.0" layoutY="38.0" onMouseClicked="#handleNavigation" radius="19.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="profile_pic">
+                  <Circle fx:id="pp_placeholder" fill="DODGERBLUE" layoutX="927.0" layoutY="38.0" onMouseClicked="#handleNavigation" radius="19.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="profile_pic">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Circle>
-                  <Label layoutX="1009.0" layoutY="30.0" text="admin@mail.com" textFill="WHITE" AnchorPane.rightAnchor="59.0">
+                  <Label fx:id="labelUserMail" layoutX="960.0" layoutY="31.0" prefHeight="17.0" prefWidth="184.0" text="admin@mail.com" textFill="WHITE" AnchorPane.rightAnchor="26.0">
                      <font>
                         <Font name="Corbel Bold" size="14.0" />
                      </font>

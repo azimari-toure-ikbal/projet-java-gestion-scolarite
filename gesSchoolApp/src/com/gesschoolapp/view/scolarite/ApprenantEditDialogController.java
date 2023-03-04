@@ -109,7 +109,7 @@ public class ApprenantEditDialogController extends Application implements Initia
     @FXML
     private ChoiceBox<Genre> selectGenre;
 
-    private Genre[] genres = {Genre.MASCULIN,Genre.FEMININ,Genre.AUTRES};
+    private Genre[] genres = {Genre.MASCULIN,Genre.FEMININ};
 
     private Stage dialogStage;
 

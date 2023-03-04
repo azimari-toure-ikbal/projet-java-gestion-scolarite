@@ -87,6 +87,7 @@ public class UserItemController {
                     list.removeIf(usr -> usr.getId() == user.getId());
                     superController.setUsersList(list);
                     superController.setMainMessageInfo("Utilisateur supprimé avec succès !");
+                    superController.setListeDesUtilisateurs();
                 } catch (DAOException e) {
                     throw new RuntimeException(e);
                 }

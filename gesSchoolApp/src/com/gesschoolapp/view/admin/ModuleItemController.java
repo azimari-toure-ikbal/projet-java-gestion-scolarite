@@ -69,7 +69,7 @@ public class ModuleItemController {
             //ask for confirmation
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Suppression");
-            alert.setHeaderText("Vous êtes sur le point de supprimer le module " + selectedModule.getIntitule() + " de la classe " + selectedModule.getClasse());
+            alert.setHeaderText("Vous êtes sur le point de supprimer le module " + selectedModule.getIntitule() + " de la classe " + superController.getSelectedClass().getIntitule());
             alert.setContentText("Voulez-vous continuer ?");
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
@@ -82,6 +82,7 @@ public class ModuleItemController {
                     superController.getSelectedClass().setModules(list);
                     superController.removeDeletedFromVue(modulePane);
                     superController.setMainMessage("Module supprimé avec succès !", 1);
+                    superController.superController.setListeDesClasses();
                 } catch (DAOException e) {
                     throw new RuntimeException(e);
                 }
@@ -158,29 +159,29 @@ public class ModuleItemController {
 
             if (selectedModule == null) {
 
-                Module newModule = new Module();
-                newModule.setSemestre(semestreSelect.getValue());
-                newModule.setIntitule(intituleTF.getText());
-                newModule.setClasse(superController.getSelectedClass().getIntitule());
-                try {
-                    superController.setMainMessage("Patientez...", 1);
-                    Module toAddModule = mDao.create(newModule, superController.superController.getCurrentUser().getFullName());
-                    List<Module> mds = superController.getSelectedClass().getModules();
-                    System.out.println("avant add : " + mds);
-                    mds.add(toAddModule);
-                    getSuperController().getSelectedClass().setModules(mds);
-                    System.out.println("apres add : " + getSuperController().getSelectedClass().getModules());
-                    selectedModule = toAddModule;
-                    setData(toAddModule);
-                    System.out.println(" créee");
-                    intituleTF.setVisible(false);
-                    semestreSelect.setVisible(false);
-                    labelIntitule.setText(intituleTF.getText());
-                    labelSemestre.setText(semestreSelect.getValue() + "");
-                    superController.setMainMessage("Module crée avec succès", 1);
-                } catch (DAOException e) {
-                    throw new RuntimeException(e);
-                }
+//                Module newModule = new Module();
+//                newModule.setSemestre(semestreSelect.getValue());
+//                newModule.setSemestre(semestreSelect.getValue());
+//                newModule.setIntitule(intituleTF.getText());
+//                newModule.setClasse(superController.getSelectedClass().getIntitule());
+//                try {
+//                    superController.setMainMessage("Patientez...", 1);
+//                    Module toAddModule = mDao.create(newModule, superController.superController.getCurrentUser().getFullName());
+//                    List<Module> mds = superController.getSelectedClass().getModules();
+//                    System.out.println("to add : " + toAddModule.getSemestre());
+//                    mds.add(toAddModule);
+//                    getSuperController().getSelectedClass().setModules(mds);
+//                    getSuperController().setListeDesModules(getSuperController().getSelectedClass().getModules());
+//                    intituleTF.setVisible(false);
+//                    semestreSelect.setVisible(false);
+//                    labelIntitule.setText(intituleTF.getText());
+//                    labelSemestre.setText(semestreSelect.getValue() + "");
+//                    superController.setMainMessage("Module crée avec succès", 1);
+//                    superController.superController.setListeDesClasses();
+//                } catch (DAOException e) {
+//                    throw new RuntimeException(e);
+//                }
+
 
             } else {
 
@@ -209,22 +210,20 @@ public class ModuleItemController {
                 try {
                     superController.setMainMessage("Patientez...", 1);
                     Module toAddModule = mDao.create(newModule, superController.superController.getCurrentUser().getFullName());
-                    System.out.println(toAddModule);
-                    selectedModule = toAddModule;
-                    setData(toAddModule);
-                    System.out.println(" créee");
+                    toAddModule.setSemestre(semestreSelect.getValue());
                     List<Module> mds = superController.getSelectedClass().getModules();
-                    System.out.println("avant add : " + mds);
                     mds.add(toAddModule);
                     getSuperController().getSelectedClass().setModules(mds);
-                    System.out.println("apres add : " + getSuperController().getSelectedClass().getModules());
-                    selectedModule = toAddModule;
-                    setData(toAddModule);
+                    getSuperController().setListeDesModules(getSuperController().getSelectedClass().getModules());
                     intituleTF.setVisible(false);
                     semestreSelect.setVisible(false);
                     labelIntitule.setText(intituleTF.getText());
-                    labelSemestre.setText(semestreSelect.getValue() + "");
+
+                    System.out.println("to add : " + toAddModule.getSemestre());
+                    System.out.println("semestre selected : " + semestreSelect.getValue());
                     superController.setMainMessage("Module crée avec succès", 1);
+                    superController.superController.setListeDesClasses();
+                    labelSemestre.setText(semestreSelect.getValue() + " fdp");
                 } catch (DAOException e) {
                     throw new RuntimeException(e);
                 }

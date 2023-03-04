@@ -720,6 +720,8 @@ public class ScolariteUIController implements Initializable {
     public void resetVue() {
         try {
 //            resetSelectedClass(selectedClass);
+            classPreview1Controller.setData(selectedClass);
+            classPreview2Controller.setData(selectedClass);
             setListeDesApprenants(selectedClass.getApprenants());
             refreshFeesData(feesSpanSelect.getValue());
             setListeDesNotes(selectedModule.getNotes());
@@ -1000,7 +1002,7 @@ public class ScolariteUIController implements Initializable {
             mainMessageInfo.setVisible(false);
         } else {
             mainMessageInfo.setVisible(true);
-            Toolbox.setTimeout(() -> mainMessageInfo.setVisible(false), 10000);
+            Toolbox.setTimeout(() -> mainMessageInfo.setVisible(false), 3000);
         }
 
         if (status != 0)
@@ -1344,11 +1346,8 @@ public class ScolariteUIController implements Initializable {
             newList = selectedClass.getApprenants().stream().filter(appr -> appr.getEtatPaiement() == 0).toList();
         }
 
-        try {
             setListeDesApprenants(newList);
-        } catch (DAOException | IOException ex) {
-            throw new RuntimeException(ex);
-        }
+
     }
 
     @FXML
@@ -1506,11 +1505,11 @@ public class ScolariteUIController implements Initializable {
 
     }
 
-    public void setListeDesApprenants() throws DAOException, IOException {
+    public void setListeDesApprenants()  {
         setListeDesApprenants(selectedClass.getApprenants());
     }
 
-    public void setListeDesApprenants(List<Apprenant> apprenants) throws DAOException, IOException {
+    public void setListeDesApprenants(List<Apprenant> apprenants) {
 
 //        Je met en commentaire ce code car j'ai un bug sur le dernier apprenant qui saute pas
 //        jene sais plus pourquoi je l'avais mis donc oklm
@@ -1528,7 +1527,12 @@ public class ScolariteUIController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("ApprenantItem.fxml"));
 
-            HBox hbox = fxmlLoader.load();
+            HBox hbox = null;
+            try {
+                hbox = fxmlLoader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             ApprenantItemsController aic = fxmlLoader.getController();
             aic.setSuperController(this);
                 System.out.println(currentUser);
@@ -1909,6 +1913,7 @@ public class ScolariteUIController implements Initializable {
                         setMainMessageInfo("Bulletins générés avec succès (VOIR ELEVES)",1);
                     } catch (PDFException ex) {
                         setMainMessageInfo(ex.getMessage(),0);
+                        System.out.println(ex.getMessage());
                     }
 
             }
