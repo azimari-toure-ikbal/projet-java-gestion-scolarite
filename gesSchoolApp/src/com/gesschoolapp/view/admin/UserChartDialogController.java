@@ -53,6 +53,9 @@ public class UserChartDialogController implements Initializable {
     private Label feeTotal;
 
     @FXML
+    private Label labelUsername;
+
+    @FXML
     private PieChart feesPie;
 
     @FXML
@@ -101,6 +104,7 @@ public class UserChartDialogController implements Initializable {
 
     public void setData(Utilisateur utilisateur){
         user = utilisateur;
+        labelUsername.setText(utilisateur.getFullName());
 
         List<Paiement> dailyFeesList = Toolbox.paiementsJournalier(LocalDate.now());
         setDailyFeesList(FXCollections.observableArrayList(dailyFeesList.stream().filter(paiement -> paiement.getCaissier().equalsIgnoreCase(utilisateur.getFullName())).toList()));
