@@ -2,7 +2,7 @@ package com.gesschoolapp.gescsv;
 
 import com.gesschoolapp.Exceptions.CSVException;
 import com.gesschoolapp.Exceptions.DAOException;
-import com.gesschoolapp.Exceptions.Mismatch;
+import com.gesschoolapp.Exceptions.MismatchException;
 import com.gesschoolapp.db.DAOClassesImpl.ApprenantDAOImp;
 import com.gesschoolapp.db.DAOClassesImpl.ModuleDAOImp;
 import com.gesschoolapp.db.DAOClassesImpl.NoteDAOImp;
@@ -106,9 +106,9 @@ public class NotesCSV implements CSVReader<Note> {
      * @param classse
      * @return List
      * @throws CSVException
-     * @throws Mismatch
+     * @throws MismatchException
      */
-    public List<Note> csvToObject(List<String[]> data, Module module, Classe classse, Utilisateur utilisateur, int semestre) throws CSVException, Mismatch {
+    public List<Note> csvToObject(List<String[]> data, Module module, Classe classse, Utilisateur utilisateur, int semestre) throws CSVException, MismatchException {
         // Verify if the list is not empty
         if (data.isEmpty()) {
             throw new CSVException("La liste est vide");
@@ -161,7 +161,7 @@ public class NotesCSV implements CSVReader<Note> {
             // Verify if the student is in the class
             try {
                 if (!Objects.equals(apprenantDAOImp.searchByMatricule(Integer.parseInt(line[0])).getClasse(), classse.getIntitule())) {
-                    throw new Mismatch("L'apprenant n'est pas dans la classe");
+                    throw new MismatchException("L'apprenant n'est pas dans la classe");
                 }
             } catch (DAOException e) {
                 throw new CSVException("Une erreur est survenue lors de la recherche de l'apprenant : " + e.getMessage());
@@ -177,14 +177,14 @@ public class NotesCSV implements CSVReader<Note> {
 
             // Verify that the note is between 0 and 20
             if (Float.parseFloat(line[1]) < 0 || Float.parseFloat(line[1]) > 20) {
-                throw new Mismatch("La note doit être comprise entre 0 et 20");
+                throw new MismatchException("La note doit être comprise entre 0 et 20");
             }
             note.setNote(Float.parseFloat(line[1]));
 
 
             // Verify that we are adding in the right semester
             if (Integer.parseInt(line[2]) != semestre) {
-                throw new Mismatch("Le semestre n'est pas le bon");
+                throw new MismatchException("Le semestre n'est pas le bon");
             }
 
             // Create the note

@@ -2,7 +2,7 @@ package com.gesschoolapp.gescsv;
 
 import com.gesschoolapp.Exceptions.CSVException;
 import com.gesschoolapp.Exceptions.DAOException;
-import com.gesschoolapp.Exceptions.Mismatch;
+import com.gesschoolapp.Exceptions.MismatchException;
 import com.gesschoolapp.db.DAOClassesImpl.ApprenantDAOImp;
 import com.gesschoolapp.gescsv.reader.CSVReader;
 import com.gesschoolapp.gescsv.writter.CSVWritter;
@@ -96,7 +96,7 @@ public class ApprenantsCSV implements CSVReader<Apprenant>, CSVWritter<Apprenant
         return apprenants;
     }
 
-    public List<Apprenant> csvToObject(List<String[]> data, Classe classe, Utilisateur utilisateur) throws CSVException, Mismatch {
+    public List<Apprenant> csvToObject(List<String[]> data, Classe classe, Utilisateur utilisateur) throws CSVException, MismatchException {
         // Verify if the list is not empty
         if (data.isEmpty()) {
             throw new CSVException("La liste est vide");
@@ -117,7 +117,7 @@ public class ApprenantsCSV implements CSVReader<Apprenant>, CSVWritter<Apprenant
             apprenant.setNom(line[1].toUpperCase());
             // Verify if the date has format 'dd-MM-yyyy'
             if (!line[2].matches("\\d{2}-\\d{2}-\\d{4}")) {
-                throw new Mismatch("La date doit être au format 'jj-MM-aaaa'");
+                throw new MismatchException("La date doit être au format 'jj-MM-aaaa'");
             }
             // Convert the date to LocalDate with format 'yyyy-MM-dd'
             apprenant.setDateNaissance(Toolbox.dateFornater(line[2]));
@@ -125,7 +125,7 @@ public class ApprenantsCSV implements CSVReader<Apprenant>, CSVWritter<Apprenant
             apprenant.setEtatPaiement(0);
             // Verify if the sexe is 'M' or 'F'
             if (!line[4].equalsIgnoreCase("M") && !line[4].equalsIgnoreCase("F")) {
-                throw new Mismatch("Le sexe doit être 'M' ou 'F'");
+                throw new MismatchException("Le sexe doit être 'M' ou 'F'");
             }
             apprenant.setSexe(line[4].toUpperCase());
             apprenant.setClasse(classe.getIntitule());

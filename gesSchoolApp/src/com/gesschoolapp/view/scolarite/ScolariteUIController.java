@@ -2,7 +2,7 @@ package com.gesschoolapp.view.scolarite;
 
 import com.gesschoolapp.Exceptions.CSVException;
 import com.gesschoolapp.Exceptions.DAOException;
-import com.gesschoolapp.Exceptions.Mismatch;
+import com.gesschoolapp.Exceptions.MismatchException;
 import com.gesschoolapp.Exceptions.PDFException;
 import com.gesschoolapp.db.DAOClassesImpl.*;
 import com.gesschoolapp.docmaker.PDFGenerator;
@@ -1207,7 +1207,7 @@ public class ScolariteUIController implements Initializable {
                     }
 
                     this.setMainMessageInfo("Note(s) importé(s) avec succès !");
-                } catch (CSVException | Mismatch e) {
+                } catch (CSVException | MismatchException e) {
                     setMainMessageInfo(e.getMessage(), 0);
                 }
             }
@@ -1227,7 +1227,7 @@ public class ScolariteUIController implements Initializable {
                     selectedClass.setApprenants(list);
 
                     this.setMainMessageInfo("Apprenant(s) importé(s) avec succès !");
-                } catch (CSVException | Mismatch e) {
+                } catch (CSVException | MismatchException e) {
                     setMainMessageInfo(e.getMessage(), 0);
                     System.out.println(e.getMessage());
                 }
@@ -1904,9 +1904,10 @@ public class ScolariteUIController implements Initializable {
             if (result.get() == ButtonType.OK) {
                 // ... user chose OK
                     try {
-                        Classe classeToPass = getSelectedClass();
+                        Classe classeToPass = new Classe();
                         List<Module> modulesToPass = new ArrayList<>();
                         modulesToPass.addAll(getSelectedClass().getModules());
+                        classeToPass = getSelectedClass();
 
                         PDFGenerator.bulletinGenerator(classeToPass,modulesToPass,getSelectedSemestreIndex());
                         setMainMessageInfo("Bulletins générés avec succès (VOIR ELEVES)",1);

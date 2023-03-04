@@ -265,10 +265,10 @@ public class Toolbox {
 //    }
 
 
-//    public static List<Paiement> paiementsJournalier(String date) throws Mismatch {
+//    public static List<Paiement> paiementsJournalier(String date) throws MismatchException {
 //        // Verify if the date is in the correct format
 //        if (!date.matches("\\d{2}-\\d{2}-\\d{4}")) {
-//            throw new Mismatch("La date doit être au format 'dd-MM-yyyy'");
+//            throw new MismatchException("La date doit être au format 'dd-MM-yyyy'");
 //        }
 //        // Parse the date to LocalDate
 //        LocalDate localDate = dateFornater(date);
