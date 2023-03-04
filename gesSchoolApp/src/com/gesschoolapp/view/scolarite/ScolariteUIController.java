@@ -19,7 +19,6 @@ import com.gesschoolapp.models.users.concrete.Caissier;
 import com.gesschoolapp.models.users.concrete.Secretaire;
 import com.gesschoolapp.models.users.Utilisateur;
 import com.gesschoolapp.runtime.Main;
-import com.gesschoolapp.controllers.NotesItemController;
 import com.gesschoolapp.utils.Toolbox;
 import com.gesschoolapp.utils.Route;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
@@ -1917,6 +1916,19 @@ public class ScolariteUIController implements Initializable {
                     }
 
             }
+        }else{
+            Classe classeToPass = getSelectedClass();
+            List<Module> modulesToPass = new ArrayList<>();
+            modulesToPass.addAll(getSelectedClass().getModules());
+
+
+            try {
+                PDFGenerator.bulletinGenerator(classeToPass,modulesToPass,getSelectedSemestreIndex());
+            } catch (PDFException ex) {
+                setMainMessageInfo(ex.getMessage(),0);
+                System.out.println(ex.getMessage());
+            }
+            setMainMessageInfo("Bulletins générés avec succès (VOIR ELEVES)",1);
         }
     }
 
