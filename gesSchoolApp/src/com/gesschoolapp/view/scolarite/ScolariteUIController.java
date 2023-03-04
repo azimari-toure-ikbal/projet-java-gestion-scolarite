@@ -1904,9 +1904,10 @@ public class ScolariteUIController implements Initializable {
             if (result.get() == ButtonType.OK) {
                 // ... user chose OK
                     try {
-                        Classe classeToPass = getSelectedClass();
+                        Classe classeToPass = new Classe();
                         List<Module> modulesToPass = new ArrayList<>();
                         modulesToPass.addAll(getSelectedClass().getModules());
+                        classeToPass = getSelectedClass();
 
                         PDFGenerator.bulletinGenerator(classeToPass,modulesToPass,getSelectedSemestreIndex());
                         setMainMessageInfo("Bulletins générés avec succès (VOIR ELEVES)",1);
