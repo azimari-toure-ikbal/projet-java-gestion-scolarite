@@ -24,15 +24,16 @@ import java.util.List;
 public class PDFGenerator {
 
     public static void cerficatScolariteGenerator(Apprenant apprenant) throws PDFException {
+        Apprenant apprenantPDF = apprenant;
 
         // Verifier que l'apprenant soit inscrit
-        if (apprenant.getEtatPaiement() == 0) {
-            throw new PDFException("L'apprenant " + apprenant.getFullName() + " n'est pas inscrit !");
+        if (apprenantPDF.getEtatPaiement() == 0) {
+            throw new PDFException("L'apprenant " + apprenantPDF.getFullName() + " n'est pas inscrit !");
         }
 
         // Initialisation du document PDF
         Document document = new Document(PageSize.A4, 50, 50, 50, 50);
-        String file = apprenant.getFullName().replace(" ", "_") + "_" + LocalDate.now();
+        String file = apprenantPDF.getFullName().replace(" ", "_") + "_" + LocalDate.now();
         String path = "storage/certificats/pdfs/" + file + ".pdf";
         String filename = "storage/certificats/imgs/" + file + ".png";
 
@@ -68,7 +69,7 @@ public class PDFGenerator {
             // Ajouter le contenu du certificat de scolarité
             Font contentFont = FontFactory.getFont(FontFactory.HELVETICA, 12);
             Paragraph content = new Paragraph();
-            content.add(new Phrase("Je soussigné Monsieur Al Abdourahamane Abdoulaye AZOUMARI, Directeur de l'établissement, atteste que Mme, Mlle, M. : " + apprenant.getFullName() + " né(e) le " + apprenant.getDateNaissance().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + " est régulièrement inscrit(e) à ladite école en " + apprenant.getClasse() + ", année scolaire " + (LocalDate.now().getYear() - 1) + "-" + (LocalDate.now().getYear()) + ".", contentFont));
+            content.add(new Phrase("Je soussigné Monsieur Al Abdourahamane Abdoulaye AZOUMARI, Directeur de l'établissement, atteste que Mme, Mlle, M. : " + apprenantPDF.getFullName() + " né(e) le " + apprenantPDF.getDateNaissance().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + " est régulièrement inscrit(e) à ladite école en " + apprenantPDF.getClasse() + ", année scolaire " + (LocalDate.now().getYear() - 1) + "-" + (LocalDate.now().getYear()) + ".", contentFont));
             content.add(new Phrase("\nEn foi de quoi, la présente attestation est délivrée pour servir et valoir ce que de droit."));
             content.setAlignment(Element.ALIGN_JUSTIFIED);
             content.setSpacingAfter(30f);
@@ -97,10 +98,12 @@ public class PDFGenerator {
     }
 
     public static void recuGenerator(Paiement paiement) throws PDFException {
+        Paiement paiementPDF = paiement;
+
         // Initialisation du document PDF
         Document document = new Document();
-        String path = "storage/reçus/pdfs/" + paiement.getNumeroRecu() + "_ " + paiement.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")).replace("-", "_") + ".pdf";
-        String filename = "storage/reçus/imgs/" + paiement.getNumeroRecu() + "_ " + paiement.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")).replace("-", "_") + ".png";
+        String path = "storage/reçus/pdfs/" + paiementPDF.getNumeroRecu() + "_ " + paiementPDF.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")).replace("-", "_") + ".pdf";
+        String filename = "storage/reçus/imgs/" + paiementPDF.getNumeroRecu() + "_ " + paiementPDF.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")).replace("-", "_") + ".png";
 
         try {
             // Création du fichier PDF
@@ -121,19 +124,19 @@ public class PDFGenerator {
             document.add(title);
 
             // Ajout de la date et du numéro de recu à droite
-            Paragraph dateNum = new Paragraph("Date de paiement : " + paiement.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + "\nNuméro de reçu : " + paiement.getNumeroRecu(), new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL, BaseColor.BLACK));
+            Paragraph dateNum = new Paragraph("Date de paiement : " + paiementPDF.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + "\nNuméro de reçu : " + paiementPDF.getNumeroRecu(), new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL, BaseColor.BLACK));
             dateNum.setAlignment(Element.ALIGN_RIGHT);
             document.add(dateNum);
 
             // Ajout des informations de paiement
-            Paragraph nom = new Paragraph("Reçu de : " + paiement.getApprenant().getFullName(), new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD, BaseColor.BLACK));
+            Paragraph nom = new Paragraph("Reçu de : " + paiementPDF.getApprenant().getFullName(), new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD, BaseColor.BLACK));
             nom.setSpacingBefore(10f);
             document.add(nom);
-            Paragraph classe = new Paragraph("En classe de : " + paiement.getApprenant().getClasse(), new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD, BaseColor.BLACK));
+            Paragraph classe = new Paragraph("En classe de : " + paiementPDF.getApprenant().getClasse(), new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD, BaseColor.BLACK));
             document.add(classe);
-            Paragraph montant = new Paragraph("Montant : " + paiement.getMontant() + " CFA", new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD, BaseColor.BLACK));
+            Paragraph montant = new Paragraph("Montant : " + paiementPDF.getMontant() + " CFA", new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD, BaseColor.BLACK));
             document.add(montant);
-            Paragraph rubrique = new Paragraph("Rubrique : " + paiement.getRubrique(), new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD, BaseColor.BLACK));
+            Paragraph rubrique = new Paragraph("Rubrique : " + paiementPDF.getRubrique(), new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD, BaseColor.BLACK));
             rubrique.setSpacingAfter(30f);
             document.add(rubrique);
 
@@ -166,10 +169,12 @@ public class PDFGenerator {
 
     public static void bulletinGenerator(Classe classe, List<Module> modules, int semestre) throws PDFException {
         // Recuperer la liste des eleves
-        List<Apprenant> apprenants = classe.getApprenants();
+        List<Apprenant> apprenants = new ArrayList<>(classe.getApprenants());
+
+        List<Module> moduleList = new ArrayList<>(modules);
 
         // Supprimer les modules qui ne sont pas du bon semestre
-        modules.removeIf(module -> module.getSemestre() != semestre);
+        moduleList.removeIf(module -> module.getSemestre() != semestre);
 
 
         // Verifier si la liste des eleves est vide
@@ -182,7 +187,7 @@ public class PDFGenerator {
 
         // Recuperer la liste des notes
         List<Note> notes = new ArrayList<>();
-        for (Module module : modules) {
+        for (Module module : moduleList) {
             notes.addAll(module.getNotes());
         }
 
@@ -246,7 +251,7 @@ public class PDFGenerator {
                 table.addCell(new Phrase("Note", new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD)));
 
                 // Ajouter les données des notes de l'étudiant
-                tableLineGenerator(table, modules, apprenantNotes);
+                tableLineGenerator(table, moduleList, apprenantNotes);
 
                 // Ajouter le tableau au document
                 document.add(table);
