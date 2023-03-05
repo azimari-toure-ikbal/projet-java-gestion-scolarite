@@ -210,6 +210,7 @@ public class Toolbox {
     }
 
     public static String[] getBulletinImgPaths(Apprenant apprenant) throws RuntimeException {
+
         String[] filepaths = new String[2];
 
         File bulletinSemestre1 = new File("storage/bulletins/imgs/" + apprenant.getFullName().replace(" ", "_") + "_bulletin_semestre_1.png");
