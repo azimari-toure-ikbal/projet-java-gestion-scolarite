@@ -1023,6 +1023,8 @@ public class ScolariteUIController implements Initializable {
         }
 
         this.selectedModule = selectedModule;
+        System.out.println("Module sélectionné : " + selectedModule);
+        System.out.println("Module sélectionné notes : " + selectedModule.getNotes());
         try {
             setListeDesNotes(selectedModule.getNotes());
         } catch (DAOException e) {

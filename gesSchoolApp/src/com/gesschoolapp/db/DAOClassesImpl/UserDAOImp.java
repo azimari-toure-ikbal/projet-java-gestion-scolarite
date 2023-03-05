@@ -161,7 +161,7 @@ public class UserDAOImp implements UserDAO, DAO<Utilisateur> {
             PreparedStatement ps = connection.prepareStatement(query);
 
             // Set user password
-            obj.setPassword(Toolbox.generateRandomPassword().trim());
+            obj.setPassword(Toolbox.generateRandomPassword());
 
             String hashedPassword = Toolbox.generateSecurePassword(obj.getPassword());
             ps.setString(1, obj.getNom());

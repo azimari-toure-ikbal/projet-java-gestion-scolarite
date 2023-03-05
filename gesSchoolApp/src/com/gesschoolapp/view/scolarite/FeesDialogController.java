@@ -191,15 +191,15 @@ public class FeesDialogController  implements Initializable {
         } catch (DAOException e) {
             throw new RuntimeException(e);
         }
-        Note newNote = new Note();
-        newNote.setApprenant(apprenant);
-
-        newNote.setNote(0);
         List<Module> modules = superController.getSelectedClass().getModules();
         NoteDAOImp notesData = new NoteDAOImp();
 
         if(apprenant.getEtatPaiement() == 0){
+
             for(Module module : modules){
+                Note newNote = new Note();
+                newNote.setApprenant(apprenant);
+                newNote.setNote(0);
                 List<Note> notesList = new ArrayList<>(module.getNotes());
                 newNote.setModule(module.getIntitule());
     //            Note
