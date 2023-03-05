@@ -215,7 +215,8 @@ public class Toolbox {
 
         File bulletinSemestre1 = new File("storage/bulletins/imgs/" + apprenant.getNom().replace(" ", "_") + "_" + apprenant.getPrenom() + "_bulletin_semestre_1.png");
         File bulletinSemestre2 = new File("storage/bulletins/imgs/" + apprenant.getNom().replace(" ", "_") + "_" + apprenant.getPrenom() + "_bulletin_semestre_2.png");
-
+        System.out.println(bulletinSemestre1.getPath());
+        System.out.println(bulletinSemestre2.getPath());
         if (!bulletinSemestre1.exists() && !bulletinSemestre2.exists()) {
             throw new RuntimeException(apprenant.getFullName() + " n'a aucun bulletin.");
         } else {
