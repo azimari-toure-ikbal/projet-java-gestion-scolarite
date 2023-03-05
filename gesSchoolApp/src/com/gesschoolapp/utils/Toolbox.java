@@ -214,29 +214,29 @@ public class Toolbox {
 
         String[] filepaths = new String[2];
 
-        File bulletinSemestre1 = new File("storage/bulletins/imgs/" + apprenant.getNom().replace(" ", "_") + "_" + apprenant.getPrenom() + "_bulletin_semestre_1.png");
-        File bulletinSemestre2 = new File("storage/bulletins/imgs/" + apprenant.getNom().replace(" ", "_") + "_" + apprenant.getPrenom() + "_bulletin_semestre_2.png");
+        File bulletinSemestre1 = new File("storage/bulletins/imgs/" + apprenant.getFullName().replace(" ", "_") + "_bulletin_semestre_1.png");
+        File bulletinSemestre2 = new File("storage/bulletins/imgs/" + apprenant.getFullName().replace(" ", "_") + "_bulletin_semestre_2.png");
         System.out.println(bulletinSemestre1.getPath());
         System.out.println(bulletinSemestre2.getPath());
         if (!bulletinSemestre1.exists() && !bulletinSemestre2.exists()) {
             throw new RuntimeException(apprenant.getFullName() + " n'a aucun bulletin.");
         } else {
             if (bulletinSemestre1.exists()) {
-                filepaths[0] = "storage/bulletins/imgs/" + apprenant.getNom().replace(" ", "_") + "_" + apprenant.getPrenom() + "_bulletin_semestre_1.png";
+                filepaths[0] = "storage/bulletins/imgs/" + apprenant.getFullName().replace(" ", "_") + "_bulletin_semestre_1.png";
             }
             if (bulletinSemestre2.exists()) {
-                filepaths[1] = "storage/bulletins/imgs/" + apprenant.getNom().replace(" ", "_") + "_" + apprenant.getPrenom() + "_bulletin_semestre_2.png";
+                filepaths[1] = "storage/bulletins/imgs/" + apprenant.getFullName().replace(" ", "_") + "_bulletin_semestre_2.png";
             }
             return filepaths;
         }
     }
 
     public static String getCertificatsImgPath(Apprenant apprenant) {
-        File file = new File("storage/certificats/imgs/" + apprenant.getNom().replace(" ", "_") + "_" + apprenant.getPrenom() + "_" + LocalDate.now() + ".png");
+        File file = new File("storage/certificats/imgs/" + apprenant.getFullName().replace(" ", "_") + "_" + LocalDate.now() + ".png");
         if (!file.exists()) {
             throw new RuntimeException("Il n'y a pas de certificat pour " + apprenant.getFullName() + ".");
         } else {
-            return "storage/certificats/imgs/" + apprenant.getNom().replace(" ", "_") + "_" + apprenant.getPrenom() + "_" + LocalDate.now() + ".png";
+            return "storage/certificats/imgs/" + apprenant.getFullName().replace(" ", "_") + "_" + LocalDate.now() + ".png";
         }
     }
 }
