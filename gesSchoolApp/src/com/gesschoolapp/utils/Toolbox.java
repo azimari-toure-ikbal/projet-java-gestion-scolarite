@@ -46,10 +46,10 @@ public class Toolbox {
     }
 
     public static boolean emailFormatChecker(String emailAdressen) {
-        Pattern pattern = Pattern.compile("^[A-Z0-9_!#$%&'*+/=?`{|}~^-]+(?:\\.[A-Z0-9_!#$%&'*+/=?`{|}~^-]+↵\n" +
-                ")*@[A-Z0-9-]+(?:\\.[A-Z0-9-]+)*$", Pattern.CASE_INSENSITIVE);
+        String regex = "^[a-zA-Z0-9_!#$%&amp;'*+/=?`{|}~^-]+(?:\\.[a-zA-Z0-9_!#$%&amp;'*+/=?`{|}~^-]+)*@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$";
+        Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(emailAdressen);
-        return matcher.find();
+        return matcher.matches();
     }
 
     public static String capitalizeName(String name) {
@@ -71,6 +71,13 @@ public class Toolbox {
         // Convert from format 'dd-MM-yyyy' to 'yyyy-MM-dd'
         String[] dateParts = date.split("-");
         return LocalDate.of(Integer.parseInt(dateParts[2]), Integer.parseInt(dateParts[1]), Integer.parseInt(dateParts[0]));
+    }
+
+    public static String duplicataText(String exception) {
+        if (exception.contains("la clef 'email'")) {
+            return "Cet email est déjà utilisé";
+        }
+        return "Cet numéro est déjà utilisé";
     }
 
     public static List<Rubrique> getRubriques(){

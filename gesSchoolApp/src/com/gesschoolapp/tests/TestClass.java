@@ -84,6 +84,8 @@ public class TestClass {
 
 //        System.out.println("Systeme d'exploitation: " + System.getProperty("os.name"));
 //        System.out.println(Toolbox.verifyPassword("NCo0)dh7Ac7j", "$2a$12$u1yzk0HiNayeUPQzzEuh9uXbgUYfpKeVTwwLXS1gyuQ9Te1sgyY9K"));
+//    testApprenantCSV();
+        System.out.println(Toolbox.emailFormatChecker("azimari.toure.ikbal@gmail.com"));
     }
 
     public static void testGenerateCertificat(){
@@ -105,6 +107,7 @@ public class TestClass {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
+
 
     public static void testCreateModule(){
         try {
@@ -426,6 +429,8 @@ public class TestClass {
         } catch (CSVException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
+
+        JOptionPane.showMessageDialog(null, "Test terminé");
     }
 
     public static void testCSVWriter() {
