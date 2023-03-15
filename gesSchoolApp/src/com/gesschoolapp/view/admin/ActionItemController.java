@@ -102,7 +102,7 @@ public class ActionItemController {
         }else if(act.getObjectType().equals("Note")){
             Image pp = new Image("com/gesschoolapp/resources/images/mini_icon_note.png");
             iconTypeObject.setImage(pp);
-            tip = new Tooltip("Note de l'élève " + (((Note) act.getObject()).getApprenant().getPrenom() + " " + ((Note) act.getObject()).getApprenant().getNom() + " (" + ((Note) act.getObject()).getNote() + "/20 =>"+ ((Note) act.getCurrentObject()).getNote()  +"/20)"));
+//            tip = new Tooltip("Note de l'élève " + (((Note) act.getObject()).getApprenant().getPrenom() + " " + ((Note) act.getObject()).getApprenant().getNom() + " (" + ((Note) act.getObject()).getNote() + "/20 =>"+ ((Note) act.getCurrentObject()).getNote()  +"/20)"));
         }else if(act.getObjectType().equals("Paiement")){
             Image pp = new Image("com/gesschoolapp/resources/images/mini_icon_fee.png");
             iconTypeObject.setImage(pp);
