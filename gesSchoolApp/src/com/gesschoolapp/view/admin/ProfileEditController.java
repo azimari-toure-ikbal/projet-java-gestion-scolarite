@@ -174,6 +174,16 @@ public class ProfileEditController {
                 return false;
             }
 
+            for(Utilisateur usr : superController.getUsersList()){
+                System.out.println("ezz");
+                if (usr.getNumero().equalsIgnoreCase(numero)){
+                    messageInfo.setVisible(true);
+                    messageInfo.setText("Le numéro existe déjà.");
+                    messageInfo.setTextFill(Color.web("#e83636"));
+                    return false;
+                }
+            }
+
             user.setPassword(nPassword);
 
         }
@@ -187,7 +197,10 @@ public class ProfileEditController {
         try {
             userDAO.update(user,superController.getCurrentUser().getFullName());
         } catch (DAOException e) {
-            throw new RuntimeException(e);
+            messageInfo.setVisible(true);
+            messageInfo.setText(Toolbox.duplicataText(e.getMessage()));
+            messageInfo.setTextFill(Color.web("#e83636"));
+            return false;
         }
 
         dialogStage.close();
