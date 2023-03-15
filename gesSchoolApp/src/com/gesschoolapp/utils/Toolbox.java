@@ -73,6 +73,13 @@ public class Toolbox {
         return LocalDate.of(Integer.parseInt(dateParts[2]), Integer.parseInt(dateParts[1]), Integer.parseInt(dateParts[0]));
     }
 
+    public static String duplicataText(String exception) {
+        if (exception.contains("la clef 'email'")) {
+            return "Cet email est déjà utilisé";
+        }
+        return "Cet numéro est déjà utilisé";
+    }
+
     public static List<Rubrique> getRubriques(){
         List<Rubrique> list = new ArrayList<>();
         list.add(new Rubrique(2, "scolarite", 0));
