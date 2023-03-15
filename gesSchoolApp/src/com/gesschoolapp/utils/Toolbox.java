@@ -46,10 +46,10 @@ public class Toolbox {
     }
 
     public static boolean emailFormatChecker(String emailAdressen) {
-        Pattern pattern = Pattern.compile("^[A-Z0-9_!#$%&'*+/=?`{|}~^-]+(?:\\.[A-Z0-9_!#$%&'*+/=?`{|}~^-]+↵\n" +
-                ")*@[A-Z0-9-]+(?:\\.[A-Z0-9-]+)*$", Pattern.CASE_INSENSITIVE);
+        String regex = "^[a-zA-Z0-9_!#$%&amp;'*+/=?`{|}~^-]+(?:\\.[a-zA-Z0-9_!#$%&amp;'*+/=?`{|}~^-]+)*@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$";
+        Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(emailAdressen);
-        return matcher.find();
+        return matcher.matches();
     }
 
     public static String capitalizeName(String name) {
