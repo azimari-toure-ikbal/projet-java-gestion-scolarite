@@ -74,10 +74,12 @@ public class Toolbox {
     }
 
     public static String duplicataText(String exception) {
-        if (exception.contains("la clef 'email'")) {
-            return "Cet email est déjà utilisé";
+        if (exception.contains("la clef 'email'") && exception.contains("la clef 'numero'")) {
+            return "Cet email et ce numéro sont déjà utilisés";
+        } else if (exception.contains("la clef 'numero'")) {
+            return "Ce numéro est déjà utilisé";
         }
-        return "Cet numéro est déjà utilisé";
+        return "Cet email est déjà utilisé";
     }
 
     public static List<Rubrique> getRubriques(){
