@@ -133,15 +133,17 @@ public class UserAddDialogController implements Initializable {
 
         try {
 
-            dialogStage.close();
             Utilisateur newUser = usersData.create(user,superController.getCurrentUser().getFullName());
             List<Utilisateur> list = new ArrayList<>(superController.getUsersList());
             list.add(newUser);
             superController.setUsersList(list);
         } catch (DAOException e) {
-            superController.setMainMessageInfo("Email n'existe pas");
+            messageInfo.setVisible(true);
+            messageInfo.setText(Toolbox.duplicataText(e.getMessage()));
+            messageInfo.setTextFill(Color.web("#e83636"));
             return false;
         }
+            dialogStage.close();
 
 //        System.out.println("Utilisateur ajouté avec succès !");
         superController.setMainMessageInfo("Utilisateur ajouté avec succès !");

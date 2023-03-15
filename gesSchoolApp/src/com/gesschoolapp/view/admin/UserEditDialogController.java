@@ -120,6 +120,14 @@ public class UserEditDialogController implements Initializable {
             return false;
         }
 
+        for(Utilisateur user : superController.getUsersList()){
+            if (user.getNumero().equalsIgnoreCase(numero)){
+                messageInfo.setVisible(true);
+                messageInfo.setText("Le numéro existe déjà.");
+                messageInfo.setTextFill(Color.web("#e83636"));
+                return false;
+            }
+        }
 
 
         Utilisateur user = null;
@@ -140,14 +148,15 @@ public class UserEditDialogController implements Initializable {
 
 
         try {
-
-            dialogStage.close();
             usersData.update(user,superController.getCurrentUser().getFullName());
             List<Utilisateur> list = new ArrayList<>(superController.getUsersList());
             list.set(list.indexOf(selectedUser),user);
             superController.setUsersList(list);
         } catch (DAOException e) {
-            superController.setMainMessageInfo("L'email existe déjà.");
+            messageInfo.setVisible(true);
+            messageInfo.setText(Toolbox.duplicataText(e.getMessage()));
+            messageInfo.setTextFill(Color.web("#e83636"));
+            System.out.println(e.getMessage());
             return false;
         }
         dialogStage.close();
