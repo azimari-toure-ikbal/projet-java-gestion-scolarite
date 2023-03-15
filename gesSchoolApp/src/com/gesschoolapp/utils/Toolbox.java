@@ -120,7 +120,7 @@ public class Toolbox {
 
     public static String generateRandomPassword() {
         // Generate random password with 12 characters
-        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$^&";
         StringBuilder password = new StringBuilder();
         SecureRandom random = new SecureRandom();
         while (password.length() < 12) {
@@ -131,6 +131,7 @@ public class Toolbox {
         return password.toString();
     }
     public static String generateSecurePassword(String password) {
+        System.out.println("Password: " + password);
         if (password == null || password.isEmpty())
             return null;
         return BCrypt.withDefaults().hashToString(12, password.toCharArray());

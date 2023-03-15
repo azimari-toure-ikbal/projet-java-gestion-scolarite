@@ -253,7 +253,9 @@ public class UserDAOImp implements UserDAO, DAO<Utilisateur> {
             String query = "UPDATE utilisateurs SET nom=?, prenom=?, email=?, password=?, numero=?, type=? WHERE idUtilisateur=?";
             PreparedStatement ps = connection.prepareStatement(query);
 
+            System.out.println("Password_backup : " + obj.getPassword());
             String hashedPassword = Toolbox.generateSecurePassword(obj.getPassword());
+            System.out.println("Password_hashed : " + hashedPassword);
 
             ps.setString(1, obj.getNom());
             ps.setString(2, obj.getPrenom());
