@@ -131,6 +131,8 @@ public class Toolbox {
         return password.toString();
     }
     public static String generateSecurePassword(String password) {
+        if (password == null || password.isEmpty())
+            return null;
         return BCrypt.withDefaults().hashToString(12, password.toCharArray());
     }
 
