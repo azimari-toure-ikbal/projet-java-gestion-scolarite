@@ -139,7 +139,8 @@ public class UserAddDialogController implements Initializable {
             list.add(newUser);
             superController.setUsersList(list);
         } catch (DAOException e) {
-            throw new RuntimeException(e);
+            superController.setMainMessageInfo("Email n'existe pas");
+            return false;
         }
 
 //        System.out.println("Utilisateur ajouté avec succès !");

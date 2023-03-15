@@ -147,7 +147,8 @@ public class UserEditDialogController implements Initializable {
             list.set(list.indexOf(selectedUser),user);
             superController.setUsersList(list);
         } catch (DAOException e) {
-            throw new RuntimeException(e);
+            superController.setMainMessageInfo("L'email existe déjà.");
+            return false;
         }
         dialogStage.close();
         superController.setMainMessageInfo("Utilisateur modifié avec succès !");
