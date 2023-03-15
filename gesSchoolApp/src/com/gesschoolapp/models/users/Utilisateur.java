@@ -109,13 +109,10 @@ public abstract class Utilisateur {
     public String toString() {
         return "Utilisateur{" +
                 "id=" + id +
-                ", prenom='" + prenom + '\'' +
-                ", nom='" + nom + '\'' +
-                ", login='" + login + '\'' +
+                ", fullName='" + getFullName() + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", numero='" + numero + '\'' +
-                ", fullName='" + getFullName() + '\'' +
                 '}';
     }
 }

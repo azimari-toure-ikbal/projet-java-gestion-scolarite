@@ -16,7 +16,6 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 
 public class ActionDAOImp implements ActionDAO {
@@ -31,11 +30,6 @@ public class ActionDAOImp implements ActionDAO {
                 case ADD -> cancelAddApprenant((Apprenant) action.getObject());
                 case DELETE -> cancelDeleteApprenant((Apprenant) action.getObject());
                 case UPDATE -> cancelUpdateApprenant((Apprenant) action.getObject());
-            }
-        }
-        else if(action.getObject() instanceof Note){
-            if (Objects.requireNonNull(action.getAction()) == ActionType.UPDATE) {
-                cancelUpdateNote((Note) action.getObject());
             }
         }
         addNotification(action.getActor(), admin, message);
@@ -87,17 +81,6 @@ public class ActionDAOImp implements ActionDAO {
             apprenantDAOImp.update(apprenant, "admin");
         }catch (Exception e){
             System.out.println("Error in cancelUpdateApprenant() : " + e.getMessage());
-        }
-    }
-
-
-    @Override
-    public void cancelUpdateNote(Note note){
-        NoteDAOImp noteDAOImp = new NoteDAOImp();
-        try{
-            noteDAOImp.update(note, "admin");
-        }catch (Exception e){
-            System.out.println("Error in cancelUpdateNote() : " + e.getMessage());
         }
     }
 

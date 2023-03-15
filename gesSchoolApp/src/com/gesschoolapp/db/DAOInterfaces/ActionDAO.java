@@ -12,7 +12,6 @@ public interface ActionDAO{
     void cancelAddApprenant(Apprenant apprenant);
     void cancelDeleteApprenant(Apprenant apprenant);
     void cancelUpdateApprenant(Apprenant apprenant);
-    void cancelUpdateNote(Note note);
     List<Action> getActions();
     void create(Action action);
     void setActionCanceled(Action action);

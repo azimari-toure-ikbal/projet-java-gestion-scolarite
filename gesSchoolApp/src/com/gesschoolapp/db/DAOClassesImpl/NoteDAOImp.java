@@ -3,18 +3,14 @@ package com.gesschoolapp.db.DAOClassesImpl;
 import com.gesschoolapp.Exceptions.DAOException;
 import com.gesschoolapp.db.DAOInterfaces.extensions.NoteDAO;
 import com.gesschoolapp.db.DBManager;
-import com.gesschoolapp.models.actions.Action;
 import com.gesschoolapp.models.matieres.Note;
 import com.gesschoolapp.models.student.Apprenant;
-import com.gesschoolapp.utils.ActionType;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class NoteDAOImp implements NoteDAO {
     @Override
@@ -33,7 +29,7 @@ public class NoteDAOImp implements NoteDAO {
     }
 
     @Override
-    public void update(Note obj, String user) throws DAOException {
+    public void update(Note obj, String utilisateur) throws DAOException {
         try(Connection connexion = DBManager.getConnection()) {
             System.out.println("Updating note..." + obj.getId());
             String query = "UPDATE notes SET valeur = ?, idApprenant = ?, idModule = ? WHERE idNote = ?";
@@ -49,7 +45,7 @@ public class NoteDAOImp implements NoteDAO {
     }
 
     @Override
-    public void update (Note obj, int semestre, String user) throws DAOException {
+    public void update (Note obj, int semestre, String utilisateur) throws DAOException {
 
         try(Connection connexion = DBManager.getConnection()) {
             String preQuery =  "SELECT n.idNote FROM notes n, modules m, apprenants a WHERE n.idApprenant = a.idApprenant AND n.idModule = m.idModule AND m.semestre = ? AND a.matricule = ? AND m.intitule = ?";
@@ -61,22 +57,6 @@ public class NoteDAOImp implements NoteDAO {
 
             if(rs.next()) {
                 obj.setId(rs.getInt("idNote"));
-            }
-
-            if(!Objects.equals(user, "admin")){
-                List<Action> actions = new ActionDAOImp().getActions();
-                for (Action action : actions) {
-                    if(action.getObject() instanceof Note previousNote){
-                        if(previousNote.getId() == obj.getId())
-                            new ActionDAOImp().delete(action.getIdAction());
-                    }
-                }
-                Action action = new Action();
-                action.setActor(user);
-                action.setAction(ActionType.UPDATE);
-                action.setObject(read(obj.getId()));
-                action.setDate(LocalDateTime.now());
-                new ActionDAOImp().create(action);
             }
 
             String query = "UPDATE notes SET valeur = ? WHERE idNote = ?";

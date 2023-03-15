@@ -9,8 +9,7 @@ import java.util.List;
 
 public interface NoteDAO extends DAO<Note> {
     public List<Note> getNotesOfModule(int idModule) throws DAOException ;
-    public void update (Note obj, int semestre, String user) throws DAOException;
+    public void update (Note obj, int semestre, String utilisateur) throws DAOException;
     public List<Note> getNotesOfApprenant(Apprenant apprenant) throws DAOException;
-
 
     }
