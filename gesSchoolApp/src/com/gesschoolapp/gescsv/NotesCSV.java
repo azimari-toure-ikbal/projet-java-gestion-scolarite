@@ -73,14 +73,13 @@ public class NotesCSV implements CSVReader<Note> {
         List<Note> notes = new ArrayList<>();
 
         for (String[] line : data) {
-            if (line.length != 4) {
+            if (line.length != 3) {
                 throw new CSVException("Le fichier n'est pas au bon format");
             }
 
             Note note = new Note();
             try {
                 note.setApprenant(apprenantDAOImp.searchByMatricule(Integer.parseInt(line[0])));
-//                System.out.println(apprenantDAOImp.searchByMatricule(Integer.parseInt(line[0])));
             } catch (DAOException e) {
                 throw new CSVException("Une erreur est survenue lors de la recherche de l'apprenant : " + e.getMessage());
             }

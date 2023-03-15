@@ -151,6 +151,14 @@ public class ModuleItemController {
             return false;
         }
 
+        for(Module mod : superController.getSelectedClass().getModules()){
+            System.out.println("TEST");
+            if(intitule.equalsIgnoreCase(mod.getIntitule()) && semestreSelect.getValue() == mod.getSemestre()){
+                superController.setMainMessage("Module déjà existant pour le semestre " + mod.getSemestre(), 0);
+                return false;
+            }
+        }
+
 //        System.out.println(selectedModule);
 
         if (event.getSource() == intituleTF && event.getCode() == KeyCode.ENTER) {
@@ -191,6 +199,7 @@ public class ModuleItemController {
                     mDao.update(selectedModule, superController.superController.getCurrentUser().getFullName());
                     labelIntitule.setText(intitule);
                     intituleTF.setVisible(false);
+
                     superController.setMainMessage("Intitulé du module modifié avec succès", 1);
 
                     return true;
@@ -207,8 +216,9 @@ public class ModuleItemController {
                 newModule.setSemestre(semestreSelect.getValue());
                 newModule.setIntitule(intituleTF.getText());
                 newModule.setClasse(superController.getSelectedClass().getIntitule());
+
                 try {
-                    superController.setMainMessage("Patientez...", 1);
+//                    superController.setMainMessage("Patientez...", 1);
                     Module toAddModule = mDao.create(newModule, superController.superController.getCurrentUser().getFullName());
                     toAddModule.setSemestre(semestreSelect.getValue());
                     List<Module> mds = superController.getSelectedClass().getModules();
@@ -218,6 +228,7 @@ public class ModuleItemController {
                     intituleTF.setVisible(false);
                     semestreSelect.setVisible(false);
                     labelIntitule.setText(intituleTF.getText());
+
 
                     System.out.println("to add : " + toAddModule.getSemestre());
                     System.out.println("semestre selected : " + semestreSelect.getValue());
@@ -235,6 +246,7 @@ public class ModuleItemController {
                     superController.setMainMessage("Patientez...", 1);
                     mDao.update(selectedModule, superController.superController.getCurrentUser().getFullName());
                     labelSemestre.setText(semestreSelect.getValue() + "");
+
                     superController.setMainMessage("Semestre du module modifié avec succès", 1);
                     intituleTF.setVisible(false);
                     semestreSelect.setVisible(false);

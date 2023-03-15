@@ -17,7 +17,7 @@
    <children>
       <ImageView fx:id="bulletinImg" fitHeight="902.0" fitWidth="625.0" layoutX="23.0" layoutY="53.0" pickOnBounds="true" preserveRatio="true" style="-fx-border-width: 10px;">
          <image>
-            <Image url="@../../../../../storage/bulletins/imgs/hey_hey_bulletin_semestre_1.png" />
+            <Image url="@../../resources/images/Aita_DIOP_bulletin_semestre_1.png" />
          </image>
       </ImageView>
       <Button fx:id="btnAnnuler" alignment="CENTER" layoutX="275.0" layoutY="666.0" mnemonicParsing="false" onAction="#onClose" prefHeight="43.0" prefWidth="120.0" style="-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-background-color: linear-gradient(to right, #D23342, #ED213A);" styleClass="classic_btn" text="Fermer">
